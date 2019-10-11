@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
+import com.apttus.sfdc.Rebates2.library.AdminTemplatePage;
 import com.apttus.sfdc.Rebates2.library.DataSourcePage;
 
 
@@ -21,6 +22,10 @@ public class HomePage extends StartUpPage {
 	
 	@FindBy(css=".oneUserProfileCardTrigger span .uiImage")
 	public WebElement userProfileIcon;
+	
+	@FindBy(css="/lightning/o/Program_Template__c/home")
+	public WebElement Templatelnk;
+	
 
 	
 	public WebElement lnkAgrDocSearch;	
@@ -61,5 +66,15 @@ public class HomePage extends StartUpPage {
 		return PageFactory.initElements(driver, DataSourcePage.class);
 		
 	}
+		
+		public AdminTemplatePage navigateToAdminTemplate() throws Exception {
+			
+			
+			sfdcAcolyte.navigateTo("https://rebateqa--rebates.lightning.force.com/lightning/o/Program_Template__c/list?filterName=Recent");
+			/*sfdcAcolyte.waitTillElementIsVisible(Templatelnk).jsClick(Templatelnk);*/
+				
+			return PageFactory.initElements(driver, AdminTemplatePage.class);
+			
+		}
 }
 

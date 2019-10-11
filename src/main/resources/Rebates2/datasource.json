@@ -30,7 +30,7 @@
 	     "Product":"Base Product",
 	     "ProgramAccount":"Bill To",
 	     "FileSuffix":"_AutoSuffix",
-	     "FileExtenstion":"csv",
+	     "FileExtenstion1":"csv",
 	     "Delimiter":"commas"
 	     
 	     },
@@ -41,7 +41,15 @@
 	     "TransMetaData":"Order Line Item",
 	     "CalculationDate":"Ready for Activation Date",
 	     "Product":"Base Product",
-	     "ProgramAccount":"Bill To"
+	     "ProgramAccount":"Bill To",
+	     "SuffixB":"_part",
+	     "SuffixC":"suffix1234",
+	     "SuffixD":"_#$%^&**suff676",
+	     "SuffixE":"tab_tab",
+	     "DelimiterB":"semicolon",
+	     "DelimiterC":"open braces",
+	     "DelimiterD":"forward slash",
+	     "DelimiterE":"tab"
 	     },
 	     
 	     "FilterDataSource":{

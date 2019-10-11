@@ -27,16 +27,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/stripathi/.p2/pool/plugins/org.testng_6.14.2.r201802161450.jar" sourcepath="C:/Users/stripathi/.p2/pool/plugins/org.testng.source_6.14.2.r201802161450.jar"/>
-	<classpathentry kind="src" path="/comply"/>
-	<classpathentry kind="lib" path="C:/Users/stripathi/.m2/repository/com/apttus/unifiedframework/automation/12.0.6/automation-12.0.6.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="com.apttus.unifiedframework"/>
-			<attribute name="maven.artifactId" value="automation"/>
-			<attribute name="maven.version" value="12.0.6"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
