@@ -3,7 +3,6 @@ package com.apttus.sfdc.Rebates2.library;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
@@ -25,8 +24,10 @@ public class DataSourcePage extends StartUpPage {
     @FindBy(css="[title='New'][class='forceActionLink']")
 	public WebElement CreateNewDataSrcbtn;
     
-    @FindBy(xpath="//select[@class='slds-select metaData']")
+   
+    @FindBy(xpath = "//select[@class='slds-select metaData']")  
 	public WebElement selctTransMetaData;
+    
     
     @FindBy(xpath="//select[@class='slds-select calcDateAttr']")
 	public WebElement selctcalcdateAttr;
@@ -43,24 +44,21 @@ public class DataSourcePage extends StartUpPage {
     @FindBy(xpath="//select[@class='slds-select fileExtension']")
 	public WebElement MultiFileExtension;
    
-    @FindBy(xpath="//label[contains(text(),'File Suffix To ignore')]//following::div[1]/input")
+    @FindBy(css=".fileSuffix div >input")
 	public WebElement txtfilesuffix;
     
-    @FindBy(xpath="//div[2]/lightning-input/div[1]/input")
+    @FindBy(css=".fileSuffix div >input")
 	public WebElement dpfilesuffix;
     
-  
     @FindBy(xpath="//label[contains(text(),'Data Source Name')]//following::div[1]/input")
 	public WebElement txtdatasrc;
     
-    @FindBy(xpath="//button[text()='Submit']")
+    @FindBy(css="lightning-button:nth-child(6) > button]")
 	public WebElement btnsubmitdatasrc;
     
-    @FindBy(xpath="//button[text()='Cancel']")
+    @FindBy(css="lightning-button.cancelBtn > button")
 	public WebElement btnCancel;
-    
-    
-    
+   
     @FindBy(xpath="//span[contains(text(),'Data Source created')]")
 	public WebElement successresponse;
     
@@ -68,60 +66,56 @@ public class DataSourcePage extends StartUpPage {
 	public WebElement Duplicateresponse;
     
    /* .............ListPage...................*/
-    
-    @FindBy(xpath="//span[text()='Recently Viewed']")
+    @FindBy(css = "span.triggerLinkText.selectedListView.uiOutputText")
 	public WebElement Recentlyviewedlnk;
     
-    @FindBy(xpath="//span[text()='All']")
+    
+    @FindBy(css ="a[role='option'][id^='virtual']")
 	public WebElement Allviewedlnk;
     
-    @FindBy(xpath="//input[@placeholder='Search this list...']")
+    @FindBy(css="input[placeholder='Search this list...']")
 	public WebElement searchtxt;
-    
-    @FindBy(xpath="//span[@title='Apttus CIM Admin']")
-	public WebElement ApttustCIMtitle;
-    
-    @FindBy(xpath="//span[@text='Refresh']")
-	public WebElement Refreshicon;
     
     @FindBy(xpath="//select[3]/option[2]")
 	public WebElement optionProd;
   
     
-    @FindBy(xpath="//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
-   	public WebElement Namecolmn;
+    @FindBy(css="span[title*='DSrcAutomation']")
+    public WebElement Namecolmn;
     
-    @FindBy(xpath="//span[@title='Name']")
-   	public WebElement titleNamecolmn;
-    
-    @FindBy(xpath="//*[@data-key='filterList']")
+    @FindBy(css="svg[data-key='filterList']")
    	public WebElement filtericon;
     
-    @FindBy(xpath="//a[text()='Add Filter']")
+    @FindBy(css="a.addFilter")
    	public WebElement AddFilterlnk;
     
-    @FindBy(xpath="//*[text()='Field']/../..//input[@type='text']")
-   	public WebElement SelectField;
+    @FindBy(css="input[placeholder='Select an Option'][input]")
+    public WebElement SelectField;
     
-    @FindBy(xpath="//*[text()='Operator']/../..//input[@class='slds-input slds-combobox__input']")
-   	public WebElement SelectOperator;
     
-    @FindBy(xpath="//*[text()='Value']/../..//input[@type='text']")
-   	public WebElement EnterValue;
+    @FindBy(css="div:nth-child(2) > lightning-combobox > div")
+    public WebElement SelectOperator;
     
-    @FindBy(xpath="//span[text()='Done']")
+    @FindBy(css="input[data-aura-class*='uiInput uiInputText ui']") 
+    public WebElement EnterValue;
+    
+    @FindBy(css="button[class$='doneButton uiButton']>span[dir='ltr']")
    	public WebElement flrDonebtn;
   
-    @FindBy(xpath="//*[@class='slds-button slds-button_brand saveButton headerButton']")
+    @FindBy(css="button[class$='saveButton headerButton']")
    	public WebElement flrSavebtn;
    
-    @FindBy(xpath="//a[text()='Remove All']")
+    @FindBy(css="a.removeAll")
    	public WebElement RemoveAllftr;
     
-  //*[@data-aura-class='forceOutputLookup']
-  
-  //a[@class='removeAll']
     /* .............XpathValidations...................*/
+    
+    
+    @FindBy(css="span[class*='toastMessage']")
+   	public WebElement TempDataSrcResponse;
+    
+    @FindBy(css="button[title='Close']")
+   	public WebElement CloseToastResponse;
     
     @FindBy(xpath="//span[contains(text(),'Please enter Data Source Name')]")
    	public WebElement DataSrcResponse;
@@ -190,7 +184,7 @@ public class DataSourcePage extends StartUpPage {
 		
 		sfdcAcolyte.waitTillElementIsVisible(CreateNewDataSrcbtn).
                     waitTillElementIsClickable(CreateNewDataSrcbtn).jsClick(CreateNewDataSrcbtn);
-        sfdcAcolyte.waitTillElementIsClickable(txtdatasrc).click(txtdatasrc).sendKeysTo(txtdatasrc, DataSourceName);
+        sfdcAcolyte.waitTillElementIsVisible(txtdatasrc).click(txtdatasrc).sendKeysTo(txtdatasrc, DataSourceName);
         sfdcAcolyte.click(selctTransMetaData).waitTillElementIsVisible(Ordr).click(selctTransMetaData).
                     selectComboByText(selctTransMetaData, TransMetaData).
                     click(selctcalcdateAttr).waitTillElementIsVisible(calcdate).selectComboByText(selctcalcdateAttr, CalculationDate);

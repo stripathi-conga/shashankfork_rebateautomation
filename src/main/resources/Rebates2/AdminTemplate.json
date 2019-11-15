@@ -9,15 +9,54 @@
 	     "TierDiscrete":"Discrete",
 	     "DatasourceValue":" DS-0103",
 	     "QualftnBenftFormula":"Qualification & Benefit Product",
-	     "TierTiered":"Tiered"
-	     },
-	     "Filter_DeleteTemplate":{
+	     "TierTiered":"Tiered",
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains",
 	     "FilterValue":"Automation_AdmTemplate"
-	     }
-	    
+	     },
+	     "ValidationAdmintemplate":{
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains",
+	     "FilterValue":"Automation_AdmTemplate"
+	     },
 	     
+	     "EditAdminTemplate":{
+	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate1_DiscreteBenftProd",
+	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains"
+	     
+	     },
+	     "VerifyActiveTemplateName":{
+	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate1_Active",
+	     "TemplateNameTierQualifBenftProd":"Automation_AdmTemplate2_TierQualfBenftProd",
+	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
+	     "TemplateDescValue2":"AutomationTest For Tier-Tiered and Formula-Qualification Benefit Product",
+	     "BenftPrdtValue":"Benefit Product",
+	     "TierDiscrete":"Discrete",
+	     "DatasourceValue":"DS-0103",
+	     "QualftnBenftFormula":"Qualification & Benefit Product",
+	     "TierTiered":"Tiered",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains",
+	     "FilterValue":"Automation_AdmTemplate"
+	     },
+	     
+	     "ActivateAdminTemplate":{
+	     "ActiveTemplate":"AutomationActiveTemplate",
+	     "TemplateDescValue1":"ActiveTemplate",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains"
+	     
+	     },
+	     "EditDraftTemplate":{
+	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate",
+	     "TemplateDescValue1":"AutomationTest ",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains"
+	     
+	     }
+	      
 }
 
 		

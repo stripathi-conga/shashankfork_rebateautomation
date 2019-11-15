@@ -146,7 +146,7 @@ public class DataSourceTest {
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 				       testData.get("FileExtenstion2"),testData.get("DelimiterB"));
 		
-		/*datasourcePage.VerifydiffrentsetofDelimterSuffixC(testData.get("DataSourceName")+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixC"),
+		datasourcePage.VerifydiffrentsetofDelimterSuffixC(testData.get("DataSourceName")+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixC"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterC"));
 			    		
@@ -156,7 +156,7 @@ public class DataSourceTest {
 		
 		datasourcePage.VerifydiffrentsetofDelimterSuffixE(testData.get("DataSourceName")+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixE"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
-			           testData.get("FileExtenstion2"),testData.get("DelimiterE"));*/
+			           testData.get("FileExtenstion2"),testData.get("DelimiterE"));
 		
     	
     }
