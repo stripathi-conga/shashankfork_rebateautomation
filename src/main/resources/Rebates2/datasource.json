@@ -9,7 +9,9 @@
 	     "CalculationDate":"Ready for Activation Date",
 	     "Product":"Base Product",
 	     "ProgramAccount":"Bill To",
-	     "Delimiter":"commas"
+	     "Delimiter":"commas",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains"    
 	     
 	     },
 	     "DuplicateDataSource":{

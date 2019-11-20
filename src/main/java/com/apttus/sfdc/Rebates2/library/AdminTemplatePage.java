@@ -8,9 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
-
-import junit.framework.Assert;
-
 import com.apttus.sfdc.Rebates2.common.GenericPage;
 
 public class AdminTemplatePage extends StartUpPage {
@@ -58,7 +55,6 @@ public class AdminTemplatePage extends StartUpPage {
 	public  WebElement QualftnBenftFormula;
 	
 	@FindBy(css="span[class*='toastMessage']")
-	//@FindBy(xpath="//span[contains(text(),'Program template saved')]")
 	public WebElement successresponse;
 	
 	@FindBy(css="span[class='triggerLinkText selectedListView uiOutputText']")
@@ -69,10 +65,6 @@ public class AdminTemplatePage extends StartUpPage {
     
     @FindBy(css="[title*='Automation']")
 	public WebElement Edtlink;
-    
-    
-    /*@FindBy(xpath="//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
-   	public WebElement Namecolmn;*/
     
     @FindBy(css="span[title='Name']")
    	public WebElement titleNamecolmn;
@@ -92,8 +84,7 @@ public class AdminTemplatePage extends StartUpPage {
     @FindBy(css="[class='filterTextInput valueInput input uiInput uiInputText uiInput--default uiInput--input']")
    	public WebElement EnterValue;
     
-    @FindBy(css="button[class='slds-button slds-button--neutral doneButton uiButton'] span")
-    //@FindBy(xpath="//span[text()='Done']")    
+    @FindBy(css="button[class='slds-button slds-button--neutral doneButton uiButton'] span")  
    	public WebElement flrDonebtn;
   
     @FindBy(css="[class='slds-button slds-button_brand saveButton headerButton']")
@@ -103,7 +94,6 @@ public class AdminTemplatePage extends StartUpPage {
    	public WebElement AlllnkPinnedlist;
     
     @FindBy(css="[class='triggerLinkTextAndIconWrapper slds-p-right--x-large']")
-   // @FindBy(xpath="//*[@class='triggerLinkTextAndIconWrapper slds-p-right--x-large']")
    	public WebElement Alllink;
     
     @FindBy(css="span[class='countSortedByFilteredBy']")
@@ -138,6 +128,10 @@ public class AdminTemplatePage extends StartUpPage {
 		
 	@FindBy(css="svg[class='slds-icon slds-icon_small']")
    	public WebElement Cancelbtn;
+		
+	@FindBy(xpath="//span[text()='close']")
+   	public WebElement Closebtn;
+	
 	
 	@FindBy(css="button[title='Close']")
    	public WebElement CloseToastResponse;
@@ -150,6 +144,10 @@ public class AdminTemplatePage extends StartUpPage {
 	
 	@FindBy(css="button[class='slds-button slds-button_neutral']")
    	public WebElement Editbtn2;
+	
+	@FindBy(xpath="//h3[text()='Matching all of these filters']")
+   	public WebElement ExistingFilter;
+	
 			
 	@FindBy(linkText="/lightning/o/Program_Template__c/home")
    	public WebElement Templatelnk;		
@@ -209,6 +207,7 @@ public class AdminTemplatePage extends StartUpPage {
 		Thread.sleep(2000);
 		
 		for (int i = 0; i < BenifitCheckbox.size()-3; i++) {
+			sfdcAcolyte.waitTillElementIsClickable(BenifitCheckbox.get(0));
 			BenifitCheckbox.get(i).click();
 			
 		}
@@ -223,13 +222,9 @@ public class AdminTemplatePage extends StartUpPage {
 		            waitTillElementIsVisible(DatasourceValue).
 		            jsScrollAndClick(DatasourceValue);
 		
-		for (int i = 0; i < BenifitCheckbox.size()-2; i++) {
-			BenifitCheckbox.get(i).click();
-			
-		}
-		sfdcAcolyte.click(SaveAdmin);;
-		sfdcAcolyte.waitTillElementIsClickable(CloseToastResponse).click(CloseToastResponse);		
-		sfdcAcolyte.waitTillElementIsVisible(Cancelbtn).click(Cancelbtn);
+		sfdcAcolyte.click(SaveAdmin);
+		sfdcAcolyte.waitTillElementIsVisible(CloseToastResponse).waitTillElementIsClickable(CloseToastResponse).click(CloseToastResponse);	
+		
 		return PageFactory.initElements(driver, AdminTemplatePage.class);
 		
 	}
@@ -237,9 +232,7 @@ public class AdminTemplatePage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsVisible(SaveAdmin).click(SaveAdmin);
 		
 		sfdcAcolyte.waitTillElementIsVisible(successresponse);
-		return PageFactory.initElements(driver, AdminTemplatePage.class);
-		//sfdcAcolyte.waitTillElementIsVisible(successresponse);
-		
+		return PageFactory.initElements(driver, AdminTemplatePage.class);		
 		
 	}
 	public void WaitTemplate(WebElement SaveAdmin) throws Exception {
@@ -249,38 +242,34 @@ public class AdminTemplatePage extends StartUpPage {
 	}
 	 public AdminTemplatePage SFDCFilter(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
 			
-	        
-			
+
 			sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
 		                waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
+			
 			sfdcAcolyte.waitTillElementIsVisible(AddFilterlnk).click(AddFilterlnk);
 			sfdcAcolyte.waitTillElementIsVisible(SelectField).click(SelectField).sendKeysTo(SelectField, ColumnName).sendBoardKeys(Keys.ENTER);
 			sfdcAcolyte.waitTillElementIsVisible(SelectOperator).click(SelectOperator).sendKeysTo(SelectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
 	                    waitTillElementIsVisible(EnterValue).sendKeysTo(EnterValue, FilterValue).
 	                    waitTillElementIsVisible(flrDonebtn).click(flrDonebtn).
 	                    waitTillElementIsVisible(flrSavebtn).click(flrSavebtn);
-		  /* sfdcAcolyte.waitTillElementIsVisible(SortedItemlabel);*/
 			
 			return PageFactory.initElements(driver, AdminTemplatePage.class);
 
 }
 	 public AdminTemplatePage DeleteSFDCFilter() throws Exception {
-			
+		
 	      sfdcAcolyte.waitTillElementIsVisible(ShowMore).
 	      jsClick(ShowMore);
 	      Thread.sleep(4000);
 	      sfdcAcolyte.jsClick(showDeleteAction).
 	      jsClick(ConfirmDeleteAction);
 	      
-	     /* sfdcAcolyte.waitTillElementIsVisible(DeleteAction).click(DeleteAction);*/
-	      
-	      
 	      return PageFactory.initElements(driver, AdminTemplatePage.class);
 	
 }
 
 	public AdminTemplatePage MoveToEditPage() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(ShowMore).
+		sfdcAcolyte.waitTillElementIsVisible(ShowMore).waitTillElementIsClickable(ShowMore).
 	      click(ShowMore).
 	      waitTillElementIsClickable(EditShowAction).
 	      click(EditShowAction);
@@ -335,7 +324,7 @@ public class AdminTemplatePage extends StartUpPage {
 		
 	}
 
-	public void WaitForPageToLoad() throws InterruptedException {
+	public void WaitForPageToLoad() throws Exception {
 		Thread.sleep(4000);
 		
 	}
@@ -370,22 +359,17 @@ public class AdminTemplatePage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 		            waitTillElementIsVisible(AlllnkPinnedlist).click(AlllnkPinnedlist);
 		
-		//sfdcAcolyte.waitTillElementIsVisible(PageSortedbynamelabel);
-		
 	}
 
 	public void ActivateTemplate() throws Exception {
 		sfdcAcolyte.jsClick(Edtlink).waitTillElementIsVisible(Activatebtn).
-		click(Activatebtn);
-	
-		
+		            click(Activatebtn);
 		
 	}
 
 	public void RemoveFilterSave() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
                     waitTillElementIsClickable(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
-
         sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
 		
 	}
@@ -395,10 +379,18 @@ public class AdminTemplatePage extends StartUpPage {
 		
 	}
 
-	
-
-
+	public void DeleteExistingFilter() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
+                    waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
+		sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
 	}
+
+	public void MoveToAllFilter() throws Exception {
+		sfdcAcolyte.refreshPage();
+		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
+        waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
+	}
+}
 	
 
 

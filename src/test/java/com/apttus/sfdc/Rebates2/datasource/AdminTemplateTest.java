@@ -61,7 +61,7 @@ public class AdminTemplateTest {
 				
 	}
 		
-	@Test(description = "Verify that the Admin user can create and save a new template",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verify that the Admin user can create and save a new template",groups = {"Regression","SFDC"})
 	public void CreateNewAdminTemplate() throws Exception {
 		try {
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
@@ -73,42 +73,23 @@ public class AdminTemplateTest {
 			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
 			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
 		
-			//assertEquals(AdmTemplatepage.NewTemplate, AdmTemplatepage.Newtemplatelabel.getText());
 			assertEquals(AdmTemplatepage.success, AdmTemplatepage.successresponse.getText());
 			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			
 			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("TemplateNameDiscreteBenftProd")+ln);
+			AdmTemplatepage.MoveToAllFilter();
 			AdmTemplatepage.DeleteSFDCFilter();
 			AdmTemplatepage.CloseToastMessage();
 			AdmTemplatepage.deleteFilter();
 			AdmTemplatepage.CloseToastMessage();
-			/*Above Template for Discrete + Benefit Product */
-			
-			
-			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
-			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameTierQualifBenftProd")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue2"));
-			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.QualftnBenftFormula ,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
-			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
-			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
-			
-			assertEquals(AdmTemplatepage.NewTemplate, AdmTemplatepage.Newtemplatelabel.getText());
-			assertEquals(AdmTemplatepage.success, AdmTemplatepage.successresponse.getText());
-			
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("TemplateNameTierQualifBenftProd")+ln);
-			AdmTemplatepage.DeleteSFDCFilter();
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.deleteFilter();
-			AdmTemplatepage.CloseToastMessage();
-     		/*Above Template for Tiered + Qualification & Benefit Product*/ 
 			
 		} catch (Exception e) {
 			throw new Exception(e);
 		}
 	}
 	
-	
-	
-	@Test(description = "Verify that the Admin user can edit and update the existing template",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verify that the Admin user can edit and update the existing template",groups = {"Regression","SFDC"})
 	public void EditAdminTemplate() throws Exception {
 		
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
@@ -133,15 +114,15 @@ public class AdminTemplateTest {
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
 		AdmTemplatepage.RemoveAllFilter();
 		AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("TemplateNameDiscreteBenftProd")+ln);
+		AdmTemplatepage.MoveToAllFilter();
 		AdmTemplatepage.DeleteSFDCFilter();
 		AdmTemplatepage.CloseToastMessage();
 		AdmTemplatepage.deleteFilter();
 		AdmTemplatepage.CloseToastMessage();
-		
-		
+			
 	}
 	
-	@Test(description = "Verifying for the Validation of Template Name on the Template View list",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verifying for the Validation of Template Name on the Template View list",groups = {"Regression","SFDC"})
 	public void ValidationAdmintemplate() throws Exception {
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
 		testData = new Efficacies().readJsonFile("AdminTemplate.json");
@@ -158,11 +139,13 @@ public class AdminTemplateTest {
 		AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
 		AdmTemplatepage.CloseToastMessage();
 		
+		AdmTemplatepage=homepage.navigateToAdminTemplate();
 		AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
 		AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,"TemplateNameDiscreteBenftProd",AdmTemplatepage.TemplateDescription,"TemplateDescValue1");
 		AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierDiscrete);
 		AdmTemplatepage.SaveDataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
 		
+		datasourcePage=homepage.navigateToDataSource();
 		AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),"TemplateNameDiscreteBenftProd");
 		AdmTemplatepage.WaitForPageToLoad();
 		AdmTemplatepage.DeleteSFDCFilter();
@@ -171,8 +154,8 @@ public class AdminTemplateTest {
 		AdmTemplatepage.CloseToastMessage();
 	}
 
-	@Test(description = "Verify for the Activate button on the Template details page",groups = {"Regression","Smoke","SFDC"})
-	public void ActivateAdminTemplate() throws Exception {
+	 @Test(description = "Verify for the Activate button on the Template details page",groups = {"Regression","SFDC"})
+	 public void ActivateAdminTemplate() throws Exception {
 		
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
 		testData = new Efficacies().readJsonFile("AdminTemplate.json");
@@ -189,17 +172,18 @@ public class AdminTemplateTest {
 		AdmTemplatepage.CloseToastMessage();
 		AdmTemplatepage.ActivateTemplate();
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
+		AdmTemplatepage.RefreshLinkTemplate();
 		AdmTemplatepage.RemoveAllFilter();
 		AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
+		AdmTemplatepage.RefreshLinkTemplate();
 		AdmTemplatepage.DeleteSFDCFilter();
 		AdmTemplatepage.CloseToastMessage();
-		AdmTemplatepage.deleteFilter();
-		AdmTemplatepage.CloseToastMessage();
-		
+		AdmTemplatepage.RemoveFilterSave();
+		AdmTemplatepage.CloseToastMessage();	
 		
 	}
 	
-	@Test(description = "Verify for the edit button on the Template details page when the template status is 'Draft'",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verify for the edit button on the Template details page when the template status is 'Draft'",groups = {"Regression","SFDC"})
 	public void EditDraftTemplate() throws Exception {
 		
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
@@ -224,11 +208,11 @@ public class AdminTemplateTest {
 		AdmTemplatepage=homepage.navigateToAdminTemplate();
 		AdmTemplatepage.RemoveAllFilter();
 		AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("TemplateNameDiscreteBenftProd")+ln);
+		AdmTemplatepage.RefreshLinkTemplate();
 		AdmTemplatepage.DeleteSFDCFilter();
 		AdmTemplatepage.CloseToastMessage();
-		AdmTemplatepage.deleteFilter();
+		AdmTemplatepage.RemoveFilterSave();
 		AdmTemplatepage.CloseToastMessage();
-		
 		
 	}
 	@AfterMethod(alwaysRun = true)
