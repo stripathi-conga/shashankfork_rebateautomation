@@ -9,9 +9,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
-
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -23,14 +21,29 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-
-import com.apttus.sfdc.clm.apis.library.SFDCHelper;
-import com.apttus.sfdc.clm.classic.CreateAgreementPageClassic;
 import com.apttus.ui.fundamentals.WebElementBuilder;
-import com.jayway.restassured.response.Response;
+
 
 public class GenericPage extends StartUpPage {
 	
+	@FindBy(xpath="//span[text()='Recently Viewed']")
+	public WebElement Recentlyviewedlnk;
+    
+    @FindBy(xpath="//span[text()='All']")
+	public WebElement Allviewedlnk;
+    
+    @FindBy(xpath="//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
+   	public WebElement Namecolmn;
+    
+    @FindBy(xpath="//span[@title='Name']")
+   	public WebElement titleNamecolmn;
+    
+    @FindBy(xpath="//*[@data-key='filterList']")
+   	public WebElement filtericon;
+    
+    @FindBy(xpath="//a[text()='Add Filter']")
+   	public WebElement AddFilterlnk;
+    
 	@FindBy(css=".labelCol label")
 	public List<WebElement> agrFieldLbl;
 	
@@ -83,6 +96,7 @@ public class GenericPage extends StartUpPage {
 	@CacheLookup
 	public WebElement lblSelectClause;
 	
+
 	public String fieldLabel = ".labelCol";
 
 	public GenericPage(WebDriver driver) {
@@ -90,23 +104,12 @@ public class GenericPage extends StartUpPage {
 		PageFactory.initElements(driver, this);
 		sfdcAcolyte.setWaitTime(60);
 	}	
-	/**
-	 * Check visibility of the element.
-	 * @param element Name as a webElement.
-	 * @return true or False
-	 * @throws Exception
-	 */
+	
 	
 	public boolean checkVisibility(WebElement element) throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(element);
 		return sfdcAcolyte.checkVisibility(element);
 	}
-	/**
-	 * Check visibility of the element.
-	 * @param element Name as a webElement.
-	 * @return true or False
-	 * @throws Exception
-	 */
 	
 	public boolean checkInVisibility(WebElement element) throws Exception {
 		boolean isExists=false;
@@ -118,12 +121,7 @@ public class GenericPage extends StartUpPage {
 		}
 	}
 	
-	/**
-	 * Check visibility of the element.
-	 * @param element Name as a webElement.
-	 * @return true or False
-	 * @throws Exception
-	 */
+	
 	
 	public void doubleClick(WebElement element) throws Exception {
 		Actions builder = new Actions(driver);
@@ -142,13 +140,7 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.refreshPage();
 	}
 	
-	/**
-     * Get label name to pass input values
-     * param WebElement  
-      * @return
-     * @throws Exception
-     */   
-
+	
      public WebElement inputAutoCompleteFieldwithLabel(String label) throws Exception {
 	    return (new WebElementBuilder(this.driver))
 	                 .getElementWithCSSText("label", label)
@@ -170,8 +162,7 @@ public class GenericPage extends StartUpPage {
  		eleToClear.sendKeys(Keys.DELETE);
  	}	
      
- 	/**
- 	 * Enter values in input fields over New Agreement Page
+ 	/*
  	 * @param String Value
  	 * @return WebElement
  	 * @throws Exception
@@ -206,18 +197,6 @@ public class GenericPage extends StartUpPage {
 		return textString.split(splitText)[index].trim();
 	}
 
-	/**
-     * Get Offline agreement page field values based on label
-     * @param  String value
-     * @return webElement
-     * @throws Exception
-     */
-    public WebElement getOfflineAgrFieldValue(String fieldName) throws Exception{
-            WebElement element=new WebElementBuilder(driver).getElementWithCSSText(fieldLabel, fieldName)
-                            .getNextSiblingElement()
-                            .getWebElement();
-            return element;
-    }
     
     /**
      * Update dropdown values
@@ -228,60 +207,6 @@ public class GenericPage extends StartUpPage {
      public void updateAgrmtDDFieldValues(String fieldName, String fieldValue) throws Exception {
          sfdcAcolyte.selectComboByText(sfdcAcolyte.getComboboxElementWithLabel(fieldName), fieldValue);
      }
-     
-     
-     
-     /**
-      * TC-10950-
-      * Author: Prashant Vikash
-      */ 
-     
-     // TO verify the Pdf file created in File Section.    
-     public boolean verifyPdf(List<WebElement> elements, String fileFormatSigned, String fileFormatCertific) {
- 		ArrayList<String> filename = new ArrayList<String>();
- 		boolean flag = false;
-		try {
-			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).getText().contains(fileFormatSigned)
-						|| elements.get(i).getText().contains(fileFormatCertific)) {
-					flag = true;
-					filename.add(elements.get(i).getText());
-				}
-			}
-		} catch (Exception e) {
-			flag=false;
-		}
- 		return flag;
-
- 	}
-     
-     /**
-      * TC-10951-
-      * Author: Prashant Vikash
-      */ 
-     
-      // TO verify the Pdf file created in File Section and counting the no. of pdf greater than One  
-     public boolean verifyPdfCount(List<WebElement> elements,String fileFormatSigned, String fileFormatCertific) {
-
-		int counter = 0;
-		boolean flag = false;
-
-		try {
-			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).getText().contains(fileFormatSigned)
-						|| elements.get(i).getText().contains(fileFormatCertific)) {
-					counter++;
-				}
-			}
-			if (counter > 1) {
-				flag = true;
-			}
-		} catch (Exception e) {
-			flag=false;
-		}
-		return flag;
-
-  	}
      
      /**
    	 * Verify Inner Text Matches On Page
@@ -347,28 +272,7 @@ public class GenericPage extends StartUpPage {
 	
 
 	
-	/**
-     * To Verify the Open Activities List In Agreement detail page
-     * @param openActivity 
-      * @param Webelement List of activities
-     * @return String of all the activities
-     * @throws Exception
-     */ 
-     
-     public boolean verifyOpenActivites(String internal,List<WebElement> openActivities, WebElement openActivity) throws Exception {
-            boolean status = false;
-            ArrayList<String> listActivity = new ArrayList<String>();
-            sfdcAcolyte.waitTillElementIsVisible(openActivity);
-            for(WebElement e:openActivities) {
-                   listActivity.add(e.getText().trim());  
-            }
-            if (listActivity.containsAll(Arrays.asList(internal.split(",")))) {
-                   status = true;
-            }
-            sfdcAcolyte.waitTillElementIsVisible(openActivity);
-            
-            return status;
-     }
+	
 	
 	/**
 	 * Verify Activity History with OR condition
@@ -453,7 +357,6 @@ public class GenericPage extends StartUpPage {
 	 * @param  String value and Array
 	 * @return boolean
 	 * @throws Exception
-	 * @author Sanjay.Panwar
 	 */
 	public boolean checkRecordType(String arrayRecType[], String recordTypeName) throws Exception{
 		ArrayList<String> recordType = new ArrayList<String>(Arrays.asList(arrayRecType));
@@ -465,7 +368,6 @@ public class GenericPage extends StartUpPage {
 	 * @param uniqueId
 	 * @param element
 	 * @throws Exception
-	 * @author Sanjay.Panwar
 	 */
 	public void navigateURL(String URL,String uniqueId, WebElement element) throws Exception {
 		sfdcAcolyte.navigateTo(URL+uniqueId);
@@ -540,7 +442,6 @@ public class GenericPage extends StartUpPage {
 	 * @param fieldLabel
 	 * @return
 	 * @throws Exception
-	 * @author Sanjay.Panwar
 	 */
 	public GenericPage selectComboByValue(WebElement element, String fieldLabel) throws Exception {
 		sfdcAcolyte.selectComboByValue(element, fieldLabel);
@@ -572,7 +473,6 @@ public class GenericPage extends StartUpPage {
 	 * To verify action button Enabled
 	 * @param List
 	 * all Button
-	 * @return AgreementDetailsPageClassic
 	 * @throws Exception
 	 */
 	public boolean actionButtonEnabled(List<WebElement> buttonList) throws Exception {
@@ -601,7 +501,6 @@ public class GenericPage extends StartUpPage {
 	 * @param element
 	 * @return List
 	 * @throws Exception
-	 * @author Sanjay.Panwar
 	 */
 	public List<String> getTextFromWebElementList(List<WebElement> element) throws Exception {
 		List<String> txtList = new ArrayList<String>();
@@ -616,7 +515,6 @@ public class GenericPage extends StartUpPage {
 	 * @param element
 	 * @return
 	 * @throws Exception
-	 * @author Sanjay.Panwar
 	 */
 	public String getDropdownSelectedTxt(WebElement element) throws Exception {
 		return getObjOfDropDownElement(element).getFirstSelectedOption().getText();
@@ -627,7 +525,6 @@ public class GenericPage extends StartUpPage {
 	 * @param fieldLabel
 	 * @return GenericPage
 	 * @throws Exception
-	 * @author Sanjay.Panwar
 	 */
 	public GenericPage selectComboByText(WebElement element, String ddlValue) throws Exception {
 		sfdcAcolyte.selectComboByText(element, ddlValue);
@@ -639,7 +536,6 @@ public class GenericPage extends StartUpPage {
 	 * @param elementList
 	 * @param expectedValue
 	 * @return
-	 * @author Sanjay.Panwar
 	 */
 	public String getStrValueFromWebEleList(List<WebElement> elementList, String expectedValue) {
 		String text = null;
@@ -657,7 +553,7 @@ public class GenericPage extends StartUpPage {
 	 * @param String value
 	 * @return
 	 * @throws Exception
-	 * @author Sanjay.Panwar
+	 
 	 */
 	public GenericPage getWindow(int windowNum) throws Exception {
 		Set<String> handles = sfdcAcolyte.getWindowHandles();
@@ -740,22 +636,6 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsVisible(element);
 
 	}
-
-	/**
-	* Get Dropdown all Values
-	* @return List
-	* @throws Exception
-	* @author Sanjay.Panwar
-	*/
-	public List<String> getDrodpownAllValues(WebElement element) throws Exception {
-		Select dropdown = new Select(element);
-		List<WebElement> options = dropdown.getOptions();
-		List<String> allValues = new ArrayList<>();
-		for (WebElement item : options) {
-			allValues.add(item.getText());
-		}
-		return allValues;
-	}
 	
 	/** 
 	 * To get the values of key and value of a map
@@ -774,40 +654,8 @@ public class GenericPage extends StartUpPage {
 		return keyValuePair;
 	}
 	
-	/**
-	 * Generates the agreement
-	 * @param SFDCHelper sfdcHelper, Properties configProperty 
-	 * @param Map<String, String>testData, String agreementID
-	 * @return response
-	 * @throws Exception
-	 */
-	public Response generateAgreement(SFDCHelper sfdcHelper, Properties configProperty, Map<String, String> testData,
-			String agreementID) throws Exception {
-		testData.put("AgreementId", agreementID);
-		testData.put("Username", configProperty.getProperty("username"));
-		testData.put("Password", configProperty.getProperty("password"));
-		testData.put("RestEndPoint", configProperty.getProperty("restEndPoint"));
-
-		Response response = sfdcHelper.generateAgreementAPI(testData);
-		return response;
-	}
-
-	/**
-	 * Activates the agreement
-	 * @param SFDCHelper sfdcHelper, Properties configProperty
-	 * @param Map<String,String>testData, String agreementID, Response response
-	 * @return response
-	 * @throws Exception
-	 */
-	public GenericPage activateAgreement(SFDCHelper sfdcHelper, Response response, Properties configProperty,
-			Map<String, String> testData, String agreementID) throws Exception {
-		testData.put("AttachmentId", response.jsonPath().get("result").toString());
-		testData.put("AgreementId", agreementID);
-		testData.put("RestEndPoint", configProperty.getProperty("restEndPointDynamic") + testData.get("ActivateAgrTxt"));
-		sfdcHelper.activateAgreementAPI(testData);
-		testData.put("RestEndPoint", configProperty.getProperty("restEndPointDynamic") + testData.get("PublishToDocRepoTxt"));
-		sfdcHelper.publishAgreementDocumentAPI(testData);
+       
 		
-		return PageFactory.initElements(driver, GenericPage.class);
-	}
+        
+
 }
