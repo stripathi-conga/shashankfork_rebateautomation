@@ -107,64 +107,7 @@ public class HomePageClassic extends StartUpPage {
 		return PageFactory.initElements(driver, HomePageClassic.class);
 	}
 	
-	/**
-	 * Click on links available at left pane 
-	 * @param  String Value
-	 * @return Page
-	 * @throws Exception
-	 */
-	/*public AgreementDetailsPageClassic clickAgrLink(String lnkName) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(sideBar);
-		WebElement selector = new WebElementBuilder(driver).getElementContainingText(apttusLinks, lnkName)
-				.getWebElement();
-		sfdcAcolyte.waitTillElementIsClickable(selector)
-		.jsClick(selector);
-		return PageFactory.initElements(driver, AgreementDetailsPageClassic.class);
-	}*/
-
-	/**
-	 * Select Record Type from RecordType dropdown 
-	 * @param  String Value
-	 * @return Page
-	 * @throws Exception
-	 */
-	/*public AgreementDetailsPageClassic selectClassicRecordType(WebElement element, String recordType) throws Exception {
-		sfdcAcolyte.waitTillElementIsClickable(element)
-		.selectComboByText(element, recordType);
-		return PageFactory.initElements(driver, AgreementDetailsPageClassic.class);
-	}*/
-
-	/**
-	 * Navigate to Menu Tabs 
-	 * @param  
-	 * @return Page
-	 * @throws Exception
-	 */
-	/*public AgreementDetailsPageClassic navigateToMenuTab(WebElement menuTabName) throws Exception {
-		sfdcAcolyte.waitTillElementIsClickable(menuTabName)
-		.click(menuTabName);
-		return PageFactory.initElements(driver, AgreementDetailsPageClassic.class);
-	}	*/
 	
-	/**
-	 * Navigate to All Tabs (+)
-	 * @param  
-	 * @return Page
-	 * @throws Exception
-	 */
-	/*public AgreementProtectionPageClassic navigateToProtectionType() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(linkAgmtProtection)
-					.waitTillElementIsClickable(linkAgmtProtection)
-					.click(linkAgmtProtection);		
-		return PageFactory.initElements(driver, AgreementProtectionPageClassic.class);
-	}*/
-
-	/**
-	 * Navigate to Account page from HomePage Menu.
-	 * @return page
-	 * @throws Exception
-	 * @author Sanjay.Panwar
-	 */
 	public HomePageClassic accountLogOut() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(userMenuTab)
 				.waitTillElementIsClickable(userMenuTab)
@@ -174,20 +117,6 @@ public class HomePageClassic extends StartUpPage {
 		return PageFactory.initElements(driver, HomePageClassic.class);
 	}
 
-	/**
-	 * Click on Sidebar links available under Create New 
-	 * @param  String Value
-	 * @return Page
-	 * @throws Exception
-	 */
-	/*public AgreementDetailsPageClassic clickCreateNewLink(String lnkName) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(sideBar)
-		.jsClick(btnCreateNew);
-		WebElement selector = new WebElementBuilder(driver).getElementContainingText(createNewLinks, lnkName)
-				.getWebElement();
-		sfdcAcolyte.waitTillElementIsClickable(selector)
-		.jsClick(selector);
-		return PageFactory.initElements(driver, AgreementDetailsPageClassic.class);
-	}*/
+	
 	
 }

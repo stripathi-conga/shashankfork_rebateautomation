@@ -5,7 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
+import com.apttus.sfdc.Rebates2.datasource.LinkTemplateTest;
+import com.apttus.sfdc.Rebates2.library.AdminTemplatePage;
 import com.apttus.sfdc.Rebates2.library.DataSourcePage;
+import com.apttus.sfdc.Rebates2.library.LinkTemplatePage;
 
 
 public class HomePage extends StartUpPage {
@@ -21,7 +24,19 @@ public class HomePage extends StartUpPage {
 	
 	@FindBy(css=".oneUserProfileCardTrigger span .uiImage")
 	public WebElement userProfileIcon;
-
+	
+	@FindBy(xpath="//span[text()='Templates']")
+	public WebElement Templatelnk;
+	
+	@FindBy(xpath="//span[text()='Link Templates']")
+	public WebElement lnkTemplatelnk;
+	
+	@FindBy(xpath="//span[text()='Data Sources']")
+	public WebElement Datasrclnk;
+	
+	@FindBy(xpath="//*[@data-aura-class='uiOutputText forceBreadCrumbItem'][text()='Link Templates']")
+	public WebElement lnkTemplatepagelabel;
+	
 	
 	public WebElement lnkAgrDocSearch;	
 	
@@ -56,10 +71,28 @@ public class HomePage extends StartUpPage {
 		public DataSourcePage navigateToDataSource() throws Exception {
 		
 		
-		sfdcAcolyte.navigateTo("https://rebateqa--rebates.lightning.force.com/lightning/o/Data_Source__c/list?filterName=Recent");
+		sfdcAcolyte.waitTillElementIsClickable(Datasrclnk).
+        jsClick(Datasrclnk);
 			
 		return PageFactory.initElements(driver, DataSourcePage.class);
 		
 	}
+		
+		public AdminTemplatePage navigateToAdminTemplate() throws Exception {
+			
+			sfdcAcolyte.waitTillElementIsClickable(Templatelnk).
+			            jsClick(Templatelnk);			
+				
+			return PageFactory.initElements(driver, AdminTemplatePage.class);
+			
+		}
+		
+		public LinkTemplatePage navigateToLinkTemplate() throws Exception {
+			
+			sfdcAcolyte.waitTillElementIsVisible(lnkTemplatelnk).
+            jsClick(lnkTemplatelnk);
+						
+			return PageFactory.initElements(driver, LinkTemplatePage.class);
+		}
 }
 

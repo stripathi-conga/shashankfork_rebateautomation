@@ -16,6 +16,8 @@
 
 		<classes>
 			<class name="com.apttus.sfdc.Rebates2.datasource.DataSourceTest" />
+			<class name="com.apttus.sfdc.Rebates2.datasource.AdminTemplateTest" />
+			<class name="com.apttus.sfdc.Rebates2.datasource.LinkTemplateTest" />
 			
 		</classes>
 	</test> <!-- Test -->
