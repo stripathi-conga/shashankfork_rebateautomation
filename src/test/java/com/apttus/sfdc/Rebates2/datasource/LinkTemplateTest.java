@@ -1,6 +1,7 @@
 package com.apttus.sfdc.Rebates2.datasource;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.util.Map;
 import java.util.Properties;
@@ -63,10 +64,13 @@ public class LinkTemplateTest {
 				
 	}
 		
-	@Test(description = "Verify that the Admin user can create and save a new template",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verify for the mapping creation for one single Active Template with the unique combination of program Type and Program Sub-type selected",groups = {"Regression","Smoke","SFDC"})
+	
 	public void VerifyActiveTemplateName() throws Exception {
 		try {
+			
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			Thread.sleep(6000);
 			testData = new Efficacies().readJsonFile("AdminTemplate.json");
 			long ln = JavaHelpers.generateRandomNumber();
 			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
@@ -92,9 +96,10 @@ public class LinkTemplateTest {
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			AdmTemplatepage.RemoveAllFilter();
 			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
+			AdmTemplatepage.RefreshLinkTemplate();
 			AdmTemplatepage.DeleteSFDCFilter();
 			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.deleteFilter();
+			AdmTemplatepage.RemoveFilterSave();
 			AdmTemplatepage.CloseToastMessage();
 			
 		} catch (Exception e) {
@@ -108,90 +113,7 @@ public class LinkTemplateTest {
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
 			long ln = JavaHelpers.generateRandomNumber();
-			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
-			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameDiscreteBenftProd")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue1"));
-			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
-			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
-			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
-			
-			String ActvTemplate=testData.get("TemplateNameDiscreteBenftProd")+ln;
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.ActivateTemplate();
-			AdmTemplatepage.CloseToastMessage();
-			
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			AdmTemplatepage.RefreshLinkTemplate();
-			AdmTemplatepage.RemoveFilterSave();
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RefreshLinkTemplate();
-			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
-			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameTierQualifBenftProd")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue1"));
-			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
-			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
-			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
-			
-			String Actv2Template=testData.get("TemplateNameTierQualifBenftProd")+ln;
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),Actv2Template);
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.WaitForPageToLoad();
-			AdmTemplatepage.ActivateTemplate();
-			AdmTemplatepage.CloseToastMessage();
-			
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.RefreshLinkTemplate();
-			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
-			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
-			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
-			lnkTemplatepage.SaveLink();
-		
-			lnkTemplatepage.SFDCFilter(testData.get("TemplateName"),testData.get("Operator"),Actv2Template);
-			lnkTemplatepage=homepage.navigateToLinkTemplate();		
-			lnkTemplatepage.ChangeStatusActive();
-			
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.RefreshLinkTemplate();
-			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
-			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
-			lnkTemplatepage.SaveLink();
-			
-			assertEquals(lnkTemplatepage.successresponse.getText(), lnkTemplatepage.ActiveMapExist, "An active mapping already exists.");
-			lnkTemplatepage.CloseToastMessage();
-			
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RemoveAllFilter();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
-			AdmTemplatepage.DeleteSFDCFilter();
-			AdmTemplatepage.CloseToastMessage();
-						
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.RemoveAllFilter();
-			lnkTemplatepage.SFDCFilter(testData.get("TemplateName"),testData.get("ColumnOperator"),Actv2Template);
-			lnkTemplatepage.DeleteSFDCFilter();
-			lnkTemplatepage.RemoveAllFilter();
-			
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RemoveAllFilter();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),Actv2Template);
-			AdmTemplatepage.DeleteSFDCFilter();
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.deleteFilter();
-			AdmTemplatepage.CloseToastMessage();	
-			
-		} catch (Exception e) {
-			throw new Exception(e);
-		}
-	}
-	
-	@Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Draft",groups = {"Regression","Smoke","SFDC"})
-	public void VerifyMoreThanOneActiveTemplateAssociation() throws Exception {
-		try {
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
-			long ln = JavaHelpers.generateRandomNumber();
 			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
 			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameActiveOne")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue1"));
 			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
@@ -204,66 +126,46 @@ public class LinkTemplateTest {
 			AdmTemplatepage.CloseToastMessage();
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			AdmTemplatepage.ActivateTemplate();
+		   /* Created and Activated a Template*/
 			
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.WaitForPageToLoad();
-			AdmTemplatepage.RemoveFilterSave();
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RefreshLinkTemplate();
-			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
-			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameActiveTwo")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue1"));
-			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
-			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
-			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
-			
-			String Actv2Template=testData.get("TemplateNameActiveTwo")+ln;
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),Actv2Template);
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.WaitForPageToLoad();
-			AdmTemplatepage.ActivateTemplate();
-					
 			lnkTemplatepage=homepage.navigateToLinkTemplate();
 			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
 			lnkTemplatepage.RefreshLinkTemplate();
 			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
 			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
 			lnkTemplatepage.SaveLink();
-			lnkTemplatepage.CloseToastMessage();
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.RefreshLinkTemplate();
-			
-			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
-			lnkTemplatepage.FillmultipleLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
-			lnkTemplatepage.SaveLink();
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.SFDCFilter(testData.get("TemplateName"),testData.get("ColumnOperator"),Actv2Template);
 			lnkTemplatepage.ChangeStatusActive();
-						
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RefreshLinkTemplate();
 			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			/*Linked the 1sttemplate and Activated */
+			
+			lnkTemplatepage.ChangeStatustoInActive();
+			
+			/*Inactivate the1st activated Link*/
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+			lnkTemplatepage.SaveLink();
+			
+			lnkTemplatepage.ChangeStatusActive();
+			/*Activated 2nd link*/
+			lnkTemplatepage.MoveToFilter();
+			
+			lnkTemplatepage.ChangeStatusInactivetoctive();
+			assertEquals(lnkTemplatepage.CanNotSaveRecord, lnkTemplatepage.ErrorOccur.getText());
+			
+			lnkTemplatepage.CancelChangeStatus();	
+			lnkTemplatepage.RefreshLinkTemplate();
 			lnkTemplatepage.DeleteSFDCFilter();
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-						
+			lnkTemplatepage.RefreshLinkTemplate();			
+			lnkTemplatepage.DeleteSFDCFilter();
+			
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RemoveAllFilter();
 			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
-			
+			AdmTemplatepage.RefreshLinkTemplate();
 			AdmTemplatepage.DeleteSFDCFilter();
 			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.deleteFilter();
-			AdmTemplatepage.CloseToastMessage();
-			
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.DeleteSFDCFilter();
-			lnkTemplatepage=homepage.navigateToLinkTemplate();
-			lnkTemplatepage.RemoveAllFilter();
-			
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),Actv2Template);
-			AdmTemplatepage.DeleteSFDCFilter();
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.deleteFilter();
+			AdmTemplatepage.RemoveAllFilter();
 			AdmTemplatepage.CloseToastMessage();
 			
 			
@@ -272,7 +174,215 @@ public class LinkTemplateTest {
 		}
 	}
 	
+	@Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Draft",groups = {"Regression","Smoke","SFDC"})
+	public void VerifyMoreThanOneActiveTemplateAssociation() throws Exception {
+		try {
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+			long ln = JavaHelpers.generateRandomNumber();
+			AdmTemplatepage.RefreshLinkTemplate();
+			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
+			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameActiveOne")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue1"));
+			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
+			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
+			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
+			
+			String ActvTemplate=testData.get("TemplateNameActiveOne")+ln;
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			AdmTemplatepage.ActivateTemplate();
+					
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+			lnkTemplatepage.SaveLink();
+			lnkTemplatepage.ChangeStatusActive();
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+			lnkTemplatepage.SaveLink();
+			assertEquals(lnkTemplatepage.successresponse.getText(), lnkTemplatepage.ActiveMapExist, "An active mapping already exists.");			
+			
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			lnkTemplatepage.DeleteSFDCFilter();			
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
+			AdmTemplatepage.RefreshLinkTemplate();
+			AdmTemplatepage.DeleteSFDCFilter();
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage.RemoveAllFilter();
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage.RefreshLinkTemplate();
+			
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
+	}
+       @Test(description = "Verify for the inline edit on the Link Template Tab",groups = {"Regression","Smoke","SFDC"})
 	
+	   public void VerifyInlineEditDraft() throws Exception {
+		try {
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+			long ln = JavaHelpers.generateRandomNumber();
+			
+			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
+			AdmTemplatepage.FillTemplateDetails(AdmTemplatepage.TemplateName ,testData.get("TemplateNameActiveOne")+ln,AdmTemplatepage.TemplateDescription,testData.get("TemplateDescValue1"));
+			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
+			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
+			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
+			
+			String ActvTemplate=testData.get("TemplateNameActiveOne")+ln;
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			AdmTemplatepage.ActivateTemplate();
+			/*Created and Activated a Template*/
+			
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+			lnkTemplatepage.SaveLink();
+			lnkTemplatepage.EditLinkAssociation();
+			assertEquals(lnkTemplatepage.SuccessEdit,lnkTemplatepage.EdtSuccess );
+			lnkTemplatepage.DeleteSFDCFilter();
+			lnkTemplatepage.RefreshLinkTemplate();
+			
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.NavigateToLinkAssociation();
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+			lnkTemplatepage.SaveLink();
+			lnkTemplatepage.ChangeStatusActive();
+			lnkTemplatepage.EditUpdateLinkAssociation();
+			assertTrue(lnkTemplatepage.EdtSuccess.contains(lnkTemplatepage.CanNotModify));
+			lnkTemplatepage.DeleteSFDCFilter();
+			lnkTemplatepage.RefreshLinkTemplate();
+			
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+			lnkTemplatepage.SaveLink();
+			lnkTemplatepage.ChangeStatustoInActive();
+			lnkTemplatepage.EditUpdateLinkAssociation();
+			assertTrue(lnkTemplatepage.EdtSuccess.contains(lnkTemplatepage.CanNotModify));
+			lnkTemplatepage.DeleteSFDCFilter();
+			lnkTemplatepage.RefreshLinkTemplate();
+			
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
+			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
+			AdmTemplatepage.RefreshLinkTemplate();
+			AdmTemplatepage.DeleteSFDCFilter();
+			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage.RemoveAllFilter();
+			AdmTemplatepage.CloseToastMessage();
+			
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
+	}
+	
+       @Test(description = "Verify for the inline edit on the Link Template Tab",groups = {"Regression","Smoke","SFDC"})
+   	
+	   public void VerifyMandatoryFields() throws Exception {
+		try {
+			lnkTemplatepage=homepage.navigateToLinkTemplate();
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.NavigateToLinkAssociation();
+			
+			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+			lnkTemplatepage.VerifyValidationTemplate();
+			assertEquals(lnkTemplatepage.TemplateFailValidation, lnkTemplatepage.TemplateFailResponse);
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.VerifyValidationProgramType();
+			assertEquals(lnkTemplatepage.ProgramTypeFailResponse, lnkTemplatepage.ProgramFailValidation);
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.VerifyvalidationProgramSubType();
+			assertEquals(lnkTemplatepage.ProgramSubTypeFailResponse, lnkTemplatepage.ProgramSubTypeFailValidation);
+			lnkTemplatepage.NavigateToLinkAssociation();;
+			
+			
+		} catch (Exception e) {
+			throw new Exception(e);
+		}
+	}
+       @Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is active",groups = {"Regression","Smoke","SFDC"})
+   	public void VerifyMoreThanOneActiveTemplateAssociation_Active() throws Exception {
+   		try {
+   					
+   			lnkTemplatepage=homepage.navigateToLinkTemplate();
+   			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+   			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+   			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+   			lnkTemplatepage.SaveLink();
+   			
+   			lnkTemplatepage.RefreshLinkTemplate();
+   			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+   			lnkTemplatepage.FillmultipleLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+   			lnkTemplatepage.SaveLink();
+   			
+   			lnkTemplatepage.ChangeStatusActive();
+   			lnkTemplatepage=homepage.navigateToLinkTemplate();
+   			lnkTemplatepage.SFDCFilter(testData.get("TemplateName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
+   			lnkTemplatepage.ChangeStatusActive();
+   			assertEquals(lnkTemplatepage.CanNotSaveRecord, lnkTemplatepage.ErrorOccur.getText());
+   			
+   			lnkTemplatepage.CancelChangeStatus();	
+			lnkTemplatepage.RefreshLinkTemplate();
+			lnkTemplatepage.DeleteSFDCFilter();
+			lnkTemplatepage.RemoveAllFilter();
+			lnkTemplatepage.DeleteSFDCFilter();
+   			
+   		} catch (Exception e) {
+   			throw new Exception(e);
+   		}
+   	}
+       
+       @Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Inactive",groups = {"Regression","Smoke","SFDC"})
+      	public void VerifyMoreThanOneActiveTemplateAssociation_InActive() throws Exception {
+      		try {
+      					
+      			lnkTemplatepage=homepage.navigateToLinkTemplate();
+      			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
+      			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+      			lnkTemplatepage.FillLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+      			lnkTemplatepage.SaveLink();
+      			lnkTemplatepage.ChangeStatustoInActive();
+      			
+      			/*lnkTemplatepage.RefreshLinkTemplate();*/
+      			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
+      			lnkTemplatepage.FillmultipleLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
+      			lnkTemplatepage.SaveLink();
+      			
+      			/*lnkTemplatepage.ChangeStatusActive();*/
+      			/*lnkTemplatepage=homepage.navigateToLinkTemplate();
+      			lnkTemplatepage.SFDCFilter(testData.get("TemplateName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
+      			lnkTemplatepage.ChangeStatusActive();*/
+      			/*assertEquals(lnkTemplatepage.CanNotSaveRecord, lnkTemplatepage.ErrorOccur.getText());*/
+      			
+      			/*lnkTemplatepage.CancelChangeStatus();	
+   			    lnkTemplatepage.RefreshLinkTemplate();*/
+   			    lnkTemplatepage.DeleteSFDCFilter();
+   			    /*lnkTemplatepage.RemoveAllFilter();*/
+   			    lnkTemplatepage.DeleteSFDCFilter();
+      			
+      		} catch (Exception e) {
+      			throw new Exception(e);
+      		}
+      	}
+       
 	@AfterMethod(alwaysRun = true)
 	public void cleanUp() throws Exception {
 		

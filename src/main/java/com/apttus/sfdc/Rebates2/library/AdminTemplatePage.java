@@ -12,7 +12,7 @@ import com.apttus.sfdc.Rebates2.common.GenericPage;
 
 public class AdminTemplatePage extends StartUpPage {
 	
-	@FindBy(xpath="//b[text()='New Template']")
+	@FindBy(xpath="//*[text()='New Template']")
 	public WebElement Newtemplatelabel;
 	 
 	@FindBy(css="div[title='New']")
@@ -21,10 +21,12 @@ public class AdminTemplatePage extends StartUpPage {
 	@FindBy(xpath="//input[@placeholder='Enter a name']")
 	public WebElement TemplateName;
 	
-	@FindBy(xpath="//textarea[@name='template-description']")
+	@FindBy(xpath="//textarea[@name='Description']")
 	public WebElement TemplateDescription;
+	
+	
 		
-	@FindBy(xpath="//input[@name='qnbLayout']")
+	@FindBy(xpath="//input[@name='Q&B Layout']")
 	public WebElement QBselct;
 	
 	@FindBy(xpath="//*[text()='Tier']//..//input[@type='text']")
@@ -33,19 +35,19 @@ public class AdminTemplatePage extends StartUpPage {
 	@FindBy(xpath="//span[@class='slds-checkbox_faux']")
 	public  List<WebElement> BenifitCheckbox;
 	
-	@FindBy(xpath="//*[text()='Data Source']//..//input[@placeholder='Please select']")
+	@FindBy(xpath="//*[text()='Data Source']//..//input[@placeholder='Select an Option']")
 	public  WebElement DataSourcedorpdwn;
 	
 	@FindBy(xpath="//button[@class='slds-button slds-button_brand']")
 	public  WebElement SaveAdmin;
 	
-	@FindBy(xpath="//*[text()='Q & B Layout']//..//lightning-base-combobox-item[@data-value='Benefit Product']")
+	@FindBy(xpath="//span[@title='Benefit Product']")
 	public  WebElement BenftPrdtValue;
 	
-	@FindBy(xpath="//*[text()='Tier']//..//lightning-base-combobox-item[@data-value='Discrete']")
+	@FindBy(xpath="//span[@title='Discrete']")
 	public  WebElement TierDiscrete;
 	
-	@FindBy(xpath="//*[text()='Tier']//..//lightning-base-combobox-item[@data-value='Tiered']")
+	@FindBy(xpath="//span[@title='Tier']")
 	public  WebElement TierTiered;
 	
 	@FindBy(xpath="//*[text()='Data Source']//..//span[text()='DS-Test']")
@@ -169,7 +171,7 @@ public class AdminTemplatePage extends StartUpPage {
 
 	public AdminTemplatePage MovetoNewTemplatePage(WebElement newbutton, WebElement Labelnewtemplate) throws Exception {
 		
-		sfdcAcolyte.waitTillElementIsVisible(newbutton).click(newbutton);
+		sfdcAcolyte.waitTillElementIsVisible(newbutton).jsClick(newbutton);
 		sfdcAcolyte.waitTillElementIsVisible(Labelnewtemplate);
 		
 		return PageFactory.initElements(driver, AdminTemplatePage.class);
@@ -389,6 +391,12 @@ public class AdminTemplatePage extends StartUpPage {
 		sfdcAcolyte.refreshPage();
 		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
         waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
+	}
+
+	public void LaunchAdminTemplate() throws Exception {
+		String Currenturl=sfdcAcolyte.getCurrentURL();
+		sfdcAcolyte.navigateTo(Currenturl);
+		
 	}
 }
 	

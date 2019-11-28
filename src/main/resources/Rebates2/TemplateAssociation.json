@@ -22,8 +22,8 @@
 	     "FilterValue":"ActiveTemplate"
 	     },
 	      "VerifySingleActiveTemplateAssociation":{
-	     "TemplateNameDiscreteBenftProd":"AOneAutomationActiveTemplate",
-	     "TemplateNameTierQualifBenftProd":"ATwoAutomationActive",
+	     "TemplateNameActiveOne":"AAutomationActiveOne",
+	     "TemplateNameTierQualifBenftProd":"AAutomationTemplateTwo",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
 	     "TemplateDescValue2":"AutomationTest For Tier-Tiered and Formula-Qualification Benefit Product",
 	     "BenftPrdtValue":"Benefit Product",
@@ -32,6 +32,34 @@
 	     "QualftnBenftFormula":"Qualification & Benefit Product",
 	     "TierTiered":"Tiered",
 	     "ColumnName":"Name",
+	     "ColumnStatus":"Linked Status",
+	     "StatusValueDraft":"Draft",
+	     "StatusValueActive":"Active",
+	     "StatusValueInActive":"Inactive",
+	     "ColumnOperator":"contains",
+	     "FilterValue":"Active",
+	     "ActiveProgram":"Program Type",
+	     "ProgramValue":"Rebates 2.0",
+	     "ActiveprogramSubType":"Program Sub-Type",
+	     "ProgramSubValue":"Point Accrual",
+	     "Operator":"contains",
+	     "TemplateName":"Template Name"
+	     },
+	     "VerifyInlineEditDraft":{
+	     "TemplateNameActiveOne":"AAutomationActiveOne",
+	     "TemplateNameTierQualifBenftProd":"AAutomationTemplateTwo",
+	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
+	     "TemplateDescValue2":"AutomationTest For Tier-Tiered and Formula-Qualification Benefit Product",
+	     "BenftPrdtValue":"Benefit Product",
+	     "TierDiscrete":"Discrete",
+	     "DatasourceValue":"DS-0103",
+	     "QualftnBenftFormula":"Qualification & Benefit Product",
+	     "TierTiered":"Tiered",
+	     "ColumnName":"Name",
+	     "ColumnStatus":"Linked Status",
+	     "StatusValueDraft":"Draft",
+	     "StatusValueActive":"Active",
+	     "StatusValueInActive":"Inactive",
 	     "ColumnOperator":"contains",
 	     "FilterValue":"Active",
 	     "ActiveProgram":"Program Type",
@@ -42,9 +70,28 @@
 	     "TemplateName":"Template Name"
 	     },
 	     
+	     "VerifyMoreThanOneActiveTemplateAssociation_Active":{
+	     "TemplateNameActiveOne":"AAutomationActiveOne",
+	     "TemplateNameActiveTwo":"AAutomationTemplateTwo",
+	     "TemplateDescValue1":"AutomationTest",
+	     "TemplateDescValue2":"AutomationTest",
+	     "BenftPrdtValue":"Benefit Product",
+	     "TierDiscrete":"Discrete",
+	     "DatasourceValue":"DS-0103",
+	     "QualftnBenftFormula":"Qualification & Benefit Product",
+	     "TierTiered":"Tiered",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains",
+	     "FilterValue":"AAAutomationOne ActiveDon't Delete",
+	     "ActiveProgram":"Program Type",
+	     "ProgramValue":"Rebates 2.0",
+	     "ActiveprogramSubType":"Program Sub-Type",
+	     "ProgramSubValue":"Point Accrual",
+	     "TemplateName":"Template Name"
+	     }, 
 	     "VerifyMoreThanOneActiveTemplateAssociation":{
-	     "TemplateNameActiveOne":"A1AutomationActiveOne",
-	     "TemplateNameActiveTwo":"A2AutomationTemplateTwo",
+	     "TemplateNameActiveOne":"AAutomationActiveOne",
+	     "TemplateNameActiveTwo":"AAutomationTemplateTwo",
 	     "TemplateDescValue1":"AutomationTest",
 	     "TemplateDescValue2":"AutomationTest",
 	     "BenftPrdtValue":"Benefit Product",
@@ -60,8 +107,26 @@
 	     "ActiveprogramSubType":"Program Sub-Type",
 	     "ProgramSubValue":"Point Accrual",
 	     "TemplateName":"Template Name"
+	     },
+	     "VerifyMoreThanOneActiveTemplateAssociation_InActive":{
+	     "TemplateNameActiveOne":"AAutomationActiveOne",
+	     "TemplateNameActiveTwo":"AAutomationTemplateTwo",
+	     "TemplateDescValue1":"AutomationTest",
+	     "TemplateDescValue2":"AutomationTest",
+	     "BenftPrdtValue":"Benefit Product",
+	     "TierDiscrete":"Discrete",
+	     "DatasourceValue":"DS-0103",
+	     "QualftnBenftFormula":"Qualification & Benefit Product",
+	     "TierTiered":"Tiered",
+	     "ColumnName":"Name",
+	     "ColumnOperator":"contains",
+	     "FilterValue":"AAAutomationOne ActiveDon't Delete",
+	     "ActiveProgram":"Program Type",
+	     "ProgramValue":"Rebates 2.0",
+	     "ActiveprogramSubType":"Program Sub-Type",
+	     "ProgramSubValue":"Point Accrual",
+	     "TemplateName":"Template Name"
 	     }
-	     
 	     
 }
 
