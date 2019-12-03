@@ -71,7 +71,7 @@ public class DataSourceTest {
 			datasourcePage.RemoveFilter();
 			    
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e,driver);
 		}
 	}
 		
@@ -100,7 +100,7 @@ public class DataSourceTest {
 			datasourcePage.deleteFilter();
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e,driver);
 		}
 	}
 	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Regression"})
@@ -139,7 +139,7 @@ public class DataSourceTest {
 		assertEquals(datasourcePage.ResponseProduct, datasourcePage.ProductResponse.getText());
 			
 	}catch (Exception e) {
-		throw new Exception(e);
+		throw new CustomException(e,driver);
 	}}	
 	
 	 @Test(description = "Verify the Data Source with multiplecombination",groups = {"Regression"})
@@ -177,7 +177,7 @@ public class DataSourceTest {
 		datasourcePage.CloseToastMessage();
     	
     }catch (Exception e) {
-		throw new Exception(e);
+		throw new CustomException(e,driver);
 	}}
     
 	@Test(description = "Verify Save- Search filter to filter and view related Rebate records in List view",groups = {"Regression"})
@@ -191,7 +191,7 @@ public class DataSourceTest {
 			assertEquals(datasourcePage.nwResponseFilter, datasourcePage.ResponseFilter);
 		   
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e,driver);
 		}
 	}
 	
