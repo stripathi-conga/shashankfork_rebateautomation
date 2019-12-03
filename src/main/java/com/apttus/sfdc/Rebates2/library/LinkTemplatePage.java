@@ -89,7 +89,6 @@ public class LinkTemplatePage extends StartUpPage {
     @FindBy(xpath="//*[@id=\"brandBand_1\"]/div/div[1]/div[5]//section/div/footer/button[1]")
    	public WebElement Canceledt;
   
-    
     @FindBy(xpath="//*[text()='Field']/../..//input[@type='text']")
    	public WebElement SelectField;
     
@@ -123,13 +122,11 @@ public class LinkTemplatePage extends StartUpPage {
 	@FindBy(css = "span[class='genericSummary uiOutputText']")
 	public WebElement ErrorOccur;
 	
-	
 	@FindBy(xpath = "//a[@title='Delete']")
 	public WebElement showDeleteAction;
 	
 	@FindBy(xpath = "//button[@title='Delete']")
 	public WebElement ConfirmDeleteAction;
-	
 	
 	@FindBy(css = "a[title='Edit']")
 	public WebElement EditShowAction;
@@ -148,8 +145,7 @@ public class LinkTemplatePage extends StartUpPage {
 	
 	@FindBy(css="a[title='Edit']")
    	public WebElement EdtshowMore;
-	
-	
+		
 	@FindBy(css="button[title='Close']")
    	public WebElement CloseToastResponse;
 	
@@ -196,9 +192,7 @@ public class LinkTemplatePage extends StartUpPage {
 	
 	@FindBy(css="a[title='Inactive']")
    	public WebElement Inactivefltr;
-	
-	
-	
+			
 	@FindBy(css="a[title*='PGT']")
    	public WebElement Pgromlnk;
 	
@@ -232,7 +226,7 @@ public class LinkTemplatePage extends StartUpPage {
 	}
 
 	public LinkTemplatePage MovetoNewLinkTemplatePage(WebElement newbutton, WebElement Labelnewtemplate) throws Exception {
-		Thread.sleep(3000);//remove
+		
 		sfdcAcolyte.waitTillElementIsVisible(newbutton).click(newbutton);
 		sfdcAcolyte.waitTillElementIsVisible(Labelnewtemplate);
 		
@@ -246,14 +240,9 @@ public class LinkTemplatePage extends StartUpPage {
 		WebDriverWait wait = new WebDriverWait(driver, 15);
 		WebElement ExpWaitProgramType=wait.until(ExpectedConditions.visibilityOf(PgmTypedpdn));
 		sfdcAcolyte.jsClick(ExpWaitProgramType);
-				sfdcAcolyte.
-		            waitTillElementIsVisible(prgrmSubType).click(prgrmSubType);
-		Thread.sleep(1000);//remove
-		sfdcAcolyte.
-		            waitTillElementIsVisible(prgrmSubTypedpdn).click(prgrmSubTypedpdn);
-		Thread.sleep(1000);//remove
-		sfdcAcolyte.
-		            waitTillElementIsVisible(prgrmTemplate).click(prgrmTemplate).
+	    sfdcAcolyte.waitTillElementIsVisible(prgrmSubType).click(prgrmSubType);
+		sfdcAcolyte.waitTillElementIsVisible(prgrmSubTypedpdn).click(prgrmSubTypedpdn);
+		sfdcAcolyte.waitTillElementIsVisible(prgrmTemplate).click(prgrmTemplate).
 		            waitTillElementIsVisible(PgmTemplatedpdn1).jsClick(PgmTemplatedpdn1);
 		
 		return PageFactory.initElements(driver, LinkTemplatePage.class);
@@ -274,7 +263,8 @@ public class LinkTemplatePage extends StartUpPage {
 	public LinkTemplatePage SaveLink() throws Exception {
 		
 		sfdcAcolyte.waitTillElementIsVisible(SaveLnk).click(SaveLnk);
-		Thread.sleep(2000);
+		
+		nghelper.wait(3000);
 		sfdcAcolyte.waitTillElementIsVisible(successresponse);
 		CloseToastMessage();
 		Thread.sleep(1000);
@@ -303,33 +293,16 @@ public class LinkTemplatePage extends StartUpPage {
 		return PageFactory.initElements(driver, LinkTemplatePage.class);
 		
 	}
-public LinkTemplatePage SFDCFilter2(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
-		
-		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
-	                waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
-		sfdcAcolyte.waitTillElementIsVisible(AddFilterlnk).click(AddFilterlnk);
-		sfdcAcolyte.waitTillElementIsVisible(SelectField).click(SelectField).sendKeysTo(SelectField, ColumnName).sendBoardKeys(Keys.ENTER);
-		sfdcAcolyte.waitTillElementIsVisible(SelectOperator).click(SelectOperator).sendKeysTo(SelectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER);
-		
-		sfdcAcolyte.waitTillElementIsVisible(Valuedropdown).jsClick(Inactivefltr).
-                    waitTillElementIsVisible(flrDonebtn).click(flrDonebtn).
-                    waitTillElementIsVisible(flrSavebtn).click(flrSavebtn);
-		
-		return PageFactory.initElements(driver, LinkTemplatePage.class);
-		
-	}
 
 	 public LinkTemplatePage DeleteSFDCFilter() throws Exception {
 		
 		 Thread.sleep(2000);
 	      sfdcAcolyte.waitTillElementIsVisible(ShowMore).
 	      jsClick(ShowMore);
-	      /*Thread.sleep(5000);*/
 	      WebDriverWait wait = new WebDriverWait(driver, 15);
-			WebElement ExpWaitDelete=wait.until(ExpectedConditions.visibilityOf(DeleteShowAction));
+		  WebElement ExpWaitDelete=wait.until(ExpectedConditions.visibilityOf(DeleteShowAction));
 	      sfdcAcolyte.jsClick(ExpWaitDelete).
 	      jsClick(ConfirmDeleteAction);
-	     
 	   
 	      return PageFactory.initElements(driver, LinkTemplatePage.class);
 	}
@@ -338,10 +311,8 @@ public LinkTemplatePage SFDCFilter2(String ColumnName, String ColumnOperator, St
 		
 		sfdcAcolyte.waitTillElementIsClickable(CloseToastResponse).click(CloseToastResponse);
 		
-		return PageFactory.initElements(driver, LinkTemplatePage.class);
-		
+		return PageFactory.initElements(driver, LinkTemplatePage.class);	
 	}
-
 
 	public LinkTemplatePage deleteFilter() throws Exception {
 		
@@ -389,16 +360,13 @@ public LinkTemplatePage SFDCFilter2(String ColumnName, String ColumnOperator, St
 		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).click(Recentlyviewedlnk).waitTillElementIsVisible(Allviewedlnk).
         waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).click(filtericon);
 
-sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
-sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
+        sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
+        sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
         waitTillElementIsVisible(AlllnkPinnedlist).click(AlllnkPinnedlist);
-		
-	
 	}
 
 	public void waitTillPageLoad() throws Exception {
 		sfdcAcolyte.wait(4000);
-	
 	}
 
 	public void ChangeStatustoInActive() throws Exception {
@@ -406,7 +374,6 @@ sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 		Thread.sleep(1000);
 		sfdcAcolyte.jsClick(EditStatusbtn).
 		            jsClick(draftlnk).jsClick(InActivelnk);
-		
 		sfdcAcolyte.jsClick(SaveStatuslnk);
 		Thread.sleep(2000);
 		 
@@ -415,7 +382,6 @@ sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 		Thread.sleep(1000);
 		sfdcAcolyte.jsClick(EditStatusbtn).
 		            jsClick(draftlnk).jsClick(Activelnk);
-		
 		sfdcAcolyte.jsClick(SaveStatuslnk);
 		sfdcAcolyte.waitTillElementIsVisible(ErrorOccur);
 		
@@ -431,18 +397,11 @@ sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 	}
 
 	public void EditLinkAssociation() throws Exception {
-		/*sfdcAcolyte.waitTillElementIsVisible(Pgromlnk).click(Pgromlnk);
-		sfdcAcolyte.waitTillElementIsVisible(EditShowAction).click(EditShowAction);
-		UpdateLinkTemplate();
-		sfdcAcolyte.waitTillElementIsVisible(SaveLnk).
-		waitTillElementIsClickable(SaveLnk).click(SaveLnk);*/
 		
-		sfdcAcolyte.waitTillElementIsVisible(ShowMore).
-	      jsClick(ShowMore);
+		sfdcAcolyte.waitTillElementIsVisible(ShowMore).jsClick(ShowMore);
 		sfdcAcolyte.waitTillElementIsVisible(EdtshowMore);
 		sfdcAcolyte.jsClick(EdtshowMore);
 		Thread.sleep(3000);
-		
 		sfdcAcolyte.waitTillElementIsVisible(prgsubType).click(prgsubType);
         sfdcAcolyte.waitTillElementIsVisible(prgrmSubTypedpdn2);
 		
@@ -462,13 +421,12 @@ sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 		EdtSuccess=successresponse.getText();
 		NavigateToLinkAssociation();
 		
-		
 	}
 
 	private void UpdateLinkTemplate() throws Exception {
-		String Currenturl=sfdcAcolyte.getCurrentURL();
-		sfdcAcolyte.navigateTo(Currenturl);
-		sfdcAcolyte.navigateTo(Currenturl);
+		String currentUrl=sfdcAcolyte.getCurrentURL();
+		sfdcAcolyte.navigateTo(currentUrl);
+		sfdcAcolyte.navigateTo(currentUrl);
 		sfdcAcolyte.waitTillElementIsVisible(prgsubType).click(prgsubType);
         sfdcAcolyte.waitTillElementIsVisible(prgrmSubTypedpdn2);
         Thread.sleep(3000);
@@ -517,8 +475,7 @@ sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 		sfdcAcolyte.waitTillElementIsVisible(prgtemplate).click(prgtemplate).
         waitTillElementIsVisible(PgmTemplatedpdn1).jsClick(PgmTemplatedpdn1);
         sfdcAcolyte.waitTillElementIsVisible(prgType).click(prgType);
-		
-		sfdcAcolyte.waitTillElementIsVisible(PgmTypedpdn).click(PgmTypedpdn);;
+		sfdcAcolyte.waitTillElementIsVisible(PgmTypedpdn).click(PgmTypedpdn);
         sfdcAcolyte.waitTillElementIsVisible(SaveLnk).click(SaveLnk);
 		sfdcAcolyte.waitTillElementIsVisible(successresponse);
 		ProgramSubTypeFailResponse=successresponse.getText();
@@ -526,10 +483,6 @@ sfdcAcolyte.waitTillElementIsVisible(Alllink).click(Alllink).
 		
 	}
 
-	public void CancelLink() throws Exception {
-		
-		
-	}
 	}
 	
 

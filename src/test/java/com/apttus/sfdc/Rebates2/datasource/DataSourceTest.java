@@ -11,12 +11,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.apttus.sfdc.Rebates2.library.Rebatesinit;
+import com.apttus.customException.CustomException;
 import com.apttus.helpers.Efficacies;
 import com.apttus.helpers.JavaHelpers;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.Rebates2.common.GenericPage;
 import com.apttus.sfdc.Rebates2.common.LoginPage;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
+import com.apttus.sfdc.Rebates2.library.AdminTemplatePage;
 import com.apttus.sfdc.Rebates2.library.DataSourcePage;
 import com.apttus.sfdc.Rebates2.lightning.HomePage;
 import com.apttus.sfdc.rudiments.utils.GeneralHelper;
@@ -32,6 +34,7 @@ public class DataSourceTest {
 	public Map<String, String> testData;
 	
 	public DataSourcePage datasourcePage;
+	public AdminTemplatePage AdmTemplatepage;
 	public GenericPage genericpage;
 	public HomePage homepage;
 	public String homeURL;
@@ -39,6 +42,7 @@ public class DataSourceTest {
 	Properties configProperty;
 	StartUpPage startUpPage;
 	Acolyte sfdcAcolyte;
+	
 
 
 	@BeforeClass(alwaysRun = true)
@@ -62,7 +66,7 @@ public class DataSourceTest {
 			
 	}
 		
-	@Test(description = "Verify the Data Source Save Feature",groups = {"Regression","SFDC"})
+	@Test(description = "Verify the Data Source Save Feature",groups = {"Regression"})
 	
 	public void CreateNewDataSource() throws Exception {
 		try {
@@ -74,27 +78,31 @@ public class DataSourceTest {
 					                               testData.get("FileExtenstion2"),testData.get("Delimiter"));
 			assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
 			datasourcePage.CloseToastMessage();
+			datasourcePage=homepage.navigateToDataSource();
 			datasourcePage.DataSdourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("DataSourceName")+ln);
-			datasourcePage.CloseToastMessage();
+			datasourcePage.DataSourceRefresh();
 			datasourcePage.DeleteSFDCFilter();
-			datasourcePage.deleteFilter();
+			datasourcePage.RemoveFilter();
+			
 		    
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e, driver);
 		}
 	}
 		
-	@Test(description = "Verify the Data Source Save Feature",groups = {"Regression","SFDC"})
+	@Test(description = "Verify the Data Source Validation",groups = {"Regression"})
 	public void DuplicateDataSource() throws Exception {
 		try {
 			datasourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
 			long ln = JavaHelpers.generateRandomNumber();
+			datasourcePage.DataSourceRefresh();
 			datasourcePage.DuplicateSaveNewDataSource(testData.get("DupDataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
 		    String DuplicateDataSource=testData.get("DupDataSourceName")+ln;
-		    		    
+		    datasourcePage=homepage.navigateToDataSource();	
+		    datasourcePage.DataSourceRefresh();
 			datasourcePage.Verifyduplicate(DuplicateDataSource, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
@@ -106,15 +114,15 @@ public class DataSourceTest {
 			datasourcePage.deleteFilter();
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e, driver);
 		}
 	}
-	@Test(description = "Verify the Data Source Validation",groups = {"Regression","SFDC"})
+	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Regression"})
 	public void VerifyValidationMsz() throws Exception {
-		
+		try {
 		datasourcePage=homepage.navigateToDataSource();
 		testData = new Efficacies().readJsonFile("datasource.json");
-		
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VeriyValidationDelimiter(testData.get("DataSourceName"), testData.get("TransMetaData"), testData.get("CalculationDate"),
                                                testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"));
 	    assertEquals(datasourcePage.ResponseDelimiter, datasourcePage.getDelimiterResponse);
@@ -122,10 +130,12 @@ public class DataSourceTest {
 		datasourcePage.VeriyValidationFileExtension("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To","_AutoSuffix","commas");
 		assertEquals(datasourcePage.ResponseFileExt, datasourcePage.getFileExtensionResponse);
 		
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VeriyValidationSuffix("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To");
 		assertEquals(datasourcePage.ResponseSuffix, datasourcePage.getSuffixResponse);
 		
 		datasourcePage=homepage.navigateToDataSource();
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifyValidation_DataSourceName();
 		assertEquals(datasourcePage.ResponseDataSrc, datasourcePage.getdatasrcResponse);
 		
@@ -135,53 +145,60 @@ public class DataSourceTest {
 		
 		datasourcePage.VerifyValidation_CalculationDate("ValidationAutomation", "Order Line Item");
 		assertEquals(datasourcePage.ResponseCalcDate, datasourcePage.getCaldateResponse);
-		
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VeriyValidation_ProgramAccount("ValidationAutomation","Order Line Item","Ready for Activation Date");
 		assertEquals(datasourcePage.ResponsePrgmAccount, datasourcePage.getProgram);
 		
 		datasourcePage.VeriyValidation_Product(testData.get("ProgramAccount"));
 		assertEquals(datasourcePage.ResponseProduct, datasourcePage.ProductResponse.getText());
 			
-	}
+	}catch (Exception e) {
+		throw new CustomException(e, driver);
+	}}	
 	
-	
-	  @Test(description = "Verify the Data Source with multiplecombination",groups = {"Regression","SFDC"})
-    	
-    	public void VerifyDelimiterSuffix() throws Exception {
-    	
+	 @Test(description = "Verify the Data Source with multiplecombination",groups = {"Regression"})
+     public void VerifyDelimiterSuffix() throws Exception {
+		 try {
     	datasourcePage=homepage.navigateToDataSource();
 		testData = new Efficacies().readJsonFile("datasource.json");
 		long ln = JavaHelpers.generateRandomNumber();
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixB(testData.get("DataSourceName")+"B"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixB"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 				       testData.get("FileExtenstion2"),testData.get("DelimiterB"));
 		datasourcePage=homepage.navigateToDataSource();
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixC(testData.get("DataSourceName")+"C"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixC"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterC"));
-		datasourcePage=homepage.navigateToDataSource();	    		
+		datasourcePage=homepage.navigateToDataSource();	  
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixD(testData.get("DataSourceName")+"D"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixD"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterD"));
 		datasourcePage=homepage.navigateToDataSource();
+		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixE(testData.get("DataSourceName")+"E"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixE"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterE"));
 		
     	
-    }
+    }catch (Exception e) {
+		throw new CustomException(e, driver);
+	}}
     
-	@Test(description = "Verify Save- Search filter to filter and view related Rebate records in List view",groups = {"Regression","SFDC"})
+	@Test(description = "Verify Save- Search filter to filter and view related Rebate records in List view",groups = {"Regression"})
 	public void FilterDataSource() throws Exception {
 		try {
 			datasourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
+			datasourcePage.DataSourceRefresh();
 			datasourcePage.DataSdourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
 			datasourcePage.deleteFilter();
 			assertEquals(datasourcePage.nwResponseFilter, datasourcePage.ResponseFilter);
 		   
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e,driver);
 		}
 	}
 	

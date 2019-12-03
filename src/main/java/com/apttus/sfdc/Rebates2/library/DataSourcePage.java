@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
+import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.Rebates2.common.GenericPage;
 
 public class DataSourcePage extends StartUpPage {
@@ -21,9 +22,12 @@ public class DataSourcePage extends StartUpPage {
     @FindBy(xpath="//span[@class='slds-truncate'][text()='Data Sources']")
 	public WebElement Datasrclink;
     
-    @FindBy(css="[title='New'][class='forceActionLink']")
+    @FindBy(css="[title='New']")
 	public WebElement CreateNewDataSrcbtn;
     
+    @FindBy(css="a[title='Delete'][role='button']")
+	public WebElement DeleteDataSrcbtn;
+        
     @FindBy(xpath = "//select[@class='slds-select metaData']")  
 	public WebElement selctTransMetaData;
     
@@ -192,11 +196,14 @@ public class DataSourcePage extends StartUpPage {
 		PageFactory.initElements(driver, this);
 		sfdcAcolyte.setWaitTime(60);
 		genericPage = new GenericPage(driver);
+		
 	}
 	
 	public DataSourcePage CreateSaveNewDataSource(String DataSourceName, String TransMetaData, String CalculationDate, String Product,
 			                                      String ProgramAccount, String FileSuffix, String FileExtenstion1, String FileExtenstion2,String Delimiter) throws Exception {
 		
+		String DataSrcURL=sfdcAcolyte.getCurrentURL();
+		sfdcAcolyte.navigateTo(DataSrcURL);
 		sfdcAcolyte.waitTillElementIsVisible(CreateNewDataSrcbtn).
                     waitTillElementIsClickable(CreateNewDataSrcbtn).jsClick(CreateNewDataSrcbtn);
         sfdcAcolyte.waitTillElementIsVisible(txtdatasrc).click(txtdatasrc).sendKeysTo(txtdatasrc, DataSourceName);
@@ -211,24 +218,10 @@ public class DataSourcePage extends StartUpPage {
                    click(selctdelimter).selectComboByText(selctdelimter, Delimiter).click(btnsubmitdatasrc);
 		
 		sfdcAcolyte.waitTillElementIsVisible(successresponse);	
-		
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	
 	}
 
-	public DataSourcePage SearchDataSource(String createdDataSource) throws Exception {
-			
-		sfdcAcolyte.click(Recentlyviewedlnk);
-		sfdcAcolyte.waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk).
-		            click(searchtxt);
-		searchtxt.sendKeys(createdDataSource);
-		sfdcAcolyte.sendBoardKeys(Keys.ENTER); 
-		Thread.sleep(8000);
-		
-				
-		return PageFactory.initElements(driver, DataSourcePage.class);
-				
-	}
 
 	public DataSourcePage Verifyduplicate(String duplicateDataSource, String TransMetaData, String CalculationDate, String Product,
             String ProgramAccount, String FileSuffix, String FileExtenstion1, String FileExtenstion2,String Delimiter) throws Exception {
@@ -249,7 +242,6 @@ public class DataSourcePage extends StartUpPage {
         sfdcAcolyte.waitTillElementIsVisible(Duplicateresponse);	
         CloseToastMessage();
         duplicateRecord=Duplicateresponse.getText();
-		
 		return PageFactory.initElements(driver, DataSourcePage.class);
 		
 	}
@@ -288,8 +280,10 @@ public class DataSourcePage extends StartUpPage {
                           selectComboByText(selctprodAccount, "Bill To");
               sfdcAcolyte.waitTillElementIsClickable(txtfilesuffix).click(txtfilesuffix).sendKeysTo(txtfilesuffix, SuffixB);
               sfdcAcolyte.click(MultiFileExtension).selectComboByText(MultiFileExtension, FileExtenstion1).selectComboByText(MultiFileExtension, FileExtenstion2).
-                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterB).click(btnsubmitdatasrc).click(btnCancel);
-
+                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterB);
+              sfdcAcolyte.waitTillElementIsVisible(btnsubmitdatasrc);
+              sfdcAcolyte.click(selctproduct).click(btnsubmitdatasrc);
+       
               sfdcAcolyte.waitTillElementIsVisible(successresponse);
 
        return PageFactory.initElements(driver, DataSourcePage.class);
@@ -310,7 +304,7 @@ public class DataSourcePage extends StartUpPage {
               selectComboByText(selctprodAccount, "Bill To");
               sfdcAcolyte.waitTillElementIsClickable(txtfilesuffix).click(txtfilesuffix).sendKeysTo(txtfilesuffix, SuffixC);
               sfdcAcolyte.click(MultiFileExtension).selectComboByText(MultiFileExtension, FileExtenstion1).selectComboByText(MultiFileExtension, FileExtenstion2).
-                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterC).jsClick(btnsubmitdatasrc).jsClick(btnCancel);
+                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterC).click(selctproduct).jsClick(btnsubmitdatasrc);
 
 
        return PageFactory.initElements(driver, DataSourcePage.class);
@@ -331,8 +325,7 @@ public class DataSourcePage extends StartUpPage {
               selectComboByText(selctprodAccount, "Bill To");
               sfdcAcolyte.waitTillElementIsClickable(txtfilesuffix).click(txtfilesuffix).sendKeysTo(txtfilesuffix, SuffixD);
               sfdcAcolyte.click(MultiFileExtension).selectComboByText(MultiFileExtension, FileExtenstion1).selectComboByText(MultiFileExtension, FileExtenstion2).
-                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterD).jsClick(btnsubmitdatasrc).jsClick(btnCancel);
-
+                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterD).click(selctproduct).jsClick(btnsubmitdatasrc);
 
        return PageFactory.initElements(driver, DataSourcePage.class);
 		
@@ -352,10 +345,7 @@ public class DataSourcePage extends StartUpPage {
               selectComboByText(selctprodAccount, "Bill To");
               sfdcAcolyte.waitTillElementIsClickable(txtfilesuffix).click(txtfilesuffix).sendKeysTo(txtfilesuffix, SuffixE);
               sfdcAcolyte.click(MultiFileExtension).selectComboByText(MultiFileExtension, FileExtenstion1).selectComboByText(MultiFileExtension, FileExtenstion2).
-                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterE).jsClick(btnsubmitdatasrc).jsClick(btnCancel);
-
-
-             
+                          click(selctdelimter).selectComboByText(selctdelimter, DelimiterE).click(selctproduct).click(btnsubmitdatasrc);          
        return PageFactory.initElements(driver, DataSourcePage.class);
 		
 	}
@@ -383,6 +373,7 @@ public class DataSourcePage extends StartUpPage {
 	public void VerifyValidation_CalculationDate(String DataSourceName,String TransMetaData) throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(CreateNewDataSrcbtn).waitTillElementIsClickable(CreateNewDataSrcbtn).jsClick(CreateNewDataSrcbtn);
         Thread.sleep(2000);
+		
         sfdcAcolyte.waitTillElementIsVisible(btnsubmitdatasrc);
         sfdcAcolyte.click(selctTransMetaData).waitTillElementIsVisible(Ordr).sendKeysTo(txtdatasrc, DataSourceName);
 		sfdcAcolyte.click(selctTransMetaData).selectComboByText(selctTransMetaData, TransMetaData).click(btnsubmitdatasrc).click(btnCancel);
@@ -398,11 +389,12 @@ public class DataSourcePage extends StartUpPage {
                     selectComboByText(selctTransMetaData, TransMetaData).
                     click(selctcalcdateAttr).waitTillElementIsVisible(calcdate).selectComboByText(selctcalcdateAttr, CalculationDate).
                     click(btnsubmitdatasrc);
-		
+        CloseToastMessage();	
 	}
 
 	public void VeriyValidation_Product(String ProgramAccount) throws Exception {
 		 sfdcAcolyte.click(selctTransMetaData).waitTillElementIsVisible(Ordr);
+		 sfdcAcolyte.click(txtdatasrc);
 		sfdcAcolyte.click(selctprodAccount).selectComboByText(selctprodAccount, ProgramAccount).click(btnsubmitdatasrc);
 				
 	}
@@ -470,7 +462,7 @@ public class DataSourcePage extends StartUpPage {
 			waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk);
 			sfdcAcolyte.waitTillElementIsVisible(filtericon).click(filtericon);
 			sfdcAcolyte.waitTillElementIsVisible(AddFilterlnk).click(AddFilterlnk);
-			Thread.sleep(10000);
+			/*Thread.sleep(10000);*/
 			sfdcAcolyte.waitTillElementIsVisible(SelectField).click(SelectField).sendKeysTo(SelectField, ColumnName).sendBoardKeys(Keys.ENTER);
 			sfdcAcolyte.waitTillElementIsVisible(SelectOperator).click(SelectOperator).sendKeysTo(SelectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
 	        sendKeysTo(EnterValue, FilterValue).click(flrDonebtn).click(flrSavebtn);
@@ -497,8 +489,7 @@ public class DataSourcePage extends StartUpPage {
                      selectComboByText(selctTransMetaData, "Order Line Item").
                      click(selctcalcdateAttr).waitTillElementIsVisible(calcdate).selectComboByText(selctcalcdateAttr, "Ready for Activation Date");
 
-        return PageFactory.initElements(driver, DataSourcePage.class);
-		
+        return PageFactory.initElements(driver, DataSourcePage.class);	
 	}
 
 	public DataSourcePage VerifyCancel() throws Exception {
@@ -512,7 +503,7 @@ public class DataSourcePage extends StartUpPage {
             String ProgramAccount, String FileSuffix, String FileExtenstion1) throws Exception {
 		  sfdcAcolyte.waitTillElementIsVisible(CreateNewDataSrcbtn).
                       waitTillElementIsClickable(CreateNewDataSrcbtn).jsClick(CreateNewDataSrcbtn);
-          sfdcAcolyte.waitTillElementIsClickable(txtdatasrc).click(txtdatasrc).sendKeysTo(txtdatasrc, DataSourceName);
+          sfdcAcolyte.waitTillElementIsVisible(txtdatasrc).waitTillElementIsClickable(txtdatasrc).click(txtdatasrc).sendKeysTo(txtdatasrc, DataSourceName);
           sfdcAcolyte.click(selctTransMetaData).waitTillElementIsVisible(Ordr).click(selctTransMetaData).
                       selectComboByText(selctTransMetaData, TransMetaData).
                       click(selctcalcdateAttr).waitTillElementIsVisible(calcdate).selectComboByText(selctcalcdateAttr, CalculationDate);
@@ -534,6 +525,7 @@ public class DataSourcePage extends StartUpPage {
 	}
 
 	public void DeleteSFDCFilter() throws Exception {
+		Thread.sleep(4000);
 		sfdcAcolyte.waitTillElementIsVisible(ShowMore).
 	      jsClick(ShowMore);
 	      Thread.sleep(2000);
@@ -544,6 +536,29 @@ public class DataSourcePage extends StartUpPage {
 
 	public void CancelDatasource() throws Exception {
 		sfdcAcolyte.click(btnCancel);
+		
+	}
+	public void RemoveFilterSave() throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).jsClick(Recentlyviewedlnk);
+		Thread.sleep(4000);
+		sfdcAcolyte.waitTillElementIsVisible(Allviewedlnk).waitTillElementIsClickable(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).jsClick(filtericon);
+        sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
+	}
+
+	public void DataSourceRefresh() throws Exception {
+		sfdcAcolyte.refreshPage();
+		
+	}
+
+	public void RemoveFilter() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(filtericon).click(filtericon);
+        sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
+		
+	}
+
+	public void DeleteDataSource() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(DeleteDataSrcbtn).click(DeleteDataSrcbtn);
 		
 	}
 	

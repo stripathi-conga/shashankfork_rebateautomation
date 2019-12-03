@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import com.apttus.sfdc.Rebates2.library.Rebatesinit;
+import com.apttus.customException.CustomException;
 import com.apttus.helpers.Efficacies;
 import com.apttus.helpers.JavaHelpers;
 import com.apttus.selenium.WebDriverUtils;
@@ -64,13 +65,12 @@ public class LinkTemplateTest {
 				
 	}
 		
-	@Test(description = "Verify for the mapping creation for one single Active Template with the unique combination of program Type and Program Sub-type selected",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verify for the mapping creation for one single Active Template with the unique combination of program Type and Program Sub-type selected",groups = {"Regression"})
 	
 	public void VerifyActiveTemplateName() throws Exception {
 		try {
 			
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			Thread.sleep(6000);
 			testData = new Efficacies().readJsonFile("AdminTemplate.json");
 			long ln = JavaHelpers.generateRandomNumber();
 			AdmTemplatepage.MovetoNewTemplatePage(AdmTemplatepage.Newbtn ,AdmTemplatepage.Newtemplatelabel);
@@ -78,39 +78,30 @@ public class LinkTemplateTest {
 			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierDiscrete);
 			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
 			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
-			
-			String ActvTemplate=testData.get("TemplateNameDiscreteBenftProd")+ln;
 			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
-			AdmTemplatepage.CloseToastMessage();
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			
 			AdmTemplatepage.ActivateTemplate();
 			AdmTemplatepage.CloseToastMessage();
 			lnkTemplatepage=homepage.navigateToLinkTemplate();
 			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
-			lnkTemplatepage.RefreshLinkTemplate();
 			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
 			lnkTemplatepage.VerifyActiveTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgtemplate);
 			assertEquals(lnkTemplatepage.PgmTemplatedpdn.isDisplayed(), true);
 			
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
-			AdmTemplatepage.RemoveAllFilter();
-			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
-			AdmTemplatepage.RefreshLinkTemplate();
 			AdmTemplatepage.DeleteSFDCFilter();
-			AdmTemplatepage.CloseToastMessage();
-			AdmTemplatepage.RemoveFilterSave();
 			AdmTemplatepage.CloseToastMessage();
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e, driver);
 		}
 	}
 	
-	@Test(description = "Verify for the re-activation of the template association for the Active template, when there is further active association of the templates to the combination of program type and program sub-type selected during association",groups = {"Regression","Smoke","SFDC"})
+	@Test(description = "Verify for the re-activation of the template association for the Active template, when there is further active association of the templates to the combination of program type and program sub-type selected during association",groups = {"Regression"})
 	public void VerifySingleActiveTemplateAssociation() throws Exception {
 		try {
-			AdmTemplatepage=homepage.navigateToAdminTemplate();
+	     	AdmTemplatepage=homepage.navigateToAdminTemplate();
 			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
 			long ln = JavaHelpers.generateRandomNumber();
 			AdmTemplatepage.RefreshLinkTemplate();
@@ -119,6 +110,7 @@ public class LinkTemplateTest {
 			AdmTemplatepage.QBLayoutDefinition(AdmTemplatepage.QBselct,AdmTemplatepage.BenftPrdtValue,AdmTemplatepage.TierSelect,AdmTemplatepage.TierTiered);
 			AdmTemplatepage.DataSourceFormula(AdmTemplatepage.DataSourcedorpdwn,AdmTemplatepage.DatasourceValue , AdmTemplatepage.BenifitCheckbox);
 			AdmTemplatepage.SaveAdminTemplate(AdmTemplatepage.SaveAdmin);
+			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			
 			String ActvTemplate=testData.get("TemplateNameActiveOne")+ln;
 			AdmTemplatepage.CloseToastMessage();
@@ -148,9 +140,9 @@ public class LinkTemplateTest {
 			lnkTemplatepage.SaveLink();
 			
 			lnkTemplatepage.ChangeStatusActive();
+			lnkTemplatepage.RefreshLinkTemplate();
 			/*Activated 2nd link*/
 			lnkTemplatepage.MoveToFilter();
-			
 			lnkTemplatepage.ChangeStatusInactivetoctive();
 			assertEquals(lnkTemplatepage.CanNotSaveRecord, lnkTemplatepage.ErrorOccur.getText());
 			
@@ -164,17 +156,17 @@ public class LinkTemplateTest {
 			AdmTemplatepage.SFDCFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),ActvTemplate);
 			AdmTemplatepage.RefreshLinkTemplate();
 			AdmTemplatepage.DeleteSFDCFilter();
-			AdmTemplatepage.CloseToastMessage();
+			/*AdmTemplatepage.CloseToastMessage();*/
 			AdmTemplatepage.RemoveAllFilter();
 			AdmTemplatepage.CloseToastMessage();
 			
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e, driver);
 		}
 	}
 	
-	@Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Draft",groups = {"Regression","Smoke","SFDC"})
+	@Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Draft",groups = {"Regression"})
 	public void VerifyMoreThanOneActiveTemplateAssociation() throws Exception {
 		try {
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
@@ -220,10 +212,10 @@ public class LinkTemplateTest {
 			AdmTemplatepage.RefreshLinkTemplate();
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e, driver);
 		}
 	}
-       @Test(description = "Verify for the inline edit on the Link Template Tab",groups = {"Regression","Smoke","SFDC"})
+       @Test(description = "Verify for the inline edit on the Link Template Tab",groups = {"Regression"})
 	
 	   public void VerifyInlineEditDraft() throws Exception {
 		try {
@@ -243,7 +235,6 @@ public class LinkTemplateTest {
 			AdmTemplatepage.CloseToastMessage();
 			AdmTemplatepage=homepage.navigateToAdminTemplate();
 			AdmTemplatepage.ActivateTemplate();
-			/*Created and Activated a Template*/
 			
 			lnkTemplatepage=homepage.navigateToLinkTemplate();
 			testData = new Efficacies().readJsonFile("TemplateAssociation.json");
@@ -290,11 +281,11 @@ public class LinkTemplateTest {
 			AdmTemplatepage.CloseToastMessage();
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e, driver);
 		}
 	}
 	
-       @Test(description = "Verify for the inline edit on the Link Template Tab",groups = {"Regression","Smoke","SFDC"})
+       @Test(description = "Verify for the inline edit on the Link Template Tab",groups = {"Regression"})
    	
 	   public void VerifyMandatoryFields() throws Exception {
 		try {
@@ -314,11 +305,11 @@ public class LinkTemplateTest {
 			lnkTemplatepage.NavigateToLinkAssociation();;
 			
 			
-		} catch (Exception e) {
-			throw new Exception(e);
+		}catch (Exception e) {
+			throw new CustomException(e, driver);
 		}
 	}
-       @Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is active",groups = {"Regression","Smoke","SFDC"})
+       @Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is active",groups = {"Regression"})
    	public void VerifyMoreThanOneActiveTemplateAssociation_Active() throws Exception {
    		try {
    					
@@ -346,11 +337,11 @@ public class LinkTemplateTest {
 			lnkTemplatepage.DeleteSFDCFilter();
    			
    		} catch (Exception e) {
-   			throw new Exception(e);
-   		}
+			throw new CustomException(e, driver);
+		}
    	}
        
-       @Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Inactive",groups = {"Regression","Smoke","SFDC"})
+       @Test(description ="Verify for the linking of active templates when the link status of the previously linked templates is Inactive",groups = {"Regression"})
       	public void VerifyMoreThanOneActiveTemplateAssociation_InActive() throws Exception {
       		try {
       					
@@ -361,26 +352,15 @@ public class LinkTemplateTest {
       			lnkTemplatepage.SaveLink();
       			lnkTemplatepage.ChangeStatustoInActive();
       			
-      			/*lnkTemplatepage.RefreshLinkTemplate();*/
       			lnkTemplatepage.MovetoNewLinkTemplatePage(lnkTemplatepage.NewLnkbtn ,lnkTemplatepage.Newtemplatelabel);
       			lnkTemplatepage.FillmultipleLinkTemplate(lnkTemplatepage.prgType,lnkTemplatepage.prgsubType,lnkTemplatepage.prgtemplate);
       			lnkTemplatepage.SaveLink();
-      			
-      			/*lnkTemplatepage.ChangeStatusActive();*/
-      			/*lnkTemplatepage=homepage.navigateToLinkTemplate();
-      			lnkTemplatepage.SFDCFilter(testData.get("TemplateName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
-      			lnkTemplatepage.ChangeStatusActive();*/
-      			/*assertEquals(lnkTemplatepage.CanNotSaveRecord, lnkTemplatepage.ErrorOccur.getText());*/
-      			
-      			/*lnkTemplatepage.CancelChangeStatus();	
-   			    lnkTemplatepage.RefreshLinkTemplate();*/
    			    lnkTemplatepage.DeleteSFDCFilter();
-   			    /*lnkTemplatepage.RemoveAllFilter();*/
    			    lnkTemplatepage.DeleteSFDCFilter();
       			
       		} catch (Exception e) {
-      			throw new Exception(e);
-      		}
+    			throw new CustomException(e, driver);
+    		}
       	}
        
 	@AfterMethod(alwaysRun = true)
