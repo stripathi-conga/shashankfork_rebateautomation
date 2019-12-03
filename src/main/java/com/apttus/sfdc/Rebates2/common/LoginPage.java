@@ -1,15 +1,10 @@
 package com.apttus.sfdc.Rebates2.common;
 
-import java.io.IOException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.apttus.sfdc.Rebates2.HomePageClassic;
-//import com.apttus.sfdc.clm.common.LoginPage;
 import com.apttus.sfdc.Rebates2.lightning.HomePage;
 
 

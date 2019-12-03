@@ -53,7 +53,6 @@
 	     "DelimiterD":"forward slash",
 	     "DelimiterE":"tab"
 	     },
-	     
 	     "FilterDataSource":{
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains",

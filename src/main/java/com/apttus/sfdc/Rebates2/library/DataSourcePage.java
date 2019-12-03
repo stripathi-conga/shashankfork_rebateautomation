@@ -5,9 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import com.apttus.sfdc.Rebates2.common.StartUpPage;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.Rebates2.common.GenericPage;
+import com.apttus.sfdc.Rebates2.common.StartUpPage;
 
 public class DataSourcePage extends StartUpPage {
 	  
@@ -281,8 +284,7 @@ public class DataSourcePage extends StartUpPage {
               sfdcAcolyte.waitTillElementIsClickable(txtfilesuffix).click(txtfilesuffix).sendKeysTo(txtfilesuffix, SuffixB);
               sfdcAcolyte.click(MultiFileExtension).selectComboByText(MultiFileExtension, FileExtenstion1).selectComboByText(MultiFileExtension, FileExtenstion2).
                           click(selctdelimter).selectComboByText(selctdelimter, DelimiterB);
-              sfdcAcolyte.waitTillElementIsVisible(btnsubmitdatasrc);
-              sfdcAcolyte.click(selctproduct).click(btnsubmitdatasrc);
+              sfdcAcolyte.waitTillElementIsVisible(btnsubmitdatasrc); sfdcAcolyte.click(selctproduct).click(btnsubmitdatasrc);
        
               sfdcAcolyte.waitTillElementIsVisible(successresponse);
 
@@ -305,10 +307,8 @@ public class DataSourcePage extends StartUpPage {
               sfdcAcolyte.waitTillElementIsClickable(txtfilesuffix).click(txtfilesuffix).sendKeysTo(txtfilesuffix, SuffixC);
               sfdcAcolyte.click(MultiFileExtension).selectComboByText(MultiFileExtension, FileExtenstion1).selectComboByText(MultiFileExtension, FileExtenstion2).
                           click(selctdelimter).selectComboByText(selctdelimter, DelimiterC).click(selctproduct).jsClick(btnsubmitdatasrc);
-
-
-       return PageFactory.initElements(driver, DataSourcePage.class);
-		
+              
+       return PageFactory.initElements(driver, DataSourcePage.class);	
 	}
 	
 	public DataSourcePage VerifydiffrentsetofDelimterSuffixD(String DataSourceName, String TransMetaData, String CalculationDate, String Product,
@@ -372,7 +372,7 @@ public class DataSourcePage extends StartUpPage {
 
 	public void VerifyValidation_CalculationDate(String DataSourceName,String TransMetaData) throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(CreateNewDataSrcbtn).waitTillElementIsClickable(CreateNewDataSrcbtn).jsClick(CreateNewDataSrcbtn);
-        Thread.sleep(2000);
+        
 		
         sfdcAcolyte.waitTillElementIsVisible(btnsubmitdatasrc);
         sfdcAcolyte.click(selctTransMetaData).waitTillElementIsVisible(Ordr).sendKeysTo(txtdatasrc, DataSourceName);
@@ -462,7 +462,6 @@ public class DataSourcePage extends StartUpPage {
 			waitTillElementIsVisible(Allviewedlnk).click(Allviewedlnk);
 			sfdcAcolyte.waitTillElementIsVisible(filtericon).click(filtericon);
 			sfdcAcolyte.waitTillElementIsVisible(AddFilterlnk).click(AddFilterlnk);
-			/*Thread.sleep(10000);*/
 			sfdcAcolyte.waitTillElementIsVisible(SelectField).click(SelectField).sendKeysTo(SelectField, ColumnName).sendBoardKeys(Keys.ENTER);
 			sfdcAcolyte.waitTillElementIsVisible(SelectOperator).click(SelectOperator).sendKeysTo(SelectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
 	        sendKeysTo(EnterValue, FilterValue).click(flrDonebtn).click(flrSavebtn);
@@ -473,9 +472,11 @@ public class DataSourcePage extends StartUpPage {
 		}
 
 	public DataSourcePage deleteFilter() throws Exception {
-	        Thread.sleep(1000);
-			sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).waitTillElementIsClickable(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
-			Thread.sleep(1000);
+	       
+	        WebDriverWait wait = new WebDriverWait(driver, 15);
+			WebElement expWaitRemoveallfltr=wait.until(ExpectedConditions.visibilityOf(RemoveAllftr));
+			sfdcAcolyte.click(expWaitRemoveallfltr).click(flrSavebtn);
+			
 		
 		return PageFactory.initElements(driver, DataSourcePage.class);
 		
@@ -525,11 +526,14 @@ public class DataSourcePage extends StartUpPage {
 	}
 
 	public void DeleteSFDCFilter() throws Exception {
-		Thread.sleep(4000);
-		sfdcAcolyte.waitTillElementIsVisible(ShowMore).
-	      jsClick(ShowMore);
-	      Thread.sleep(2000);
-	      sfdcAcolyte.jsClick(showDeleteAction).
+		WebDriverWait wait = new WebDriverWait(driver, 15);
+		WebElement expWaitShowMore=wait.until(ExpectedConditions.visibilityOf(ShowMore));
+		sfdcAcolyte.waitTillElementIsVisible(expWaitShowMore).
+	      jsClick(expWaitShowMore);
+		
+		WebElement expWaitshowDeleteAction=wait.until(ExpectedConditions.visibilityOf(showDeleteAction));
+		
+	      sfdcAcolyte.jsClick(expWaitshowDeleteAction).
 	      jsClick(ConfirmDeleteAction);
 		
 	}
@@ -538,14 +542,7 @@ public class DataSourcePage extends StartUpPage {
 		sfdcAcolyte.click(btnCancel);
 		
 	}
-	public void RemoveFilterSave() throws Exception {
-
-		sfdcAcolyte.waitTillElementIsVisible(Recentlyviewedlnk).jsClick(Recentlyviewedlnk);
-		Thread.sleep(4000);
-		sfdcAcolyte.waitTillElementIsVisible(Allviewedlnk).waitTillElementIsClickable(Allviewedlnk).click(Allviewedlnk).waitTillElementIsVisible(filtericon).jsClick(filtericon);
-        sfdcAcolyte.waitTillElementIsVisible(RemoveAllftr).click(RemoveAllftr).click(flrSavebtn);
-	}
-
+	
 	public void DataSourceRefresh() throws Exception {
 		sfdcAcolyte.refreshPage();
 		

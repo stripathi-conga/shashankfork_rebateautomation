@@ -27,13 +27,13 @@ import com.apttus.ui.fundamentals.WebElementBuilder;
 public class GenericPage extends StartUpPage {
 	
 	@FindBy(xpath="//span[text()='Recently Viewed']")
-	public WebElement Recentlyviewedlnk;
+	public WebElement recentlyviewedlnk;
     
     @FindBy(xpath="//span[text()='All']")
-	public WebElement Allviewedlnk;
+	public WebElement allviewedlnk;
     
     @FindBy(xpath="//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
-   	public WebElement Namecolmn;
+   	public WebElement namecolmn;
     
     @FindBy(xpath="//span[@title='Name']")
    	public WebElement titleNamecolmn;
@@ -42,7 +42,7 @@ public class GenericPage extends StartUpPage {
    	public WebElement filtericon;
     
     @FindBy(xpath="//a[text()='Add Filter']")
-   	public WebElement AddFilterlnk;
+   	public WebElement addFilterlnk;
     
 	@FindBy(css=".labelCol label")
 	public List<WebElement> agrFieldLbl;
@@ -96,7 +96,38 @@ public class GenericPage extends StartUpPage {
 	@CacheLookup
 	public WebElement lblSelectClause;
 	
-
+	@FindBy(css="input[placeholder='Select an Option'][input]")
+	public WebElement selectField;
+	        
+	@FindBy(css="div:nth-child(2) > lightning-combobox > div")
+	public WebElement selectOperator;
+	
+	@FindBy(css="input[data-aura-class*='uiInput uiInputText ui']") 
+    public WebElement enterValue;
+    
+    @FindBy(css="button[class$='doneButton uiButton']>span[dir='ltr']")
+   	public WebElement flrDonebtn;
+    
+    @FindBy(xpath="//*[text()='List view updated.']")
+   	public WebElement filterResponse;
+  
+    @FindBy(css="button[class$='saveButton headerButton']")
+   	public WebElement flrSavebtn;
+    
+    @FindBy(xpath="//*[@id=\"brandBand_1\"]//..//span/div/a/lightning-icon/lightning-primitive-icon")
+	public  WebElement showMore;
+   
+    @FindBy(xpath = "//a[@title='Delete']")
+	public WebElement showDeleteAction;
+	
+	@FindBy(xpath = "//button[@title='Delete']")
+	public WebElement confirmDeleteAction;
+	
+	@FindBy(css="[class='removeAll']")
+   	public WebElement removeAllftr;
+	@FindBy(css="button[title='Close']")
+   	public WebElement closeToastResponse;
+	
 	public String fieldLabel = ".labelCol";
 
 	public GenericPage(WebDriver driver) {
@@ -610,20 +641,6 @@ public class GenericPage extends StartUpPage {
 	return PageFactory.initElements(driver, GenericPage.class);
 	}
 	
-	/** 
-	 * To delete downloaded file
-	 * @param filePath as String
-	 * @return 
-	 * @throws Exception
-	 */
-	public void deleteFile(String filename) throws Exception {
-		if (filename != null){
-			File file = new File(filename);
-			if (file.exists()) {
-				file.delete();
-			}
-		}
-	}
 
 	/**
 	 * Navigate to Previous page
@@ -636,25 +653,45 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsVisible(element);
 
 	}
+		
 	
-	/** 
-	 * To get the values of key and value of a map
-	 * @param Map map
-	 * @return String of key-value pair
-	 * @throws Exception
-	 */
-	public String getKeyValueFromMap(Map map) throws Exception {
-		String keyValuePair = null;
-		Set keys = map.keySet();
-		for (Iterator itr = keys.iterator(); itr.hasNext();) {
-			String key = (String) itr.next();
-			String value = (String) map.get(key);
-			keyValuePair = key + "," + value;
-		}
-		return keyValuePair;
+    public GenericPage SFDCSearchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
+    	
+    	sfdcAcolyte.click(recentlyviewedlnk).
+		waitTillElementIsVisible(allviewedlnk).click(allviewedlnk);
+		sfdcAcolyte.waitTillElementIsVisible(filtericon).click(filtericon);
+		sfdcAcolyte.waitTillElementIsVisible(addFilterlnk).click(addFilterlnk);	
+        sfdcAcolyte.waitTillElementIsVisible(selectField).click(selectField).sendKeysTo(selectField, ColumnName).sendBoardKeys(Keys.ENTER);
+		
+		sfdcAcolyte.waitTillElementIsVisible(selectOperator).click(selectOperator).sendKeysTo(selectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
+        sendKeysTo(enterValue, FilterValue).click(flrDonebtn).click(flrSavebtn);
+	    sfdcAcolyte.waitTillElementIsVisible(filterResponse);
+	    return PageFactory.initElements(driver, GenericPage.class);
+    }
+
+
+	public GenericPage SFDCDeleteName() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(showMore).
+	      jsClick(showMore);
+	      Thread.sleep(4000);
+	      sfdcAcolyte.jsClick(showDeleteAction).
+	      jsClick(confirmDeleteAction);
+	      return PageFactory.initElements(driver, GenericPage.class);
+		
 	}
-	
-       
+
+
+	public GenericPage SFDCRecordDelete() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(removeAllftr).click(removeAllftr).click(flrSavebtn);
+		return PageFactory.initElements(driver, GenericPage.class);
+	}
+
+
+	public GenericPage closeToastMessage() throws Exception {
+		sfdcAcolyte.waitTillElementIsClickable(closeToastResponse).click(closeToastResponse);
+		
+		return PageFactory.initElements(driver, GenericPage.class);
+	}   
 		
         
 

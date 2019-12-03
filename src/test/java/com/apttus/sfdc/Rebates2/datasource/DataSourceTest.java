@@ -4,59 +4,45 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Map;
 import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import com.apttus.sfdc.Rebates2.library.Rebatesinit;
+
 import com.apttus.customException.CustomException;
 import com.apttus.helpers.Efficacies;
 import com.apttus.helpers.JavaHelpers;
 import com.apttus.selenium.WebDriverUtils;
-import com.apttus.sfdc.Rebates2.common.GenericPage;
 import com.apttus.sfdc.Rebates2.common.LoginPage;
 import com.apttus.sfdc.Rebates2.common.StartUpPage;
-import com.apttus.sfdc.Rebates2.library.AdminTemplatePage;
 import com.apttus.sfdc.Rebates2.library.DataSourcePage;
+import com.apttus.sfdc.Rebates2.library.Rebatesinit;
 import com.apttus.sfdc.Rebates2.lightning.HomePage;
 import com.apttus.sfdc.rudiments.utils.GeneralHelper;
-import com.apttus.ui.fundamentals.Acolyte;
 
 public class DataSourceTest {
 	
 	WebDriver driver;
 	public  Rebatesinit rebatesinit;
-	public HomePage homePage;
 	LoginPage loginPage;
-	Efficacies efficacies;
 	public Map<String, String> testData;
-	
 	public DataSourcePage datasourcePage;
-	public AdminTemplatePage AdmTemplatepage;
-	public GenericPage genericpage;
 	public HomePage homepage;
-	public String homeURL;
-	public String baseURL;
 	Properties configProperty;
 	StartUpPage startUpPage;
-	Acolyte sfdcAcolyte;
 	
-
-
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void setUp(String runParallel, String environment, String browser, String hubURL) throws Exception {
 		
-		Properties configProperty;
 		WebDriverUtils utils = new WebDriverUtils();
 		utils.initializeDriver(browser, hubURL);
 		driver = utils.getDriver();
-		efficacies = new Efficacies();
+
 		startUpPage = new StartUpPage(driver);
-		
-		
 		configProperty = GeneralHelper.loadPropertyFile(environment);
 	
 		loginPage = startUpPage.navigateToLoginPage(configProperty.getProperty("sfloginURL"));
@@ -83,10 +69,9 @@ public class DataSourceTest {
 			datasourcePage.DataSourceRefresh();
 			datasourcePage.DeleteSFDCFilter();
 			datasourcePage.RemoveFilter();
-			
-		    
+			    
 		} catch (Exception e) {
-			throw new CustomException(e, driver);
+			throw new Exception(e);
 		}
 	}
 		
@@ -100,6 +85,7 @@ public class DataSourceTest {
 			datasourcePage.DuplicateSaveNewDataSource(testData.get("DupDataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
+			
 		    String DuplicateDataSource=testData.get("DupDataSourceName")+ln;
 		    datasourcePage=homepage.navigateToDataSource();	
 		    datasourcePage.DataSourceRefresh();
@@ -114,7 +100,7 @@ public class DataSourceTest {
 			datasourcePage.deleteFilter();
 			
 		} catch (Exception e) {
-			throw new CustomException(e, driver);
+			throw new Exception(e);
 		}
 	}
 	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Regression"})
@@ -153,7 +139,7 @@ public class DataSourceTest {
 		assertEquals(datasourcePage.ResponseProduct, datasourcePage.ProductResponse.getText());
 			
 	}catch (Exception e) {
-		throw new CustomException(e, driver);
+		throw new Exception(e);
 	}}	
 	
 	 @Test(description = "Verify the Data Source with multiplecombination",groups = {"Regression"})
@@ -167,24 +153,31 @@ public class DataSourceTest {
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 				       testData.get("FileExtenstion2"),testData.get("DelimiterB"));
 		datasourcePage=homepage.navigateToDataSource();
+		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
+		datasourcePage.CloseToastMessage();
 		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixC(testData.get("DataSourceName")+"C"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixC"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterC"));
+		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
+		datasourcePage.CloseToastMessage();
 		datasourcePage=homepage.navigateToDataSource();	  
 		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixD(testData.get("DataSourceName")+"D"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixD"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterD"));
+		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
+		datasourcePage.CloseToastMessage();
 		datasourcePage=homepage.navigateToDataSource();
 		datasourcePage.DataSourceRefresh();
 		datasourcePage.VerifydiffrentsetofDelimterSuffixE(testData.get("DataSourceName")+"E"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixE"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterE"));
-		
+		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
+		datasourcePage.CloseToastMessage();
     	
     }catch (Exception e) {
-		throw new CustomException(e, driver);
+		throw new Exception(e);
 	}}
     
 	@Test(description = "Verify Save- Search filter to filter and view related Rebate records in List view",groups = {"Regression"})
@@ -198,7 +191,7 @@ public class DataSourceTest {
 			assertEquals(datasourcePage.nwResponseFilter, datasourcePage.ResponseFilter);
 		   
 		} catch (Exception e) {
-			throw new CustomException(e,driver);
+			throw new Exception(e);
 		}
 	}
 	
