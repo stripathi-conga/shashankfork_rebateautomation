@@ -41,10 +41,8 @@ public class DataSourceTest {
 		WebDriverUtils utils = new WebDriverUtils();
 		utils.initializeDriver(browser, hubURL);
 		driver = utils.getDriver();
-
 		startUpPage = new StartUpPage(driver);
 		configProperty = GeneralHelper.loadPropertyFile(environment);
-	
 		loginPage = startUpPage.navigateToLoginPage(configProperty.getProperty("sfloginURL"));
 		loginPage.waitForLoginPageLoad().loginToApp(configProperty.getProperty("username"),configProperty.getProperty("password"));
 		rebatesinit= new Rebatesinit(driver);
@@ -52,146 +50,146 @@ public class DataSourceTest {
 			
 	}
 		
-	@Test(description = "Verify the Data Source Save Feature",groups = {"Regression"})
+	@Test(description = "Verify the Data Source Save Feature",groups = {"Smoke"})
 	
-	public void CreateNewDataSource() throws Exception {
+	public void createNewDataSource() throws Exception {
 		try {
 			datasourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
 			long ln = JavaHelpers.generateRandomNumber();
-			datasourcePage.CreateSaveNewDataSource(testData.get("DataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
+			datasourcePage.createSaveNewDataSource(testData.get("DataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
 					                               testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
 					                               testData.get("FileExtenstion2"),testData.get("Delimiter"));
 			assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
-			datasourcePage.CloseToastMessage();
+			datasourcePage.closeToastMessage();
 			datasourcePage=homepage.navigateToDataSource();
-			datasourcePage.DataSdourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("DataSourceName")+ln);
-			datasourcePage.DataSourceRefresh();
-			datasourcePage.DeleteSFDCFilter();
-			datasourcePage.RemoveFilter();
+			datasourcePage.dataSdourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("DataSourceName")+ln);
+			datasourcePage.dataSourceRefresh();
+			datasourcePage.deleteSfdcFilter();
+			datasourcePage.removeFilter();
 			    
 		} catch (Exception e) {
-			throw new CustomException(e,driver);
+			throw new Exception(e);
 		}
 	}
 		
-	@Test(description = "Verify the Data Source Validation",groups = {"Regression"})
-	public void DuplicateDataSource() throws Exception {
+	@Test(description = "Verify the Data Source Validation",groups = {"Smoke"})
+	public void duplicateDataSource() throws Exception {
 		try {
 			datasourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
 			long ln = JavaHelpers.generateRandomNumber();
-			datasourcePage.DataSourceRefresh();
-			datasourcePage.DuplicateSaveNewDataSource(testData.get("DupDataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
+			datasourcePage.dataSourceRefresh();
+			datasourcePage.duplicateSaveNewDataSource(testData.get("DupDataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
 			
 		    String DuplicateDataSource=testData.get("DupDataSourceName")+ln;
 		    datasourcePage=homepage.navigateToDataSource();	
-		    datasourcePage.DataSourceRefresh();
-			datasourcePage.Verifyduplicate(DuplicateDataSource, testData.get("TransMetaData"), testData.get("CalculationDate"),
+		    datasourcePage.dataSourceRefresh();
+			datasourcePage.verifyduplicate(DuplicateDataSource, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
-			assertEquals(datasourcePage.Duplicate, datasourcePage.duplicateRecord);
-		    datasourcePage.CancelDatasource();
-			datasourcePage.DuplicateSdourceFilter("Name","contains",DuplicateDataSource);
-			datasourcePage.CloseToastMessage();
-			datasourcePage.DeleteSFDCFilter();
+			assertEquals(datasourcePage.duplicate, datasourcePage.duplicateRecord);
+		    datasourcePage.cancelDatasource();
+			datasourcePage.duplicateSdourceFilter("Name","contains",DuplicateDataSource);
+			datasourcePage.closeToastMessage();
+			datasourcePage.deleteSfdcFilter();
 			datasourcePage.deleteFilter();
 			
 		} catch (Exception e) {
-			throw new CustomException(e,driver);
+			throw new Exception(e);
 		}
 	}
-	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Regression"})
-	public void VerifyValidationMsz() throws Exception {
+	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Smoke"})
+	public void verifyValidationMsz() throws Exception {
 		try {
 		datasourcePage=homepage.navigateToDataSource();
 		testData = new Efficacies().readJsonFile("datasource.json");
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VeriyValidationDelimiter(testData.get("DataSourceName"), testData.get("TransMetaData"), testData.get("CalculationDate"),
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.veriyValidationDelimiter(testData.get("DataSourceName"), testData.get("TransMetaData"), testData.get("CalculationDate"),
                                                testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"));
-	    assertEquals(datasourcePage.ResponseDelimiter, datasourcePage.getDelimiterResponse);
+	    assertEquals(datasourcePage.responseDelimiter, datasourcePage.getDelimiterResponse);
 		
-		datasourcePage.VeriyValidationFileExtension("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To","_AutoSuffix","commas");
-		assertEquals(datasourcePage.ResponseFileExt, datasourcePage.getFileExtensionResponse);
+		datasourcePage.veriyValidationFileExtension("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To","_AutoSuffix","commas");
+		assertEquals(datasourcePage.responseFileExt, datasourcePage.getFileExtensionResponse);
 		
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VeriyValidationSuffix("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To");
-		assertEquals(datasourcePage.ResponseSuffix, datasourcePage.getSuffixResponse);
-		
-		datasourcePage=homepage.navigateToDataSource();
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VerifyValidation_DataSourceName();
-		assertEquals(datasourcePage.ResponseDataSrc, datasourcePage.getdatasrcResponse);
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.veriyValidationSuffix("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To");
+		assertEquals(datasourcePage.responseSuffix, datasourcePage.getSuffixResponse);
 		
 		datasourcePage=homepage.navigateToDataSource();
-		datasourcePage.VerifyValidationTransactionMetaData("ValidationAutomation");
-		assertEquals(datasourcePage.ResponseMetaData, datasourcePage.getMetadataResponse);
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.verifyValidation_DataSourceName();
+		assertEquals(datasourcePage.responseDataSrc, datasourcePage.getdatasrcResponse);
 		
-		datasourcePage.VerifyValidation_CalculationDate("ValidationAutomation", "Order Line Item");
-		assertEquals(datasourcePage.ResponseCalcDate, datasourcePage.getCaldateResponse);
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VeriyValidation_ProgramAccount("ValidationAutomation","Order Line Item","Ready for Activation Date");
-		assertEquals(datasourcePage.ResponsePrgmAccount, datasourcePage.getProgram);
+		datasourcePage=homepage.navigateToDataSource();
+		datasourcePage.verifyValidationTransactionMetaData("ValidationAutomation");
+		assertEquals(datasourcePage.responseMetaData, datasourcePage.getMetadataResponse);
 		
-		datasourcePage.VeriyValidation_Product(testData.get("ProgramAccount"));
-		assertEquals(datasourcePage.ResponseProduct, datasourcePage.ProductResponse.getText());
+		datasourcePage.verifyValidation_CalculationDate("ValidationAutomation", "Order Line Item");
+		assertEquals(datasourcePage.responseCalcDate, datasourcePage.getCaldateResponse);
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.veriyValidation_ProgramAccount("ValidationAutomation","Order Line Item","Ready for Activation Date");
+		assertEquals(datasourcePage.responsePrgmAccount, datasourcePage.getProgram);
+		
+		datasourcePage.veriyValidation_Product(testData.get("ProgramAccount"));
+		assertEquals(datasourcePage.responseProduct, datasourcePage.productResponse.getText());
 			
 	}catch (Exception e) {
-		throw new CustomException(e,driver);
+		throw new Exception(e);
 	}}	
 	
-	 @Test(description = "Verify the Data Source with multiplecombination",groups = {"Regression"})
-     public void VerifyDelimiterSuffix() throws Exception {
+	 @Test(description = "Verify the Data Source with multiplecombination",groups = {"Smoke"})
+     public void verifyDelimiterSuffix() throws Exception {
 		 try {
     	datasourcePage=homepage.navigateToDataSource();
 		testData = new Efficacies().readJsonFile("datasource.json");
 		long ln = JavaHelpers.generateRandomNumber();
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VerifydiffrentsetofDelimterSuffixB(testData.get("DataSourceName")+"B"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixB"),
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.verifydiffrentsetofDelimterSuffixB(testData.get("DataSourceName")+"B"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixB"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 				       testData.get("FileExtenstion2"),testData.get("DelimiterB"));
 		datasourcePage=homepage.navigateToDataSource();
 		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
-		datasourcePage.CloseToastMessage();
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VerifydiffrentsetofDelimterSuffixC(testData.get("DataSourceName")+"C"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixC"),
+		datasourcePage.closeToastMessage();
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.verifydiffrentsetofDelimterSuffixC(testData.get("DataSourceName")+"C"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixC"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterC"));
 		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
-		datasourcePage.CloseToastMessage();
+		datasourcePage.closeToastMessage();
 		datasourcePage=homepage.navigateToDataSource();	  
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VerifydiffrentsetofDelimterSuffixD(testData.get("DataSourceName")+"D"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixD"),
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.verifydiffrentsetofDelimterSuffixD(testData.get("DataSourceName")+"D"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixD"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterD"));
 		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
-		datasourcePage.CloseToastMessage();
+		datasourcePage.closeToastMessage();
 		datasourcePage=homepage.navigateToDataSource();
-		datasourcePage.DataSourceRefresh();
-		datasourcePage.VerifydiffrentsetofDelimterSuffixE(testData.get("DataSourceName")+"E"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixE"),
+		datasourcePage.dataSourceRefresh();
+		datasourcePage.verifydiffrentsetofDelimterSuffixE(testData.get("DataSourceName")+"E"+ln, testData.get("TransMetaData"),testData.get("CalculationDate"),testData.get("SuffixE"),
 				       testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileExtenstion1"), 
 			           testData.get("FileExtenstion2"),testData.get("DelimiterE"));
 		assertEquals(datasourcePage.success, datasourcePage.successresponse.getText());
-		datasourcePage.CloseToastMessage();
+		datasourcePage.closeToastMessage();
     	
     }catch (Exception e) {
-		throw new CustomException(e,driver);
+		throw new Exception(e);
 	}}
     
-	@Test(description = "Verify Save- Search filter to filter and view related Rebate records in List view",groups = {"Regression"})
-	public void FilterDataSource() throws Exception {
+	@Test(description = "Verify Save- Search filter to filter and view related Rebate records in List view",groups = {"Smoke"})
+	public void filterDataSource() throws Exception {
 		try {
 			datasourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
-			datasourcePage.DataSourceRefresh();
-			datasourcePage.DataSdourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
+			datasourcePage.dataSourceRefresh();
+			datasourcePage.dataSdourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
 			datasourcePage.deleteFilter();
-			assertEquals(datasourcePage.nwResponseFilter, datasourcePage.ResponseFilter);
+			assertEquals(datasourcePage.newResponseFilter, datasourcePage.responseFilter);
 		   
 		} catch (Exception e) {
-			throw new CustomException(e,driver);
+			throw new Exception(e);
 		}
 	}
 	

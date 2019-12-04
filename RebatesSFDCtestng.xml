@@ -11,14 +11,13 @@
 	<parameter name="environment" value="config.properties" />
 	<parameter name="browser" value="Chrome" />
 	<parameter name="hubURL" value="http://localhost:4444/wd/hub" />
-
+    <parameter name="qTestPropertyFile" value="stagingSmokeQtest.properties" />
 	<test thread-count="3" name="test" parallel="classes">
 
-		<classes>
+	 <classes>
 			<class name="com.apttus.sfdc.Rebates2.datasource.DataSourceTest" />
-			<class name="com.apttus.sfdc.Rebates2.datasource.AdminTemplateTest" />
-			<class name="com.apttus.sfdc.Rebates2.datasource.LinkTemplateTest" />
-			
+			<class name="com.apttus.sfdc.Rebates2.datasource.AdminTemplateTest" /> 	
+			<class name="com.apttus.sfdc.Rebates2.datasource.LinkTemplateTest" /> 
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

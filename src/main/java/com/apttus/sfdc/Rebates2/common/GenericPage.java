@@ -20,7 +20,10 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.apttus.ui.fundamentals.WebElementBuilder;
 
 
@@ -106,13 +109,13 @@ public class GenericPage extends StartUpPage {
     public WebElement enterValue;
     
     @FindBy(css="button[class$='doneButton uiButton']>span[dir='ltr']")
-   	public WebElement flrDonebtn;
+   	public WebElement filterDonebtn;
     
     @FindBy(xpath="//*[text()='List view updated.']")
    	public WebElement filterResponse;
   
     @FindBy(css="button[class$='saveButton headerButton']")
-   	public WebElement flrSavebtn;
+   	public WebElement filterSavebtn;
     
     @FindBy(xpath="//*[@id=\"brandBand_1\"]//..//span/div/a/lightning-icon/lightning-primitive-icon")
 	public  WebElement showMore;
@@ -124,10 +127,11 @@ public class GenericPage extends StartUpPage {
 	public WebElement confirmDeleteAction;
 	
 	@FindBy(css="[class='removeAll']")
-   	public WebElement removeAllftr;
+   	public WebElement removeAllfilter;
 	@FindBy(css="button[title='Close']")
    	public WebElement closeToastResponse;
 	
+	public int waitTime = 40;
 	public String fieldLabel = ".labelCol";
 
 	public GenericPage(WebDriver driver) {
@@ -664,13 +668,13 @@ public class GenericPage extends StartUpPage {
         sfdcAcolyte.waitTillElementIsVisible(selectField).click(selectField).sendKeysTo(selectField, ColumnName).sendBoardKeys(Keys.ENTER);
 		
 		sfdcAcolyte.waitTillElementIsVisible(selectOperator).click(selectOperator).sendKeysTo(selectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
-        sendKeysTo(enterValue, FilterValue).click(flrDonebtn).click(flrSavebtn);
+        sendKeysTo(enterValue, FilterValue).click(filterDonebtn).click(filterSavebtn);
 	    sfdcAcolyte.waitTillElementIsVisible(filterResponse);
 	    return PageFactory.initElements(driver, GenericPage.class);
     }
 
 
-	public GenericPage SFDCDeleteName() throws Exception {
+	public GenericPage deleteName() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(showMore).
 	      jsClick(showMore);
 	      Thread.sleep(4000);
@@ -680,9 +684,8 @@ public class GenericPage extends StartUpPage {
 		
 	}
 
-
-	public GenericPage SFDCRecordDelete() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(removeAllftr).click(removeAllftr).click(flrSavebtn);
+	public GenericPage recordDelete() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(filterSavebtn);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
@@ -692,7 +695,11 @@ public class GenericPage extends StartUpPage {
 		
 		return PageFactory.initElements(driver, GenericPage.class);
 	}   
-		
+	public void waitTillStaleElementToBeVisible(WebElement ele) {
+ 		new WebDriverWait(driver, waitTime)
+ 		.until(ExpectedConditions.refreshed(
+ 				ExpectedConditions.visibilityOf(ele)));
+ 	}
         
 
 }
