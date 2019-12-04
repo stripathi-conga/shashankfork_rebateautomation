@@ -19,9 +19,8 @@ public class StartUpPage {
 	}
 	
 	public LoginPage navigateToLoginPage(String baseURL) throws Exception {
-		sfdcAcolyte.maximizeWindow()
-				  .navigateTo(baseURL);
-		
+		sfdcAcolyte.maximizeWindow();
+		sfdcAcolyte.navigateTo(baseURL);
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
 	

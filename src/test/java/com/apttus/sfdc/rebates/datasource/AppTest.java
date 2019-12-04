@@ -1,4 +1,4 @@
-package com.apttus.aic.RebatesSFDC;
+package com.apttus.sfdc.rebates.datasource;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

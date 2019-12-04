@@ -1,4 +1,4 @@
-package com.apttus.sfdc.Rebates2.datasource;
+package com.apttus.sfdc.rebates.datasource;
 
 import static org.testng.Assert.assertEquals;
 

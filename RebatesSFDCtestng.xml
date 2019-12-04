@@ -15,9 +15,8 @@
 	<test thread-count="3" name="test" parallel="classes">
 
 	 <classes>
-			<class name="com.apttus.sfdc.Rebates2.datasource.DataSourceTest" />
-			<class name="com.apttus.sfdc.Rebates2.datasource.AdminTemplateTest" /> 	
-			<class name="com.apttus.sfdc.Rebates2.datasource.LinkTemplateTest" /> 
+			<class name="com.apttus.sfdc.rebates.datasource.DataSourceTest" />
+			
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

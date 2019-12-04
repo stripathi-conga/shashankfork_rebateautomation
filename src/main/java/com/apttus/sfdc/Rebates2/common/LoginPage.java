@@ -36,7 +36,8 @@ public class LoginPage extends StartUpPage {
 	}
 	
 	public HomePage loginToApp(String userName, String password) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(txtUserName)
+		Thread.sleep(5000);
+		sfdcAcolyte.waitTillElementIsClickable(txtUserName)
 		.clear(txtUserName)
 		.clear(txtPassword);
 		txtUserName.sendKeys(userName);

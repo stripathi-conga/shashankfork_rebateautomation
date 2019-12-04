@@ -1,6 +1,6 @@
 	{
 	
-     "CreateNewDataSource":{
+     "createNewDataSource":{
 	     "DataSourceName":"DSrcAutomation",
 	     "FileExtenstion1":"csv",
 	     "FileExtenstion2":"tsv",
@@ -14,7 +14,7 @@
 	     "ColumnOperator":"contains"    
 	     
 	     },
-	     "DuplicateDataSource":{
+	     "duplicateDataSource":{
 	     "DupDataSourceName":"DupAutomation",
 	     "FileExtenstion1":"csv",
 	     "FileExtenstion2":"tsv",
@@ -25,7 +25,7 @@
 	     "ProgramAccount":"Bill To",
 	     "Delimiter":"commas"
 	     },
-	     "VerifyValidationMsz":{
+	     "verifyValidationMsz":{
 	     "DataSourceName":"ValidationAutomation",
 	     "TransMetaData":"Order Line Item",
 	     "CalculationDate":"Ready for Activation Date",
@@ -36,7 +36,7 @@
 	     "Delimiter":"commas"
 	     
 	     },
-	     "VerifyDelimiterSuffix":{
+	     "verifyDelimiterSuffix":{
 	     "DataSourceName":"DSrcAutomation",
 	     "FileExtenstion1":"csv",
 	     "FileExtenstion2":"tsv",
@@ -53,7 +53,7 @@
 	     "DelimiterD":"forward slash",
 	     "DelimiterE":"tab"
 	     },
-	     "FilterDataSource":{
+	     "filterDataSource":{
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains",
 	     "FilterValue":"Automation"
