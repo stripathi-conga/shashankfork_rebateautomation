@@ -16,11 +16,11 @@ import com.apttus.customException.CustomException;
 import com.apttus.helpers.Efficacies;
 import com.apttus.helpers.JavaHelpers;
 import com.apttus.selenium.WebDriverUtils;
-import com.apttus.sfdc.Rebates2.common.LoginPage;
-import com.apttus.sfdc.Rebates2.common.StartUpPage;
-import com.apttus.sfdc.Rebates2.library.DataSourcePage;
-import com.apttus.sfdc.Rebates2.library.Rebatesinit;
-import com.apttus.sfdc.Rebates2.lightning.HomePage;
+import com.apttus.sfdc.rebates.common.LoginPage;
+import com.apttus.sfdc.rebates.common.StartUpPage;
+import com.apttus.sfdc.rebates.lightning.HomePage;
+import com.apttus.sfdc.rebates.ui.library.DataSourcePage;
+import com.apttus.sfdc.rebates.ui.library.Rebatesinit;
 import com.apttus.sfdc.rudiments.utils.GeneralHelper;
 
 public class DataSourceTest {

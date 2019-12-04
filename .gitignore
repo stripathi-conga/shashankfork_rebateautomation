@@ -1,1 +1,14 @@
 /target/
+/.classpath
+
+/.project
+/
+/test-output/
+
+/.settings
+
+/.idea
+/
+/logs
+/
+/*.ser
