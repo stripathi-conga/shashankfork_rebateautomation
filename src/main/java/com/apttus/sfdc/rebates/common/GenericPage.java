@@ -1,4 +1,4 @@
-package com.apttus.sfdc.Rebates2.common;
+package com.apttus.sfdc.rebates.common;
 
 import java.io.File;
 import java.io.IOException;
