@@ -21,13 +21,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class GenericPage extends StartUpPage {
 	
 	@FindBy(xpath="//span[text()='Recently Viewed']")
-	public WebElement recentlyviewedlnk;
+	public WebElement lnkrecentlyviewed;
     
     @FindBy(xpath="//span[text()='All']")
-	public WebElement allviewedlnk;
+	public WebElement lnkallviewed;
     
     @FindBy(xpath="//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
-   	public WebElement namecolmn;
+   	public WebElement columnName;
     
     @FindBy(xpath="//span[@title='Name']")
    	public WebElement titleNamecolmn;
@@ -36,86 +36,34 @@ public class GenericPage extends StartUpPage {
    	public WebElement filtericon;
     
     @FindBy(xpath="//a[text()='Add Filter']")
-   	public WebElement addFilterlnk;
-    
-	@FindBy(css=".labelCol label")
-	public List<WebElement> agrFieldLbl;
-	
-	@FindBy(id = "findInput")
-	public WebElement searchBoxInPdf;
-	
-	@FindBy(id = "clearText")
-	public WebElement clearSearchText;
-	
-	@FindBy(css = ".highlight")
-	public List<WebElement> searchResult;
-	
-	@FindBy(id = "findHighlightAll")
-	public WebElement chekboxHighLightAll;
-	
-	@FindBy(id = "findNext")
-	public WebElement btnfindNextInPDF;
+   	public WebElement lnkaddFilter;
 
-	@FindBy(id = "findResultsCount")
-	public WebElement resultCount;
-	
-	@FindBy(css = ".textLayer div")
-	public WebElement textToSelect;
-	
-	@FindBy(id = "viewerContainer")
-	public WebElement pdfViewerContainer;
-	
-	@FindBy(id = "numPages")
-	public WebElement numPages;
-	
-	@FindBy(css = ".clauseCls span")
-	public WebElement txtClause;
-	
-	@FindBy(css = "[id*='ClauseDropdownId']")
-	@CacheLookup
-	public WebElement dropDownClause;
-	
-	@FindBy(css = "[id*='ClauseChangeSection']")
-	@CacheLookup
-	public WebElement dpnClause;
-	
-	@FindBy(id = "addClauseId")
-	public WebElement btnAddClause;
-	
-	@FindBy(css = "[value='New']+label")
-	@CacheLookup
-	public WebElement lblNewClause;
-
-	@FindBy(css = "[value='Select']+label")
-	@CacheLookup
-	public WebElement lblSelectClause;
-	
 	@FindBy(css="input[placeholder='Select an Option'][input]")
-	public WebElement selectField;
+	public WebElement ddlselectField;
 	        
 	@FindBy(css="div:nth-child(2) > lightning-combobox > div")
-	public WebElement selectOperator;
+	public WebElement ddlselectOperator;
 	
 	@FindBy(css="input[data-aura-class*='uiInput uiInputText ui']") 
-    public WebElement enterValue;
+    public WebElement txtenterValue;
     
     @FindBy(css="button[class$='doneButton uiButton']>span[dir='ltr']")
-   	public WebElement filterDonebtn;
+   	public WebElement btnfilterDone;
     
     @FindBy(xpath="//*[text()='List view updated.']")
    	public WebElement filterResponse;
   
     @FindBy(css="button[class$='saveButton headerButton']")
-   	public WebElement filterSavebtn;
+   	public WebElement btnfilterSave;
     
     @FindBy(xpath="//*[@id=\"brandBand_1\"]//..//span/div/a/lightning-icon/lightning-primitive-icon")
-	public  WebElement showMore;
+	public  WebElement btnshowMore;
    
     @FindBy(xpath = "//a[@title='Delete']")
-	public WebElement showDeleteAction;
+	public WebElement btnshowDeleteAction;
 	
 	@FindBy(xpath = "//button[@title='Delete']")
-	public WebElement confirmDeleteAction;
+	public WebElement btnconfirmDeleteAction;
 	
 	@FindBy(css="[class='removeAll']")
    	public WebElement removeAllfilter;
@@ -154,11 +102,6 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsVisible(element);
 	}
 	
-	/**
-	 * To refresh Page
-	 * @return
-	 * @throws Exception
-	 */
 	public void refreshPage() throws Exception {
 		sfdcAcolyte.refreshPage();
 	}
@@ -169,10 +112,7 @@ public class GenericPage extends StartUpPage {
          sfdcAcolyte.selectComboByText(sfdcAcolyte.getComboboxElementWithLabel(fieldName), fieldValue);
      }
      
-     /**
-   	 * Verify Inner Text Matches On Page
-   	 * @throws Exception
-   	 */
+    
    	public GenericPage checkInnerTextMatches(WebElement element, String value) throws Exception {
    		sfdcAcolyte.waitTillInnerTextMatches(element, value);
    		return PageFactory.initElements(driver, GenericPage.class);
@@ -203,12 +143,6 @@ public class GenericPage extends StartUpPage {
 		return sfdcAcolyte.getCurrentURL();
 	}
 
-	/**
-	 * Select Combo box value
-	 * @param fieldLabel
-	 * @return
-	 * @throws Exception
-	 */
 	public GenericPage selectComboByValue(WebElement element, String fieldLabel) throws Exception {
 		sfdcAcolyte.selectComboByValue(element, fieldLabel);
 		return PageFactory.initElements(driver, GenericPage.class);
@@ -226,22 +160,10 @@ public class GenericPage extends StartUpPage {
 		return flag;
 	}
 
-	/**
-	 * To get the object of drop down list
-	 * @param element
-	 * @return
-	 * @throws Exception
-	 */
 	public Select getObjOfDropDownElement(WebElement element) throws Exception {
 		return new Select(element);
 	}
 
-	/**
-	 * Get text list from WebElement
-	 * @param element
-	 * @return List
-	 * @throws Exception
-	 */
 	public List<String> getTextFromWebElementList(List<WebElement> element) throws Exception {
 		List<String> txtList = new ArrayList<String>();
 		for (WebElement e : element) {
@@ -250,33 +172,15 @@ public class GenericPage extends StartUpPage {
 		return txtList;
 	}
 
-	/**
-	 * Get First selected text of DropDown list
-	 * @param element
-	 * @return
-	 * @throws Exception
-	 */
 	public String getDropdownSelectedTxt(WebElement element) throws Exception {
 		return getObjOfDropDownElement(element).getFirstSelectedOption().getText();
 	}
 
-	/**
-	 * Select Combo box by text
-	 * @param fieldLabel
-	 * @return GenericPage
-	 * @throws Exception
-	 */
 	public GenericPage selectComboByText(WebElement element, String ddlValue) throws Exception {
 		sfdcAcolyte.selectComboByText(element, ddlValue);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	/**
-	 * To get String text from WebElement List
-	 * @param elementList
-	 * @param expectedValue
-	 * @return
-	 */
 	public String getStrValueFromWebEleList(List<WebElement> elementList, String expectedValue) {
 		String text = null;
 		for (WebElement element : elementList) {
@@ -288,13 +192,6 @@ public class GenericPage extends StartUpPage {
 		return text;
 	}
 
-	/**
-	 * Get any Window
-	 * @param String value
-	 * @return
-	 * @throws Exception
-	 
-	 */
 	public GenericPage getWindow(int windowNum) throws Exception {
 		Set<String> handles = sfdcAcolyte.getWindowHandles();
 		ArrayList<String> lstHandles = new ArrayList<String>();
@@ -303,10 +200,6 @@ public class GenericPage extends StartUpPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	/**
-	* Check the element and Click on it
-	* @return
-	*/
 	public GenericPage checkAndClickOnBtn(List<WebElement> elementList) {
 		while (elementList.size() > 0) {
 			elementList.get(0).click();
@@ -315,21 +208,10 @@ public class GenericPage extends StartUpPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 	
-	/**
-	* Check element is exists or not.
-	* @param element Name as a String.
-	* @return true or False
-	* @throws Exception
-	*/
 	public boolean isElementExists(String element) throws Exception {
 		return (sfdcAcolyte.findTheElements(By.cssSelector(element)).size() != 0);   
 	}
 	
-	/**
-	 * This method will check all CheckBoxes with same locator.
-	 * @param chkReviewers
-	 * @return GenericPage
-	 */
 	public void checkAllChckBox(List<WebElement> chkReviewers) {
 		for (WebElement ele : chkReviewers) {
 			if (!ele.isSelected())
@@ -337,26 +219,11 @@ public class GenericPage extends StartUpPage {
 		}
 	}
 	
-	/**
-	* Wait till attribute contains the value
-	* @param WebElement
-	* @param Atrribute
-	* @param Value
-	* @return 
-	* @throws Exception
-	*/
 	public GenericPage waitTillAttributeContains(WebElement element, String attribute, String value) throws Exception {
 	sfdcAcolyte.waitTillAttributeContains(element, attribute, value);
 	return PageFactory.initElements(driver, GenericPage.class);
 	}
 	
-
-	/**
-	 * Navigate to Previous page
-	 * @param WebElement
-	 * @throws Exception
-	 * @return 
-	 */
 	public void navigatBack(WebElement element) throws Exception {
 		driver.navigate().back();
 		sfdcAcolyte.waitTillElementIsVisible(element);
@@ -364,33 +231,32 @@ public class GenericPage extends StartUpPage {
 	}
 		
 	
-    public GenericPage SFDCSearchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
+    public GenericPage sfdcSearchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
     	
-    	sfdcAcolyte.click(recentlyviewedlnk).
-		waitTillElementIsVisible(allviewedlnk).click(allviewedlnk);
+    	sfdcAcolyte.click(lnkrecentlyviewed).
+		waitTillElementIsVisible(lnkallviewed).click(lnkallviewed);
 		sfdcAcolyte.waitTillElementIsVisible(filtericon).click(filtericon);
-		sfdcAcolyte.waitTillElementIsVisible(addFilterlnk).click(addFilterlnk);	
-        sfdcAcolyte.waitTillElementIsVisible(selectField).click(selectField).sendKeysTo(selectField, ColumnName).sendBoardKeys(Keys.ENTER);
+		sfdcAcolyte.waitTillElementIsVisible(lnkaddFilter).click(lnkaddFilter);	
+        sfdcAcolyte.waitTillElementIsVisible(ddlselectField).click(ddlselectField).sendKeysTo(ddlselectField, ColumnName).sendBoardKeys(Keys.ENTER);
 		
-		sfdcAcolyte.waitTillElementIsVisible(selectOperator).click(selectOperator).sendKeysTo(selectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
-        sendKeysTo(enterValue, FilterValue).click(filterDonebtn).click(filterSavebtn);
+		sfdcAcolyte.waitTillElementIsVisible(ddlselectOperator).click(ddlselectOperator).sendKeysTo(ddlselectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER).
+        sendKeysTo(txtenterValue, FilterValue).click(btnfilterDone).click(btnfilterSave);
 	    sfdcAcolyte.waitTillElementIsVisible(filterResponse);
 	    return PageFactory.initElements(driver, GenericPage.class);
     }
 
 
 	public GenericPage deleteName() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(showMore).
-	      jsClick(showMore);
-	      Thread.sleep(4000);
-	      sfdcAcolyte.jsClick(showDeleteAction).
-	      jsClick(confirmDeleteAction);
+		sfdcAcolyte.waitTillElementIsVisible(btnshowMore).
+	      jsClick(btnshowMore);
+	      sfdcAcolyte.jsClick(btnshowDeleteAction).
+	      jsClick(btnconfirmDeleteAction);
 	      return PageFactory.initElements(driver, GenericPage.class);
 		
 	}
 
 	public GenericPage recordDelete() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(filterSavebtn);
+		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(btnfilterSave);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 

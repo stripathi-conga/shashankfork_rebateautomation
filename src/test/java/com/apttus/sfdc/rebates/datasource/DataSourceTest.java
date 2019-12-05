@@ -22,9 +22,9 @@ import com.apttus.sfdc.rebates.lightning.HomePage;
 import com.apttus.sfdc.rebates.ui.library.DataSourcePage;
 import com.apttus.sfdc.rebates.ui.library.Rebatesinit;
 import com.apttus.sfdc.rudiments.utils.GeneralHelper;
-
+import com.apttus.selenium.NGHelper;
 public class DataSourceTest {
-	
+	public NGHelper ngHelper;
 	WebDriver driver;
 	public  Rebatesinit rebatesinit;
 	LoginPage loginPage;
@@ -69,11 +69,11 @@ public class DataSourceTest {
 			dataSourcePage.removeFilter();
 			    
 		} catch (Exception e) {
-			throw new CustomException(e,driver);
+			throw new Exception(e);
 		}
 	}
 		
-	@Test(description = "Verify the Data Source Validation",groups = {"Smoke"})
+	/*@Test(description = "Verify the Data Source Validation",groups = {"Smoke"})
 	public void duplicateDataSource() throws Exception {
 		try {
 			dataSourcePage=homepage.navigateToDataSource();
@@ -99,11 +99,11 @@ public class DataSourceTest {
 			dataSourcePage.removeFilter();
 			
 		} catch (Exception e) {
-			throw new CustomException(e,driver);
+			throw new Exception(e);
 		}
 	}
 	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Smoke"})
-	public void verifyValidationMsz() throws Exception {
+	public void verifyDataSourceValidation() throws Exception {
 		try {
 			dataSourcePage=homepage.navigateToDataSource();
 		testData = new Efficacies().readJsonFile("datasource.json");
@@ -113,7 +113,7 @@ public class DataSourceTest {
 	    assertEquals(dataSourcePage.responseDelimiter, dataSourcePage.getDelimiterResponse);
 		
 	    dataSourcePage.verifyValidationFileExtension("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To","_AutoSuffix","commas");
-		assertEquals(dataSourcePage.responseFileExt, dataSourcePage.getFileExtensionResponse);
+		assertEquals(dataSourcePage.responseFileExtension, dataSourcePage.getFileExtensionResponse);
 		
 		dataSourcePage.dataSourceRefresh();
 		dataSourcePage.verifyValidationSuffix("ValidationAutomation", "Order Line Item", "Ready for Activation Date","Base Product","Bill To");
@@ -122,7 +122,7 @@ public class DataSourceTest {
 		dataSourcePage=homepage.navigateToDataSource();
 		dataSourcePage.dataSourceRefresh();
 		dataSourcePage.verifyValidation_DataSourceName();
-		assertEquals(dataSourcePage.responseDataSrc, dataSourcePage.getdatasrcResponse);
+		assertEquals(dataSourcePage.responseDataSource, dataSourcePage.getdatasrcResponse);
 		
 		dataSourcePage=homepage.navigateToDataSource();
 		dataSourcePage.dataSourceRefresh();
@@ -130,7 +130,7 @@ public class DataSourceTest {
 		assertEquals(dataSourcePage.responseMetaData, dataSourcePage.getMetadataResponse);
 		
 		dataSourcePage.verifyValidation_CalculationDate("ValidationAutomation", "Order Line Item");
-		assertEquals(dataSourcePage.responseCalcDate, dataSourcePage.getCaldateResponse);
+		assertEquals(dataSourcePage.responsecalculationdate, dataSourcePage.getCaldateResponse);
 		dataSourcePage.dataSourceRefresh();
 		dataSourcePage.verifyValidation_ProgramAccount("ValidationAutomation","Order Line Item","Ready for Activation Date");
 		assertEquals(dataSourcePage.responsePrgmAccount, dataSourcePage.getProgram);
@@ -139,7 +139,7 @@ public class DataSourceTest {
 		assertEquals(dataSourcePage.responseProduct, dataSourcePage.productResponse.getText());
 			
 	}catch (Exception e) {
-		throw new CustomException(e,driver);
+		throw new Exception(e);
 	}}	
 	
     
@@ -156,7 +156,7 @@ public class DataSourceTest {
 		} catch (Exception e) {
 			throw new CustomException(e,driver);
 		}
-	}
+	}*/
 	
 	@AfterMethod(alwaysRun = true)
 	public void cleanUp() throws Exception {

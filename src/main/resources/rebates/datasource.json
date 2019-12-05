@@ -25,7 +25,7 @@
 	     "ProgramAccount":"Bill To",
 	     "Delimiter":"commas"
 	     },
-	     "verifyValidationMsz":{
+	     "verifyDataSourceValidation":{
 	     "DataSourceName":"ValidationAutomation",
 	     "TransMetaData":"Order Line Item",
 	     "CalculationDate":"Ready for Activation Date",
@@ -36,23 +36,7 @@
 	     "Delimiter":"commas"
 	     
 	     },
-	     "verifyDelimiterSuffix":{
-	     "DataSourceName":"Automation1",
-	     "FileExtenstion1":"csv",
-	     "FileExtenstion2":"tsv",
-	     "TransMetaData":"Order Line Item",
-	     "CalculationDate":"Ready for Activation Date",
-	     "Product":"Base Product",
-	     "ProgramAccount":"Bill To",
-	     "Suffixscenario1":"_part",
-	     "Suffixscenario2":"suffix1234",
-	     "Suffixscenario3":"_#$%^&**suff676",
-	     "Suffixscenario4":"tab_tab",
-	     "Delimiterscenario1":"semicolon",
-	     "Delimiterscenario2":"open braces",
-	     "Delimiterscenario3":"forward slash",
-	     "Delimiterscenario3":"tab"
-	     },
+	     
 	     "filterDataSource":{
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains",

@@ -2,21 +2,26 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Smoke Suite for SFDC Rebates">
 
-	<!-- <listeners>
+	<listeners>
 		<listener class-name="com.apttus.extent.report.ExtentTestNGIReporterListener" />
-	</listeners> -->
+	</listeners>
 
 	<parameter name="application" value="apttusCloud" />
 	<parameter name="runParallel" value="false" />
 	<parameter name="environment" value="config.properties" />
 	<parameter name="browser" value="Chrome" />
 	<parameter name="hubURL" value="http://localhost:4444/wd/hub" />
-    <parameter name="qTestPropertyFile" value="stagingSmokeQtest.properties" />
+    <parameter name="qTestPropertyFile" value="SmokeQtest.properties" />
 	<test thread-count="3" name="test" parallel="classes">
-
+       <groups>
+           <run>
+                <include name="Regression" />
+           </run>
+       </groups>
+ 
 	 <classes>
 			<class name="com.apttus.sfdc.rebates.datasource.DataSourceTest" />
 			
 		</classes>
-	</test> <!-- Test -->
-</suite> <!-- Suite -->
+	</test> 
+</suite> 

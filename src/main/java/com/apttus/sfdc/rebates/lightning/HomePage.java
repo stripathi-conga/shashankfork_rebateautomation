@@ -34,11 +34,6 @@ public class HomePage extends StartUpPage {
 		sfdcAcolyte.setWaitTime(60);
 	}
 	 	
-	/**
-	 * Log out from Application
-	 * @return
-	 * @throws Exception
-	 */
 	public HomePage logout() throws Exception {
 		sfdcAcolyte.waitTillElementIsClickable(closeWindow)
 		.jsClick(closeWindow);
@@ -49,12 +44,7 @@ public class HomePage extends StartUpPage {
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 	
-	/**
-	 * DataSourceNavigation
-	 * Need to add steps for datasource navigate in place of direct URL Launch
-	 */
-
-		public DataSourcePage navigateToDataSource() throws Exception {
+	public DataSourcePage navigateToDataSource() throws Exception {
 		
 		
 		sfdcAcolyte.waitTillElementIsClickable(dataSourcelnk).
