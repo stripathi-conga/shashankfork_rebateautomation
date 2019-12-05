@@ -1,16 +1,10 @@
-package com.apttus.sfdc.Rebates2.common;
+package com.apttus.sfdc.rebates.common;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -23,9 +17,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.apttus.ui.fundamentals.WebElementBuilder;
-
 
 public class GenericPage extends StartUpPage {
 	
@@ -156,15 +147,12 @@ public class GenericPage extends StartUpPage {
 		}
 	}
 	
-	
-	
 	public void doubleClick(WebElement element) throws Exception {
 		Actions builder = new Actions(driver);
 		sfdcAcolyte.waitTillElementIsVisible(element);
 		builder.doubleClick(element).build().perform();
 		sfdcAcolyte.waitTillElementIsVisible(element);
 	}
-	
 	
 	/**
 	 * To refresh Page
@@ -175,70 +163,8 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.refreshPage();
 	}
 	
-	
-     public WebElement inputAutoCompleteFieldwithLabel(String label) throws Exception {
-	    return (new WebElementBuilder(this.driver))
-	                 .getElementWithCSSText("label", label)
-	                 .getParentElement()
-	                 .getFirstChildElement()
-	                 .getNextSiblingElement()
-	                 .getElementWithCSS("input").getWebElement();
-     }
-     /**
- 	 * To clear given Field
- 	 * param WebElement   
- 	 * @return
- 	 * @throws Exception
- 	 */	
- 	public void clearField(WebElement eleToClear) throws Exception
- 	{	
- 		sfdcAcolyte.waitTillElementIsVisible(eleToClear);
- 		eleToClear.sendKeys(Keys.CONTROL + "a");
- 		eleToClear.sendKeys(Keys.DELETE);
- 	}	
-     
- 	/*
- 	 * @param String Value
- 	 * @return WebElement
- 	 * @throws Exception
- 	 */
- 	public WebElement getTextFieldElementWithLabel(String fieldLabel,String value) throws Exception {
- 		WebElement element=new WebElementBuilder(driver).getElementContainingText(agrFieldLbl, fieldLabel)
- 				.getParentElement()
- 				.getNextSiblingElement()
- 				.getElementWithCSS(value)
- 				.getWebElement();
- 		return element;   
- 	}
  	
- 	/**
- 	 * To delete the temp directory created
- 	 * @throws IOException
- 	 */
- 	public void deleteTempDirectory() throws IOException {
- 		File tempDirectory = new File(System.getProperty("user.dir") + File.separator + "temp" + File.separator);;
- 		if (tempDirectory.exists()) 
- 			FileUtils.deleteDirectory(tempDirectory); 
- 	}
- 	/**
-	 * To split string with required parameter of given index
-	 * @param String textString
-	 * @param String splitText 
-	 * @param Integer index
- 	 * @return String
-	 * @throws Exception
-	 */
-	public String splitString(String textString, String splitText, int index) throws Exception {
-		return textString.split(splitText)[index].trim();
-	}
-
-    
-    /**
-     * Update dropdown values
-     * @param  field name, field value
-     * @return webElement
-     * @throws Exception
-     */
+ 	
      public void updateAgrmtDDFieldValues(String fieldName, String fieldValue) throws Exception {
          sfdcAcolyte.selectComboByText(sfdcAcolyte.getComboboxElementWithLabel(fieldName), fieldValue);
      }
@@ -252,197 +178,7 @@ public class GenericPage extends StartUpPage {
    		return PageFactory.initElements(driver, GenericPage.class);
    	}
 
-    /**
- 	 * Get active action panel buttons
- 	 * @param  lstElement, frameElement
- 	 * @return action panel buttons displayed
- 	 * @throws Exception
- 	 */
- 	public List<String> getActiveActionPanelBtn(List<WebElement> lstElement, WebElement frameElement) throws Exception {
- 		sfdcAcolyte.waitTillFrameIsAvailableAndSwitch(frameElement);
- 		List<String> activeActionPanelBtn = new ArrayList<String>();
- 		for (WebElement actionBtn : lstElement) {
- 			if (actionBtn.isDisplayed())
- 				activeActionPanelBtn.add(actionBtn.getText());
- 		}
- 		sfdcAcolyte.switchToDefaultContent();
- 		return activeActionPanelBtn;
- 	}
- 	
- 	public int getWidthValue(String sizeAfterZoomOut, Map<String, String> testData) throws NumberFormatException, Exception {
-		return Integer.parseInt(splitString(
-				splitString(splitString(sizeAfterZoomOut, testData.get("SplitTextSemiCol"),
-						Integer.parseInt(testData.get("SplitIndexZero"))), testData.get("SplitTextCol"), Integer.parseInt(testData.get("SplitIndexOne"))),
-				testData.get("SplitText"), Integer.parseInt(testData.get("SplitIndexZero"))));
-	}
- 	
- 	/**
-	 * This method will search text in PDF and return matching text from pdf.
-	 * 
-	 * @param textToSearch
-	 * @return
-	 * @throws Exception
-	 */
-	public String searchTextInPdf(String textToSearch) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(pdfViewerContainer);
-		sfdcAcolyte.waitTillElementIsVisible(numPages);
-		sfdcAcolyte.waitTillElementIsVisible(textToSelect).waitTillElementIsClickable(clearSearchText)
-				.click(clearSearchText);
-		sfdcAcolyte.waitTillElementIsVisible(searchBoxInPdf).sendKeysTo(searchBoxInPdf, textToSearch)
-				.sendBoardKeys(Keys.ENTER);
-		if (!chekboxHighLightAll.isDisplayed()) {
-			sfdcAcolyte.click(searchBoxInPdf);
-			sfdcAcolyte.waitTillElementIsClickable(chekboxHighLightAll);
-			chekboxHighLightAll.click();
-		} else {
-			sfdcAcolyte.waitTillElementIsClickable(chekboxHighLightAll);
-			chekboxHighLightAll.click();
-		}
-		sfdcAcolyte.waitTillElementIsVisible(btnfindNextInPDF);
-		sfdcAcolyte.waitTillElementIsVisible(textToSelect);
-		sfdcAcolyte.waitTillElementIsVisible(resultCount);
-
-		return resultCount.getText();
-	}
-	
-
-	
-	
-	
-	/**
-	 * Verify Activity History with OR condition
-	 * @return page
-	 * @throws Exception
-	 */
-	public boolean verifyActivityStatus(String activity, String statusCompleted, String esignedStatus)
-			throws Exception {
-		boolean status = false;
-		if ((activity.contains(statusCompleted)) || (activity.contains(esignedStatus))) {
-			status = true;
-		}
-		return status;
-	}
-	
-	/**
-	 * Get attribute value
-	 * 
-	 * @param element
-	 * @return Attribute Value.
-	 */
-
-	public String getAttributeValue(WebElement field, String attributeName) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(field);
-		return field.getAttribute(attributeName);
-	}
-
-	/**
-	 * Select text from pdf.
-	 * @param testData 
-	 * @throws Exception
-	 */
-	public void selectElement(Map<String, String> testData) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(pdfViewerContainer);
-		sfdcAcolyte.waitTillElementIsVisible(numPages);
-		waitForLoadPdf(numPages,testData.get("PageCount"));
-		sfdcAcolyte.waitTillElementIsVisible(textToSelect);
-		Actions action = new Actions(driver);
-		action.doubleClick(textToSelect).perform();
-		action.contextClick(textToSelect).perform();
-	}
-
-	/**
-	 * Select clause from drop-down on review screen.
-	 * @param clauseName
-	 * @throws Exception
-	 */
-	public void selectClauseDropDown(String clauseName) throws Exception {
-		sfdcAcolyte.waitTillElementIsClickable(dpnClause)
-		.click(dpnClause);
-		Select select = new Select(dropDownClause);
-		select.selectByVisibleText(clauseName);
-	}
-	
-	/**
-	 * Wait for PDF to load.
-	 * @param pageCount 
-	 * @param numPages 
-	 * @throws Exception
-	 */
-	public void waitForLoadPdf(WebElement numPages, String pageCount) throws Exception {
-		boolean checkCond = false;
-		Instant start = Instant.now();
-		Instant now;
-		do {
-			now = Instant.now();
-			if(Duration.between(start, now).toMillis() >= 10000) {
-				checkCond = true;
-				break;
-			}
-			if(numPages.getText().contains(pageCount)) {
-				checkCond = true;
-				break;
-			}
-			sfdcAcolyte.waitTillElementIsVisible(pdfViewerContainer);
-			sfdcAcolyte.waitTillElementIsVisible(numPages);
-		} while (checkCond==false);
-	}
-
-	/**
-	 * Check Record type
-	 * @param  String value and Array
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public boolean checkRecordType(String arrayRecType[], String recordTypeName) throws Exception{
-		ArrayList<String> recordType = new ArrayList<String>(Arrays.asList(arrayRecType));
-		return recordType.contains(recordTypeName)?true : false;
-	}
-
-	/**
-	 * @param URL
-	 * @param uniqueId
-	 * @param element
-	 * @throws Exception
-	 */
-	public void navigateURL(String URL,String uniqueId, WebElement element) throws Exception {
-		sfdcAcolyte.navigateTo(URL+uniqueId);
-		sfdcAcolyte.waitTillElementIsVisible(element);
-	}
-	
-	/**
- 	 * Method to get the text of list of elements
- 	 * @param List<WebElement> lstFieldName   
- 	 * @return list of text of WebElement
- 	 * @throws Exception
- 	 */	
- 	public List<String> getTextOfListOfElements(List<WebElement> lstFieldName) throws Exception {
- 		List<String> lstOfFiles = new ArrayList<String>();
- 		for(WebElement ele:lstFieldName )	
- 			lstOfFiles.add(ele.getText().trim());
- 		return lstOfFiles;
- 	}
- 	
- 	/**
-	 * Get Title's text from element
-	 * 
-	 * @param Web Element
-	 * @return
-	 * @throws Exception
-	 */
-	public List<String> getListOfTitlesForColumn(List<WebElement> lstFieldName, String attributeName) throws Exception {
-		List<String> lstOfColtxt = new ArrayList<String>();
-		for (WebElement ele : lstFieldName)
-			lstOfColtxt.add(ele.getAttribute(attributeName));
-		return lstOfColtxt;
-	}
-	
-	/**
-	 * To check element is present.
-	 * @param WebElement btn
-	 * @param WebElement frame
-	 * @return GenericPage
-	 * @throws Exception
-	 */	
+  
 	public GenericPage switchToFrame(WebElement btn, WebElement frame) throws Exception {
 		boolean checkCond = false;
 		Instant start = Instant.now();
@@ -463,11 +199,6 @@ public class GenericPage extends StartUpPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 	
-	/**
-	 * This method will return Current URL on browser.
-	 * @return
-	 * @throws Exception
-	 */
 	public String getCurrentUrl() throws Exception {
 		return sfdcAcolyte.getCurrentURL();
 	}
@@ -483,33 +214,7 @@ public class GenericPage extends StartUpPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 	
-	/**
-	 * Check File exists or not
-	 * @param fileName
-	 * @return
-	 * @throws IOException
-	 */
-	public boolean checkFileExists(String fileName) throws IOException {
-		boolean checkCond = false;
-		Instant start = Instant.now();
-		do {
-			Instant now = Instant.now();
-			if (Duration.between(start, now).toMillis() >= 25) {
-				break;
-			}
-			if (new File(fileName).exists()) {
-				checkCond = true;
-				break;
-			} 
-		} while(checkCond==false);
-		return checkCond;
-	}
-	/**
-	 * To verify action button Enabled
-	 * @param List
-	 * all Button
-	 * @throws Exception
-	 */
+	
 	public boolean actionButtonEnabled(List<WebElement> buttonList) throws Exception {
 		boolean flag = true;
 		for (WebElement button : buttonList) {

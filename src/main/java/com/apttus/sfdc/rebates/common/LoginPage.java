@@ -1,14 +1,11 @@
-package com.apttus.sfdc.Rebates2.common;
+package com.apttus.sfdc.rebates.common;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import com.apttus.sfdc.Rebates2.lightning.HomePage;
-
-
-
+import com.apttus.sfdc.rebates.lightning.HomePage;
 
 public class LoginPage extends StartUpPage {
 	
@@ -23,7 +20,6 @@ public class LoginPage extends StartUpPage {
 	@FindBy(id="Login")
 	public WebElement btnLogin;
 	
-
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
@@ -36,15 +32,12 @@ public class LoginPage extends StartUpPage {
 	}
 	
 	public HomePage loginToApp(String userName, String password) throws Exception {
-		Thread.sleep(5000);
-		sfdcAcolyte.waitTillElementIsClickable(txtUserName)
-		.clear(txtUserName)
-		.clear(txtPassword);
-		txtUserName.sendKeys(userName);
 		
+		sfdcAcolyte.waitTillElementIsClickable(txtUserName);
+		txtUserName.sendKeys(userName);
 		txtPassword.sendKeys(password);
 		btnLogin.click();
-		Thread.sleep(10000);
+		
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 	

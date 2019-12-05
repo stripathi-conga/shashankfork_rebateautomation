@@ -37,21 +37,21 @@
 	     
 	     },
 	     "verifyDelimiterSuffix":{
-	     "DataSourceName":"DSrcAutomation",
+	     "DataSourceName":"Automation1",
 	     "FileExtenstion1":"csv",
 	     "FileExtenstion2":"tsv",
 	     "TransMetaData":"Order Line Item",
 	     "CalculationDate":"Ready for Activation Date",
 	     "Product":"Base Product",
 	     "ProgramAccount":"Bill To",
-	     "SuffixB":"_part",
-	     "SuffixC":"suffix1234",
-	     "SuffixD":"_#$%^&**suff676",
-	     "SuffixE":"tab_tab",
-	     "DelimiterB":"semicolon",
-	     "DelimiterC":"open braces",
-	     "DelimiterD":"forward slash",
-	     "DelimiterE":"tab"
+	     "Suffixscenario1":"_part",
+	     "Suffixscenario2":"suffix1234",
+	     "Suffixscenario3":"_#$%^&**suff676",
+	     "Suffixscenario4":"tab_tab",
+	     "Delimiterscenario1":"semicolon",
+	     "Delimiterscenario2":"open braces",
+	     "Delimiterscenario3":"forward slash",
+	     "Delimiterscenario3":"tab"
 	     },
 	     "filterDataSource":{
 	     "ColumnName":"Name",

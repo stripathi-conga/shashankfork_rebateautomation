@@ -1,5 +1,4 @@
-package com.apttus.sfdc.Rebates2.library;
-
+package com.apttus.sfdc.rebates.ui.library;
 
 import java.util.Properties;
 
@@ -9,7 +8,7 @@ import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.apttus.selenium.NGHelper;
-import com.apttus.sfdc.Rebates2.lightning.HomePage;
+import com.apttus.sfdc.rebates.lightning.HomePage;
 
 public class Rebatesinit {
 
@@ -44,7 +43,6 @@ public class Rebatesinit {
 		
 	public Rebatesinit(WebDriver driver) {
 		this.driver=driver;
-		/*sfdcAcolyte=new Acolyte(driver);*/
 	   PageFactory.initElements(driver, this);
 	}
 	

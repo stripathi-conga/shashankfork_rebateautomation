@@ -1,19 +1,16 @@
-package com.apttus.sfdc.Rebates2.lightning;
+package com.apttus.sfdc.rebates.lightning;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import com.apttus.sfdc.Rebates2.common.StartUpPage;
 
-import com.apttus.sfdc.Rebates2.library.DataSourcePage;
-
+import com.apttus.sfdc.rebates.common.StartUpPage;
+import com.apttus.sfdc.rebates.ui.library.DataSourcePage;
 
 
 public class HomePage extends StartUpPage {
 	
-	@FindBy(className="switch-to-lightning")
-	public WebElement linkSwitchToLight;
 	
 	@FindBy(css=".logout ")
 	public WebElement logOutLink;
@@ -24,28 +21,18 @@ public class HomePage extends StartUpPage {
 	@FindBy(css=".oneUserProfileCardTrigger span .uiImage")
 	public WebElement userProfileIcon;
 	
-	@FindBy(xpath="//span[text()='Templates']")
-	public WebElement templatelnk;
-	
-	@FindBy(xpath="//span[text()='Link Templates']")
-	public WebElement lnkTemplatelnk;
-	
 	@FindBy(xpath="//span[text()='Data Sources']")
-	public WebElement datasrclnk;
+	public WebElement dataSourcelnk;
 	
 	@FindBy(xpath="//*[@data-aura-class='uiOutputText forceBreadCrumbItem'][text()='Link Templates']")
 	public WebElement lnkTemplatepagelabel;
 	
-	
-	public WebElement lnkAgrDocSearch;	
 	
 	public HomePage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
 		sfdcAcolyte.setWaitTime(60);
 	}
-	
-	
 	 	
 	/**
 	 * Log out from Application
@@ -70,8 +57,8 @@ public class HomePage extends StartUpPage {
 		public DataSourcePage navigateToDataSource() throws Exception {
 		
 		
-		sfdcAcolyte.waitTillElementIsClickable(datasrclnk).
-        jsClick(datasrclnk);
+		sfdcAcolyte.waitTillElementIsClickable(dataSourcelnk).
+                    jsClick(dataSourcelnk);
 			
 		return PageFactory.initElements(driver, DataSourcePage.class);
 		

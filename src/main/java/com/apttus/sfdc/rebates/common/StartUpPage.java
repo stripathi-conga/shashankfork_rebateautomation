@@ -1,9 +1,9 @@
-package com.apttus.sfdc.Rebates2.common;
+package com.apttus.sfdc.rebates.common;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-import com.apttus.sfdc.Rebates2.lightning.HomePage;
+import com.apttus.sfdc.rebates.lightning.HomePage;
 import com.apttus.ui.fundamentals.Acolyte;
 
 public class StartUpPage {
