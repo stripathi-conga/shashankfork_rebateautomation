@@ -69,11 +69,11 @@ public class DataSourceTest {
 			dataSourcePage.removeFilter();
 			    
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e,driver);
 		}
 	}
 		
-	/*@Test(description = "Verify the Data Source Validation",groups = {"Smoke"})
+	@Test(description = "Verify the Data Source Validation",groups = {"Smoke"})
 	public void duplicateDataSource() throws Exception {
 		try {
 			dataSourcePage=homepage.navigateToDataSource();
@@ -99,7 +99,7 @@ public class DataSourceTest {
 			dataSourcePage.removeFilter();
 			
 		} catch (Exception e) {
-			throw new Exception(e);
+			throw new CustomException(e,driver);
 		}
 	}
 	@Test(description = "Verify mandatory & Field Validation-Data Source File Ingestion attribute",groups = {"Smoke"})
@@ -139,7 +139,7 @@ public class DataSourceTest {
 		assertEquals(dataSourcePage.responseProduct, dataSourcePage.productResponse.getText());
 			
 	}catch (Exception e) {
-		throw new Exception(e);
+		throw new CustomException(e,driver);
 	}}	
 	
     
@@ -156,7 +156,7 @@ public class DataSourceTest {
 		} catch (Exception e) {
 			throw new CustomException(e,driver);
 		}
-	}*/
+	}
 	
 	@AfterMethod(alwaysRun = true)
 	public void cleanUp() throws Exception {
