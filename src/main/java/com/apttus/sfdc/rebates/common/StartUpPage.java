@@ -24,8 +24,4 @@ public class StartUpPage {
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
 			
-		
-	public void killDriver() {
-		driver.quit();
-	}
 }

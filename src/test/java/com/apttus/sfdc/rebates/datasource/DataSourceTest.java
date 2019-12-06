@@ -160,7 +160,8 @@ public class DataSourceTest {
 
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
-		startUpPage.killDriver();
+		
+		driver.quit();
 	}
 }
 
