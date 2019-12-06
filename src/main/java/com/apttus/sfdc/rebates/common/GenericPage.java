@@ -248,7 +248,7 @@ public class GenericPage extends StartUpPage {
 		
 	}
 
-	public GenericPage recordDelete() throws Exception {
+	public GenericPage deleteRecord() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(btnfilterSave);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}

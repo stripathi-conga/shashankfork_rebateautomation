@@ -10,7 +10,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.apttus.customException.CustomException;
 import com.apttus.helpers.Efficacies;
 import com.apttus.helpers.JavaHelpers;
@@ -21,9 +20,9 @@ import com.apttus.sfdc.rebates.lightning.HomePage;
 import com.apttus.sfdc.rebates.ui.library.DataSourcePage;
 import com.apttus.sfdc.rebates.ui.library.Rebatesinit;
 import com.apttus.sfdc.rudiments.utils.GeneralHelper;
-import com.apttus.selenium.NGHelper;
+
 public class DataSourceTest {
-	public NGHelper ngHelper;
+	
 	WebDriver driver;
 	public  Rebatesinit rebatesinit;
 	LoginPage loginPage;
