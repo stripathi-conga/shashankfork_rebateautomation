@@ -7,7 +7,6 @@ import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -43,8 +42,8 @@ public class DataSourceTest {
 		driver = utils.getDriver();
 		startUpPage = new StartUpPage(driver);
 		configProperty = GeneralHelper.loadPropertyFile(environment);
-		loginPage = startUpPage.navigateToLoginPage(configProperty.getProperty("sfloginURL"));
-		loginPage.waitForLoginPageLoad().loginToApp(configProperty.getProperty("username"),configProperty.getProperty("password"));
+		loginPage = startUpPage.navigateToLoginPage(configProperty.getProperty("LoginURL"));
+		loginPage.waitForLoginPageLoad().loginToApp(configProperty.getProperty("LoginUser"),configProperty.getProperty("LoginPassword"));
 		rebatesinit= new Rebatesinit(driver);
 		homepage = rebatesinit.landOnHomepage();
 			
@@ -57,13 +56,13 @@ public class DataSourceTest {
 			dataSourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
 			long ln = JavaHelpers.generateRandomNumber();
-			dataSourcePage.createSaveNewDataSource(testData.get("DataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
+			dataSourcePage.createDataSource(testData.get("DataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
 					                               testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
 					                               testData.get("FileExtenstion2"),testData.get("Delimiter"));
 			assertEquals(dataSourcePage.success, dataSourcePage.successresponse.getText());
 			dataSourcePage.closeToastMessage();
 			dataSourcePage=homepage.navigateToDataSource();
-			dataSourcePage.dataSourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("DataSourceName")+ln);
+			dataSourcePage.filterDataSource(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("DataSourceName")+ln);
 			dataSourcePage.dataSourceRefresh();
 			dataSourcePage.deleteFilterRecord();
 			dataSourcePage.removeFilter();
@@ -121,7 +120,7 @@ public class DataSourceTest {
 		
 		dataSourcePage=homepage.navigateToDataSource();
 		dataSourcePage.dataSourceRefresh();
-		dataSourcePage.verifyValidation_DataSourceName();
+		dataSourcePage.verifyValidationDataSourceName();
 		assertEquals(dataSourcePage.responseDataSource, dataSourcePage.getdatasrcResponse);
 		
 		dataSourcePage=homepage.navigateToDataSource();
@@ -129,13 +128,13 @@ public class DataSourceTest {
 		dataSourcePage.verifyValidationTransactionMetaData("ValidationAutomation");
 		assertEquals(dataSourcePage.responseMetaData, dataSourcePage.getMetadataResponse);
 		
-		dataSourcePage.verifyValidation_CalculationDate("ValidationAutomation", "Order Line Item");
+		dataSourcePage.verifyValidationCalculationDate("ValidationAutomation", "Order Line Item");
 		assertEquals(dataSourcePage.responsecalculationdate, dataSourcePage.getCaldateResponse);
 		dataSourcePage.dataSourceRefresh();
-		dataSourcePage.verifyValidation_ProgramAccount("ValidationAutomation","Order Line Item","Ready for Activation Date");
+		dataSourcePage.verifyValidationProgramAccount("ValidationAutomation","Order Line Item","Ready for Activation Date");
 		assertEquals(dataSourcePage.responsePrgmAccount, dataSourcePage.getProgram);
 		
-		dataSourcePage.verifyValidation_Product(testData.get("ProgramAccount"));
+		dataSourcePage.verifyValidationProduct(testData.get("ProgramAccount"));
 		assertEquals(dataSourcePage.responseProduct, dataSourcePage.productResponse.getText());
 			
 	}catch (Exception e) {
@@ -149,7 +148,7 @@ public class DataSourceTest {
 			dataSourcePage=homepage.navigateToDataSource();
 			testData = new Efficacies().readJsonFile("datasource.json");
 			dataSourcePage.dataSourceRefresh();
-			dataSourcePage.dataSourceFilter(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
+			dataSourcePage.filterDataSource(testData.get("ColumnName"),testData.get("ColumnOperator"),testData.get("FilterValue"));
 			dataSourcePage.deleteFilter();
 			assertEquals(dataSourcePage.newResponseFilter, dataSourcePage.responseFilter);
 		   
@@ -158,10 +157,6 @@ public class DataSourceTest {
 		}
 	}
 	
-	@AfterMethod(alwaysRun = true)
-	public void cleanUp() throws Exception {
-		
-	}
 
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {

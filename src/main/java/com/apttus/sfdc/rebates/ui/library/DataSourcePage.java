@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.common.GenericPage;
 import com.apttus.sfdc.rebates.common.StartUpPage;
 
@@ -179,7 +177,6 @@ public class DataSourcePage extends StartUpPage {
 	public String getdatasrcResponse;
 	public String getMetadataResponse;
 	public String getCaldateResponse;
-	public NGHelper ngHelper;
 	GenericPage genericPage;
 	WebDriverWait wait;
 
@@ -192,7 +189,7 @@ public class DataSourcePage extends StartUpPage {
 
 	}
 
-	public DataSourcePage createSaveNewDataSource(String DataSourceName, String TransMetaData, String CalculationDate,
+	public DataSourcePage createDataSource(String DataSourceName, String TransMetaData, String CalculationDate,
 			String Product, String ProgramAccount, String FileSuffix, String FileExtenstion1, String FileExtenstion2,
 			String Delimiter) throws Exception {
 
@@ -269,7 +266,7 @@ public class DataSourcePage extends StartUpPage {
 
 	}
 
-	public void verifyValidation_DataSourceName() throws Exception {
+	public void verifyValidationDataSourceName() throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(btncreateNewDataSource).waitTillElementIsClickable(btncreateNewDataSource)
 				.jsClick(btncreateNewDataSource).waitTillElementIsVisible(btnsubmitdataSource);
@@ -290,7 +287,7 @@ public class DataSourcePage extends StartUpPage {
 		closeToastMessage();
 	}
 
-	public void verifyValidation_CalculationDate(String DataSourceName, String TransMetaData) throws Exception {
+	public void verifyValidationCalculationDate(String DataSourceName, String TransMetaData) throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(btncreateNewDataSource).waitTillElementIsClickable(btncreateNewDataSource)
 				.jsClick(btncreateNewDataSource);
 		sfdcAcolyte.waitTillElementIsVisible(btnsubmitdataSource);
@@ -302,7 +299,7 @@ public class DataSourcePage extends StartUpPage {
 
 	}
 
-	public void verifyValidation_ProgramAccount(String DataSourceName, String TransMetaData, String CalculationDate)
+	public void verifyValidationProgramAccount(String DataSourceName, String TransMetaData, String CalculationDate)
 			throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(btncreateNewDataSource).waitTillElementIsClickable(btncreateNewDataSource)
 				.jsClick(btncreateNewDataSource);
@@ -315,7 +312,7 @@ public class DataSourcePage extends StartUpPage {
 		closeToastMessage();
 	}
 
-	public void verifyValidation_Product(String ProgramAccount) throws Exception {
+	public void verifyValidationProduct(String ProgramAccount) throws Exception {
 		sfdcAcolyte.click(ddlselctTransMetaData).waitTillElementIsVisible(ddlOrder);
 		sfdcAcolyte.click(txtdataSource);
 		sfdcAcolyte.click(ddlselectAccount).selectComboByText(ddlselectAccount, ProgramAccount)
@@ -368,7 +365,7 @@ public class DataSourcePage extends StartUpPage {
 
 	}
 
-	public DataSourcePage dataSourceFilter(String ColumnName, String ColumnOperator, String FilterValue)
+	public DataSourcePage filterDataSource(String ColumnName, String ColumnOperator, String FilterValue)
 			throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(lnkrecentlyviewed).click(lnkrecentlyviewed)
@@ -406,19 +403,6 @@ public class DataSourcePage extends StartUpPage {
 
 		sfdcAcolyte.waitTillElementIsVisible(lnkremoveAllfilter);
 		sfdcAcolyte.click(lnkremoveAllfilter).click(btnfilterSave);
-		return PageFactory.initElements(driver, DataSourcePage.class);
-
-	}
-
-	public DataSourcePage tempNewDataSource() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(btncreateNewDataSource).waitTillElementIsClickable(btncreateNewDataSource)
-				.jsClick(btncreateNewDataSource);
-		sfdcAcolyte.waitTillElementIsClickable(txtdataSource).click(txtdataSource).sendKeysTo(txtdataSource, "klklkl");
-		sfdcAcolyte.click(ddlselctTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlselctTransMetaData)
-				.selectComboByText(ddlselctTransMetaData, "Order Line Item").click(ddlselectcalculationdateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
-				.selectComboByText(ddlselectcalculationdateAttribute, "Ready for Activation Date");
-
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 

@@ -18,19 +18,12 @@ public class StartUpPage {
 		
 	}
 	
-	public LoginPage navigateToLoginPage(String baseURL) throws Exception {
+	public LoginPage navigateToLoginPage(String LoginURL) throws Exception {
 		sfdcAcolyte.maximizeWindow();
-		sfdcAcolyte.navigateTo(baseURL);
+		sfdcAcolyte.navigateTo(LoginURL);
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
-	
-	public HomePage navigateToHomePage(String homeURI) throws Exception {
-		
-		sfdcAcolyte.navigateTo(homeURI);	
-	
-		return PageFactory.initElements(driver, HomePage.class);
-	}
-		
+			
 		
 	public void killDriver() {
 		driver.quit();
