@@ -216,7 +216,7 @@ public class DataSourcePage extends StartUpPage {
 
 	}
 
-	public DataSourcePage verifyduplicate(String duplicateDataSource, String TransMetaData, String CalculationDate,
+	public DataSourcePage verifyDuplicate(String duplicateDataSource, String TransMetaData, String CalculationDate,
 			String Product, String ProgramAccount, String FileSuffix, String FileExtenstion1, String FileExtenstion2,
 			String Delimiter) throws Exception {
 
@@ -242,7 +242,7 @@ public class DataSourcePage extends StartUpPage {
 
 	}
 
-	public void duplicateSaveNewDataSource(String DupDataSourceName, String TransMetaData, String CalculationDate,
+	public void duplicateDataSource(String DupDataSourceName, String TransMetaData, String CalculationDate,
 			String Product, String ProgramAccount, String FileSuffix, String FileExtenstion1, String FileExtenstion2,
 			String Delimiter) throws Exception {
 

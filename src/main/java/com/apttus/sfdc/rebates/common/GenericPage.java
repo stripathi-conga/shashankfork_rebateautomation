@@ -105,14 +105,7 @@ public class GenericPage extends StartUpPage {
 	public void refreshPage() throws Exception {
 		sfdcAcolyte.refreshPage();
 	}
-	
- 	
- 	
-     public void updateAgrmtDDFieldValues(String fieldName, String fieldValue) throws Exception {
-         sfdcAcolyte.selectComboByText(sfdcAcolyte.getComboboxElementWithLabel(fieldName), fieldValue);
-     }
-     
-    
+	 	   
    	public GenericPage checkInnerTextMatches(WebElement element, String value) throws Exception {
    		sfdcAcolyte.waitTillInnerTextMatches(element, value);
    		return PageFactory.initElements(driver, GenericPage.class);
@@ -231,7 +224,7 @@ public class GenericPage extends StartUpPage {
 	}
 		
 	
-    public GenericPage sfdcSearchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
+    public GenericPage searchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
     	
     	sfdcAcolyte.click(lnkrecentlyviewed).
 		waitTillElementIsVisible(lnkallviewed).click(lnkallviewed);
@@ -265,7 +258,8 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsClickable(closeToastResponse).click(closeToastResponse);
 		
 		return PageFactory.initElements(driver, GenericPage.class);
-	}   
+	}  
+	
 	public void waitTillStaleElementToBeVisible(WebElement ele) {
  		new WebDriverWait(driver, waitTime)
  		.until(ExpectedConditions.refreshed(

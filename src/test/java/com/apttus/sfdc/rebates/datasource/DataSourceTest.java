@@ -79,14 +79,14 @@ public class DataSourceTest {
 			testData = new Efficacies().readJsonFile("datasource.json");
 			long ln = JavaHelpers.generateRandomNumber();
 			dataSourcePage.dataSourceRefresh();
-			dataSourcePage.duplicateSaveNewDataSource(testData.get("DupDataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
+			dataSourcePage.duplicateDataSource(testData.get("DupDataSourceName")+ln, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
 			
 		    String DuplicateDataSource=testData.get("DupDataSourceName")+ln;
 		    dataSourcePage=homepage.navigateToDataSource();	
 		    dataSourcePage.dataSourceRefresh();
-		    dataSourcePage.verifyduplicate(DuplicateDataSource, testData.get("TransMetaData"), testData.get("CalculationDate"),
+		    dataSourcePage.verifyDuplicate(DuplicateDataSource, testData.get("TransMetaData"), testData.get("CalculationDate"),
                            testData.get("Product"),testData.get("ProgramAccount"),testData.get("FileSuffix"),testData.get("FileExtenstion1"), 
                            testData.get("FileExtenstion2"),testData.get("Delimiter"));
 			assertEquals(dataSourcePage.duplicate, dataSourcePage.duplicateRecord);

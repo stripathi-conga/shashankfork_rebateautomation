@@ -11,7 +11,7 @@
 	<parameter name="environment" value="config.properties" />
 	<parameter name="browser" value="Chrome" />
 	<parameter name="hubURL" value="http://localhost:4444/wd/hub" />
-    <parameter name="qTestPropertyFile" value="RegressionQtest.properties" />
+    <parameter name="qTestPropertyFile" value="SmokeQtest.properties" />
 	<test thread-count="3" name="test" parallel="classes">
        <groups>
            <run>
