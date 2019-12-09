@@ -113,7 +113,6 @@ public class DataSourcePage extends StartUpPage {
 	public WebElement btnconfirmDeleteAction;
 
 	/* .............XpathValidations................... */
-
 	@FindBy(css = "span[class*='toastMessage']")
 	public WebElement tempDataSrcResponse;
 
@@ -186,6 +185,7 @@ public class DataSourcePage extends StartUpPage {
 		sfdcAcolyte.setWaitTime(60);
 		genericPage = new GenericPage(driver);
 		wait = new WebDriverWait(driver, 60);
+		
 
 	}
 

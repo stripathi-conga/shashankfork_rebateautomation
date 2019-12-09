@@ -1,5 +1,5 @@
 	{
-     "CreateNewAdminTemplate":{
+     "createAdminTemplate":{
 	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate1_DiscreteBenftProd",
 	     "TemplateNameTierQualifBenftProd":"Automation_AdmTemplate2_TierQualfBenftProd",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
@@ -13,20 +13,20 @@
 	     "ColumnOperator":"contains",
 	     "FilterValue":"Automation_AdmTemplate"
 	     },
-	     "ValidationAdmintemplate":{
+	     "validationAdmintemplate":{
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains",
 	     "FilterValue":"Automation_AdmTemplate"
 	     },
 	     
-	     "EditAdminTemplate":{
+	     "editAdminTemplate":{
 	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate1_DiscreteBenftProd",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains"
 	     
 	     },
-	     "VerifyActiveTemplateName":{
+	     "verifyActiveTemplateName":{
 	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate1_Active",
 	     "TemplateNameTierQualifBenftProd":"Automation_AdmTemplate2_TierQualfBenftProd",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
@@ -41,14 +41,14 @@
 	     "FilterValue":"Automation_AdmTemplate"
 	     },
 	     
-	     "ActivateAdminTemplate":{
+	     "activateAdminTemplate":{
 	     "ActiveTemplate":"AutomationActiveTemplate",
 	     "TemplateDescValue1":"ActiveTemplate",
 	     "ColumnName":"Name",
 	     "ColumnOperator":"contains"
 	     
 	     },
-	     "EditDraftTemplate":{
+	     "editDraftTemplate":{
 	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate",
 	     "TemplateDescValue1":"AutomationTest ",
 	     "ColumnName":"Name",

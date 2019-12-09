@@ -1,5 +1,5 @@
 	{
-	     "CreateNewActiveLinkTemplate":{
+	     "createNewActiveLinkTemplate":{
 	     "TemplateNameDiscreteBenftProd":"Automation_AdmTemplate1_DiscreteBenftProd",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
 	     "ColumnName":"Name",
@@ -7,7 +7,7 @@
 	     
 	     },
 	     
-	     "VerifyActiveTemplateName":{
+	     "verifyActiveTemplateName":{
 	     "TemplateNameDiscreteBenftProd":"ActiveTemplate",
 	     "TemplateNameTierQualifBenftProd":"ActiveTemplate",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
@@ -21,7 +21,7 @@
 	     "ColumnOperator":"contains",
 	     "FilterValue":"ActiveTemplate"
 	     },
-	      "VerifySingleActiveTemplateAssociation":{
+	      "verifySingleActiveTemplateAssociation":{
 	     "TemplateNameActiveOne":"AAutomationActiveOne",
 	     "TemplateNameTierQualifBenftProd":"AAutomationTemplateTwo",
 	     "TemplateDescValue1":"AutomationTest For Tier-Discrete  and Formula-Benefit Product",
@@ -70,7 +70,7 @@
 	     "TemplateName":"Template Name"
 	     },
 	     
-	     "VerifyMoreThanOneActiveTemplateAssociation_Active":{
+	     "verifyMoreThanOneActiveTemplateAssociation_Active":{
 	     "TemplateNameActiveOne":"AAutomationActiveOne",
 	     "TemplateNameActiveTwo":"AAutomationTemplateTwo",
 	     "TemplateDescValue1":"AutomationTest",
@@ -89,7 +89,7 @@
 	     "ProgramSubValue":"Point Accrual",
 	     "TemplateName":"Template Name"
 	     }, 
-	     "VerifyMoreThanOneActiveTemplateAssociation":{
+	     "verifyMoreThanOneActiveTemplateAssociation":{
 	     "TemplateNameActiveOne":"AAutomationActiveOne",
 	     "TemplateNameActiveTwo":"AAutomationTemplateTwo",
 	     "TemplateDescValue1":"AutomationTest",
@@ -108,7 +108,7 @@
 	     "ProgramSubValue":"Point Accrual",
 	     "TemplateName":"Template Name"
 	     },
-	     "VerifyMoreThanOneActiveTemplateAssociation_InActive":{
+	     "verifyMoreThanOneActiveTemplateAssociation_InActive":{
 	     "TemplateNameActiveOne":"AAutomationActiveOne",
 	     "TemplateNameActiveTwo":"AAutomationTemplateTwo",
 	     "TemplateDescValue1":"AutomationTest",
