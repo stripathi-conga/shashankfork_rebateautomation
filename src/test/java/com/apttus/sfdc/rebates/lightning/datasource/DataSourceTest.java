@@ -1,4 +1,4 @@
-package com.apttus.sfdc.rebates.datasource;
+package com.apttus.sfdc.rebates.lightning.datasource;
 
 import static org.testng.Assert.assertEquals;
 import java.util.Map;
