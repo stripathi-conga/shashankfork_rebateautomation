@@ -22,7 +22,7 @@
 		</groups>
 
 		<classes>
-			<class name="com.apttus.sfdc.rebates.datasource.DataSourceTest" />
+			<class name="com.apttus.sfdc.rebates.lightning.datasource.DataSourceTest" />
 
 		</classes>
 	</test>
