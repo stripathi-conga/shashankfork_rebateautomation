@@ -127,10 +127,10 @@ public class DataSourceTest {
 			dataSourcePage = homepage.navigateToDataSource();
 			dataSourcePage.dataSourceRefresh();
 			dataSourcePage.verifyValidationTransactionMetaData("ValidationAutomation");
-			assertEquals(dataSourcePage.responseMetaData, dataSourcePage.getMetadataResponse);
+			assertEquals(dataSourcePage.responseMetadata, dataSourcePage.getMetadataResponse);
 
 			dataSourcePage.verifyValidationCalculationDate("ValidationAutomation", "Order Line Item");
-			assertEquals(dataSourcePage.responsecalculationdate, dataSourcePage.getCaldateResponse);
+			assertEquals(dataSourcePage.responseCalculationDate, dataSourcePage.getCalDateResponse);
 			dataSourcePage.dataSourceRefresh();
 			dataSourcePage.verifyValidationProgramAccount("ValidationAutomation", "Order Line Item",
 					"Ready for Activation Date");
@@ -154,7 +154,7 @@ public class DataSourceTest {
 			dataSourcePage.filterDataSource(testData.get("ColumnName"), testData.get("ColumnOperator"),
 					testData.get("FilterValue"));
 			dataSourcePage.deleteFilter();
-			assertEquals(dataSourcePage.newResponseFilter, dataSourcePage.responseFilter);
+			assertEquals(dataSourcePage.responseFilter, dataSourcePage.responseFilter);
 
 		} catch (Exception e) {
 			throw new CustomException(e, driver);

@@ -130,7 +130,7 @@ public class DataSourcePage extends GenericPage {
 	public WebElement calculationDateResponse;
 
 	@FindBy(xpath = "//*[contains(text(),'Please select Program')]")
-	public WebElement programAcctesponse;
+	public WebElement programAcceptResponse;
 
 	@FindBy(xpath = "//*[contains(text(),'Please select Product .')]")
 	public WebElement productResponse;
@@ -154,29 +154,28 @@ public class DataSourcePage extends GenericPage {
 	public WebElement ddlOrder;
 
 	@FindBy(xpath = "//option[text()='Ready for Activation Date']")
-	public WebElement ddlcalculationdate;
+	public WebElement ddlCalculationDate;
 
 	/* .............Expected Validations................... */
 	public final String getProgram = "Please select Program Account .";
 	public final String success = "Data Source created";
 	public final String duplicate = "Duplicate Data Source Name Found";
 	public final String responseDataSource = "Please enter Data Source Name";
-	public final String responseMetaData = "Error creating record";
-	public final String responsecalculationdate = "Please select Calculation Date .";
+	public final String responseMetadata = "Error creating record";
+	public final String responseCalculationDate  = "Please select Calculation Date .";
 	public final String responsePrgmAccount = "Please select Program Account .";
 	public final String responseProduct = "Please select Product .";
 	public final String responseSuffix = "Please enter File Suffix to Ignore.";
 	public final String responseFileExtension = "Please select File Extension.";
 	public final String responseDelimiter = "Please select Delimiter.";
 	public final String responseFilter = "List view updated.";
-	public final String newResponseFilter = "List view updated.";
 	public String duplicateRecord;
 	public String getDelimiterResponse;
 	public String getFileExtensionResponse;
 	public String getSuffixResponse;
 	public String getdatasrcResponse;
 	public String getMetadataResponse;
-	public String getCaldateResponse;
+	public String getCalDateResponse;
 	GenericPage genericPage;
 	WebDriverWait wait;
 
@@ -197,7 +196,7 @@ public class DataSourcePage extends GenericPage {
 				DataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate);
 
 		sfdcAcolyte.click(ddlSelectProduct).selectComboByText(ddlSelectProduct, Product).click(ddlSelectAccount)
@@ -221,7 +220,7 @@ public class DataSourcePage extends GenericPage {
 				duplicateDataSource);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate);
 		sfdcAcolyte.click(ddlSelectProduct).selectComboByText(ddlSelectProduct, Product).click(ddlSelectAccount)
 				.selectComboByText(ddlSelectAccount, ProgramAccount);
@@ -246,7 +245,7 @@ public class DataSourcePage extends GenericPage {
 				DupDataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate);
 		sfdcAcolyte.click(ddlSelectProduct).selectComboByText(ddlSelectProduct, Product).click(ddlSelectAccount)
 				.selectComboByText(ddlSelectAccount, ProgramAccount);
@@ -288,7 +287,7 @@ public class DataSourcePage extends GenericPage {
 				DataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).selectComboByText(ddlSelectTransMetaData, TransMetaData)
 				.click(btnSubmitDataSource).click(btnCancel);
-		getCaldateResponse = calculationDateResponse.getText();
+		getCalDateResponse = calculationDateResponse.getText();
 	}
 
 	public void verifyValidationProgramAccount(String DataSourceName, String TransMetaData, String CalculationDate)
@@ -299,7 +298,7 @@ public class DataSourcePage extends GenericPage {
 				DataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate).click(btnSubmitDataSource);
 		closeToastMessage();
 	}
@@ -322,7 +321,7 @@ public class DataSourcePage extends GenericPage {
 				DataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate);
 		sfdcAcolyte.click(ddlSelectProduct).selectComboByText(ddlSelectProduct, Product).click(ddlSelectAccount)
 				.selectComboByText(ddlSelectAccount, ProgramAccount);
@@ -343,7 +342,7 @@ public class DataSourcePage extends GenericPage {
 				DataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate);
 		sfdcAcolyte.click(ddlSelectProduct).selectComboByText(ddlSelectProduct, Product).click(ddlSelectAccount)
 				.selectComboByText(ddlSelectAccount, ProgramAccount);
@@ -408,7 +407,7 @@ public class DataSourcePage extends GenericPage {
 				.click(txtDataSource).sendKeysTo(txtDataSource, DataSourceName);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder).click(ddlSelectTransMetaData)
 				.selectComboByText(ddlSelectTransMetaData, TransMetaData).click(ddlSelectCalculationDateAttribute)
-				.waitTillElementIsVisible(ddlcalculationdate)
+				.waitTillElementIsVisible(ddlCalculationDate)
 				.selectComboByText(ddlSelectCalculationDateAttribute, CalculationDate);
 		sfdcAcolyte.click(ddlSelectProduct).selectComboByText(ddlSelectProduct, Product).click(ddlSelectProduct)
 				.selectComboByText(ddlSelectAccount, ProgramAccount);
