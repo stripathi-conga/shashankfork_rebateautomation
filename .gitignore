@@ -1,11 +1,11 @@
 /target/
 /.classpath
 
-.project
+/.project/
 /
 /test-output/
 
-.settings/
+/.settings/
 
 /.idea
 /
