@@ -1,8 +1,10 @@
 /target/
 /.classpath
-.project/
+/.project
 /test-output/
 /.idea
 /logs/
 /*.ser
-.settings/
+/.gradle
+/.settings/
+
