@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Smoke Suite for SFDC Rebates" verbose="2"
+<suite name="Regression Suite for SFDC lightning Rebates" verbose="2"
 	parallel="classes" thread-count="7">
 
 	<listeners>

@@ -21,9 +21,12 @@ public class HomePage extends GenericPage {
 
 	@FindBy(xpath = "//span[text()='Data Sources']")
 	public WebElement lnkDataSource;
-
-	@FindBy(xpath = "//*[@data-aura-class='uiOutputText forceBreadCrumbItem'][text()='Link Templates']")
-	public WebElement lnkTemplatepagelabel;
+	
+	@FindBy(xpath="//div[@class='slds-icon-waffle']")
+    public WebElement btnAppLauncher;
+   
+    @FindBy(xpath="//a[text()='Apttus CIM Admin']")
+    public WebElement lnkApttusCIMAdmin;
 
 	public HomePage(WebDriver driver) {
 		super(driver);
@@ -53,4 +56,12 @@ public class HomePage extends GenericPage {
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 
+	
+	public void launchCIMApttusAdmin() throws Exception {
+       
+        sfdcAcolyte.waitTillElementIsClickable(btnAppLauncher).click(btnAppLauncher)
+        .waitTillElementIsClickable(lnkApttusCIMAdmin).click(lnkApttusCIMAdmin);
+       
+       
+    }
 }
