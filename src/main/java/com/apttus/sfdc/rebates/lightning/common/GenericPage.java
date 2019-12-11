@@ -1,5 +1,4 @@
-package com.apttus.sfdc.rebates.common;
-
+package com.apttus.sfdc.rebates.lightning.common;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -16,56 +15,61 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import com.apttus.ui.fundamentals.Acolyte;
 
-public class GenericPage extends StartUpPage {
+public class GenericPage {
+
+	public WebDriver driver;
+	public Acolyte sfdcAcolyte;
 
 	@FindBy(xpath = "//span[text()='Recently Viewed']")
-	public WebElement lnkrecentlyviewed;
+	public WebElement lnkRecentlyViewed;
 
 	@FindBy(xpath = "//span[text()='All']")
-	public WebElement lnkallviewed;
+	public WebElement lnkAllViewed;
 
 	@FindBy(xpath = "//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
-	public WebElement columnName;
+	public WebElement txtColumnName;
 
 	@FindBy(xpath = "//span[@title='Name']")
-	public WebElement titleNamecolmn;
+	public WebElement titleNameColumn;
 
 	@FindBy(xpath = "//*[@data-key='filterList']")
-	public WebElement filtericon;
+	public WebElement filterIcon;
 
 	@FindBy(xpath = "//a[text()='Add Filter']")
-	public WebElement lnkaddFilter;
+	public WebElement lnkAddFilter;
 
 	@FindBy(css = "input[placeholder='Select an Option'][input]")
-	public WebElement ddlselectField;
+	public WebElement ddlSelectField;
 
 	@FindBy(css = "div:nth-child(2) > lightning-combobox > div")
-	public WebElement ddlselectOperator;
+	public WebElement ddlSelectOperator;
 
 	@FindBy(css = "input[data-aura-class*='uiInput uiInputText ui']")
-	public WebElement txtenterValue;
+	public WebElement txtEnterValue;
 
 	@FindBy(css = "button[class$='doneButton uiButton']>span[dir='ltr']")
-	public WebElement btnfilterDone;
+	public WebElement btnFilterDone;
 
 	@FindBy(xpath = "//*[text()='List view updated.']")
 	public WebElement filterResponse;
 
 	@FindBy(css = "button[class$='saveButton headerButton']")
-	public WebElement btnfilterSave;
+	public WebElement btnFilterSave;
 
 	@FindBy(xpath = "//*[@id=\"brandBand_1\"]//..//span/div/a/lightning-icon/lightning-primitive-icon")
 	public WebElement btnshowMore;
 
 	@FindBy(xpath = "//a[@title='Delete']")
-	public WebElement btnshowDeleteAction;
+	public WebElement btnShowDeleteAction;
 
 	@FindBy(xpath = "//button[@title='Delete']")
-	public WebElement btnconfirmDeleteAction;
+	public WebElement btnConfirmDeleteAction;
 
 	@FindBy(css = "[class='removeAll']")
 	public WebElement removeAllfilter;
+	
 	@FindBy(css = "button[title='Close']")
 	public WebElement closeToastResponse;
 
@@ -73,9 +77,11 @@ public class GenericPage extends StartUpPage {
 	public String fieldLabel = ".labelCol";
 
 	public GenericPage(WebDriver driver) {
-		super(driver);
-		PageFactory.initElements(driver, this);
+
+		this.driver = driver;
+		sfdcAcolyte = new Acolyte(driver);
 		sfdcAcolyte.setWaitTime(60);
+		PageFactory.initElements(driver, this);
 	}
 
 	public boolean checkVisibility(WebElement element) throws Exception {
@@ -100,18 +106,33 @@ public class GenericPage extends StartUpPage {
 		sfdcAcolyte.waitTillElementIsVisible(element);
 	}
 
-	public void waitForElementToBeClickable(WebElement element) throws Exception {
-		Actions action = new Actions(driver);
-	    action.moveToElement(element).click().build().perform();
-
-	}
-
 	public void refreshPage() throws Exception {
 		sfdcAcolyte.refreshPage();
 	}
 
 	public GenericPage checkInnerTextMatches(WebElement element, String value) throws Exception {
 		sfdcAcolyte.waitTillInnerTextMatches(element, value);
+		return PageFactory.initElements(driver, GenericPage.class);
+	}
+
+	public GenericPage switchToFrame(WebElement btn, WebElement frame) throws Exception {
+		boolean checkCond = false;
+		Instant start = Instant.now();
+		do {
+			Instant now = Instant.now();
+			if (Duration.between(start, now).toMinutes() >= 1) {
+				checkCond = true;
+				break;
+			}
+			sfdcAcolyte.waitTillFrameIsAvailableAndSwitch(frame);
+			try {
+				if (btn.isDisplayed() == true)
+					checkCond = true;
+				break;
+			} catch (NoSuchElementException e) {
+				checkCond = false;
+			}
+		} while (checkCond == false);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
@@ -135,6 +156,9 @@ public class GenericPage extends StartUpPage {
 		return flag;
 	}
 
+	public Select getObjOfDropDownElement(WebElement element) throws Exception {
+		return new Select(element);
+	}
 
 	public List<String> getTextFromWebElementList(List<WebElement> element) throws Exception {
 		List<String> txtList = new ArrayList<String>();
@@ -144,9 +168,24 @@ public class GenericPage extends StartUpPage {
 		return txtList;
 	}
 
+	public String getDropdownSelectedTxt(WebElement element) throws Exception {
+		return getObjOfDropDownElement(element).getFirstSelectedOption().getText();
+	}
+
 	public GenericPage selectComboByText(WebElement element, String ddlValue) throws Exception {
 		sfdcAcolyte.selectComboByText(element, ddlValue);
 		return PageFactory.initElements(driver, GenericPage.class);
+	}
+
+	public String getStrValueFromWebEleList(List<WebElement> elementList, String expectedValue) {
+		String text = null;
+		for (WebElement element : elementList) {
+			if (element.getText().contains(expectedValue)) {
+				text = element.getText();
+				break;
+			}
+		}
+		return text;
 	}
 
 	public GenericPage getWindow(int windowNum) throws Exception {
@@ -169,7 +208,7 @@ public class GenericPage extends StartUpPage {
 		return (sfdcAcolyte.findTheElements(By.cssSelector(element)).size() != 0);
 	}
 
-	public void checkAllCheckBox(List<WebElement> chkReviewers) {
+	public void checkAllChckBox(List<WebElement> chkReviewers) {
 		for (WebElement ele : chkReviewers) {
 			if (!ele.isSelected())
 				ele.click();
@@ -189,45 +228,37 @@ public class GenericPage extends StartUpPage {
 
 	public GenericPage searchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
 
-		sfdcAcolyte.click(lnkrecentlyviewed).waitTillElementIsVisible(lnkallviewed).click(lnkallviewed);
-		sfdcAcolyte.waitTillElementIsVisible(filtericon).click(filtericon);
-		sfdcAcolyte.waitTillElementIsVisible(lnkaddFilter).click(lnkaddFilter);
-		sfdcAcolyte.waitTillElementIsVisible(ddlselectField).click(ddlselectField)
-				.sendKeysTo(ddlselectField, ColumnName).sendBoardKeys(Keys.ENTER);
+		sfdcAcolyte.click(lnkRecentlyViewed).waitTillElementIsVisible(lnkAllViewed).click(lnkAllViewed);
+		sfdcAcolyte.waitTillElementIsVisible(filterIcon).click(filterIcon);
+		sfdcAcolyte.waitTillElementIsVisible(lnkAddFilter).click(lnkAddFilter);
+		sfdcAcolyte.waitTillElementIsVisible(ddlSelectField).click(ddlSelectField)
+				.sendKeysTo(ddlSelectField, ColumnName).sendBoardKeys(Keys.ENTER);
 
-		sfdcAcolyte.waitTillElementIsVisible(ddlselectOperator).click(ddlselectOperator)
-				.sendKeysTo(ddlselectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER)
-				.sendKeysTo(txtenterValue, FilterValue).click(btnfilterDone).click(btnfilterSave);
+		sfdcAcolyte.waitTillElementIsVisible(ddlSelectOperator).click(ddlSelectOperator)
+				.sendKeysTo(ddlSelectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER)
+				.sendKeysTo(txtEnterValue, FilterValue).click(btnFilterDone).click(btnFilterSave);
 		sfdcAcolyte.waitTillElementIsVisible(filterResponse);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
 	public GenericPage deleteName() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(btnshowMore).jsClick(btnshowMore);
-		sfdcAcolyte.jsClick(btnshowDeleteAction).jsClick(btnconfirmDeleteAction);
+		sfdcAcolyte.jsClick(btnShowDeleteAction).jsClick(btnConfirmDeleteAction);
 		return PageFactory.initElements(driver, GenericPage.class);
 
 	}
 
 	public GenericPage deleteRecord() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(btnfilterSave);
+		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(btnFilterSave);
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public GenericPage closeToastMessage() throws Exception {
+	public void closeToastMessage() throws Exception {
 		sfdcAcolyte.waitTillElementIsClickable(closeToastResponse).click(closeToastResponse);
-
-		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
 	public void waitTillStaleElementToBeVisible(WebElement ele) {
 		new WebDriverWait(driver, waitTime).until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(ele)));
-	}
-
-	public void waitForElementToLoad(WebElement element) throws Exception {
-		waitTillStaleElementToBeVisible(element);
-		sfdcAcolyte.waitTillElementIsVisible(element).waitTillElementIsClickable(element);
-
 	}
 
 }

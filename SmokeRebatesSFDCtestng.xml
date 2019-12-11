@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="Smoke Suite for SFDC Rebates">
+<suite name="Smoke Suite for SFDC Rebates" verbose="2"
+	parallel="classes" thread-count="7">
 
 	<listeners>
 		<listener class-name="com.apttus.extent.report.ExtentTestNGIReporterListener" />
@@ -11,17 +12,18 @@
 	<parameter name="environment" value="config.properties" />
 	<parameter name="browser" value="Chrome" />
 	<parameter name="hubURL" value="http://localhost:4444/wd/hub" />
-    <parameter name="qTestPropertyFile" value="SmokeQtest.properties" />
-	<test thread-count="3" name="test" parallel="classes">
-       <groups>
-           <run>
-                <include name="Smoke" />
-           </run>
-       </groups>
- 
-	 <classes>
-			<class name="com.apttus.sfdc.rebates.datasource.DataSourceTest" />
-			
+	<parameter name="qTestPropertyFile" value="SmokeQtest.properties" />
+	<parameter name="reportName" value="SFDC Rebates Smoke Test" />
+	<test name="test" parallel="classes" group-by-instances="false" preserve-order="true">
+		<groups>
+			<run>
+				<include name="Smoke" />
+			</run>
+		</groups>
+
+		<classes>
+			<class name="com.apttus.sfdc.rebates.lightning.datasource.DataSourceTest" />
+
 		</classes>
-	</test> 
+	</test>
 </suite> 
