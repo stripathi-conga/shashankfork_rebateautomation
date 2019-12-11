@@ -162,7 +162,6 @@ public class DataSourcePage extends GenericPage {
 
 	public void deleteFilterRecord() throws Exception {
 
-		new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(btnShowMore));
 		sfdcAcolyte.waitTillElementIsVisible(btnShowMore).jsClick(btnShowMore);
 		wait.until(ExpectedConditions.visibilityOf(btnShowDeleteAction));
