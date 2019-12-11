@@ -23,10 +23,10 @@ public class HomePage extends GenericPage {
 	public WebElement lnkDataSource;
 	
 	@FindBy(xpath="//div[@class='slds-icon-waffle']")
-    public WebElement AppLauncher;
+    public WebElement btnAppLauncher;
    
     @FindBy(xpath="//a[text()='Apttus CIM Admin']")
-    public WebElement ApttusCIMAdmin;
+    public WebElement lnkApttusCIMAdmin;
 
 	public HomePage(WebDriver driver) {
 		super(driver);
@@ -59,8 +59,8 @@ public class HomePage extends GenericPage {
 	
 	public void launchCIMApttusAdmin() throws Exception {
        
-        sfdcAcolyte.waitTillElementIsClickable(AppLauncher).click(AppLauncher)
-        .waitTillElementIsClickable(ApttusCIMAdmin).click(ApttusCIMAdmin);
+        sfdcAcolyte.waitTillElementIsClickable(btnAppLauncher).click(btnAppLauncher)
+        .waitTillElementIsClickable(lnkApttusCIMAdmin).click(lnkApttusCIMAdmin);
        
        
     }
