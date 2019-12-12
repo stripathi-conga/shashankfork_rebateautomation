@@ -155,27 +155,26 @@ public class DataSourcePage extends GenericPage {
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 
-	public void closeToastMessage() throws Exception {
 
-		sfdcAcolyte.waitTillElementIsClickable(btncloseToastResponse).click(btncloseToastResponse);
-	}
-
-	public void deleteFilterRecord() throws Exception {
+	public DataSourcePage deleteFilterRecord() throws Exception {
 
 		wait.until(ExpectedConditions.visibilityOf(btnShowMore));
 		sfdcAcolyte.waitTillElementIsVisible(btnShowMore).jsClick(btnShowMore);
 		wait.until(ExpectedConditions.visibilityOf(btnShowDeleteAction));
 		sfdcAcolyte.jsClick(btnShowDeleteAction).jsClick(btnConfirmDeleteAction);
+		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 
-	public void dataSourceRefresh() throws Exception {
+	public DataSourcePage dataSourceRefresh() throws Exception {
 		sfdcAcolyte.refreshPage();
+		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 
-	public void removeFilter() throws Exception {
+	public DataSourcePage removeFilter() throws Exception {
 		wait.until(ExpectedConditions.visibilityOf(filterIcon));
 		sfdcAcolyte.click(filterIcon);
 		sfdcAcolyte.waitTillElementIsVisible(lnkRemoveAllFilter).click(lnkRemoveAllFilter).click(btnFilterSave);
+		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 
 }

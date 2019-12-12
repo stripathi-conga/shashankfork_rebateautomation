@@ -24,6 +24,7 @@ public class DataSourceTest {
 	public DataSourcePage dataSourcePage;
 	public HomePage homepage;
 	Properties configProperty;
+	Efficacies efficacies ;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -32,8 +33,9 @@ public class DataSourceTest {
 		WebDriverUtils utils = new WebDriverUtils();
 		utils.initializeDriver(browser, hubURL);
 		driver = utils.getDriver();
+		efficacies =new Efficacies();
 		loginPage = new LoginPage(driver);
-		configProperty = GeneralHelper.loadPropertyFile(environment);
+		configProperty = efficacies.loadPropertyFile(environment);
 		loginPage = loginPage.navigateToLoginPage(configProperty.getProperty("LoginURL"));
 		loginPage.waitForLoginPageLoad().loginToApp(configProperty.getProperty("LoginUser"),
 				configProperty.getProperty("LoginPassword"));
