@@ -57,10 +57,11 @@ public class HomePage extends GenericPage {
 	}
 
 	
-	public void launchCIMApttusAdmin() throws Exception {
+	public HomePage launchCIMApttusAdmin() throws Exception {
        
         sfdcAcolyte.waitTillElementIsClickable(btnAppLauncher).click(btnAppLauncher)
         .waitTillElementIsClickable(lnkApttusCIMAdmin).click(lnkApttusCIMAdmin);
+        return PageFactory.initElements(driver, HomePage.class);
        
        
     }
