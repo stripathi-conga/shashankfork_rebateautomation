@@ -253,12 +253,14 @@ public class GenericPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public void closeToastMessage() throws Exception {
+	public GenericPage closeToastMessage() throws Exception {
 		sfdcAcolyte.waitTillElementIsClickable(closeToastResponse).click(closeToastResponse);
+		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public void waitTillStaleElementToBeVisible(WebElement ele) {
+	public GenericPage waitTillStaleElementToBeVisible(WebElement ele) {
 		new WebDriverWait(driver, waitTime).until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(ele)));
+		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
 }
