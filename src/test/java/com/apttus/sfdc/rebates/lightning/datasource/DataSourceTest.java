@@ -1,6 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.datasource;
 
 import static org.testng.Assert.assertEquals;
+
 import java.util.Map;
 import java.util.Properties;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +15,6 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.ui.library.DataSourcePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
-import com.apttus.sfdc.rudiments.utils.GeneralHelper;
 
 public class DataSourceTest {
 

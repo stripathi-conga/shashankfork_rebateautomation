@@ -60,7 +60,7 @@
 		<dependency>
             <groupId>com.apttus.automation</groupId>
             <artifactId>apttusautomation</artifactId>
-            <version>15.0.3</version>
+            <version>15.0.5</version>
         </dependency>
 		<dependency>
 			<groupId>com.apttus.sfdc</groupId>

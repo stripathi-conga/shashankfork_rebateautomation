@@ -93,7 +93,7 @@ public class DataSourcePage extends GenericPage {
 
 	@FindBy(xpath = "//button[@title='Delete']")
 	public WebElement btnConfirmDeleteAction;
-	
+
 	@FindBy(css = "button[title='Close']")
 	public WebElement btncloseToastResponse;
 
@@ -154,7 +154,6 @@ public class DataSourcePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(filterResponse);
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
-
 
 	public DataSourcePage deleteFilterRecord() throws Exception {
 
