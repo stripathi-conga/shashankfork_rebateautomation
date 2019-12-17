@@ -95,7 +95,7 @@ public class DataSourcePage extends GenericPage {
 	public WebElement btnConfirmDeleteAction;
 
 	@FindBy(css = "button[title='Close']")
-	public WebElement btncloseToastResponse;
+	public WebElement btnCloseToastResponse;
 
 	@FindBy(xpath = "//option[text()='Order Line Item']")
 	public WebElement ddlOrder;
