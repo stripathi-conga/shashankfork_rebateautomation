@@ -1,4 +1,5 @@
 package com.apttus.sfdc.rebates.lightning.common;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class GenericPage {
 
 	@FindBy(css = "[class='removeAll']")
 	public WebElement removeAllfilter;
-	
+
 	@FindBy(css = "button[title='Close']")
 	public WebElement closeToastResponse;
 
