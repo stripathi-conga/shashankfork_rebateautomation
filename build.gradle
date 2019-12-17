@@ -61,7 +61,7 @@ def creds = getCredentials()
 dependencies {
     compile 'org.seleniumhq.selenium:selenium-java:3.141.59'
     compile 'com.google.code.gson:gson:2.8.5'
-    compile group: 'com.apttus.automation', name: 'apttusautomation', version:'15.0.3'
+    compile group: 'com.apttus.automation', name: 'apttusautomation', version:'15.0.4'
     compile 'com.apttus.sfdc:rudiments:0.0.8'
     compile 'com.jayway.restassured:rest-assured:2.9.0'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
