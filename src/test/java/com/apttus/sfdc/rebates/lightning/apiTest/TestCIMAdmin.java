@@ -44,8 +44,8 @@ public class TestCIMAdmin extends UnifiedFramework {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "Verify the Data Source Save Feature", groups = { "Smoke", "API" })
-	public void createDataSource() throws Exception {
+	@Test(description = "Verify Create New Data Source", groups = { "Smoke", "API" })
+	public void createNewDataSource() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminData.json", "createNewDataSourceAPI");
 		Response response = cimAdmin.createDataSource(jsonData);
 		responseValidator.validateCreateDataSource(response);
