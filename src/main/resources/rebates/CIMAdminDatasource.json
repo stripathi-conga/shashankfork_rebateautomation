@@ -1,0 +1,12 @@
+{
+	"createNewDataSourceAPI": {
+		"Name__c": "{Random}",
+		"Transaction_MetaData__c": "Apttus_Config2__OrderLineItem__c",
+		"Calculation_Date_Attr__c": "Apttus_Config2__PricingDate__c",
+		"Program_Account_Attr__c": "Apttus_Config2__BillToAccountId__c",
+		"Product_Attr__c": "Apttus_Config2__ProductId__c",
+		"File_Extension__c": "csv",
+		"File_Suffix_To_ignore__c": "test",
+		"Delimiter__c": "\\u002c"
+	}
+}	
