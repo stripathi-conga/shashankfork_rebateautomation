@@ -1,4 +1,4 @@
-package com.apttus.sfdc.rebates.lightning.apiTest;
+package com.apttus.sfdc.rebates.lightning.api.admin;
 
 import java.util.Map;
 import java.util.Properties;
@@ -14,7 +14,7 @@ import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestCIMAdmin extends UnifiedFramework {
+public class TestDatasource extends UnifiedFramework {
 
 	private Properties configProperties;
 	protected String baseURL;
@@ -46,7 +46,7 @@ public class TestCIMAdmin extends UnifiedFramework {
 
 	@Test(description = "Verify Create New Data Source", groups = { "Smoke", "API" })
 	public void createNewDataSource() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMAdminData.json", "createNewDataSourceAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminDatasource.json", "createNewDataSourceAPI");
 		Response response = cimAdmin.createDataSource(jsonData);
 		responseValidator.validateCreateDataSource(response);
 		response = cimAdmin.getDataSource();

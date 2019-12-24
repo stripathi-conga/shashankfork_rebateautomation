@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Smoke Suite for SFDC lightning Rebates" verbose="2"
 	parallel="classes" thread-count="7">
@@ -23,7 +23,7 @@
 		</groups>
 
 		<classes>
-			<class name="com.apttus.sfdc.rebates.lightning.apiTest.TestCIMAdmin" />
+			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
 		</classes>
 	</test>
 </suite> 
