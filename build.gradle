@@ -77,7 +77,7 @@ dependencies {
     compile 'com.aventstack:extentreports:3.0.7'
     compile 'xerces:xercesImpl:2.11.0'
     testCompile 'org.hamcrest:hamcrest:2.1'
-    testCompile 'org.testng:testng:6.9.10'
+    compile group: 'org.testng', name: 'testng', version: '7.0.0'
 }
 
 

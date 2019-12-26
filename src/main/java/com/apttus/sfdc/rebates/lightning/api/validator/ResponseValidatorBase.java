@@ -12,8 +12,8 @@ public class ResponseValidatorBase {
 
 	public void validateCreateDataSource(Response response) {
 		softassert = new SoftAssert();
-		String success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsString();
-		softassert.assertEquals(Boolean.parseBoolean(success), true, "Validate success flag");
+		boolean success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsBoolean();
+		softassert.assertEquals(success, true, "Validate success flag");
 		softassert.assertAll();
 	}
 
