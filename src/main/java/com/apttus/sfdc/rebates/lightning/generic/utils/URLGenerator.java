@@ -11,7 +11,7 @@ public class URLGenerator {
 	public String calcFormulaId = "/sobjects/Calculation_Formula__C/";
 	public String linkCalcFormulaId = "/sobjects/Calculation_Formula_Step__C/";
 	public String linkDatasourceId = "/sobjects/Data_Source_Formula__C/";
-	
+
 	public URLGenerator(String instanceURL) {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
 		this.dataSourceURL = baseURL + this.dataSourceURL;
