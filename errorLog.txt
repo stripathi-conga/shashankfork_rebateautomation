@@ -1,0 +1,37 @@
+11:51:23.457 [ERROR] [system.err] C:\Users\mijain\AutomationCode\sfdcrebateautomation_mitu\src\main\java\com\apttus\sfdc\rebates\lightning\api\validator\ResponseValidatorBase.java:3: error: package org.testng.asserts does not exist
+11:51:23.457 [ERROR] [system.err] import org.testng.asserts.SoftAssert;
+11:51:23.457 [ERROR] [system.err]                          ^
+11:51:23.458 [ERROR] [system.err] C:\Users\mijain\AutomationCode\sfdcrebateautomation_mitu\src\main\java\com\apttus\sfdc\rebates\lightning\api\validator\ResponseValidatorBase.java:11: error: cannot find symbol
+11:51:23.458 [ERROR] [system.err] 	SoftAssert softassert;
+11:51:23.458 [ERROR] [system.err] 	^
+11:51:23.459 [ERROR] [system.err]   symbol:   class SoftAssert
+11:51:23.459 [ERROR] [system.err]   location: class ResponseValidatorBase
+11:51:23.475 [ERROR] [system.err] C:\Users\mijain\AutomationCode\sfdcrebateautomation_mitu\src\main\java\com\apttus\sfdc\rebates\lightning\api\validator\ResponseValidatorBase.java:14: error: cannot find symbol
+11:51:23.475 [ERROR] [system.err] 		softassert = new SoftAssert();
+11:51:23.475 [ERROR] [system.err] 		                 ^
+11:51:23.475 [ERROR] [system.err]   symbol:   class SoftAssert
+11:51:23.475 [ERROR] [system.err]   location: class ResponseValidatorBase
+11:51:23.476 [ERROR] [system.err] C:\Users\mijain\AutomationCode\sfdcrebateautomation_mitu\src\main\java\com\apttus\sfdc\rebates\lightning\api\validator\ResponseValidatorBase.java:21: error: cannot find symbol
+11:51:23.476 [ERROR] [system.err] 		softassert = new SoftAssert();
+11:51:23.477 [ERROR] [system.err] 		                 ^
+11:51:23.477 [ERROR] [system.err]   symbol:   class SoftAssert
+11:51:23.477 [ERROR] [system.err]   location: class ResponseValidatorBase
+11:51:23.479 [ERROR] [system.err] C:\Users\mijain\AutomationCode\sfdcrebateautomation_mitu\src\main\java\com\apttus\sfdc\rebates\lightning\api\validator\ResponseValidatorBase.java:33: error: cannot find symbol
+11:51:23.480 [ERROR] [system.err] 		softassert = new SoftAssert();
+11:51:23.480 [ERROR] [system.err] 		                 ^
+11:51:23.480 [ERROR] [system.err]   symbol:   class SoftAssert
+11:51:23.480 [ERROR] [system.err]   location: class ResponseValidatorBase
+11:51:23.484 [ERROR] [system.err] 5 errors
+11:51:23.494 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+11:51:23.494 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] FAILURE: Build failed with an exception.
+11:51:23.494 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+11:51:23.494 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * What went wrong:
+11:51:23.494 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Execution failed for task ':compileJava'.
+11:51:23.494 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Compilation failed; see the compiler error output for details.
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Try:
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Run with --stacktrace option to get the stack trace.  Run with --scan to get full insights.
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Get more help at https://help.gradle.org
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] 
+11:51:23.495 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] BUILD FAILED in 2s
