@@ -22,8 +22,8 @@
 			</run>
 		</groups>
 
-	<classes>
-		
-	</classes>
+		<classes>
+			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
+		</classes>
 	</test>
 </suite> 

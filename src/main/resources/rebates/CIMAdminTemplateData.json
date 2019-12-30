@@ -1,0 +1,29 @@
+{
+	"createNewDataSourceAPI": {
+		"Name__c": "{Random}",
+		"Transaction_MetaData__c": "Apttus_Config2__OrderLineItem__c",
+		"Calculation_Date_Attr__c": "Apttus_Config2__PricingDate__c",
+		"Program_Account_Attr__c": "Apttus_Config2__BillToAccountId__c",
+		"Product_Attr__c": "Apttus_Config2__ProductId__c",
+		"File_Extension__c": "csv",
+		"File_Suffix_To_ignore__c": "test",
+		"Delimiter__c": "\\u002c"
+	},
+	"createFieldExpressionId": {
+		"Apttus_Config2__Expression__c": "SUM(Rebate_Amount)",
+		"Name": "Auto SUM(Rebate_Amount)"
+	},
+	"createCalcFormulaIdBenefit": {
+		"Type__c": "Benefit",
+		"Name": "Auto_Benefit SUM(Rebate_Amount)"
+	},
+	"createCalcFormulaIdQualification": {
+		"Type__c": "Qualification",
+		"Name": "Auto_Qualification SUM(Rebate_Amount)"
+	},
+	"linkCalcFormulaToExpressionId": {
+		"ReferenceName__c": "Auto SUM(Rebate_Amount)",
+		"Sequence__c": "1",
+		"Type__c": "Line"
+	}
+}

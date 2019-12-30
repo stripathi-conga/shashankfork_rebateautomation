@@ -46,13 +46,40 @@ public class TestDatasource extends UnifiedFramework {
 
 	@Test(description = "TC215-Verify Create New Data Source", groups = { "Smoke", "API" })
 	public void createNewDataSource() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMAdminDatasource.json", "createNewDataSourceAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
 		Response response = cimAdmin.createDataSource(jsonData);
 		responseValidator.validateCreateDataSource(response);
 		response = cimAdmin.getDataSource();
 		responseValidator.validateGetDataSource(response, cimAdmin);
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
+		responseValidator.validateDeleteDataSource(response);
+	}
+
+	@Test(description = "TC436-Verify creation of formula and link to data source", groups = { "Regression", "High",
+			"API" })
+	public void createCalculationFormula() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+
+		cimAdmin.deleteDataSource();
+		Response response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteDataSource(response);
 	}
 }

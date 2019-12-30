@@ -29,64 +29,64 @@ public class CreateNewDataSourcePojo {
 		return Delimiter__c;
 	}
 
-	public void setDelimiter__c(String Delimiter__c) {
-		this.Delimiter__c = Delimiter__c;
+	public void setDelimiter__c(String delimiter__c) {
+		this.Delimiter__c = delimiter__c;
 	}
 
 	public String getName__c() {
 		return Name__c;
 	}
 
-	public void setName__c(String Name__c) {
-		this.Name__c = Name__c;
+	public void setName__c(String name__c) {
+		this.Name__c = name__c;
 	}
 
 	public String getProduct_Attr__c() {
 		return Product_Attr__c;
 	}
 
-	public void setProduct_Attr__c(String Product_Attr__c) {
-		this.Product_Attr__c = Product_Attr__c;
+	public void setProduct_Attr__c(String product_Attr__c) {
+		this.Product_Attr__c = product_Attr__c;
 	}
 
 	public String getFile_Suffix_To_ignore__c() {
 		return File_Suffix_To_ignore__c;
 	}
 
-	public void setFile_Suffix_To_ignore__c(String File_Suffix_To_ignore__c) {
-		this.File_Suffix_To_ignore__c = File_Suffix_To_ignore__c;
+	public void setFile_Suffix_To_ignore__c(String file_Suffix_To_ignore__c) {
+		this.File_Suffix_To_ignore__c = file_Suffix_To_ignore__c;
 	}
 
 	public String getTransaction_MetaData__c() {
 		return Transaction_MetaData__c;
 	}
 
-	public void setTransaction_MetaData__c(String Transaction_MetaData__c) {
-		this.Transaction_MetaData__c = Transaction_MetaData__c;
+	public void setTransaction_MetaData__c(String transaction_MetaData__c) {
+		this.Transaction_MetaData__c = transaction_MetaData__c;
 	}
 
 	public String getFile_Extension__c() {
 		return File_Extension__c;
 	}
 
-	public void setFile_Extension__c(String File_Extension__c) {
-		this.File_Extension__c = File_Extension__c;
+	public void setFile_Extension__c(String file_Extension__c) {
+		this.File_Extension__c = file_Extension__c;
 	}
 
 	public String getCalculation_Date_Attr__c() {
 		return Calculation_Date_Attr__c;
 	}
 
-	public void setCalculation_Date_Attr__c(String Calculation_Date_Attr__c) {
-		this.Calculation_Date_Attr__c = Calculation_Date_Attr__c;
+	public void setCalculation_Date_Attr__c(String calculation_Date_Attr__c) {
+		this.Calculation_Date_Attr__c = calculation_Date_Attr__c;
 	}
 
 	public String getProgram_Account_Attr__c() {
 		return Program_Account_Attr__c;
 	}
 
-	public void setProgram_Account_Attr__c(String Program_Account_Attr__c) {
-		this.Program_Account_Attr__c = Program_Account_Attr__c;
+	public void setProgram_Account_Attr__c(String program_Account_Attr__c) {
+		this.Program_Account_Attr__c = program_Account_Attr__c;
 	}
 
 	public String createDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
