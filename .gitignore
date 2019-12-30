@@ -5,11 +5,11 @@
 /.idea
 /logs/
 /*.ser
-/gradle.txt
+/.txt
 /.gradle
 /build
 /.settings/
-RebatesSFDC.iml
+/RebatesSFDC.iml
 /bin/
 /screenshots/
 
