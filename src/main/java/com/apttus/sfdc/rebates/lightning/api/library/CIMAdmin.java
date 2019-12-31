@@ -193,7 +193,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createMapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
+	public Response mapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
 		try {
 			MapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 			requestString = MapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);

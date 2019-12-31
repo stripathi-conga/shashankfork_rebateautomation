@@ -13,7 +13,8 @@ public class CreateAdminTemplatePojo {
 	private String QnB_Layout_Id__c;
 	private String Name;
 	public String TemplateId;
-	
+	CreateAdminTemplatePojo createAdminTemplatePojo;
+	private String adminTemplateName;
 	public String getTemplateId() {
 		return TemplateId;
 	}
@@ -26,38 +27,38 @@ public class CreateAdminTemplatePojo {
 		return Description__c;
 	}
 
-	public void setDescription__c(String Description__c) {
-		this.Description__c = Description__c;
+	public void setDescription__c(String description__c) {
+		this.Description__c = description__c;
 	}
 
 	public String getStatus__c() {
 		return Status__c;
 	}
 
-	public void setStatus__c(String Status__c) {
-		this.Status__c = Status__c;
+	public void setStatus__c(String status__c) {
+		this.Status__c = status__c;
 	}
 
 	public String getQnB_Layout_Id__c() {
 		return QnB_Layout_Id__c;
 	}
 
-	public void setQnB_Layout_Id__c(String QnB_Layout_Id__c) {
-		this.QnB_Layout_Id__c = QnB_Layout_Id__c;
+	public void setQnB_Layout_Id__c(String qnb_Layout_Id__c) {
+		this.QnB_Layout_Id__c = qnb_Layout_Id__c;
 	}
 
 	public String getName() {
 		return Name;
 	}
 
-	public void setName(String Name) {
-		this.Name = Name;
+	public void setName(String name) {
+		this.Name = name;
 	}
 
 	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 
-		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
-		String adminTemplateName = testData.get("Name");
+		createAdminTemplatePojo = new CreateAdminTemplatePojo();
+		adminTemplateName = testData.get("Name");
 		if (adminTemplateName.equalsIgnoreCase("{RANDOM}")) {
 			adminTemplateName = "Rebates_Auto_AdminTemplate_" + JavaHelpers.generateRandomNumber();
 		}
