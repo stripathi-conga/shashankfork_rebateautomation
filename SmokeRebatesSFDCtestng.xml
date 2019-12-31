@@ -18,12 +18,13 @@
 	<test name="test" parallel="classes" group-by-instances="false" preserve-order="true">
 		<groups>
 			<run>
-				<include name="Smoke" />
+				<include name="API" />
 			</run>
 		</groups>
 
 		<classes>
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
+			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestAdminTemplates" />
 		</classes>
 	</test>
 </suite> 

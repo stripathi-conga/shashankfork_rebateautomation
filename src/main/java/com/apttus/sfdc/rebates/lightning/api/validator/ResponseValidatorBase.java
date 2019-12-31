@@ -16,6 +16,8 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(success, true, "Validate success flag");
 		softassert.assertAll();
 	}
+	
+	
 
 	public void validateGetDataSource(Response response, CIMAdmin cimAdmin) {
 		softassert = new SoftAssert();
@@ -28,8 +30,35 @@ public class ResponseValidatorBase {
 				"Validate datasource name");
 		softassert.assertAll();
 	}
+	
+	
 
 	public void validateDeleteDataSource(Response response) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 0, "Validate response size");
+		softassert.assertAll();
+	}
+	
+	public void validateCreateAdminTemplate(Response response) {
+		softassert = new SoftAssert();
+		boolean success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsBoolean();
+		softassert.assertEquals(success, true, "Validate success flag");
+		softassert.assertAll();
+	}
+	public void validateGetAdminTemplate(Response response, CIMAdmin cimAdmin) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getTemplateId(),
+				"Validate Admin Template id");
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
+				"Validate Admin template Name");
+		softassert.assertAll();
+	}
+	
+	public void validateDeleteAdminTemplate(Response response) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 0, "Validate response size");

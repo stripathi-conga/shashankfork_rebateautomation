@@ -1,0 +1,16 @@
+{
+	"createNewAdminTemplateAPI": {
+		"Name": "{Random}",
+		"QnB_Layout_Id__c": "a593i000000LC0tAAG",
+		"Status__c": "Draft",
+		"Description__c": "Automation"
+		
+	},
+	
+	"createMapTemplateDataSourceAPI": {
+		
+		"Data_Source_Id__c": "a543i0000001fgPAAQ",
+        "Formula_Id__c": "a523i000000TfOMAA0"
+		
+	}
+}	
