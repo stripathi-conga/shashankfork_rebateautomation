@@ -22,7 +22,6 @@ public class CIMAdmin {
 	public CreateAdminTemplatePojo adminTemplateData;
 	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
 	public JsonParser parser;
-	MapTemplateAndDataSourcePojo MapTemplateAndDataSourcePojo;
 	String adminTemplateId;
 	String mapAdminTemplateDataSourceId;
 	String requestString;
@@ -159,8 +158,9 @@ public class CIMAdmin {
 
 	public Response createAdminTemplate(Map<String, String> testData) throws ApplicationException {
 
+		CreateAdminTemplatePojo createAdminTemplatePojo;
 		try {
-			CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
+			createAdminTemplatePojo = new CreateAdminTemplatePojo();
 			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
@@ -194,9 +194,10 @@ public class CIMAdmin {
 	}
 
 	public Response mapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
+		MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo;
 		try {
-			MapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
-			requestString = MapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
+			mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
+			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapAdminTemplateToDatasourceURL, requestString);
 			validateResponseCode(response, 201);
 			mapAdminTemplateDataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")

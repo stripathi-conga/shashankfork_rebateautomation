@@ -12,7 +12,7 @@ public class MapTemplateAndDataSourcePojo {
 	private String Formula_Id__c;
 
 	private String Data_Source_Id__c;
-	static MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo;
+	MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo;
 	public String getTemplate_Id__c() {
 		return Template_Id__c;
 	}
