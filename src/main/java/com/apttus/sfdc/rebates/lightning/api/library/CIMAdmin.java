@@ -2,6 +2,8 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetCalculationFormulaIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetFieldExpressionIdPojo;
@@ -17,14 +19,33 @@ public class CIMAdmin {
 	public SFDCRestUtils sfdcRestUtils;
 	public URLGenerator urlGenerator;
 	public CreateNewDataSourcePojo dataSourceData;
+	public CreateAdminTemplatePojo adminTemplateData;
+	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
 	public JsonParser parser;
+	MapTemplateAndDataSourcePojo MapTemplateAndDataSourcePojo;
+	String adminTemplateId;
+	String mapAdminTemplateDataSourceId;
+	String requestString;
+	Response response;
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
 	}
 
+	public CreateAdminTemplatePojo getAdminTemplateData() {
+		return adminTemplateData;
+	}
+
 	public void setDataSourceData(CreateNewDataSourcePojo dataSourceData) {
 		this.dataSourceData = dataSourceData;
+	}
+
+	public void setAdmintemplatedata(CreateAdminTemplatePojo adminTemplateData) {
+		this.adminTemplateData = adminTemplateData;
+	}
+
+	public void setAdminTemplateDataSourcedata(MapTemplateAndDataSourcePojo templateDataSourceMapData) {
+		this.templateDataSourceMapData = templateDataSourceMapData;
 	}
 
 	public CIMAdmin(String baseURL, SFDCRestUtils sfdcRestUtils) {
@@ -76,6 +97,7 @@ public class CIMAdmin {
 			throw new ApplicationException("Delete DataSource API call failed with exception trace : " + e);
 		}
 	}
+
 	
 	public String getFieldExpressionId(Map<String, String> testData) throws ApplicationException {
 		String fieldExpressionId = null, requestString;
@@ -133,4 +155,60 @@ public class CIMAdmin {
 			throw new ApplicationException("Link DatasourceId To CalcFormulaId API call failed with exception trace : " + e);
 		}		
 	}
+
+
+	public Response createAdminTemplate(Map<String, String> testData) throws ApplicationException {
+
+		try {
+			CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
+			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
+			validateResponseCode(response, 201);
+			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			adminTemplateData.setTemplateId(adminTemplateId);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Create New AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response getAdminTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.getData(
+					urlGenerator.getAdminTemplateURL.replace("{AdminTemplateId}", adminTemplateData.getTemplateId()));
+			validateResponseCode(response, 200);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Get AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
+
+	public void deleteAdminTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils
+					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getTemplateId());
+			validateResponseCode(response, 204);
+		} catch (Exception e) {
+			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response createMapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
+		try {
+			MapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
+			requestString = MapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapAdminTemplateToDatasourceURL, requestString);
+			validateResponseCode(response, 201);
+			mapAdminTemplateDataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")
+					.getAsString();
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException(
+					"AdminTemplate and DataSource mapping API call failed with exception trace : " + e);
+		}
+	}
+
+	
+
+
 }
