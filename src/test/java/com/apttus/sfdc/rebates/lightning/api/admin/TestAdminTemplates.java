@@ -55,7 +55,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplate.json", "createMapTemplateDataSourceAPI");
-		cimAdmin.createMapProgramTemplateDataSource(jsonData);
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateDeleteAdminTemplate(response);
