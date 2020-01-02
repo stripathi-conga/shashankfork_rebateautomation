@@ -12,16 +12,7 @@ public class MapTemplateAndDataSourcePojo {
 	private String Formula_Id__c;
 
 	private String Data_Source_Id__c;
-
-	/*
-	 * public String TemplateDataSourceId;
-	 * 
-	 * public String getTemplateDataSourceId() { return TemplateDataSourceId; }
-	 * 
-	 * public void setTemplateDataSourceId(String templateDataSourceId) {
-	 * TemplateDataSourceId = templateDataSourceId; }
-	 */
-
+	MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo;
 	public String getTemplate_Id__c() {
 		return Template_Id__c;
 	}
@@ -46,9 +37,9 @@ public class MapTemplateAndDataSourcePojo {
 		this.Data_Source_Id__c = data_Source_Id__c;
 	}
 
-	public static String createTemplateDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
+	public String createTemplateDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 
-		MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo = new MapTemplateAndDataSourcePojo();
+		mapTemplateAndDataSourcepojo = new MapTemplateAndDataSourcePojo();
 		mapTemplateAndDataSourcepojo.setTemplate_Id__c(cimAdmin.getAdminTemplateData().getTemplateId());
 		mapTemplateAndDataSourcepojo.setFormula_Id__c(testData.get("Formula_Id__c"));
 		mapTemplateAndDataSourcepojo.setData_Source_Id__c(testData.get("Data_Source_Id__c"));
