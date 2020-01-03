@@ -10,7 +10,7 @@ import com.apttus.sfdc.rebates.lightning.api.pojo.GetCalculationFormulaIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetFieldExpressionIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkCalculationFormulaPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkDatasourceToCalculationIdPojo;
-import com.apttus.sfdc.rebates.lightning.generic.utils.SFConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonParser;
@@ -216,7 +216,7 @@ public class CIMAdmin {
 
 	public Response activateAdminTemplate() throws ApplicationException {
 		try {
-			requestString = "{\"Status__c\": \"" + SFConstants.activate + "\"}";
+			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
 			validateResponseCode(response, 204);
