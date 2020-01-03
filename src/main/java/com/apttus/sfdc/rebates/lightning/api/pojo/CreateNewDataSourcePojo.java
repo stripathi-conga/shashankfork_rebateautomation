@@ -1,8 +1,8 @@
 package com.apttus.sfdc.rebates.lightning.api.pojo;
 
 import java.util.Map;
+import com.apttus.helpers.JavaHelpers;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
-import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
 public class CreateNewDataSourcePojo {
@@ -93,7 +93,7 @@ public class CreateNewDataSourcePojo {
 		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo();
 		String dataSourceName = testData.get("Name__c");
 		if (dataSourceName.equalsIgnoreCase("{RANDOM}")) {
-			dataSourceName = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
+			dataSourceName = "Rebates_Auto_DataSource_" + JavaHelpers.generateRandomNumber();
 		}
 		createDataSource.setName__c(dataSourceName);
 		createDataSource.setCalculation_Date_Attr__c(testData.get("Calculation_Date_Attr__c"));

@@ -8,9 +8,11 @@ import com.google.gson.Gson;
 public class MapTemplateAndDataSourcePojo {
 
 	private String Template_Id__c;
+
 	private String Formula_Id__c;
+
 	private String Data_Source_Id__c;
-	
+	MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo;
 	public String getTemplate_Id__c() {
 		return Template_Id__c;
 	}
@@ -37,8 +39,8 @@ public class MapTemplateAndDataSourcePojo {
 
 	public String createTemplateDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 
-		MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo = new MapTemplateAndDataSourcePojo();
-		mapTemplateAndDataSourcepojo.setTemplate_Id__c(cimAdmin.getAdminTemplateData().getAdminTemplateId());
+		mapTemplateAndDataSourcepojo = new MapTemplateAndDataSourcePojo();
+		mapTemplateAndDataSourcepojo.setTemplate_Id__c(cimAdmin.getAdminTemplateData().getTemplateId());
 		mapTemplateAndDataSourcepojo.setFormula_Id__c(testData.get("Formula_Id__c"));
 		mapTemplateAndDataSourcepojo.setData_Source_Id__c(testData.get("Data_Source_Id__c"));
 

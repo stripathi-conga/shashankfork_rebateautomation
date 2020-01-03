@@ -2,10 +2,12 @@ package com.apttus.sfdc.rebates.lightning.api.admin;
 
 import java.util.Map;
 import java.util.Properties;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
@@ -47,32 +49,17 @@ public class TestAdminTemplates extends UnifiedFramework {
 
 	@Test(description = "Verify Create New Admin Template", groups = { "Smoke", "API" })
 	public void createNewAdminTemplate() throws Exception {
-
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
-		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
-		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
-		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
-		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
-		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		cimAdmin.createDataSource(jsonData);
-		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
-		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
-		
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplate.json", "createNewAdminTemplateAPI");
 		response = cimAdmin.createAdminTemplate(jsonData);
-		responseValidator.validateCreateSuccess(response);
+		responseValidator.validateCreateAdminTemplate(response);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData = efficacies.readJsonElement("CIMAdminTemplate.json", "createMapTemplateDataSourceAPI");
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteSuccess(response);
+		responseValidator.validateDeleteAdminTemplate(response);
+
 	}
+
 }

@@ -3,14 +3,12 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
-import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetCalculationFormulaIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetFieldExpressionIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkCalculationFormulaPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkDatasourceToCalculationIdPojo;
-import com.apttus.sfdc.rebates.lightning.generic.utils.SFConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonParser;
@@ -23,12 +21,11 @@ public class CIMAdmin {
 	public CreateNewDataSourcePojo dataSourceData;
 	public CreateAdminTemplatePojo adminTemplateData;
 	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
-	public CreateLinkTemplatesPojo linkTemplatesData;
 	public JsonParser parser;
-	public String adminTemplateId;
-	public String mapAdminTemplateDataSourceId;
-    private String requestString;
-    private Response response;
+	String adminTemplateId;
+	String mapAdminTemplateDataSourceId;
+	String requestString;
+	Response response;
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -50,14 +47,6 @@ public class CIMAdmin {
 		this.templateDataSourceMapData = templateDataSourceMapData;
 	}
 
-	public CreateLinkTemplatesPojo getLinkTemplatesData() {
-		return linkTemplatesData;
-	}
-
-	public void setLinkTemplatesData(CreateLinkTemplatesPojo linkTemplatesData) {
-		this.linkTemplatesData = linkTemplatesData;
-	}
-
 	public CIMAdmin(String baseURL, SFDCRestUtils sfdcRestUtils) {
 		urlGenerator = new URLGenerator(baseURL);
 		this.sfdcRestUtils = sfdcRestUtils;
@@ -73,11 +62,11 @@ public class CIMAdmin {
 	}
 
 	public Response createDataSource(Map<String, String> testData) throws ApplicationException {
-		String dataSourceId;
-		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo();
+		String dataSourceId, requestString;
+		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo(); 
 		try {
 			requestString = createDataSource.createDataSourceRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
+			Response response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
 			validateResponseCode(response, 201);
 			dataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			dataSourceData.setDataSourceId(dataSourceId);
@@ -89,7 +78,7 @@ public class CIMAdmin {
 
 	public Response getDataSource() throws ApplicationException {
 		try {
-			response = sfdcRestUtils
+			Response response = sfdcRestUtils
 					.getData(urlGenerator.getDataSourceURL.replace("{DataSourceId}", dataSourceData.getDataSourceId()));
 			validateResponseCode(response, 200);
 			return response;
@@ -100,7 +89,7 @@ public class CIMAdmin {
 
 	public void deleteDataSource() throws ApplicationException {
 		try {
-			response = sfdcRestUtils
+			Response response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.dataSourceURL + dataSourceData.getDataSourceId());
 			validateResponseCode(response, 204);
 		} catch (Exception e) {
@@ -108,61 +97,67 @@ public class CIMAdmin {
 		}
 	}
 
+	
 	public String getFieldExpressionId(Map<String, String> testData) throws ApplicationException {
-		String fieldExpressionId = null;
+		String fieldExpressionId = null, requestString;
 		GetFieldExpressionIdPojo createNewFieldExpressionId = new GetFieldExpressionIdPojo();
 		try {
 			requestString = createNewFieldExpressionId.getExpressionIdRequest(testData);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionId, requestString);
+			Response response = sfdcRestUtils
+					.postWithoutAppUrl(urlGenerator.fieldExpressionId, requestString);
 			validateResponseCode(response, 201);
 			fieldExpressionId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return fieldExpressionId;
 		} catch (Exception e) {
 			throw new ApplicationException("Create FieldExpressionId API call failed with exception trace : " + e);
-		}
+		}		
 	}
-
+	
 	public String getCalcFormulaId(Map<String, String> testData) throws ApplicationException {
-		String calcFormulaId = null;
+		String calcFormulaId = null, requestString;
 		GetCalculationFormulaIdPojo createCalcFormulaId = new GetCalculationFormulaIdPojo();
 		try {
 			requestString = createCalcFormulaId.getCalculationFormulaIdRequest(testData);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.calcFormulaId, requestString);
+			Response response = sfdcRestUtils
+					.postWithoutAppUrl(urlGenerator.calcFormulaId, requestString);
 			validateResponseCode(response, 201);
 			calcFormulaId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return calcFormulaId;
 		} catch (Exception e) {
 			throw new ApplicationException("Create CalcFormulaId API call failed with exception trace : " + e);
-		}
+		}		
 	}
-
+	
 	public void linkCalcFormulaToExpression(Map<String, String> testData, String calculationFormulaId,
 			String expressionId) throws ApplicationException {
+		String requestString;
 		LinkCalculationFormulaPojo linkCalcFormula = new LinkCalculationFormulaPojo();
 		try {
-			requestString = linkCalcFormula.linkCalculationFormulaPojoRequest(testData, calculationFormulaId,
-					expressionId);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkCalcFormulaId, requestString);
+			requestString = linkCalcFormula.linkCalculationFormulaPojoRequest(testData, calculationFormulaId, expressionId);
+			Response response = sfdcRestUtils
+					.postWithoutAppUrl(urlGenerator.linkCalcFormulaId, requestString);
 			validateResponseCode(response, 201);
 		} catch (Exception e) {
-			throw new ApplicationException(
-					"Link CalcFormulaId To ExpressionId API call failed with exception trace : " + e);
-		}
+			throw new ApplicationException("Link CalcFormulaId To ExpressionId API call failed with exception trace : " + e);
+		}		
 	}
-
+	
 	public void linkDatasourceToCalcFormula(String calculationFormulaId) throws ApplicationException {
+		String requestString;
 		LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 		try {
 			requestString = linkDatasource.linkDatasourceIdRequest(calculationFormulaId, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkDatasourceId, requestString);
+			Response response = sfdcRestUtils
+					.postWithoutAppUrl(urlGenerator.linkDatasourceId, requestString);
 			validateResponseCode(response, 201);
 		} catch (Exception e) {
-			throw new ApplicationException(
-					"Link DatasourceId To CalcFormulaId API call failed with exception trace : " + e);
-		}
+			throw new ApplicationException("Link DatasourceId To CalcFormulaId API call failed with exception trace : " + e);
+		}		
 	}
 
+
 	public Response createAdminTemplate(Map<String, String> testData) throws ApplicationException {
+
 		CreateAdminTemplatePojo createAdminTemplatePojo;
 		try {
 			createAdminTemplatePojo = new CreateAdminTemplatePojo();
@@ -170,7 +165,7 @@ public class CIMAdmin {
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
 			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			adminTemplateData.setAdminTemplateId(adminTemplateId);
+			adminTemplateData.setTemplateId(adminTemplateId);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Create New AdminTemplate API call failed with exception trace : " + e);
@@ -179,8 +174,8 @@ public class CIMAdmin {
 
 	public Response getAdminTemplate() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getAdminTemplateURL.replace("{AdminTemplateId}",
-					adminTemplateData.getAdminTemplateId()));
+			response = sfdcRestUtils.getData(
+					urlGenerator.getAdminTemplateURL.replace("{AdminTemplateId}", adminTemplateData.getTemplateId()));
 			validateResponseCode(response, 200);
 			return response;
 		} catch (Exception e) {
@@ -191,7 +186,7 @@ public class CIMAdmin {
 	public void deleteAdminTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
+					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getTemplateId());
 			validateResponseCode(response, 204);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
@@ -214,44 +209,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response activateAdminTemplate() throws ApplicationException {
-		try {
-			requestString = "{\"Status__c\": \"" + SFConstants.activate + "\"}";
-			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
-			validateResponseCode(response, 204);
-			return response;
-		} catch (Exception e) {
-			throw new ApplicationException("Activate AdminTemplate API call failed with exception trace : " + e);
-		}
-	}
-
-	public Response createLinkTemplates(Map<String, String> testData) throws ApplicationException {
-		String linkTemplateId;
-		CreateLinkTemplatesPojo linkTemplates = new CreateLinkTemplatesPojo();
-		try {
-			requestString = linkTemplates.createLinkTemplateRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkTemplatesURL, requestString);
-			validateResponseCode(response, 201);
-			linkTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			linkTemplatesData.setLinkTemplateId(linkTemplateId);
-			return response;
-		} catch (Exception e) {
-			throw new ApplicationException("Create New Link Templates API call failed with exception trace : " + e);
-		}
-	}
 	
-	public Response getLinkTemplates() throws ApplicationException {
-		String linkTemplateName;
-		try {
-			response = sfdcRestUtils
-					.getData(urlGenerator.getLinkTemplatesURL.replace("{LinkTemplateId}", linkTemplatesData.getLinkTemplateId()));
-			validateResponseCode(response, 200);
-			linkTemplateName = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records").get(0).getAsJsonObject().get("Name").getAsString();
-			linkTemplatesData.setLinkTemplateName(linkTemplateName);
-			return response;
-		} catch (Exception e) {
-			throw new ApplicationException("Get LinkTemplates API call failed with exception trace : " + e);
-		}
-	}
+
+
 }
