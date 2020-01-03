@@ -5,7 +5,7 @@
 /.idea
 /logs/
 /*.ser
-/.txt
+/.txt/
 /.gradle
 /build
 /.settings/
