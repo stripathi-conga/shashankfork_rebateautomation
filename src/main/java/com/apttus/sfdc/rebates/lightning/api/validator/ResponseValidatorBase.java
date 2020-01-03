@@ -62,6 +62,8 @@ public class ResponseValidatorBase {
 				testData.get("Program_Type__c"), "Validate Program_Type in linkTemplate");
 		softassert.assertEquals(records.get("Program_Sub_Type__c").getAsString(),
 				testData.get("Program_Sub_Type__c"), "Validate Program_Sub_Type in linkTemplate");
+		softassert.assertEquals(records.get("Status__c").getAsString(),
+				testData.get("Status__c"), "Validate linkTemplate Status");
 		softassert.assertAll();
 	}
 }
