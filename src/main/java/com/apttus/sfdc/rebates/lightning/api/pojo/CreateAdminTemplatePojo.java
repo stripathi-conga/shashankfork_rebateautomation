@@ -1,9 +1,8 @@
 package com.apttus.sfdc.rebates.lightning.api.pojo;
 
 import java.util.Map;
-
-import com.apttus.helpers.JavaHelpers;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
 public class CreateAdminTemplatePojo {
@@ -12,15 +11,14 @@ public class CreateAdminTemplatePojo {
 	private String Status__c;
 	private String QnB_Layout_Id__c;
 	private String Name;
-	public String TemplateId;
-	CreateAdminTemplatePojo createAdminTemplatePojo;
-	private String adminTemplateName;
-	public String getTemplateId() {
-		return TemplateId;
+	public String adminTemplateId;
+
+	public String getAdminTemplateId() {
+		return adminTemplateId;
 	}
 
-	public void setTemplateId(String templateId) {
-		TemplateId = templateId;
+	public void setAdminTemplateId(String templateId) {
+		adminTemplateId = templateId;
 	}
 
 	public String getDescription__c() {
@@ -57,19 +55,17 @@ public class CreateAdminTemplatePojo {
 
 	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 
-		createAdminTemplatePojo = new CreateAdminTemplatePojo();
-		adminTemplateName = testData.get("Name");
+		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
+		String adminTemplateName = testData.get("Name");
 		if (adminTemplateName.equalsIgnoreCase("{RANDOM}")) {
-			adminTemplateName = "Rebates_Auto_AdminTemplate_" + JavaHelpers.generateRandomNumber();
+			adminTemplateName = "Rebates_Auto_AdminTemplate_" + SFDCHelper.randomNumberGenerator();
 		}
 		createAdminTemplatePojo.setName(adminTemplateName);
 		createAdminTemplatePojo.setDescription__c(testData.get("Description__c"));
 		createAdminTemplatePojo.setQnB_Layout_Id__c(testData.get("QnB_Layout_Id__c"));
 		createAdminTemplatePojo.setStatus__c(testData.get("Status__c"));
-		
+
 		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
 		return new Gson().toJson(createAdminTemplatePojo);
 	}
-	}
-
-
+}

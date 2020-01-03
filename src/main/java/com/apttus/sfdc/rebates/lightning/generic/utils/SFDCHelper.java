@@ -43,5 +43,8 @@ public class SFDCHelper {
 			throw new ApplicationException("Not able to set access token " + e.getMessage());
 		}
 	}
-
+	
+	public static long randomNumberGenerator() {
+		return System.nanoTime();
+	}
 }
