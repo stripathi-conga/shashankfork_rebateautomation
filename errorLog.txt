@@ -1,0 +1,13 @@
+14:03:18.844 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+14:03:18.844 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] FAILURE: Build failed with an exception.
+14:03:18.844 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+14:03:18.844 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * What went wrong:
+14:03:18.844 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Execution failed for task ':test'.
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] > Trailing char < > at index 88: C:\Users\mijain\AutomationCode\sfdcrebateautomation_mitu\RegressionRebatesSFDCtestng.xml 
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Try:
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] Run with --stacktrace option to get the stack trace.  Run with --scan to get full insights.
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] 
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildExceptionReporter] * Get more help at https://help.gradle.org
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] 
+14:03:18.845 [ERROR] [org.gradle.internal.buildevents.BuildResultLogger] BUILD FAILED in 2s
