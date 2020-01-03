@@ -10,12 +10,11 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
-import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestDatasource extends UnifiedFramework {
-
+public class TestLinkTemplates {
+	
 	private Properties configProperties;
 	protected String baseURL;
 	private Efficacies efficacies;
@@ -44,22 +43,11 @@ public class TestDatasource extends UnifiedFramework {
 	public void beforeMethod() throws Exception {
 		responseValidator = new ResponseValidatorBase();
 	}
-
-	@Test(description = "TC215-Verify Create New Data Source", groups = { "Smoke", "API" })
-	public void createNewDataSource() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		response = cimAdmin.createDataSource(jsonData);
-		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getDataSource();
-		responseValidator.validateGetDataSource(response, cimAdmin);
-		cimAdmin.deleteDataSource();
-		response = cimAdmin.getDataSource();
-		responseValidator.validateDeleteSuccess(response);
-	}
-
-	@Test(description = "TC436-Verify creation of formula and link to data source", groups = { "Regression", "High",
+	
+	@Test(description = "TC-279 Verify for the Link Template Create and List page", groups = { "Regression", "High",
 			"API" })
-	public void createCalculationFormula() throws Exception {
+	public void createLinkTemplate() throws Exception {
+
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
@@ -74,8 +62,21 @@ public class TestDatasource extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		cimAdmin.deleteDataSource();
-		response = cimAdmin.getDataSource();
-		responseValidator.validateDeleteSuccess(response);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
+		response = cimAdmin.createAdminTemplate(jsonData);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getAdminTemplate();
+		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
+		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		cimAdmin.activateAdminTemplate();
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateAPI");
+		response = cimAdmin.createLinkTemplates(jsonData);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getLinkTemplates();
+		responseValidator.validateGetLinkTemplates(jsonData, response, cimAdmin);
 	}
+
 }
