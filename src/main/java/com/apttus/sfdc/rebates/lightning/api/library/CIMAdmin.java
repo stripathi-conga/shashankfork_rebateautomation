@@ -6,6 +6,7 @@ import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewDataSourcePojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateQnBLayoutIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetCalculationFormulaIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetFieldExpressionIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkCalculationFormulaPojo;
@@ -24,6 +25,9 @@ public class CIMAdmin {
 	public CreateAdminTemplatePojo adminTemplateData;
 	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
 	public CreateLinkTemplatesPojo linkTemplatesData;
+	public CreateQnBLayoutIdPojo qnbLayoutData;
+	
+
 	public JsonParser parser;
 	public String adminTemplateId;
 	public String mapAdminTemplateDataSourceId;
@@ -56,6 +60,14 @@ public class CIMAdmin {
 
 	public void setLinkTemplatesData(CreateLinkTemplatesPojo linkTemplatesData) {
 		this.linkTemplatesData = linkTemplatesData;
+	}
+	
+	public CreateQnBLayoutIdPojo getQnblayoutData() {
+		return qnbLayoutData;
+	}
+
+	public void setQnblayoutData(CreateQnBLayoutIdPojo qnblayoutData) {
+		this.qnbLayoutData = qnblayoutData;
 	}
 
 	public CIMAdmin(String baseURL, SFDCRestUtils sfdcRestUtils) {
@@ -162,11 +174,11 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createAdminTemplate(Map<String, String> testData) throws ApplicationException {
+	public Response createAdminTemplate(Map<String, String> testData,String qnbLayoutId) throws ApplicationException {
 		CreateAdminTemplatePojo createAdminTemplatePojo;
 		try {
 			createAdminTemplatePojo = new CreateAdminTemplatePojo();
-			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this);
+			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
 			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
@@ -193,6 +205,16 @@ public class CIMAdmin {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
 			validateResponseCode(response, 204);
+		} catch (Exception e) {
+			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
+	
+	public void deleteActiveInactiveTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils
+					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
+			validateResponseCode(response, 400);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
 		}
@@ -225,6 +247,7 @@ public class CIMAdmin {
 			throw new ApplicationException("Activate AdminTemplate API call failed with exception trace : " + e);
 		}
 	}
+	
 
 	public Response createLinkTemplates(Map<String, String> testData) throws ApplicationException {
 		String linkTemplateId;
@@ -254,4 +277,20 @@ public class CIMAdmin {
 			throw new ApplicationException("Get LinkTemplates API call failed with exception trace : " + e);
 		}
 	}
+
+	public String getQnBLayoutId(Map<String, String> testData) throws ApplicationException {
+		String qnblayoutId = null;
+		CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
+		try {
+			requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData,this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutId, requestString);
+			validateResponseCode(response, 201);
+			qnblayoutId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			return qnblayoutId;
+		} catch (Exception e) {
+			throw new ApplicationException("Create QnB Layout ID API call failed with exception trace : " + e);
+		}
+	}
+
+	
 }

@@ -14,7 +14,7 @@ import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
 public class TestLinkTemplates {
-	
+
 	private Properties configProperties;
 	protected String baseURL;
 	private Efficacies efficacies;
@@ -43,7 +43,7 @@ public class TestLinkTemplates {
 	public void beforeMethod() throws Exception {
 		responseValidator = new ResponseValidatorBase();
 	}
-	
+
 	@Test(description = "TC-279 Verify for the Link Template Create and List page", groups = { "Regression", "High",
 			"API" })
 	public void createLinkTemplate() throws Exception {
@@ -62,8 +62,11 @@ public class TestLinkTemplates {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
-		response = cimAdmin.createAdminTemplate(jsonData);
+		response = cimAdmin.createAdminTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
@@ -78,5 +81,7 @@ public class TestLinkTemplates {
 		response = cimAdmin.getLinkTemplates();
 		responseValidator.validateGetLinkTemplates(jsonData, response, cimAdmin);
 	}
+
+	
 
 }

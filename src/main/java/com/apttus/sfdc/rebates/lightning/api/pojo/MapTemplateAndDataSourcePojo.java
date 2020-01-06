@@ -42,7 +42,6 @@ public class MapTemplateAndDataSourcePojo {
 		mapTemplateAndDataSourcepojo.setFormula_Id__c(testData.get("Formula_Id__c"));
 		mapTemplateAndDataSourcepojo.setData_Source_Id__c(testData.get("Data_Source_Id__c"));
 
-		cimAdmin.setAdminTemplateDataSourcedata(mapTemplateAndDataSourcepojo);
 		return new Gson().toJson(mapTemplateAndDataSourcepojo);
 	}
 

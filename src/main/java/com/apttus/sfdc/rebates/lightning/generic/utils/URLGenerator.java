@@ -9,6 +9,7 @@ public class URLGenerator {
 	public String getDataSourceURL = "/query/?q=SELECT Id,Name__c FROM Data_Source__c WHERE id = '{DataSourceId}'";
 	public String fieldExpressionId = "/sobjects/Apttus_Config2__FieldExpression__c/";
 	public String calcFormulaId = "/sobjects/Calculation_Formula__c/";
+	public String qnbLayoutId = "/sobjects/Qualification_and_Benefit_Layout__c/";
 	public String linkCalcFormulaId = "/sobjects/Calculation_Formula_Step__c/";
 	public String linkDatasourceId = "/sobjects/Data_Source_Formula__c/";
 	public String adminTemplateURL = "/sobjects/Program_Template__c/";
@@ -33,5 +34,6 @@ public class URLGenerator {
 		
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
 		this.getLinkTemplatesURL = baseURL + this.getLinkTemplatesURL;
+		this.qnbLayoutId=baseURL + this.qnbLayoutId;
 	}
 }
