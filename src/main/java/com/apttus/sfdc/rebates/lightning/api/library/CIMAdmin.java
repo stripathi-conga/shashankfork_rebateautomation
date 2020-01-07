@@ -21,16 +21,21 @@ import com.jayway.restassured.response.Response;
 public class CIMAdmin {
 
 	public SFDCRestUtils sfdcRestUtils;
-	public URLGenerator urlGenerator;
-	public CreateNewDataSourcePojo dataSourceData;
-	public CreateAdminTemplatePojo adminTemplateData;
-	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
-	public CreateLinkTemplatesPojo linkTemplatesData = new CreateLinkTemplatesPojo();
 	public JsonParser parser;
 	public String adminTemplateId;
 	public String mapAdminTemplateDataSourceId;
 	private String requestString;
 	private Response response;
+	public URLGenerator urlGenerator;
+	public CreateNewDataSourcePojo dataSourceData = new CreateNewDataSourcePojo();
+	public CreateAdminTemplatePojo adminTemplateData = new CreateAdminTemplatePojo();
+	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
+	public CreateLinkTemplatesPojo linkTemplatesData = new CreateLinkTemplatesPojo();
+	public GetFieldExpressionIdPojo createNewFieldExpressionId = new GetFieldExpressionIdPojo();
+	public GetCalculationFormulaIdPojo createCalcFormulaId = new GetCalculationFormulaIdPojo();
+	public LinkCalculationFormulaPojo linkCalcFormula = new LinkCalculationFormulaPojo();
+	public MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
+	public LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -76,9 +81,8 @@ public class CIMAdmin {
 
 	public Response createDataSource(Map<String, String> testData) throws ApplicationException {
 		String dataSourceId;
-		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo();
 		try {
-			requestString = createDataSource.createDataSourceRequest(testData, this);
+			requestString = dataSourceData.createDataSourceRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
 			validateResponseCode(response, 201);
 			dataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
@@ -112,7 +116,6 @@ public class CIMAdmin {
 
 	public String getFieldExpressionId(Map<String, String> testData) throws ApplicationException {
 		String fieldExpressionId = null;
-		GetFieldExpressionIdPojo createNewFieldExpressionId = new GetFieldExpressionIdPojo();
 		try {
 			requestString = createNewFieldExpressionId.getExpressionIdRequest(testData);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionId, requestString);
@@ -126,7 +129,6 @@ public class CIMAdmin {
 
 	public String getCalcFormulaId(Map<String, String> testData) throws ApplicationException {
 		String calcFormulaId = null;
-		GetCalculationFormulaIdPojo createCalcFormulaId = new GetCalculationFormulaIdPojo();
 		try {
 			requestString = createCalcFormulaId.getCalculationFormulaIdRequest(testData);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.calcFormulaId, requestString);
@@ -140,7 +142,6 @@ public class CIMAdmin {
 
 	public void linkCalcFormulaToExpression(Map<String, String> testData, String calculationFormulaId,
 			String expressionId) throws ApplicationException {
-		LinkCalculationFormulaPojo linkCalcFormula = new LinkCalculationFormulaPojo();
 		try {
 			requestString = linkCalcFormula.linkCalculationFormulaPojoRequest(testData, calculationFormulaId,
 					expressionId);
@@ -153,7 +154,6 @@ public class CIMAdmin {
 	}
 
 	public void linkDatasourceToCalcFormula(String calculationFormulaId) throws ApplicationException {
-		LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 		try {
 			requestString = linkDatasource.linkDatasourceIdRequest(calculationFormulaId, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkDatasourceId, requestString);
@@ -165,10 +165,8 @@ public class CIMAdmin {
 	}
 
 	public Response createAdminTemplate(Map<String, String> testData) throws ApplicationException {
-		CreateAdminTemplatePojo createAdminTemplatePojo;
 		try {
-			createAdminTemplatePojo = new CreateAdminTemplatePojo();
-			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this);
+			requestString = adminTemplateData.createAdminTemplateRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
 			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
@@ -201,9 +199,7 @@ public class CIMAdmin {
 	}
 
 	public Response mapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
-		MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo;
 		try {
-			mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapAdminTemplateToDatasourceURL, requestString);
 			validateResponseCode(response, 201);
@@ -281,7 +277,6 @@ public class CIMAdmin {
 
 	public String getActiveInactiveTemplateIdFromGetLinkTemplates(Response response, Map<String, String> testData)
 			throws ApplicationException {
-		linkTemplatesData = new CreateLinkTemplatesPojo();
 		String activeInactiveLinkTemplateId = null, status;
 		JsonObject resp;
 		JsonArray records;
