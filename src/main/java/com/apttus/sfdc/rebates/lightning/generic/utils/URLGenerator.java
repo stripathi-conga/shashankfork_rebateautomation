@@ -15,7 +15,9 @@ public class URLGenerator {
 	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name FROM Program_Template__c WHERE id = '{AdminTemplateId}'";
 	public String mapAdminTemplateToDatasourceURL = "/sobjects/Program_Template_Data_Source__c/";
 	public String linkTemplatesURL = "/sobjects/Program_Template_Map__c/";
-	public String getLinkTemplatesURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where id = '{LinkTemplateId}'";
+	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where id = '{LinkTemplateId}'";
+	public String getLinkTemplatesViaProgramTypeURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where Program_Type__c = '{ProgramType}' and Program_Sub_Type__c = '{ProgramSubType}'";
+	
 
 	public URLGenerator(String instanceURL) {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
@@ -32,6 +34,7 @@ public class URLGenerator {
 		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;
 		
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
-		this.getLinkTemplatesURL = baseURL + this.getLinkTemplatesURL;
+		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
+		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
 	}
 }
