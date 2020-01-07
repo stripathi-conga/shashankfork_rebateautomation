@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
@@ -110,7 +111,7 @@ public class TestLinkTemplates {
 		response = cimAdmin.createLinkTemplates(jsonData);
 		cimAdmin.activateLinkAdminTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
-		responseValidator.validateActiveLinkTemplates(response, cimAdmin);
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
 	}
 
 }

@@ -63,13 +63,13 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 	
-	public void validateActiveLinkTemplates(Response response, CIMAdmin cimAdmin) {
+	public void validateLinkTemplatesStatus(Response response, CIMAdmin cimAdmin, String status) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Status__c").getAsString(),
-				"Active", "Validate status in linkTemplate");
+				status, "Validate status in linkTemplate");
 		softassert.assertAll();
 	}
 }
