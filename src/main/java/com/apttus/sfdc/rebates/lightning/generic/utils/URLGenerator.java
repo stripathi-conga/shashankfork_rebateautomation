@@ -25,23 +25,16 @@ public class URLGenerator {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
 		this.dataSourceURL = baseURL + this.dataSourceURL;
 		this.getDataSourceURL = baseURL + this.getDataSourceURL;
-
 		this.fieldExpressionId = baseURL + this.fieldExpressionId;
 		this.calcFormulaId = baseURL + this.calcFormulaId;
 		this.linkCalcFormulaId = baseURL + this.linkCalcFormulaId;
 		this.linkDatasourceId = baseURL + this.linkDatasourceId;
-
 		this.getAdminTemplateURL = baseURL + this.getAdminTemplateURL;
 		this.adminTemplateURL = baseURL + this.adminTemplateURL;
-		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;
-		
+		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;	
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
-
-		
 		this.qnbLayoutId=baseURL + this.qnbLayoutId;
 		this.getqnblayoutURL=baseURL + this.getqnblayoutURL;
-		
-
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
 		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
 

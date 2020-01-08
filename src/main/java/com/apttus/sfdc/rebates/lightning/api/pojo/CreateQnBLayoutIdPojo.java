@@ -1,23 +1,12 @@
 package com.apttus.sfdc.rebates.lightning.api.pojo;
 
 import java.util.Map;
-
-import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.Gson;
 
 public class CreateQnBLayoutIdPojo {
 
 	private String tier__c;
 	private String type__c;
-	public String qnbLayoutId;
-
-	public String getQnbLayoutId() {
-		return qnbLayoutId;
-	}
-
-	public void setQnbLayoutId(String qnbLayoutId) {
-		this.qnbLayoutId = qnbLayoutId;
-	}
 
 	public String getTier__c() {
 		return tier__c;
@@ -35,11 +24,10 @@ public class CreateQnBLayoutIdPojo {
 		this.type__c = type__c;
 	}
 
-	public String createQnBLayoutIdRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
+	public String createQnBLayoutIdRequest(Map<String, String> testData) {
 		CreateQnBLayoutIdPojo createQnBLayoutId = new CreateQnBLayoutIdPojo();
 		createQnBLayoutId.setTier__c(testData.get("tier__c"));
 		createQnBLayoutId.setType__c(testData.get("type__c"));
-		cimAdmin.setQnblayoutData(createQnBLayoutId);
 		return new Gson().toJson(createQnBLayoutId);
 	}
 }

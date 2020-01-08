@@ -41,7 +41,6 @@ public class ResponseValidatorBase {
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		softassert.assertAll();
-		
 	}
 
 	public void validateGetAdminTemplate(Response response, CIMAdmin cimAdmin) {

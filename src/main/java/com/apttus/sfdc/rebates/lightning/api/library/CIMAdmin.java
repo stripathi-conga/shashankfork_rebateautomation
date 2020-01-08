@@ -1,7 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Map;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
@@ -23,7 +22,6 @@ import com.jayway.restassured.response.Response;
 public class CIMAdmin {
 
 	public SFDCRestUtils sfdcRestUtils;
-	public CreateQnBLayoutIdPojo qnbLayoutData;
 	public JsonParser parser;
 	public String adminTemplateId;
 	public String mapAdminTemplateDataSourceId;
@@ -67,14 +65,6 @@ public class CIMAdmin {
 
 	public void setLinkTemplatesData(CreateLinkTemplatesPojo linkTemplatesData) {
 		this.linkTemplatesData = linkTemplatesData;
-	}
-
-	public CreateQnBLayoutIdPojo getQnblayoutData() {
-		return qnbLayoutData;
-	}
-
-	public void setQnblayoutData(CreateQnBLayoutIdPojo qnblayoutData) {
-		this.qnbLayoutData = qnblayoutData;
 	}
 
 	public CIMAdmin(String baseURL, SFDCRestUtils sfdcRestUtils) {
@@ -347,24 +337,19 @@ public class CIMAdmin {
 		String qnblayoutId = null;
 		int recordsize;
 		JsonObject responsebody;
-		
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
 							.replace("{QnBLayoutTier}", testData.get("tier__c")));
 			validateResponseCode(response, 200);
 			responsebody = parser.parse(response.getBody().asString()).getAsJsonObject();
 			recordsize = responsebody.get("totalSize").getAsInt();
-
 			if (recordsize > 0) {
 				qnblayoutId = responsebody.getAsJsonArray("records").get(0).getAsJsonObject().get("Id").getAsString();
-
 			} else {
-
-				requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData, this);
+				requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData);
 				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutId, requestString);
 				validateResponseCode(response, 201);
 				qnblayoutId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-
 			}
 			return qnblayoutId;
 		} catch (Exception e) {

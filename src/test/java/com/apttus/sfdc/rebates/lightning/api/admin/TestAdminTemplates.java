@@ -63,9 +63,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
-		String qnbLayoutId=cimAdmin.getQnBLayoutId(jsonData);
-		System.out.println("qnbLayoutId: "+qnbLayoutId);
-		
+		String qnbLayoutId=cimAdmin.getQnBLayoutId(jsonData);		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
 		response = cimAdmin.createAdminTemplate(jsonData,qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
@@ -76,12 +74,11 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);	
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteSuccess(response);			  
-		 
+		responseValidator.validateDeleteSuccess(response);			 	 
 	}
 	
-	@Test(description = "TC409-Unable to Delete  Template_Status_Active_Inactive_spillover menu", groups = { "Smoke", "API" ,"High"})
-	public void verifyActiveDeleteAdminTemplate() throws Exception {
+	@Test(description = "TC409-Unable to Delete  Template_Status_Active_Inactive_spillover menu", groups = { "Regression", "API" ,"High"})
+	public void verifyActiveAdminTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
@@ -99,7 +96,6 @@ public class TestAdminTemplates extends UnifiedFramework {
 		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
 		String qnbLayoutId=cimAdmin.getQnBLayoutId(jsonData);
-		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
 		response = cimAdmin.createAdminTemplate(jsonData,qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
@@ -109,11 +105,8 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateAdminTemplate();
-		
 		cimAdmin.deleteActiveInactiveTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteFailure(response);
-			  
-		 
+		responseValidator.validateDeleteFailure(response); 
 	}
 }
