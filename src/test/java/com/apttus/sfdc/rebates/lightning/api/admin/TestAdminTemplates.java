@@ -80,7 +80,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		 
 	}
 	
-	@Test(description = "TC409-Unable to Delete  Template_Status_Active_Inactive_spillover menu", groups = { "Smoke", "API" })
+	@Test(description = "TC409-Unable to Delete  Template_Status_Active_Inactive_spillover menu", groups = { "Smoke", "API" ,"High"})
 	public void verifyActiveDeleteAdminTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");

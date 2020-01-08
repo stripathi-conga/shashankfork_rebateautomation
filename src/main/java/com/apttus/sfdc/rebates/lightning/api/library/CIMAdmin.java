@@ -342,19 +342,6 @@ public class CIMAdmin {
 		}
 	}
 
-	/*public String getQnBLayoutId(Map<String, String> testData) throws ApplicationException {
-		String qnblayoutId = null;
-		CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
-		try {
-			requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutId, requestString);
-			validateResponseCode(response, 201);
-			qnblayoutId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			return qnblayoutId;
-		} catch (Exception e) {
-			throw new ApplicationException("Create QnB Layout ID API call failed with exception trace : " + e);
-		}
-	}*/
 
 	public String getQnBLayoutId(Map<String, String> testData) throws ApplicationException {
 		String qnblayoutId = null;
