@@ -368,7 +368,7 @@ public class CIMAdmin {
 			}
 			return qnblayoutId;
 		} catch (Exception e) {
-			throw new ApplicationException("Get qnb API call failed with exception trace : " + e);
+			throw new ApplicationException("Get QnB Layout Id API call failed with exception trace : " + e);
 		}
 
 	}
