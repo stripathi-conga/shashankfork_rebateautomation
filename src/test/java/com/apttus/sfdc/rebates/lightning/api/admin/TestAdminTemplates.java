@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
@@ -77,7 +78,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateDeleteSuccess(response);			 	 
 	}
 	
-	@Test(description = "TC409-Unable to Delete  Template_Status_Active_Inactive_spillover menu", groups = { "Regression", "API" ,"High"})
+	@Test(description = "TC409-Unable to Delete  Active Admin Template", groups = { "Regression", "API" ,"High"})
 	public void verifyActiveAdminTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -107,6 +108,6 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.activateAdminTemplate();
 		cimAdmin.deleteActiveInactiveTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteFailure(response); 
+		responseValidator.validateDeleteFailure(response,RebatesConstants.messageDeleteActiveInactive,RebatesConstants.errorcodeCutomValidation); 
 	}
 }

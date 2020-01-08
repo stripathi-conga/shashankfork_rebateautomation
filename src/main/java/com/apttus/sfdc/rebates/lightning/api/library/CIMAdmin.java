@@ -38,6 +38,7 @@ public class CIMAdmin {
 	public MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 	public LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 	public CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
+	public CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -166,10 +167,8 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
-		CreateAdminTemplatePojo createAdminTemplatePojo;
+	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {	
 		try {
-			createAdminTemplatePojo = new CreateAdminTemplatePojo();
 			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
@@ -208,7 +207,7 @@ public class CIMAdmin {
 					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
 			validateResponseCode(response, 400);
 		} catch (Exception e) {
-			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Fail to verify the deletion of Active/Inactive Admin template : " + e);
 		}
 	}
 
@@ -347,7 +346,7 @@ public class CIMAdmin {
 				qnblayoutId = responsebody.getAsJsonArray("records").get(0).getAsJsonObject().get("Id").getAsString();
 			} else {
 				requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData);
-				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutId, requestString);
+				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutIdURL, requestString);
 				validateResponseCode(response, 201);
 				qnblayoutId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			}

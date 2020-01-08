@@ -10,7 +10,7 @@ public class URLGenerator {
 	public String getqnblayoutURL = "/query/?q=SELECT Id FROM Qualification_and_Benefit_Layout__c where type__c='{QnBLayoutType}' and tier__c='{QnBLayoutTier}'";
 	public String fieldExpressionId = "/sobjects/Apttus_Config2__FieldExpression__c/";
 	public String calcFormulaId = "/sobjects/Calculation_Formula__c/";
-	public String qnbLayoutId = "/sobjects/Qualification_and_Benefit_Layout__c/";
+	public String qnbLayoutIdURL = "/sobjects/Qualification_and_Benefit_Layout__c/";
 	public String linkCalcFormulaId = "/sobjects/Calculation_Formula_Step__c/";
 	public String linkDatasourceId = "/sobjects/Data_Source_Formula__c/";
 	public String adminTemplateURL = "/sobjects/Program_Template__c/";
@@ -33,7 +33,7 @@ public class URLGenerator {
 		this.adminTemplateURL = baseURL + this.adminTemplateURL;
 		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;	
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
-		this.qnbLayoutId=baseURL + this.qnbLayoutId;
+		this.qnbLayoutIdURL=baseURL + this.qnbLayoutIdURL;
 		this.getqnblayoutURL=baseURL + this.getqnblayoutURL;
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
 		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
