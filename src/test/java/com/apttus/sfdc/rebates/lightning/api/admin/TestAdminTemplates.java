@@ -45,7 +45,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "Verify Create New Admin Template", groups = { "Smoke", "API" })
+	@Test(description = "TC428-Verify for the creation of the Admin Template and List page", groups = { "Smoke", "API" ,"Urgent"})
 	public void createNewAdminTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -64,6 +64,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
 		String qnbLayoutId=cimAdmin.getQnBLayoutId(jsonData);
+		System.out.println("qnbLayoutId: "+qnbLayoutId);
 		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
 		response = cimAdmin.createAdminTemplate(jsonData,qnbLayoutId);
@@ -79,7 +80,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		 
 	}
 	
-	@Test(description = "Delete Template_Status_Draft_spillover menu", groups = { "Smoke", "API" })
+	@Test(description = "TC409-Unable to Delete  Template_Status_Active_Inactive_spillover menu", groups = { "Smoke", "API" })
 	public void verifyActiveDeleteAdminTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -111,7 +112,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		
 		cimAdmin.deleteActiveInactiveTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteUnSuccess(response);
+		responseValidator.validateDeleteFailure(response);
 			  
 		 
 	}

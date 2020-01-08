@@ -36,7 +36,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 0, "Validate response size");
 		softassert.assertAll();
 	}
-	public void validateDeleteUnSuccess(Response response) {
+	public void validateDeleteFailure(Response response) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
@@ -63,14 +63,20 @@ public class ResponseValidatorBase {
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.linkTemplatesData.getLinkTemplateId(),
 				"Validate linkTemplate id");
-		softassert.assertEquals(records.get("Template_Id__c").getAsString(),
-				cimAdmin.adminTemplateData.getAdminTemplateId(), "Validate templateId in linkTemplate");
 		softassert.assertEquals(records.get("Program_Type__c").getAsString(),
 				testData.get("Program_Type__c"), "Validate Program_Type in linkTemplate");
 		softassert.assertEquals(records.get("Program_Sub_Type__c").getAsString(),
 				testData.get("Program_Sub_Type__c"), "Validate Program_Sub_Type in linkTemplate");
+		softassert.assertAll();
+	}
+	
+	public void validateLinkTemplatesStatus(Response response, CIMAdmin cimAdmin, String status) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Status__c").getAsString(),
-				testData.get("Status__c"), "Validate linkTemplate Status");
+				status, "Validate status in linkTemplate");
 		softassert.assertAll();
 	}
 }
