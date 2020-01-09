@@ -52,4 +52,5 @@ public class TestIncentives {
 		response = cim.getProgramDetails();
 		responseValidator.validateProgramDetails(jsonData, response, cim);
 	}
+	
 }
