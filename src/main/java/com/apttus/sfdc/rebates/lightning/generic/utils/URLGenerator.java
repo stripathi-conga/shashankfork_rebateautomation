@@ -7,8 +7,10 @@ public class URLGenerator {
 	public String API_VERSION = "/v46.0";
 	public String dataSourceURL = "/sobjects/Data_Source__c/";
 	public String getDataSourceURL = "/query/?q=SELECT Id,Name__c FROM Data_Source__c WHERE id = '{DataSourceId}'";
+	public String getqnblayoutURL = "/query/?q=SELECT Id FROM Qualification_and_Benefit_Layout__c where type__c='{QnBLayoutType}' and tier__c='{QnBLayoutTier}'";
 	public String fieldExpressionId = "/sobjects/Apttus_Config2__FieldExpression__c/";
 	public String calcFormulaId = "/sobjects/Calculation_Formula__c/";
+	public String qnbLayoutIdURL = "/sobjects/Qualification_and_Benefit_Layout__c/";
 	public String linkCalcFormulaId = "/sobjects/Calculation_Formula_Step__c/";
 	public String linkDatasourceId = "/sobjects/Data_Source_Formula__c/";
 	public String adminTemplateURL = "/sobjects/Program_Template__c/";
@@ -23,18 +25,18 @@ public class URLGenerator {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
 		this.dataSourceURL = baseURL + this.dataSourceURL;
 		this.getDataSourceURL = baseURL + this.getDataSourceURL;
-
 		this.fieldExpressionId = baseURL + this.fieldExpressionId;
 		this.calcFormulaId = baseURL + this.calcFormulaId;
 		this.linkCalcFormulaId = baseURL + this.linkCalcFormulaId;
 		this.linkDatasourceId = baseURL + this.linkDatasourceId;
-
 		this.getAdminTemplateURL = baseURL + this.getAdminTemplateURL;
 		this.adminTemplateURL = baseURL + this.adminTemplateURL;
-		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;
-		
+		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;	
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
+		this.qnbLayoutIdURL=baseURL + this.qnbLayoutIdURL;
+		this.getqnblayoutURL=baseURL + this.getqnblayoutURL;
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
 		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
+
 	}
 }

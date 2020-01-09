@@ -37,9 +37,14 @@
 		"Program_Sub_Type__c": "Rebate",
 		"Status__c": "Draft"
 	},
+	"createQnBLayoutAPI": {
+		"type__c": "Benefit Product",
+        "tier__c": "Tiered"    
+    },   
 	"createNewLinkTemplateSubTypeLoyaltyAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Loyalty",
 		"Status__c": "Draft"
+
 	}
 }
