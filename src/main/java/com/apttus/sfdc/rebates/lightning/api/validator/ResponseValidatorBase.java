@@ -45,9 +45,9 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
 		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Cannot delete Active or Inactive Template.");
+				"Verify delete failure message");
 		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"FIELD_CUSTOM_VALIDATION_EXCEPTION");
+				"Verify delete failure code");
 		softassert.assertAll();
 	}
 
