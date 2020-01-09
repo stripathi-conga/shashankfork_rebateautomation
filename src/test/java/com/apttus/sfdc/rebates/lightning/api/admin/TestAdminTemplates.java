@@ -108,6 +108,6 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.activateAdminTemplate();
 		response=cimAdmin.deleteActiveInactiveTemplate();
 		
-		responseValidator.validateDeleteFailure(response,RebatesConstants.messageDeleteActiveInactiveTemplate); 
+		responseValidator.validateDeleteFailure(response,RebatesConstants.messageDeleteActiveInactiveTemplate,RebatesConstants.messageerrorcodeTemplate); 
 	}
 }
