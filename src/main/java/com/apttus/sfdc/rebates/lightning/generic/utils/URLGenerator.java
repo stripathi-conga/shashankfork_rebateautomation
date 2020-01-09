@@ -11,6 +11,8 @@ public class URLGenerator {
 	public String calcFormulaIdURL = "/sobjects/Calculation_Formula__c/";
 	public String linkCalcFormulaIdURL = "/sobjects/Calculation_Formula_Step__c/";
 	public String linkDatasourceIdURL = "/sobjects/Data_Source_Formula__c/";
+	public String getqnblayoutURL = "/query/?q=SELECT Id FROM Qualification_and_Benefit_Layout__c where type__c='{QnBLayoutType}' and tier__c='{QnBLayoutTier}'";
+	public String qnbLayoutIdURL = "/sobjects/Qualification_and_Benefit_Layout__c/";
 	public String adminTemplateURL = "/sobjects/Program_Template__c/";
 	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name FROM Program_Template__c WHERE id = '{AdminTemplateId}'";
 	public String mapAdminTemplateToDatasourceURL = "/sobjects/Program_Template_Data_Source__c/";
@@ -24,20 +26,18 @@ public class URLGenerator {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
 		this.dataSourceURL = baseURL + this.dataSourceURL;
 		this.getDataSourceURL = baseURL + this.getDataSourceURL;
-
 		this.fieldExpressionIdURL = baseURL + this.fieldExpressionIdURL;
 		this.calcFormulaIdURL = baseURL + this.calcFormulaIdURL;
 		this.linkCalcFormulaIdURL = baseURL + this.linkCalcFormulaIdURL;
 		this.linkDatasourceIdURL = baseURL + this.linkDatasourceIdURL;
-
 		this.getAdminTemplateURL = baseURL + this.getAdminTemplateURL;
 		this.adminTemplateURL = baseURL + this.adminTemplateURL;
-		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;
-		
+		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;	
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
+		this.qnbLayoutIdURL=baseURL + this.qnbLayoutIdURL;
+		this.getqnblayoutURL=baseURL + this.getqnblayoutURL;
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
-		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
-		
+		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;		
 		this.programURL = baseURL + this.programURL;
 		this.getProgramURL = baseURL + this.getProgramURL;
 	}

@@ -32,6 +32,10 @@
 		"Status__c": "Draft",
 		"Description__c": "Automation"
 	},
+	"createQnBLayoutAPI": {
+		"type__c": "Benefit Product",
+		"tier__c": "Tiered"
+	},
 	"createNewLinkTemplateSubTypeRebateAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Rebate"

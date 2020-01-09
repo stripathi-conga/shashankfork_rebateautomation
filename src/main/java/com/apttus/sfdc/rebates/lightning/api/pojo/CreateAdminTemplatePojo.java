@@ -53,7 +53,7 @@ public class CreateAdminTemplatePojo {
 		this.Name = name;
 	}
 
-	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
+	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin,String qnbLayoutId) {
 
 		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
 		String adminTemplateName = testData.get("Name");
@@ -62,7 +62,7 @@ public class CreateAdminTemplatePojo {
 		}
 		createAdminTemplatePojo.setName(adminTemplateName);
 		createAdminTemplatePojo.setDescription__c(testData.get("Description__c"));
-		createAdminTemplatePojo.setQnB_Layout_Id__c(testData.get("QnB_Layout_Id__c"));
+		createAdminTemplatePojo.setQnB_Layout_Id__c(qnbLayoutId);
 		createAdminTemplatePojo.setStatus__c(testData.get("Status__c"));
 
 		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
