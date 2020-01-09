@@ -4,12 +4,13 @@ import java.util.Map;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
-import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewDataSourcePojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateQnBLayoutIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetCalculationFormulaIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetFieldExpressionIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkCalculationFormulaPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkDatasourceToCalculationIdPojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
@@ -36,6 +37,8 @@ public class CIMAdmin {
 	public LinkCalculationFormulaPojo linkCalcFormula = new LinkCalculationFormulaPojo();
 	public MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 	public LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
+	public CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
+	
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -164,9 +167,9 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createAdminTemplate(Map<String, String> testData) throws ApplicationException {
+	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {	
 		try {
-			requestString = adminTemplateData.createAdminTemplateRequest(testData, this);
+			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
 			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
@@ -195,6 +198,17 @@ public class CIMAdmin {
 			validateResponseCode(response, 204);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response deleteActiveInactiveTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils
+					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
+			validateResponseCode(response, 400);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Failed to verify the deletion of Active/Inactive Admin template : " + e);
 		}
 	}
 
@@ -317,4 +331,31 @@ public class CIMAdmin {
 			throw new ApplicationException("Activate Link Template API call failed with exception trace : " + e);
 		}
 	}
+
+
+	public String getQnBLayoutId(Map<String, String> testData) throws ApplicationException {
+		String qnblayoutId = null;
+		int recordsize;
+		JsonObject responsebody;
+		try {
+			response = sfdcRestUtils.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
+							.replace("{QnBLayoutTier}", testData.get("tier__c")));
+			validateResponseCode(response, 200);
+			responsebody = parser.parse(response.getBody().asString()).getAsJsonObject();
+			recordsize = responsebody.get("totalSize").getAsInt();
+			if (recordsize > 0) {
+				qnblayoutId = responsebody.getAsJsonArray("records").get(0).getAsJsonObject().get("Id").getAsString();
+			} else {
+				requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData);
+				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutIdURL, requestString);
+				validateResponseCode(response, 201);
+				qnblayoutId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			}
+			return qnblayoutId;
+		} catch (Exception e) {
+			throw new ApplicationException("Get QnB Layout Id API call failed with exception trace : " + e);
+		}
+
+	}
+
 }
