@@ -1,5 +1,10 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -12,6 +17,8 @@ public class SFDCHelper {
 	public static String envName;
 	public static String accessToken;
 	public URLGenerator urlGenerator;
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private Date date = new Date();	
 
 	public SFDCHelper(String baseURL) {
 		urlGenerator = new URLGenerator(baseURL);
@@ -43,8 +50,83 @@ public class SFDCHelper {
 			throw new ApplicationException("Not able to set access token " + e.getMessage());
 		}
 	}
-	
+
 	public static long randomNumberGenerator() {
 		return System.nanoTime();
+	}
+
+	public String getTodaysDate() {
+		return dateFormat.format(new Date());
+	}
+
+	public Boolean checkValidDate(String date, String dateFormat) {
+		if (date == null) {
+			return false;
+		}
+		if (dateFormat == null) {
+			dateFormat = "yyyy-MM-dd";
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		sdf.setLenient(false);
+		try {
+			sdf.parse(date);
+
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	public String getPastorFutureDate(String actualDate, String days) throws ParseException {
+		Calendar calendar = Calendar.getInstance();
+		if (actualDate == null) {
+			calendar.setTime(date);
+		} else {
+			calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(actualDate));
+		}
+		calendar.add(Calendar.DATE, +Integer.parseInt(days));
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public String firstDayOfCurrentMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public String lastDayOfCurrentMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 1);
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.add(Calendar.DATE, -1);
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public String firstDayOfLastMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public String firstDayOfPreviousMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public String firstDayOfPreviousTwoMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -2);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+
+	public String lastDayOfNextMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 1);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
 	}
 }
