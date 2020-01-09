@@ -3,9 +3,16 @@ package com.apttus.sfdc.rebates.lightning.api.validator;
 import java.util.Map;
 import org.testng.asserts.SoftAssert;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.json.*;
+import org.json.simple.JSONArray;
+
 import com.jayway.restassured.response.Response;
+import com.mongodb.util.JSON;
 
 public class ResponseValidatorBase {
 	protected JsonParser parser = new JsonParser();
@@ -37,17 +44,15 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateDeleteFailure(Response response, String message, String errorCode) {
+	public void validateDeleteFailure(Response response, String message) {
+		
 		softassert = new SoftAssert();
-		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
-
-		JsonObject records = resp.getAsJsonArray("message").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("message").getAsString(), message,
-				"Cannot delete Active or Inactive Template.");
-		JsonObject errorcodeValidation = resp.getAsJsonArray("errorCode").get(0).getAsJsonObject();
-		softassert.assertEquals(errorcodeValidation.get("errorCode").getAsString(), errorCode,
-				"Cannot delete Active or Inactive Template.");
+		JsonArray ob=parser.parse(response.getBody().asString()).getAsJsonArray();
+		  System.out.println(ob.get(0).getAsJsonObject().get("message").getAsString());
+		  System.out.println(ob.get(0).getAsJsonObject().get("errorCode").getAsString());
+		  softassert.assertEquals(ob.get(0).getAsJsonObject().get("message").getAsString(), message,
+					  "Cannot delete Active or Inactive Template.");
+		  
 		softassert.assertAll();
 	}
 

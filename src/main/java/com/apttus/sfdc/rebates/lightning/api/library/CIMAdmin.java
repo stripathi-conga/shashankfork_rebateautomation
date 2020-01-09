@@ -38,7 +38,7 @@ public class CIMAdmin {
 	public MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 	public LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 	public CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
-	public CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
+	
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -169,7 +169,7 @@ public class CIMAdmin {
 
 	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {	
 		try {
-			requestString = createAdminTemplatePojo.createAdminTemplateRequest(testData, this, qnbLayoutId);
+			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
 			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
@@ -201,13 +201,14 @@ public class CIMAdmin {
 		}
 	}
 
-	public void deleteActiveInactiveTemplate() throws ApplicationException {
+	public Response deleteActiveInactiveTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
 			validateResponseCode(response, 400);
+			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Fail to verify the deletion of Active/Inactive Admin template : " + e);
+			throw new ApplicationException("Failed to verify the deletion of Active/Inactive Admin template : " + e);
 		}
 	}
 

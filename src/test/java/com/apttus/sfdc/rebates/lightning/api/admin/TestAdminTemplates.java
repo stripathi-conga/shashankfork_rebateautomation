@@ -46,7 +46,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "TC428-Verify for the creation of the Admin Template and List page", groups = { "Smoke", "API" ,"Urgent"})
+	@Test(description = "TC428-Verify for the creation of the Admin Template and List page", groups = { "Smoke", "API" })
 	public void createNewAdminTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -78,7 +78,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateDeleteSuccess(response);			 	 
 	}
 	
-	@Test(description = "TC409-Unable to Delete  Active Admin Template", groups = { "Regression", "API" ,"High"})
+	@Test(description = "TC409-Unable to Delete  Active Admin Template", groups = {"Regression", "API" ,"High"})
 	public void verifyActiveAdminTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -106,8 +106,8 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateAdminTemplate();
-		cimAdmin.deleteActiveInactiveTemplate();
-		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteFailure(response,RebatesConstants.messageDeleteActiveInactive,RebatesConstants.errorcodeCutomValidation); 
+		response=cimAdmin.deleteActiveInactiveTemplate();
+		
+		responseValidator.validateDeleteFailure(response,RebatesConstants.messageDeleteActiveInactiveTemplate); 
 	}
 }
