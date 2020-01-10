@@ -68,4 +68,15 @@ public class CreateAdminTemplatePojo {
 		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
 		return new Gson().toJson(createAdminTemplatePojo);
 	}
+	public String editAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
+
+		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
+		
+		createAdminTemplatePojo.setName(testData.get("UpdatedName"));
+		createAdminTemplatePojo.setDescription__c(testData.get("UpdatedDescription__c"));
+		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
+		return new Gson().toJson(createAdminTemplatePojo);
+	}
+
+	
 }
