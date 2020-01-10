@@ -114,7 +114,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 				RebatesConstants.messageerrorcodeTemplate);
 	}
 
-	@Test(description = "TC411-Delete Template_Status_Draft_detail page", groups = { "Regression", "API", "Medium" })
+	@Test(description = "TC411-Verify the Delete for Draft Template", groups = { "Regression", "API", "Medium" })
 	public void verifyDraftAdminTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -143,7 +143,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateDeleteSuccess(response);
 	}
 
-	@Test(description = "TTC432-Verify Template When the template is activated", groups = { "Regression", "API", "Medium" })
+	@Test(description = "TC432-Verify that user should allow to deactivate the active Template", groups = { "Regression", "API", "Medium" })
 	public void verifyActiveAdminTemplateDeactivation() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -170,14 +170,14 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		responseValidator.validateTemplateStatus(response, cimAdmin,RebatesConstants.draft);
 		cimAdmin.activateAdminTemplate();
+		response = cimAdmin.getAdminTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin,RebatesConstants.activate);
 		cimAdmin.deActivateAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateInActivateTemplateStatus(response, cimAdmin,RebatesConstants.Deactivate);
-		response = cimAdmin.deleteActiveInactiveTemplate();
-		responseValidator.validateDeleteFailure(response, RebatesConstants.messageDeleteActiveInactiveTemplate,
-				RebatesConstants.messageerrorcodeTemplate);
-
+	    responseValidator.validateInActivateTemplateStatus(response,cimAdmin,RebatesConstants.Deactivate);
+		
 	}
 
 }

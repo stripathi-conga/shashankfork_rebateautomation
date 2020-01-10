@@ -3,6 +3,7 @@ package com.apttus.sfdc.rebates.lightning.api.validator;
 import java.util.Map;
 
 import org.testng.asserts.SoftAssert;
+
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.JsonArray;
@@ -86,19 +87,6 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public String validateAdminTemplate(Response response, CIMAdmin cimAdmin) {
-		softassert = new SoftAssert();
-		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
-		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
-				"Validate Admin Template id");
-		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
-				"Validate Admin template Name");
-		softassert.assertAll();
-		return records.get("Id").getAsString();
-	}
-
 	public void validateProgramDetails(Map<String, String> testData, Response response, CIM cim) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -129,7 +117,7 @@ public class ResponseValidatorBase {
 
 	}
 
-	public void validateInActivateTemplateStatus(Response response, CIMAdmin cimAdmin,String inactiveStatus) {
+	public void validateInActivateTemplateStatus(Response response, CIMAdmin cimAdmin, String inactiveStatus) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
@@ -138,6 +126,19 @@ public class ResponseValidatorBase {
 				"Validate Admin Template id");
 		softassert.assertEquals(records.get("Status__c").getAsString(), inactiveStatus,
 				"Validate Admin template Status-Inactive");
+		softassert.assertAll();
+
+	}
+
+	public void validateTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
+				"Validate Admin Template id");
+		softassert.assertEquals(records.get("Status__c").getAsString(), Status,
+				"Validate Admin template Status-Draft/Active/Inactive");
 		softassert.assertAll();
 
 	}
