@@ -85,4 +85,17 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Status__c").getAsString(), status, "Validate status in linkTemplate");
 		softassert.assertAll();
 	}
+
+	public String  validateAdminTemplate(Response response, CIMAdmin cimAdmin) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
+				"Validate Admin Template id");
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
+				"Validate Admin template Name");
+		softassert.assertAll();
+		return records.get("Id").getAsString();
+	}
 }
