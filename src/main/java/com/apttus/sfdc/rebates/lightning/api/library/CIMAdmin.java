@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
+import java.util.Calendar;
 import java.util.Map;
 
 import com.apttus.customException.ApplicationException;
@@ -13,6 +14,7 @@ import com.apttus.sfdc.rebates.lightning.api.pojo.LinkCalculationFormulaPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkDatasourceToCalculationIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
@@ -39,7 +41,6 @@ public class CIMAdmin {
 	public MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 	public LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 	public CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
-	
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -122,7 +123,7 @@ public class CIMAdmin {
 		String fieldExpressionId = null;
 		try {
 			requestString = createNewFieldExpressionId.getExpressionIdRequest(testData);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionId, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionIdURL, requestString);
 			validateResponseCode(response, 201);
 			fieldExpressionId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return fieldExpressionId;
@@ -135,7 +136,7 @@ public class CIMAdmin {
 		String calcFormulaId = null;
 		try {
 			requestString = createCalcFormulaId.getCalculationFormulaIdRequest(testData);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.calcFormulaId, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.calcFormulaIdURL, requestString);
 			validateResponseCode(response, 201);
 			calcFormulaId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return calcFormulaId;
@@ -149,7 +150,7 @@ public class CIMAdmin {
 		try {
 			requestString = linkCalcFormula.linkCalculationFormulaPojoRequest(testData, calculationFormulaId,
 					expressionId);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkCalcFormulaId, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkCalcFormulaIdURL, requestString);
 			validateResponseCode(response, 201);
 		} catch (Exception e) {
 			throw new ApplicationException(
@@ -160,7 +161,7 @@ public class CIMAdmin {
 	public void linkDatasourceToCalcFormula(String calculationFormulaId) throws ApplicationException {
 		try {
 			requestString = linkDatasource.linkDatasourceIdRequest(calculationFormulaId, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkDatasourceId, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkDatasourceIdURL, requestString);
 			validateResponseCode(response, 201);
 		} catch (Exception e) {
 			throw new ApplicationException(
@@ -168,7 +169,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {	
+	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
 		try {
 			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
@@ -333,13 +334,55 @@ public class CIMAdmin {
 		}
 	}
 
+	public String getCIMDateValue(String dateValue) throws ApplicationException {
+		SFDCHelper sfdcHelper = new SFDCHelper(null);
+		String returnDate = null;
+		int year;
+		try {
+			boolean checkDate = sfdcHelper.checkValidDate(dateValue, null);
+			if (checkDate) {
+				returnDate = dateValue;
+			} else {
+				String date = dateValue.toLowerCase();
+				if (date.contains("today")) {
+					returnDate = sfdcHelper.getTodaysDate();
+				} else if (date.contains("startofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-01-01";
+				} else if (date.contains("endofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-12-31";
+				} else if (date.contains("midofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-07-01";
+				} else if (date.contains("startofcurrentmonth")) {
+					returnDate = sfdcHelper.firstDayOfCurrentMonth();
+				} else if (date.contains("endofcurrentmonth")) {
+					returnDate = sfdcHelper.lastDayOfCurrentMonth();
+				} else if (date.contains("startofpreviousmonth")) {
+					returnDate = sfdcHelper.firstDayOfPreviousMonth();
+				} else if (date.contains("startofprevioustwomonth")) {
+					returnDate = sfdcHelper.firstDayOfPreviousTwoMonth();
+				} else if (date.contains("endofnextmonth")) {
+					returnDate = sfdcHelper.lastDayOfNextMonth();
+				}
+				if (date.contains("=")) {
+					returnDate = sfdcHelper.getPastorFutureDate(returnDate, date.split("=")[1]);
+				}
+			}
+			return returnDate;
+		} catch (Exception e) {
+			throw new ApplicationException("Getting run time error while using getCIMDateValue : " + e);
+		}
+	}
 
 	public String getQnBLayoutId(Map<String, String> testData) throws ApplicationException {
 		String qnblayoutId = null;
 		int recordsize;
 		JsonObject responsebody;
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
+			response = sfdcRestUtils
+					.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
 							.replace("{QnBLayoutTier}", testData.get("tier__c")));
 			validateResponseCode(response, 200);
 			responsebody = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -356,8 +399,18 @@ public class CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Get QnB Layout Id API call failed with exception trace : " + e);
 		}
-
 	}
-	
-	}
+	public Response deActivateAdminTemplate() throws ApplicationException {
+		              try {
+		                      requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+	                     response = sfdcRestUtils.patchWithoutAppUrl(
+	                                      urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+		                      validateResponseCode(response, 204);
+		                       return response;
+		            } catch (Exception e) {
+		                      throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
+		               }
+		
+		       }
 
+}
