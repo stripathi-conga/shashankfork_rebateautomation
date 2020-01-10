@@ -2,6 +2,7 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Calendar;
 import java.util.Map;
+
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
@@ -40,7 +41,6 @@ public class CIMAdmin {
 	public MapTemplateAndDataSourcePojo mapTemplateAndDataSourcePojo = new MapTemplateAndDataSourcePojo();
 	public LinkDatasourceToCalculationIdPojo linkDatasource = new LinkDatasourceToCalculationIdPojo();
 	public CreateQnBLayoutIdPojo createQnBLayoutIdPojo = new CreateQnBLayoutIdPojo();
-	
 
 	public CreateNewDataSourcePojo getDataSourceData() {
 		return dataSourceData;
@@ -169,7 +169,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {	
+	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
 		try {
 			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
@@ -333,7 +333,7 @@ public class CIMAdmin {
 			throw new ApplicationException("Activate Link Template API call failed with exception trace : " + e);
 		}
 	}
-	
+
 	public String getCIMDateValue(String dateValue) throws ApplicationException {
 		SFDCHelper sfdcHelper = new SFDCHelper(null);
 		String returnDate = null;
@@ -381,7 +381,8 @@ public class CIMAdmin {
 		int recordsize;
 		JsonObject responsebody;
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
+			response = sfdcRestUtils
+					.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
 							.replace("{QnBLayoutTier}", testData.get("tier__c")));
 			validateResponseCode(response, 200);
 			responsebody = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -399,4 +400,17 @@ public class CIMAdmin {
 			throw new ApplicationException("Get QnB Layout Id API call failed with exception trace : " + e);
 		}
 	}
+	public Response deActivateAdminTemplate() throws ApplicationException {
+		              try {
+		                      requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+	                     response = sfdcRestUtils.patchWithoutAppUrl(
+	                                      urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+		                      validateResponseCode(response, 204);
+		                       return response;
+		            } catch (Exception e) {
+		                      throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
+		               }
+		
+		       }
+
 }
