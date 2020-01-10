@@ -14,7 +14,7 @@ public class URLGenerator {
 	public String getqnblayoutURL = "/query/?q=SELECT Id FROM Qualification_and_Benefit_Layout__c where type__c='{QnBLayoutType}' and tier__c='{QnBLayoutTier}'";
 	public String qnbLayoutIdURL = "/sobjects/Qualification_and_Benefit_Layout__c/";
 	public String adminTemplateURL = "/sobjects/Program_Template__c/";
-	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name FROM Program_Template__c WHERE id = '{AdminTemplateId}'";
+	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name ,status__c  FROM Program_Template__c WHERE id = '{AdminTemplateId}'";
 	public String mapAdminTemplateToDatasourceURL = "/sobjects/Program_Template_Data_Source__c/";
 	public String linkTemplatesURL = "/sobjects/Program_Template_Map__c/";
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where id = '{LinkTemplateId}'";
@@ -32,12 +32,12 @@ public class URLGenerator {
 		this.linkDatasourceIdURL = baseURL + this.linkDatasourceIdURL;
 		this.getAdminTemplateURL = baseURL + this.getAdminTemplateURL;
 		this.adminTemplateURL = baseURL + this.adminTemplateURL;
-		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;	
+		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
-		this.qnbLayoutIdURL=baseURL + this.qnbLayoutIdURL;
-		this.getqnblayoutURL=baseURL + this.getqnblayoutURL;
+		this.qnbLayoutIdURL = baseURL + this.qnbLayoutIdURL;
+		this.getqnblayoutURL = baseURL + this.getqnblayoutURL;
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
-		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;		
+		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
 		this.programURL = baseURL + this.programURL;
 		this.getProgramURL = baseURL + this.getProgramURL;
 	}

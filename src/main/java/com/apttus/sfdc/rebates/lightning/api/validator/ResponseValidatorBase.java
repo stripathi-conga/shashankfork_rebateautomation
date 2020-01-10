@@ -3,6 +3,7 @@ package com.apttus.sfdc.rebates.lightning.api.validator;
 import java.util.Map;
 
 import org.testng.asserts.SoftAssert;
+
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.JsonArray;
@@ -40,7 +41,7 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateDeleteFailure(Response response, String message,String errorcode) {
+	public void validateDeleteFailure(Response response, String message, String errorcode) {
 
 		softassert = new SoftAssert();
 		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
@@ -85,7 +86,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Status__c").getAsString(), status, "Validate status in linkTemplate");
 		softassert.assertAll();
 	}
-	
+
 	public void validateProgramDetails(Map<String, String> testData, Response response, CIM cim) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -112,6 +113,19 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Program_Template_Id__c").getAsString(),
 				cim.programData.getProgram_Template_Id__c(), "Validate Program TemplateId");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.programData.getProgramId(), "Validate Program Id");
+		softassert.assertAll();
+
+	}
+
+	public void validateTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
+				"Validate Admin Template id");
+		softassert.assertEquals(records.get("Status__c").getAsString(), Status,
+				"Validate Admin template Status-Draft/Active/Inactive");
 		softassert.assertAll();
 	}
 }

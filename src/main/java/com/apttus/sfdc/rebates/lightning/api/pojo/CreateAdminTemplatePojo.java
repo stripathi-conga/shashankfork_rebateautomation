@@ -53,7 +53,7 @@ public class CreateAdminTemplatePojo {
 		this.Name = name;
 	}
 
-	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin,String qnbLayoutId) {
+	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin, String qnbLayoutId) {
 
 		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
 		String adminTemplateName = testData.get("Name");
@@ -68,4 +68,5 @@ public class CreateAdminTemplatePojo {
 		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
 		return new Gson().toJson(createAdminTemplatePojo);
 	}
+
 }
