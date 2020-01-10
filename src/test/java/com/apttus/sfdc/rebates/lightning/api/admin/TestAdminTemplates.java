@@ -176,7 +176,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateTemplateStatus(response, cimAdmin,RebatesConstants.activate);
 		cimAdmin.deActivateAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
-	    responseValidator.validateInActivateTemplateStatus(response,cimAdmin,RebatesConstants.Deactivate);
+	    responseValidator.validateTemplateStatus(response,cimAdmin,RebatesConstants.Deactivate);
 		
 	}
 
