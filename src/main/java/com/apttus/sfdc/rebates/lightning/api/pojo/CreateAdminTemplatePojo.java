@@ -67,3 +67,9 @@ public class CreateAdminTemplatePojo {
 		return new Gson().toJson(createAdminTemplatePojo);
 	}
 }
+/*
+ * {
+ * "Description__c": "Shashank T3", "Name": "Test",
+ * "QnB_Layout_Id__c": "a593i000000LC0tAAG", "Status__c": "Draft"
+ * }
+ */

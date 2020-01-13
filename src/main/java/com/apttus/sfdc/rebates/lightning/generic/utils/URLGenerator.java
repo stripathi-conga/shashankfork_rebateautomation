@@ -44,5 +44,6 @@ public class URLGenerator {
 		this.getProgramURL = baseURL + this.getProgramURL;
 		this.createAccountURL = baseURL + this.createAccountURL;
 		this.getAccountURL = baseURL + this.getAccountURL;
+
 	}
 }

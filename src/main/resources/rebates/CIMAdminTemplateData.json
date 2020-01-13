@@ -39,9 +39,14 @@
 	"createNewLinkTemplateSubTypeRebateAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Rebate"
+		
 	},
 	"createNewLinkTemplateSubTypeLoyaltyAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Loyalty"
+	},
+	"createNewLinkTemplateSubTypePromotionAPI": {
+		"Program_Type__c": "Rebates 2.0",
+		"Program_Sub_Type__c": "Promotion"
 	}
 }

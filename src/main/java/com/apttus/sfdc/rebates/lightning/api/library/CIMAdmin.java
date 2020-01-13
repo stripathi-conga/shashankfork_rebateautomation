@@ -410,5 +410,63 @@ public class CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
 		}
+
 	}
+
+	public Response EditAdminTemplate(String Name) throws ApplicationException {
+		try {
+
+			requestString = "{\"Name\": \"" + Name + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(
+					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+			validateResponseCode(response, 204);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Patch AdminTemplate API call failed with exception trace : " + e);
+		}
+
+	}
+
+	public Response deleteDraftLinkTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils
+					.deleteWithoutPayload(urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId());
+			validateResponseCode(response, 204);
+		} catch (Exception e) {
+			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+		}
+		return response;
+
+	}
+
+	public Response draftLinkTemplates(Map<String, String> testData) throws ApplicationException {
+		String draftlinkTemplateId;
+		try {
+
+			requestString = linkTemplatesData.createLinkTemplateRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkTemplatesURL, requestString);
+			validateResponseCode(response, 201);
+
+			draftlinkTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")
+					.getAsString();
+
+			linkTemplatesData.setLinkTemplateId(draftlinkTemplateId);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException(
+					"Create Link Templates with Status Draft API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response getLinkTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIDURL.replace("{LinkTemplateId}",
+					linkTemplatesData.getLinkTemplateId()));
+			validateResponseCode(response, 200);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Get LinkTemplate API call failed with exception trace : " + e);
+		}
+	}
+
 }
