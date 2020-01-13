@@ -55,7 +55,7 @@ public class TestIncentives {
 	}
 
 	@Test(description = "TC420-Update Program Payee field on Edit page", groups = { "Regression", "High", "API" })
-	public void updateProgram() throws Exception {
+	public void updateProgramPayee() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
 		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
 		jsonData.put("Program_Template_Id__c", programTemplateId);
