@@ -21,24 +21,24 @@ public class CreateNewAccountPojo {
 		return AccountNumber;
 	}
 
-	public void setAccountNumber(String AccountNumber) {
-		this.AccountNumber = AccountNumber;
+	public void setAccountNumber(String accountNumber) {
+		this.AccountNumber = accountNumber;
 	}
 
 	public String getName() {
 		return Name;
 	}
 
-	public void setName(String Name) {
-		this.Name = Name;
+	public void setName(String name) {
+		this.Name = name;
 	}
 
 	public String getActive__c() {
 		return Active__c;
 	}
 
-	public void setActive__c(String Active__c) {
-		this.Active__c = Active__c;
+	public void setActive__c(String active__c) {
+		this.Active__c = active__c;
 	}
 
 	public String createNewAccountRequest(String accountName) {
