@@ -180,7 +180,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 
 	}
 
-	@Test(description = "Verify Edit for the Template in Draft Status", groups = { "Regression", "API", "Medium" })
+	@Test(description = "TC-431 Verify Edit for the Template in Draft Status", groups = { "Regression", "API", "Medium" })
 	public void verifyEditAdminTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
