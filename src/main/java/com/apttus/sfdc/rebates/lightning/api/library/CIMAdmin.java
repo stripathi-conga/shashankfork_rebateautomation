@@ -439,25 +439,6 @@ public class CIMAdmin {
 
 	}
 
-	public Response draftLinkTemplates(Map<String, String> testData) throws ApplicationException {
-		String draftlinkTemplateId;
-		try {
-
-			requestString = linkTemplatesData.createLinkTemplateRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkTemplatesURL, requestString);
-			validateResponseCode(response, 201);
-
-			draftlinkTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")
-					.getAsString();
-
-			linkTemplatesData.setLinkTemplateId(draftlinkTemplateId);
-			return response;
-		} catch (Exception e) {
-			throw new ApplicationException(
-					"Create Link Templates with Status Draft API call failed with exception trace : " + e);
-		}
-	}
-
 	public Response getLinkTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIDURL.replace("{LinkTemplateId}",
