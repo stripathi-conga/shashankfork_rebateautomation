@@ -413,7 +413,7 @@ public class CIMAdmin {
 
 	}
 
-	public Response EditAdminTemplate(String Name) throws ApplicationException {
+	public Response editAdminTemplate(String Name) throws ApplicationException {
 		try {
 
 			requestString = "{\"Name\": \"" + Name + "\"}";
