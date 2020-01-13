@@ -3,6 +3,7 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 import java.util.HashMap;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewProgramPojo;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
@@ -13,6 +14,7 @@ public class CIM extends CIMAdmin {
 
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewProgramPojo programData = new CreateNewProgramPojo();
+	public CreateNewAccountPojo account = new CreateNewAccountPojo();
 	private String requestString;
 	private Response response;
 
@@ -86,6 +88,52 @@ public class CIM extends CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Program Details API call failed with exception trace : " + e);
+		}
+	}
+	
+	public String getAccountId(String accountName) throws ApplicationException {
+		String accountId;
+		int count;
+		try {
+			response = sfdcRestUtils.getData(urlGenerator.getAccountURL.replace("{AccountName}", accountName));
+			validateResponseCode(response, 200);
+			JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+			count = resp.get("totalSize").getAsInt();
+			if (count > 0) {
+				accountId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("records")
+						.getAsJsonArray().get(0).getAsJsonObject().get("Id").getAsString();
+			} else {
+				accountId = createNewAccount(accountName);
+			}
+			return accountId;
+		} catch (Exception e) {
+			throw new ApplicationException("Get Account Details API call failed with exception trace : " + e);
+		}
+	}
+
+	public String createNewAccount(String accountName) throws ApplicationException {
+		String accountId;
+		try {
+			requestString = account.createNewAccountRequest(accountName);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.createAccountURL, requestString);
+			validateResponseCode(response, 201);
+			accountId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			return accountId;
+		} catch (Exception e) {
+			throw new ApplicationException("Create New Account API call failed with exception trace : " + e);
+		}
+	}
+
+	public void updateProgram(Map<String, String> testData) throws ApplicationException {
+		String updateProgram = programData.getProgramId();
+		try {
+			requestString = programData.createNewProgramRequest(testData, this);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.programURL + updateProgram,
+					requestString);
+			validateResponseCode(response, 204);
+			programData.setProgramId(updateProgram);
+		} catch (Exception e) {
+			throw new ApplicationException("Update Program details API call failed with exception trace : " + e);
 		}
 	}
 }

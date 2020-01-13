@@ -2,7 +2,6 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Calendar;
 import java.util.Map;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
@@ -400,17 +399,16 @@ public class CIMAdmin {
 			throw new ApplicationException("Get QnB Layout Id API call failed with exception trace : " + e);
 		}
 	}
-	public Response deActivateAdminTemplate() throws ApplicationException {
-		              try {
-		                      requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
-	                     response = sfdcRestUtils.patchWithoutAppUrl(
-	                                      urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
-		                      validateResponseCode(response, 204);
-		                       return response;
-		            } catch (Exception e) {
-		                      throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
-		               }
-		
-		       }
 
+	public Response deActivateAdminTemplate() throws ApplicationException {
+		try {
+			requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(
+					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+			validateResponseCode(response, 204);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
 }

@@ -13,5 +13,9 @@
 		"MeasurementFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebates 2.0",
 		"Apttus_Config2__SubUseType__c": "Loyalty"
+	},
+	"updateProgram": {
+		"BenefitLevel__c": "Agreement Account",
+		"AccountName": "Automation_Account_1"
 	}
 }
