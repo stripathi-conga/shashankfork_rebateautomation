@@ -119,7 +119,7 @@ public class TestLinkTemplates {
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
 	}
 
-	@Test(description = "verify delete Link Template when status is Draft via spillover menu", groups = { "Regression",
+	@Test(description = "TC-408 Verify delete Link Template when status is Draft via spillover menu", groups = { "Regression",
 			"High", "API" })
 	public void deleteLinkTemplateDraft() throws Exception {
 
