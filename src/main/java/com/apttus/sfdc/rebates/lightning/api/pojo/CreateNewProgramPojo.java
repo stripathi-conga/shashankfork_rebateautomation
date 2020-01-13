@@ -22,6 +22,7 @@ public class CreateNewProgramPojo {
 	private String Currency__c;
 	private String MeasurementLevel__c;
 	private String BenefitLevel__c;
+	private String AccountId__c;
 	private String Apttus_Config2__EffectiveDate__c;
 	private String Apttus_Config2__SubUseType__c;
 	private String Apttus_Config2__Sequence__c;
@@ -139,6 +140,14 @@ public class CreateNewProgramPojo {
 		this.MeasurementLevel__c = measurementLevel__c;
 	}
 
+	public String getAccountId__c() {
+		return AccountId__c;
+	}
+
+	public void setAccountId__c(String accountId__c) {
+		AccountId__c = accountId__c;
+	}
+
 	public String getBenefitLevel__c() {
 		return BenefitLevel__c;
 	}
@@ -172,15 +181,22 @@ public class CreateNewProgramPojo {
 	}
 
 	public String createNewProgramRequest(Map<String, String> testData, CIM cim) throws ApplicationException {
+		String startDate, endDate;
 		CreateNewProgramPojo createNewProgram = new CreateNewProgramPojo();
 		createNewProgram.setName(testData.get("Name"));
-		if (testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
-			createNewProgram.setName("Rebates_Auto_Program_" + SFDCHelper.randomNumberGenerator());
+		if (testData.get("Name") != null) {
+			if (testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
+				createNewProgram.setName("Rebates_Auto_Program_" + SFDCHelper.randomNumberGenerator());
+			}
 		}
-		String startDate = cim.getCIMDateValue(testData.get("Apttus_Config2__EffectiveDate__c"));
-		String endDate = cim.getCIMDateValue(testData.get("Apttus_Config2__ExpirationDate__c"));
-		createNewProgram.setApttus_Config2__EffectiveDate__c(startDate);
-		createNewProgram.setApttus_Config2__ExpirationDate__c(endDate);
+		if (testData.get("Apttus_Config2__EffectiveDate__c") != null) {
+			startDate = cim.getCIMDateValue(testData.get("Apttus_Config2__EffectiveDate__c"));
+			createNewProgram.setApttus_Config2__EffectiveDate__c(startDate);
+		}
+		if (testData.get("Apttus_Config2__ExpirationDate__c") != null) {
+			endDate = cim.getCIMDateValue(testData.get("Apttus_Config2__ExpirationDate__c"));
+			createNewProgram.setApttus_Config2__ExpirationDate__c(endDate);
+		}		
 		createNewProgram.setCurrency__c(testData.get("Currency__c"));
 		createNewProgram.setApttus_Config2__Description__c("Automation Program");
 		createNewProgram.setApttus_Config2__Status__c("New");
@@ -193,6 +209,12 @@ public class CreateNewProgramPojo {
 		createNewProgram.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
 		createNewProgram.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
 		createNewProgram.setProgram_Template_Id__c(testData.get("Program_Template_Id__c"));
+		createNewProgram.setBenefitLevel__c(testData.get("BenefitLevel__c"));
+		if (testData.get("BenefitLevel__c") != null) {
+			if (testData.get("BenefitLevel__c").equals("Agreement Account")) {
+				createNewProgram.setAccountId__c(cim.getAccountId(testData.get("AccountName")));
+			}
+		}
 		cim.setProgramData(createNewProgram);
 		return new Gson().toJson(createNewProgram);
 	}
@@ -212,6 +234,26 @@ public class CreateNewProgramPojo {
     "PaymentMethod__c": "Credit Memo",
     "MeasurementLevel__c": "Agreement Account",
     "MeasurementFrequency__c": "Monthly",
+    "Program_Template_Id__c": "a593i000000LC4lAAG",
+    "Apttus_Config2__Sequence__c": 1,
+    "Apttus_Config2__UseType__c": "Rebates 2.0",
+    "Apttus_Config2__SubUseType__c": "Loyalty"
+}
+
+{
+    "Name": "Mj Test",
+    "Apttus_Config2__EffectiveDate__c": "2020-01-01",
+    "Apttus_Config2__ExpirationDate__c": "2020-01-31",
+    "Currency__c": "Dollar",
+    "Apttus_Config2__Description__c": "Testing",
+    "Apttus_Config2__Status__c": "New",
+    "Calendar__c": "Gregorian",
+    "BenefitLevel__c": "Agreement Account",
+    "PayoutFrequency__c": "Monthly",
+    "PaymentMethod__c": "Credit Memo",
+    "MeasurementLevel__c": "Agreement Account",
+    "MeasurementFrequency__c": "Monthly",
+    "AccountId__c": "0013i00000DDWZ0AAP",
     "Program_Template_Id__c": "a593i000000LC4lAAG",
     "Apttus_Config2__Sequence__c": 1,
     "Apttus_Config2__UseType__c": "Rebates 2.0",

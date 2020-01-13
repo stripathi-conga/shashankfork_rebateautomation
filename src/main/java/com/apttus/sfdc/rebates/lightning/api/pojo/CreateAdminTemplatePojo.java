@@ -56,17 +56,14 @@ public class CreateAdminTemplatePojo {
 	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin, String qnbLayoutId) {
 
 		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
-		String adminTemplateName = testData.get("Name");
-		if (adminTemplateName.equalsIgnoreCase("{RANDOM}")) {
-			adminTemplateName = "Rebates_Auto_AdminTemplate_" + SFDCHelper.randomNumberGenerator();
+		createAdminTemplatePojo.setName(testData.get("Name"));
+		if (testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
+			createAdminTemplatePojo.setName("Rebates_Auto_AdminTemplate_" + SFDCHelper.randomNumberGenerator());
 		}
-		createAdminTemplatePojo.setName(adminTemplateName);
 		createAdminTemplatePojo.setDescription__c(testData.get("Description__c"));
 		createAdminTemplatePojo.setQnB_Layout_Id__c(qnbLayoutId);
 		createAdminTemplatePojo.setStatus__c(testData.get("Status__c"));
-
 		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
 		return new Gson().toJson(createAdminTemplatePojo);
 	}
-
 }

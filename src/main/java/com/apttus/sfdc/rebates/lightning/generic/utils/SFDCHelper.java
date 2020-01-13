@@ -129,4 +129,10 @@ public class SFDCHelper {
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
 		return dateFormat.format(calendar.getTime());
 	}
+	
+	public static Map<String, String> overrideJSON(Map<String, String> allData, Map<String, String> dataToOverride) {
+		for (Map.Entry<String, String> dataToOverrideKeys : dataToOverride.entrySet())
+			allData.put(dataToOverrideKeys.getKey(), dataToOverride.get(dataToOverrideKeys.getKey()));
+		return allData;
+	}
 }

@@ -23,6 +23,7 @@ public class TestIncentives {
 	private ResponseValidatorBase responseValidator;
 	private CIM cim;
 	private Map<String, String> jsonData;
+	private Map<String, String> jsonDataTemp;
 	Response response;
 
 	@BeforeClass(alwaysRun = true)
@@ -52,5 +53,17 @@ public class TestIncentives {
 		response = cim.getProgramDetails();
 		responseValidator.validateProgramDetails(jsonData, response, cim);
 	}
-	
+
+	@Test(description = "TC420-Update Program Payee field on Edit page", groups = { "Regression", "High", "API" })
+	public void updateProgram() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
+		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
+		jsonData.put("Program_Template_Id__c", programTemplateId);
+		cim.creatNewProgram(jsonData);
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateProgram");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		cim.updateProgram(jsonData);
+		response = cim.getProgramDetails();
+		responseValidator.validateProgramDetails(jsonData, response, cim);
+	}
 }

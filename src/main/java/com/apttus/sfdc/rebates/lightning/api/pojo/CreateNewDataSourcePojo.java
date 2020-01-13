@@ -91,11 +91,10 @@ public class CreateNewDataSourcePojo {
 
 	public String createDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo();
-		String dataSourceName = testData.get("Name__c");
-		if (dataSourceName.equalsIgnoreCase("{RANDOM}")) {
-			dataSourceName = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
-		}
-		createDataSource.setName__c(dataSourceName);
+		createDataSource.setName__c(testData.get("Name__c"));
+		if (testData.get("Name__c").equalsIgnoreCase("{RANDOM}")) {
+			createDataSource.setName__c("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
+		}		
 		createDataSource.setCalculation_Date_Attr__c(testData.get("Calculation_Date_Attr__c"));
 		createDataSource.setDelimiter__c(testData.get("Delimiter__c"));
 		createDataSource.setFile_Extension__c(testData.get("File_Extension__c"));
