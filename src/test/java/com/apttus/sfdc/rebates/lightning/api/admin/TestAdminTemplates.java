@@ -207,7 +207,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		response = cimAdmin.EditAdminTemplate(RebatesConstants.TemplateName);
+		response = cimAdmin.editAdminTemplate(RebatesConstants.TemplateName);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		Response responsemap=cimAdmin.mapProgramTemplateDataSource(jsonData);
