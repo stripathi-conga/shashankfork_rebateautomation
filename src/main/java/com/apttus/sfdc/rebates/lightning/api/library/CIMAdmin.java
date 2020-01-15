@@ -422,7 +422,7 @@ public class CIMAdmin {
 			validateResponseCode(response, 204);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Patch AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Update AdminTemplate API call failed with exception trace : " + e);
 		}
 
 	}
@@ -449,6 +449,7 @@ public class CIMAdmin {
 			throw new ApplicationException("Get LinkTemplate API call failed with exception trace : " + e);
 		}
 	}
+
 	public Response activateTemplateWithoutBenefitFormula() throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
@@ -457,7 +458,8 @@ public class CIMAdmin {
 			validateResponseCode(response, 400);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Activate AdminTemplate API without Benefit Formula call failed with exception trace : " + e);
+			throw new ApplicationException(
+					"Activate AdminTemplate API without Benefit Formula call failed with exception trace : " + e);
 		}
 	}
 

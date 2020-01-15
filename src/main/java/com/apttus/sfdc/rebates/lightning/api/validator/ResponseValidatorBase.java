@@ -128,40 +128,27 @@ public class ResponseValidatorBase {
 				"Validate Admin template Status-Draft/Active/Inactive");
 		softassert.assertAll();
 	}
-	public void validateAdminTemplateEdit(Response response, CIMAdmin cimAdmin,String UpdatedTemplate) {
+
+	public void validateAdminTemplateEdit(Response response, CIMAdmin cimAdmin, String UpdatedTemplate) {
 		softassert = new SoftAssert();
-		
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
 				"Validate Admin Template id");
-		softassert.assertEquals(records.get("Name").getAsString(), UpdatedTemplate,
-				"Validate Admin template Name");
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
-				"Validate Admin Template id");
 		softassert.assertAll();
 	}
-	public void validateMapProgramAdminTemplate(Response response, CIMAdmin cimAdmin,String calcFormulaIdBenefit ,String datasourceId) {
-		
+
+	public void validateMapProgramAdminTemplate(Response response, CIMAdmin cimAdmin, String calcFormulaIdBenefit,
+			String datasourceId) {
+
 		softassert = new SoftAssert();
 		boolean success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsBoolean();
 		softassert.assertEquals(success, true, "Validate success flag");
 		softassert.assertAll();
-		
+
 	}
-	public void validateLinkTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
-		softassert = new SoftAssert();
-		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
-		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getLinkTemplatesData().getLinkTemplateId(),
-				"Validate Admin Template id");
-		softassert.assertEquals(records.get("Status__c").getAsString(), Status,
-				"Validate Admin template Status-Draft/Active/Inactive");
-		softassert.assertAll();
-	}
+
 	public void validateActivateFailure(Response response, String message, String errorcode) {
 
 		softassert = new SoftAssert();

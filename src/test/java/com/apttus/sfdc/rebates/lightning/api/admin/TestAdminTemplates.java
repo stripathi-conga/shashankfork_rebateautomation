@@ -177,7 +177,6 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.deActivateAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.Deactivate);
-
 	}
 
 	@Test(description = "TC-431 Verify Edit for the Template in Draft Status", groups = { "Regression", "API",
@@ -205,19 +204,18 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateCreateSuccess(response);
 		Response response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
-
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 		response = cimAdmin.editAdminTemplate(RebatesConstants.TemplateName);
+		response = cimAdmin.getAdminTemplate();
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		Response responsemap = cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateMapProgramAdminTemplate(responsemap, cimAdmin, calcFormulaIdBenefit,
 				cimAdmin.getDataSourceData().getDataSourceId());
-
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateAdminTemplateEdit(response, cimAdmin, RebatesConstants.TemplateName);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
@@ -253,7 +251,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		Response response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		
+
 		response = cimAdmin.activateTemplateWithoutBenefitFormula();
 		responseValidator.validateActivateFailure(response, RebatesConstants.messageMandatoryTemplatefields,
 				RebatesConstants.messageErrorCodeTemplate);

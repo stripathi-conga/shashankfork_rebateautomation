@@ -152,7 +152,7 @@ public class TestLinkTemplates {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypePromotionAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
-		responseValidator.validateLinkTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 		cimAdmin.deleteDraftLinkTemplate();
 		response = cimAdmin.getLinkTemplate();
 		responseValidator.validateDeleteSuccess(response);
