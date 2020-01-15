@@ -449,5 +449,16 @@ public class CIMAdmin {
 			throw new ApplicationException("Get LinkTemplate API call failed with exception trace : " + e);
 		}
 	}
+	public Response activateTemplateWithoutBenefitFormula() throws ApplicationException {
+		try {
+			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(
+					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+			validateResponseCode(response, 400);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Activate AdminTemplate API without Benefit Formula call failed with exception trace : " + e);
+		}
+	}
 
 }

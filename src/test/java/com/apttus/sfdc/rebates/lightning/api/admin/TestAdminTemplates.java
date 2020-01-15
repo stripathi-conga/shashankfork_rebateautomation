@@ -111,7 +111,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.activateAdminTemplate();
 		response = cimAdmin.deleteActiveInactiveTemplate();
 		responseValidator.validateDeleteFailure(response, RebatesConstants.messageDeleteActiveInactiveTemplate,
-				RebatesConstants.messageerrorcodeTemplate);
+				RebatesConstants.messageErrorCodeTemplate);
 	}
 
 	@Test(description = "TC411-Verify the Delete for Draft Template", groups = { "Regression", "API", "Medium" })
@@ -180,7 +180,8 @@ public class TestAdminTemplates extends UnifiedFramework {
 
 	}
 
-	@Test(description = "TC-431 Verify Edit for the Template in Draft Status", groups = { "Regression", "API", "Medium" })
+	@Test(description = "TC-431 Verify Edit for the Template in Draft Status", groups = { "Regression", "API",
+			"Medium" })
 	public void verifyEditAdminTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -193,7 +194,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
 		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		
+
 		cimAdmin.createDataSource(jsonData);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
@@ -204,25 +205,58 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateCreateSuccess(response);
 		Response response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
-		
+
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		
+
 		response = cimAdmin.editAdminTemplate(RebatesConstants.TemplateName);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
-		Response responsemap=cimAdmin.mapProgramTemplateDataSource(jsonData);
-		responseValidator.validateMapProgramAdminTemplate(responsemap, cimAdmin, calcFormulaIdBenefit,cimAdmin.getDataSourceData().getDataSourceId());
-		
+		Response responsemap = cimAdmin.mapProgramTemplateDataSource(jsonData);
+		responseValidator.validateMapProgramAdminTemplate(responsemap, cimAdmin, calcFormulaIdBenefit,
+				cimAdmin.getDataSourceData().getDataSourceId());
+
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateAdminTemplateEdit(response, cimAdmin, RebatesConstants.TemplateName);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateDeleteSuccess(response);		 
+		responseValidator.validateDeleteSuccess(response);
 
 	}
 
+	@Test(description = "TC-501 Verify Mandatory fields for Admin Template Activation", groups = { "Regression", "API",
+			"High" })
+	public void verifyMandatoryFieldsforActivateTemplate() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
+		response = cimAdmin.createAdminTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		Response response = cimAdmin.getAdminTemplate();
+		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+		
+		response = cimAdmin.activateTemplateWithoutBenefitFormula();
+		responseValidator.validateActivateFailure(response, RebatesConstants.messageMandatoryTemplatefields,
+				RebatesConstants.messageErrorCodeTemplate);
+
+	}
 }

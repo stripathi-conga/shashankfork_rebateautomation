@@ -162,4 +162,14 @@ public class ResponseValidatorBase {
 				"Validate Admin template Status-Draft/Active/Inactive");
 		softassert.assertAll();
 	}
+	public void validateActivateFailure(Response response, String message, String errorcode) {
+
+		softassert = new SoftAssert();
+		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
+		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
+				"Verify Activate failure message");
+		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
+				"Verify Activate failure Errorcode");
+		softassert.assertAll();
+	}
 }
