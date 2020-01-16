@@ -28,7 +28,6 @@
 	},
 	"createNewAdminTemplateAPI": {
 		"Name": "{Random}",
-		"QnB_Layout_Id__c": "a5A3i0000009JabEAE",
 		"Status__c": "Draft",
 		"Description__c": "Automation"
 	},
@@ -39,9 +38,22 @@
 	"createNewLinkTemplateSubTypeRebateAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Rebate"
+		
 	},
 	"createNewLinkTemplateSubTypeLoyaltyAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Loyalty"
+	},
+	"createNewLinkTemplateSubTypePromotionAPI": {
+		"Program_Type__c": "Rebates 2.0",
+		"Program_Sub_Type__c": "Promotion"
+	},
+	"updateAdminTemplateAPI": {
+		"Name": "{Random}",
+		"Status__c": "Draft",
+		"Description__c": "UpdatedAutomation"
+	},"createDiscreteQnBLayoutAPI": {
+		"type__c": "Qualification Formulas",
+		"tier__c": "Discrete"
 	}
 }

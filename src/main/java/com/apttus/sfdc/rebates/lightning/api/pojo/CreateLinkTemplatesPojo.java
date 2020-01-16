@@ -60,6 +60,7 @@ public class CreateLinkTemplatesPojo {
 		cimAdmin.setLinkTemplatesData(linkTemplate);
 		return new Gson().toJson(linkTemplate);
 	}
+
 }
 
 /*------------------- Link Admin Template Request ------------------

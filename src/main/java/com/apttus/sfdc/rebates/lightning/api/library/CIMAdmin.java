@@ -2,6 +2,7 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Calendar;
 import java.util.Map;
+
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
@@ -227,12 +228,12 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response activateAdminTemplate() throws ApplicationException {
+	public Response activateAdminTemplate(int resposecode) throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
-			validateResponseCode(response, 204);
+			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Activate AdminTemplate API call failed with exception trace : " + e);
@@ -411,4 +412,33 @@ public class CIMAdmin {
 			throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
 		}
 	}
+
+	public Response editAdminTemplate(Map<String, String> testData, String qnbLayoutId, int responsecode)
+			throws ApplicationException {
+		try {
+			String adminTemplateId = adminTemplateData.getAdminTemplateId();
+			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.adminTemplateURL + adminTemplateId, requestString);
+			validateResponseCode(response, responsecode);
+			String Name = adminTemplateData.getName();
+			adminTemplateData.setAdminTemplateId(adminTemplateId);
+			adminTemplateData.setName(Name);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Update AdminTemplate API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response deleteDraftLinkTemplate() throws ApplicationException {
+		try {
+			response = sfdcRestUtils
+					.deleteWithoutPayload(urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId());
+			validateResponseCode(response, 204);
+		} catch (Exception e) {
+			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+		}
+		return response;
+
+	}
+
 }
