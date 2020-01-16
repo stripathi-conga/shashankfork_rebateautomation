@@ -174,7 +174,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
-
+		
 		Response editresponse = cimAdmin.editAdminTemplate(jsonData, qnbLayoutId, RebatesConstants.responseBadRequest);
 		responseValidator.validateUpdateFailure(editresponse, RebatesConstants.messageErrorCodeTemplate,
 				RebatesConstants.messageUpdateActiveInactiveTemplate);
@@ -212,12 +212,15 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
-		cimAdmin.editAdminTemplate(jsonData, qnbLayoutId, RebatesConstants.responseNocontent);
+		
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createDiscreteQnBLayoutAPI");
+		String discreteQnBLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "updateAdminTemplateAPI");
+		cimAdmin.editAdminTemplate(jsonData, discreteQnBLayoutId, RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		responseValidator.ValidateUpdatedAdminTemplate(response, cimAdmin, jsonData, qnbLayoutId);
+		responseValidator.ValidateUpdatedAdminTemplate(response, cimAdmin, jsonData, discreteQnBLayoutId);
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateDeleteSuccess(response);
