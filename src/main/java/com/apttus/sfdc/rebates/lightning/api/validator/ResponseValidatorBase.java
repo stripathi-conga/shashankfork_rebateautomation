@@ -26,6 +26,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getDataSourceData().getDataSourceId(),
 				"Validate datasource id");
@@ -56,6 +57,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
 				"Validate Admin Template id");
@@ -68,6 +70,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.linkTemplatesData.getLinkTemplateId(),
 				"Validate linkTemplate id");
@@ -82,6 +85,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Status__c").getAsString(), status, "Validate status in linkTemplate");
 		softassert.assertAll();
@@ -121,6 +125,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
+		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
 				"Validate Admin Template id");
@@ -150,23 +155,33 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void ValidateUpdatedAdminTemplate(Response response, CIMAdmin cimAdmin,Map<String, String> testData,String qnbLayoutId) {
+	public void ValidateUpdatedAdminTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
+			String qnbLayoutId) {
 		softassert = new SoftAssert();
-		String a=cimAdmin.adminTemplateData.getName();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1,
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		System.out.println(records);
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
 				"Validate Admin Template id");
-		softassert.assertEquals(records.get("Description__c").getAsString(),
-				testData.get("Description__c"), "Validate updated Admin Template Decription");
+		softassert.assertEquals(records.get("Description__c").getAsString(), testData.get("Description__c"),
+				"Validate updated Admin Template Decription");
 		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
 				"Validate Admin template Name");
-		softassert.assertEquals(records.get("QnB_Layout_Id__c").getAsString(),
-				qnbLayoutId, "Validate Updated Admin Template QnB Layout Id");
+		softassert.assertEquals(records.get("QnB_Layout_Id__c").getAsString(), qnbLayoutId,
+				"Validate Updated Admin Template QnB Layout Id");
+		softassert.assertAll();
+	}
+
+	public void validateUpdateFailure(Response response, String errorcode, String message) {
+
+		softassert = new SoftAssert();
+		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
+		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
+				"Verify Activate failure message");
+		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
+				"Verify Activate failure Errorcode");
 		softassert.assertAll();
 	}
 }

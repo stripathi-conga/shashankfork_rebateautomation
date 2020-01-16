@@ -154,8 +154,7 @@ public class TestLinkTemplates {
 		response = cimAdmin.createLinkTemplates(jsonData);
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 		cimAdmin.deleteDraftLinkTemplate();
-		 response = cimAdmin.getLinkTemplate(); 
-		response = cimAdmin.getLinkTemplatesViaId();
+		response = cimAdmin.getLinkTemplatesViaProgramType(jsonData); 
 		responseValidator.validateDeleteSuccess(response);
 
 	}

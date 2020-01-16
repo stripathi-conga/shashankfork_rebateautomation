@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
-import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
@@ -175,6 +174,10 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
+
+		Response editresponse = cimAdmin.editAdminTemplate(jsonData, qnbLayoutId, RebatesConstants.responseBadRequest);
+		responseValidator.validateUpdateFailure(editresponse, RebatesConstants.messageErrorCodeTemplate,
+				RebatesConstants.messageUpdateActiveInactiveTemplate);
 		cimAdmin.deActivateAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.Deactivate);
@@ -211,7 +214,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
-		cimAdmin.editAdminTemplate(jsonData, qnbLayoutId);
+		cimAdmin.editAdminTemplate(jsonData, qnbLayoutId, RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 		responseValidator.ValidateUpdatedAdminTemplate(response, cimAdmin, jsonData, qnbLayoutId);
@@ -249,6 +252,6 @@ public class TestAdminTemplates extends UnifiedFramework {
 		response = cimAdmin.activateAdminTemplate(RebatesConstants.responseBadRequest);
 		responseValidator.validateActivateFailure(response, RebatesConstants.messageMandatoryTemplatefields,
 				RebatesConstants.messageErrorCodeTemplate);
-		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+		
 	}
 }
