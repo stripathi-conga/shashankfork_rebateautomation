@@ -12,6 +12,15 @@ public class CreateAdminTemplatePojo {
 	private String QnB_Layout_Id__c;
 	private String Name;
 	public String adminTemplateId;
+	public String QnB_Layout_Id_c;
+
+	public String getQnB_Layout_Id_c() {
+		return QnB_Layout_Id_c;
+	}
+
+	public void setQnB_Layout_Id_c(String qnB_Layout_Id_c) {
+		QnB_Layout_Id_c = qnB_Layout_Id_c;
+	}
 
 	public String getAdminTemplateId() {
 		return adminTemplateId;
@@ -67,3 +76,9 @@ public class CreateAdminTemplatePojo {
 		return new Gson().toJson(createAdminTemplatePojo);
 	}
 }
+/*------------------- Create Admin Template Request ------------------
+ {
+  "Description__c": "Shashank T3", "Name": "Test",
+  "QnB_Layout_Id__c": "a593i000000LC0tAAG", "Status__c": "Draft"
+  }
+ */

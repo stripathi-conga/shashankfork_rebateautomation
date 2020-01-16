@@ -44,3 +44,9 @@ public class MapTemplateAndDataSourcePojo {
 		return new Gson().toJson(mapTemplateAndDataSourcepojo);
 	}
 }
+/*--------------------Map dataSource and Template Id
+  { "Data_Source_Id__c": "a543i0000001fgPAAQ", 
+    "Template_Id__c":"a593i000000LCdxAAG", 
+    "Formula_Id__c": "a523i000000TfOMAA0"
+  }
+ */

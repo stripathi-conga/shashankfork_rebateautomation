@@ -31,3 +31,8 @@ public class CreateQnBLayoutIdPojo {
 		return new Gson().toJson(createQnBLayoutId);
 	}
 }
+
+/*-------Create QnB Layout-------
+  { "type__c": "Benefit Product", 
+    "tier__c": "Tiered" }
+ */
