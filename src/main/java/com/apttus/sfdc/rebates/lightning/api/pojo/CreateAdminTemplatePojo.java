@@ -12,6 +12,7 @@ public class CreateAdminTemplatePojo {
 	private String QnB_Layout_Id__c;
 	private String Name;
 	public String adminTemplateId;
+	
 
 	public String getAdminTemplateId() {
 		return adminTemplateId;

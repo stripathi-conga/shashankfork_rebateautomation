@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
@@ -108,7 +109,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		cimAdmin.activateAdminTemplate();
+		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.deleteActiveInactiveTemplate();
 		responseValidator.validateDeleteFailure(response, RebatesConstants.messageDeleteActiveInactiveTemplate,
 				RebatesConstants.messageErrorCodeTemplate);
@@ -171,7 +172,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		cimAdmin.activateAdminTemplate();
+		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
 		cimAdmin.deActivateAdminTemplate();
@@ -204,25 +205,19 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateCreateSuccess(response);
 		Response response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
-		response = cimAdmin.editAdminTemplate(RebatesConstants.TemplateName);
+		cimAdmin.editAdminTemplate(jsonData, qnbLayoutId);
 		response = cimAdmin.getAdminTemplate();
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
-		Response responsemap = cimAdmin.mapProgramTemplateDataSource(jsonData);
-		responseValidator.validateMapProgramAdminTemplate(responsemap, cimAdmin, calcFormulaIdBenefit,
-				cimAdmin.getDataSourceData().getDataSourceId());
-		response = cimAdmin.getAdminTemplate();
-		responseValidator.validateAdminTemplateEdit(response, cimAdmin, RebatesConstants.TemplateName);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+		responseValidator.ValidateUpdatedAdminTemplate(response, cimAdmin, jsonData, qnbLayoutId);
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateDeleteSuccess(response);
-
 	}
 
 	@Test(description = "TC-501 Verify Mandatory fields for Admin Template Activation", groups = { "Regression", "API",
@@ -251,10 +246,9 @@ public class TestAdminTemplates extends UnifiedFramework {
 		Response response = cimAdmin.getAdminTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-
-		response = cimAdmin.activateTemplateWithoutBenefitFormula();
+		response = cimAdmin.activateAdminTemplate(RebatesConstants.responseBadRequest);
 		responseValidator.validateActivateFailure(response, RebatesConstants.messageMandatoryTemplatefields,
 				RebatesConstants.messageErrorCodeTemplate);
-
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 	}
 }

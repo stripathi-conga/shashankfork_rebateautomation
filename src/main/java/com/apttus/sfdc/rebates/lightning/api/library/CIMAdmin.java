@@ -26,6 +26,8 @@ public class CIMAdmin {
 	public SFDCRestUtils sfdcRestUtils;
 	public JsonParser parser;
 	public String adminTemplateId;
+	public String admindescription;
+	public String adminQnBLayoutId;
 	public String mapAdminTemplateDataSourceId;
 	private String requestString;
 	private Response response;
@@ -174,7 +176,7 @@ public class CIMAdmin {
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
 			validateResponseCode(response, 201);
 			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			adminTemplateData.setAdminTemplateId(adminTemplateId);
+			adminTemplateData.setAdminTemplateId(adminTemplateId);			
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Create New AdminTemplate API call failed with exception trace : " + e);
@@ -227,12 +229,12 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response activateAdminTemplate() throws ApplicationException {
+	public Response activateAdminTemplate(int resposecode) throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
-			validateResponseCode(response, 204);
+			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Activate AdminTemplate API call failed with exception trace : " + e);
@@ -410,21 +412,22 @@ public class CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
 		}
-
 	}
 
-	public Response editAdminTemplate(String Name) throws ApplicationException {
+	public Response editAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
 		try {
-
-			requestString = "{\"Name\": \"" + Name + "\"}";
+			String AdminTemplateId=adminTemplateData.getAdminTemplateId();
+			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+					urlGenerator.adminTemplateURL + AdminTemplateId, requestString);
 			validateResponseCode(response, 204);
+			String Name=adminTemplateData.getName();
+			adminTemplateData.setAdminTemplateId(AdminTemplateId);
+			adminTemplateData.setName(Name);		
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Update AdminTemplate API call failed with exception trace : " + e);
 		}
-
 	}
 
 	public Response deleteDraftLinkTemplate() throws ApplicationException {
@@ -449,18 +452,4 @@ public class CIMAdmin {
 			throw new ApplicationException("Get LinkTemplate API call failed with exception trace : " + e);
 		}
 	}
-
-	public Response activateTemplateWithoutBenefitFormula() throws ApplicationException {
-		try {
-			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
-			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
-			validateResponseCode(response, 400);
-			return response;
-		} catch (Exception e) {
-			throw new ApplicationException(
-					"Activate AdminTemplate API without Benefit Formula call failed with exception trace : " + e);
-		}
-	}
-
 }
