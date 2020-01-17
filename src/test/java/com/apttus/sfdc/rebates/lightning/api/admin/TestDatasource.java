@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
@@ -25,6 +26,7 @@ public class TestDatasource extends UnifiedFramework {
 	private ResponseValidatorBase responseValidator;
 	private CIMAdmin cimAdmin;
 	private Map<String, String> jsonData;
+	private Map<String, String> jsonDataTemp;
 	private Response response;
 
 	@BeforeClass(alwaysRun = true)
@@ -78,4 +80,36 @@ public class TestDatasource extends UnifiedFramework {
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
 	}
+	
+	@Test(description = "TC371-Verify the Data Source with multiplecombination", groups = { "Regression", "High",
+			"API" })
+	public void createDataSourceMultipleFileExtension() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceMultipleFileExtension");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		response = cimAdmin.createDataSource(jsonData);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getDataSource();
+		responseValidator.validateGetDataSource(response, cimAdmin);
+		cimAdmin.deleteDataSource();
+		response = cimAdmin.getDataSource();
+		responseValidator.validateDeleteSuccess(response);
+	}	
+	
+	@Test(description = "TC-225 Verify mandatory fields in Data Source", groups = { "Regression", "Medium", "API" })
+	public void verifyDataSourceMandatoryFields() throws Exception {
+		response = cimAdmin.createDataSourceWithoutAnyFields();
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeMissingFields,
+				RebatesConstants.messageCreateDataSourceWithoutFields);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceTwoFileExtension");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		response = cimAdmin.createDataSource(jsonData);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getDataSource();
+		responseValidator.validateGetDataSource(response, cimAdmin);
+		cimAdmin.deleteDataSource();
+		response = cimAdmin.getDataSource();
+		responseValidator.validateDeleteSuccess(response);
+	}	 
 }

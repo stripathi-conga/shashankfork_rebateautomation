@@ -119,6 +119,16 @@ public class CIMAdmin {
 		}
 	}
 
+	public Response createDataSourceWithoutAnyFields() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, "{}");
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Create Data Source Without Any Fields API call did not fail with exception trace : " + e);
+		}
+	}
+	
 	public String getFieldExpressionId(Map<String, String> testData) throws ApplicationException {
 		String fieldExpressionId = null;
 		try {
@@ -317,7 +327,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public void activateLinkAdminTemplate() throws ApplicationException {
+	public Response activateLinkTemplate() throws ApplicationException {
 		response = getLinkTemplatesViaId();
 		String linkTemplateStatus;
 		try {
@@ -329,8 +339,27 @@ public class CIMAdmin {
 						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
 				validateResponseCode(response, 204);
 			}
+			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Activate Link Template API call failed with exception trace : " + e);
+		}
+	}
+	
+	public Response deActivateLinkTemplate() throws ApplicationException {
+		response = getLinkTemplatesViaId();
+		String linkTemplateStatus;
+		try {
+			linkTemplateStatus = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records")
+					.get(0).getAsJsonObject().get("Status__c").getAsString();
+			if (!linkTemplateStatus.equals("Inctive") || !linkTemplateStatus.equals("Draft")) {
+				requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+				response = sfdcRestUtils.patchWithoutAppUrl(
+						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
+				validateResponseCode(response, 204);
+			}
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Deactivate Link Template API call failed with exception trace : " + e);
 		}
 	}
 
@@ -429,16 +458,14 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response deleteDraftLinkTemplate() throws ApplicationException {
+	public Response deleteLinkTemplate(int responseCode) throws ApplicationException {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId());
-			validateResponseCode(response, 204);
+			validateResponseCode(response, responseCode);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
 		}
 		return response;
-
 	}
-
 }

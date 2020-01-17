@@ -2,12 +2,10 @@ package com.apttus.sfdc.rebates.lightning.api.admin;
 
 import java.util.Map;
 import java.util.Properties;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
@@ -110,8 +108,8 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.deleteActiveInactiveTemplate();
-		responseValidator.validateDeleteFailure(response, RebatesConstants.messageDeleteActiveInactiveTemplate,
-				RebatesConstants.messageErrorCodeTemplate);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageDeleteActiveInactiveTemplate);
 	}
 
 	@Test(description = "TC411-Verify the Delete for Draft Template", groups = { "Regression", "API", "Medium" })
@@ -174,9 +172,9 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
-		
+
 		Response editresponse = cimAdmin.editAdminTemplate(jsonData, qnbLayoutId, RebatesConstants.responseBadRequest);
-		responseValidator.validateUpdateFailure(editresponse, RebatesConstants.messageErrorCodeTemplate,
+		responseValidator.validateFailureResponse(editresponse, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageUpdateActiveInactiveTemplate);
 		cimAdmin.deActivateAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
@@ -213,7 +211,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
-		
+
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createDiscreteQnBLayoutAPI");
 		String discreteQnBLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "updateAdminTemplateAPI");
@@ -253,8 +251,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 		response = cimAdmin.activateAdminTemplate(RebatesConstants.responseBadRequest);
-		responseValidator.validateActivateFailure(response, RebatesConstants.messageMandatoryTemplatefields,
-				RebatesConstants.messageErrorCodeTemplate);
-		
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageMandatoryTemplatefields);
 	}
 }

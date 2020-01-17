@@ -1,9 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
 import java.util.Map;
-
 import org.testng.asserts.SoftAssert;
-
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.JsonArray;
@@ -39,17 +37,6 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 0, "Validate response size");
-		softassert.assertAll();
-	}
-
-	public void validateDeleteFailure(Response response, String message, String errorcode) {
-
-		softassert = new SoftAssert();
-		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Verify delete failure message");
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"Verify delete failure code");
 		softassert.assertAll();
 	}
 
@@ -118,7 +105,6 @@ public class ResponseValidatorBase {
 				cim.programData.getProgram_Template_Id__c(), "Validate Program TemplateId");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.programData.getProgramId(), "Validate Program Id");
 		softassert.assertAll();
-
 	}
 
 	public void validateTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
@@ -136,22 +122,9 @@ public class ResponseValidatorBase {
 
 	public void validateMapProgramAdminTemplate(Response response, CIMAdmin cimAdmin, String calcFormulaIdBenefit,
 			String datasourceId) {
-
 		softassert = new SoftAssert();
 		boolean success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsBoolean();
 		softassert.assertEquals(success, true, "Validate success flag");
-		softassert.assertAll();
-
-	}
-
-	public void validateActivateFailure(Response response, String message, String errorcode) {
-
-		softassert = new SoftAssert();
-		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Verify Activate failure message");
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"Verify Activate failure Errorcode");
 		softassert.assertAll();
 	}
 
@@ -174,14 +147,13 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateUpdateFailure(Response response, String errorcode, String message) {
-
+	public void validateFailureResponse(Response response, String errorcode, String message) {
 		softassert = new SoftAssert();
 		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
 		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Verify Activate failure message");
+				"Verify failure message");
 		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"Verify Activate failure Errorcode");
+				"Verify failure Errorcode");
 		softassert.assertAll();
 	}
 }
