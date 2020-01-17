@@ -128,7 +128,7 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void ValidateUpdatedAdminTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
+	public void validateUpdatedAdminTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
 			String qnbLayoutId) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();

@@ -218,7 +218,7 @@ public class TestAdminTemplates extends UnifiedFramework {
 		cimAdmin.editAdminTemplate(jsonData, discreteQnBLayoutId, RebatesConstants.responseNocontent);
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		responseValidator.ValidateUpdatedAdminTemplate(response, cimAdmin, jsonData, discreteQnBLayoutId);
+		responseValidator.validateUpdatedAdminTemplate(response, cimAdmin, jsonData, discreteQnBLayoutId);
 		cimAdmin.deleteAdminTemplate();
 		response = cimAdmin.getAdminTemplate();
 		responseValidator.validateDeleteSuccess(response);
