@@ -52,7 +52,7 @@ public class CIM extends CIMAdmin {
 					if (status.equals("Inactive")) {
 						activeInactiveLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
 						linkTemplatesData.setLinkTemplateId(activeInactiveLinkTemplateId);
-						activateLinkAdminTemplate();
+						activateLinkTemplate();
 						templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
 						break;
 					}

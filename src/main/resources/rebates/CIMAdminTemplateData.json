@@ -9,6 +9,13 @@
 		"File_Suffix_To_ignore__c": "test",
 		"Delimiter__c": "\\u002c"
 	},
+	"createNewDataSourceMultipleFileExtension": {
+		"File_Extension__c": "csv,tsv,txt,dat,log"
+	},
+	"createNewDataSourceTwoFileExtension": {
+		"File_Extension__c": "tsv,dat",
+		"Delimiter__c": "\\u002f"
+	},
 	"createFieldExpressionId": {
 		"Apttus_Config2__Expression__c": "SUM(Rebate_Amount)",
 		"Name": "Auto SUM(Rebate_Amount)"
@@ -26,7 +33,7 @@
 		"Sequence__c": "1",
 		"Type__c": "Line"
 	},
-	"createNewAdminTemplateAPI": {
+	"createNewTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "Automation"
@@ -38,7 +45,6 @@
 	"createNewLinkTemplateSubTypeRebateAPI": {
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Rebate"
-		
 	},
 	"createNewLinkTemplateSubTypeLoyaltyAPI": {
 		"Program_Type__c": "Rebates 2.0",
@@ -48,11 +54,16 @@
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Promotion"
 	},
-	"updateAdminTemplateAPI": {
+	"createNewLinkTemplateSubTypeSalesAPI": {
+		"Program_Type__c": "Rebates 2.0",
+		"Program_Sub_Type__c": "Sales"
+	},
+	"updateTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "UpdatedAutomation"
-	},"createDiscreteQnBLayoutAPI": {
+	},
+	"createDiscreteQnBLayoutAPI": {
 		"type__c": "Qualification Formulas",
 		"tier__c": "Discrete"
 	}

@@ -15,14 +15,8 @@ public class SFDCHelper {
 
 	private static Properties masterProperty;
 	public static String envName;
-	public static String accessToken;
-	public URLGenerator urlGenerator;
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	private Date date = new Date();	
-
-	public SFDCHelper(String baseURL) {
-		urlGenerator = new URLGenerator(baseURL);
-	}
 
 	public static void setMasterProperty(Properties property) {
 		masterProperty = property;

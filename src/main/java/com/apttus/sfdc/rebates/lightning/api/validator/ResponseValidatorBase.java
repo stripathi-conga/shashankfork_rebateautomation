@@ -1,9 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
 import java.util.Map;
-
 import org.testng.asserts.SoftAssert;
-
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.JsonArray;
@@ -42,27 +40,16 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateDeleteFailure(Response response, String message, String errorcode) {
-
-		softassert = new SoftAssert();
-		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Verify delete failure message");
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"Verify delete failure code");
-		softassert.assertAll();
-	}
-
-	public void validateGetAdminTemplate(Response response, CIMAdmin cimAdmin) {
+	public void validateGetTemplate(Response response, CIMAdmin cimAdmin) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
-				"Validate Admin Template id");
-		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
-				"Validate Admin template Name");
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
+				"Validate Template id");
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getTemplateData().getName(),
+				"Validate Template Name");
 		softassert.assertAll();
 	}
 
@@ -118,7 +105,6 @@ public class ResponseValidatorBase {
 				cim.programData.getProgram_Template_Id__c(), "Validate Program TemplateId");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.programData.getProgramId(), "Validate Program Id");
 		softassert.assertAll();
-
 	}
 
 	public void validateTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
@@ -127,35 +113,14 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
-				"Validate Admin Template id");
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
+				"Validate Template id");
 		softassert.assertEquals(records.get("Status__c").getAsString(), Status,
-				"Validate Admin template Status-Draft/Active/Inactive");
+				"Validate Template Status-Draft/Active/Inactive");
 		softassert.assertAll();
 	}
 
-	public void validateMapProgramAdminTemplate(Response response, CIMAdmin cimAdmin, String calcFormulaIdBenefit,
-			String datasourceId) {
-
-		softassert = new SoftAssert();
-		boolean success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsBoolean();
-		softassert.assertEquals(success, true, "Validate success flag");
-		softassert.assertAll();
-
-	}
-
-	public void validateActivateFailure(Response response, String message, String errorcode) {
-
-		softassert = new SoftAssert();
-		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Verify Activate failure message");
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"Verify Activate failure Errorcode");
-		softassert.assertAll();
-	}
-
-	public void ValidateUpdatedAdminTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
+	public void validateUpdatedTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
 			String qnbLayoutId) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -163,25 +128,24 @@ public class ResponseValidatorBase {
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
-				"Validate Admin Template id");
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
+				"Validate Template id");
 		softassert.assertEquals(records.get("Description__c").getAsString(), testData.get("Description__c"),
-				"Validate updated Admin Template Decription");
-		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
-				"Validate Admin template Name");
+				"Validate updated Template Decription");
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getTemplateData().getName(),
+				"Validate template Name");
 		softassert.assertEquals(records.get("QnB_Layout_Id__c").getAsString(), qnbLayoutId,
-				"Validate Updated Admin Template QnB Layout Id");
+				"Validate Updated Template QnB Layout Id");
 		softassert.assertAll();
 	}
 
-	public void validateUpdateFailure(Response response, String errorcode, String message) {
-
+	public void validateFailureResponse(Response response, String errorcode, String message) {
 		softassert = new SoftAssert();
 		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
 		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("message").getAsString(), message,
-				"Verify Activate failure message");
+				"Verify failure message");
 		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
-				"Verify Activate failure Errorcode");
+				"Verify failure Errorcode");
 		softassert.assertAll();
 	}
 }

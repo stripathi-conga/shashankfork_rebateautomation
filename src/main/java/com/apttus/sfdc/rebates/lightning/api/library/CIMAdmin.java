@@ -2,9 +2,8 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Calendar;
 import java.util.Map;
-
 import com.apttus.customException.ApplicationException;
-import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateQnBLayoutIdPojo;
@@ -26,14 +25,12 @@ public class CIMAdmin {
 
 	public SFDCRestUtils sfdcRestUtils;
 	public JsonParser parser;
-	public String adminTemplateId;
-	public String mapAdminTemplateDataSourceId;
+	public String templateId;
 	private String requestString;
 	private Response response;
 	public URLGenerator urlGenerator;
 	public CreateNewDataSourcePojo dataSourceData = new CreateNewDataSourcePojo();
-	public CreateAdminTemplatePojo adminTemplateData = new CreateAdminTemplatePojo();
-	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
+	public CreateTemplatePojo templateData = new CreateTemplatePojo();
 	public CreateLinkTemplatesPojo linkTemplatesData = new CreateLinkTemplatesPojo();
 	public GetFieldExpressionIdPojo createNewFieldExpressionId = new GetFieldExpressionIdPojo();
 	public GetCalculationFormulaIdPojo createCalcFormulaId = new GetCalculationFormulaIdPojo();
@@ -46,20 +43,16 @@ public class CIMAdmin {
 		return dataSourceData;
 	}
 
-	public CreateAdminTemplatePojo getAdminTemplateData() {
-		return adminTemplateData;
+	public CreateTemplatePojo getTemplateData() {
+		return templateData;
 	}
 
 	public void setDataSourceData(CreateNewDataSourcePojo dataSourceData) {
 		this.dataSourceData = dataSourceData;
 	}
 
-	public void setAdmintemplatedata(CreateAdminTemplatePojo adminTemplateData) {
-		this.adminTemplateData = adminTemplateData;
-	}
-
-	public void setAdminTemplateDataSourcedata(MapTemplateAndDataSourcePojo templateDataSourceMapData) {
-		this.templateDataSourceMapData = templateDataSourceMapData;
+	public void setTemplateData(CreateTemplatePojo templateData) {
+		this.templateData = templateData;
 	}
 
 	public CreateLinkTemplatesPojo getLinkTemplatesData() {
@@ -119,6 +112,16 @@ public class CIMAdmin {
 		}
 	}
 
+	public Response createDataSourceWithoutAnyFields() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, "{}");
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Create Data Source Without Any Fields API call did not fail with exception trace : " + e);
+		}
+	}
+	
 	public String getFieldExpressionId(Map<String, String> testData) throws ApplicationException {
 		String fieldExpressionId = null;
 		try {
@@ -169,74 +172,72 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createAdminTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
+	public Response createTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
 		try {
-			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
+			requestString = templateData.createTemplateRequest(testData, this, qnbLayoutId);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.templateURL, requestString);
 			validateResponseCode(response, 201);
-			adminTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			adminTemplateData.setAdminTemplateId(adminTemplateId);
+			templateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			templateData.setTemplateId(templateId);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Create New AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Create New Template API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response getAdminTemplate() throws ApplicationException {
+	public Response getTemplate() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getAdminTemplateURL.replace("{AdminTemplateId}",
-					adminTemplateData.getAdminTemplateId()));
+			response = sfdcRestUtils
+					.getData(urlGenerator.getTemplateURL.replace("{TemplateId}", templateData.getTemplateId()));
 			validateResponseCode(response, 200);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Get AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Get Template API call failed with exception trace : " + e);
 		}
 	}
 
-	public void deleteAdminTemplate() throws ApplicationException {
+	public void deleteTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
+					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
 			validateResponseCode(response, 204);
 		} catch (Exception e) {
-			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
 		}
 	}
 
 	public Response deleteActiveInactiveTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId());
+					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
 			validateResponseCode(response, 400);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Failed to verify the deletion of Active/Inactive Admin template : " + e);
+			throw new ApplicationException("Failed to verify the deletion of Active/Inactive template : " + e);
 		}
 	}
 
 	public Response mapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
 		try {
 			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapAdminTemplateToDatasourceURL, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapTemplateToDatasourceURL, requestString);
 			validateResponseCode(response, 201);
-			mapAdminTemplateDataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")
-					.getAsString();
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"AdminTemplate and DataSource mapping API call failed with exception trace : " + e);
+					"Template and DataSource mapping API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response activateAdminTemplate(int resposecode) throws ApplicationException {
+	public Response activateTemplate(int resposecode) throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
 			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Activate AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Activate Template API call failed with exception trace : " + e);
 		}
 	}
 
@@ -317,7 +318,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public void activateLinkAdminTemplate() throws ApplicationException {
+	public Response activateLinkTemplate() throws ApplicationException {
 		response = getLinkTemplatesViaId();
 		String linkTemplateStatus;
 		try {
@@ -329,13 +330,32 @@ public class CIMAdmin {
 						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
 				validateResponseCode(response, 204);
 			}
+			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Activate Link Template API call failed with exception trace : " + e);
 		}
 	}
+	
+	public Response deactivateLinkTemplate() throws ApplicationException {
+		response = getLinkTemplatesViaId();
+		String linkTemplateStatus;
+		try {
+			linkTemplateStatus = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records")
+					.get(0).getAsJsonObject().get("Status__c").getAsString();
+			if (!linkTemplateStatus.equals("Inctive") || !linkTemplateStatus.equals("Draft")) {
+				requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
+				response = sfdcRestUtils.patchWithoutAppUrl(
+						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
+				validateResponseCode(response, 204);
+			}
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Deactivate Link Template API call failed with exception trace : " + e);
+		}
+	}
 
 	public String getCIMDateValue(String dateValue) throws ApplicationException {
-		SFDCHelper sfdcHelper = new SFDCHelper(null);
+		SFDCHelper sfdcHelper = new SFDCHelper();
 		String returnDate = null;
 		int year;
 		try {
@@ -401,44 +421,42 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response deActivateAdminTemplate() throws ApplicationException {
+	public Response deactivateTemplate() throws ApplicationException {
 		try {
-			requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+			requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + adminTemplateData.getAdminTemplateId(), requestString);
+					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
 			validateResponseCode(response, 204);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Deactivate Template API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response editAdminTemplate(Map<String, String> testData, String qnbLayoutId, int responsecode)
+	public Response editTemplate(Map<String, String> testData, String qnbLayoutId, int responsecode)
 			throws ApplicationException {
 		try {
-			String adminTemplateId = adminTemplateData.getAdminTemplateId();
-			requestString = adminTemplateData.createAdminTemplateRequest(testData, this, qnbLayoutId);
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.adminTemplateURL + adminTemplateId, requestString);
+			String templateId = templateData.getTemplateId();
+			requestString = templateData.createTemplateRequest(testData, this, qnbLayoutId);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.templateURL + templateId, requestString);
 			validateResponseCode(response, responsecode);
-			String Name = adminTemplateData.getName();
-			adminTemplateData.setAdminTemplateId(adminTemplateId);
-			adminTemplateData.setName(Name);
+			String Name = templateData.getName();
+			templateData.setTemplateId(templateId);
+			templateData.setName(Name);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Update AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Update Template API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response deleteDraftLinkTemplate() throws ApplicationException {
+	public Response deleteLinkTemplate(int responseCode) throws ApplicationException {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId());
-			validateResponseCode(response, 204);
+			validateResponseCode(response, responseCode);
 		} catch (Exception e) {
-			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
 		}
 		return response;
-
 	}
-
 }

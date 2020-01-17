@@ -15,14 +15,14 @@ public class CreateNewDataSourcePojo {
 	private String File_Extension__c;
 	private String Calculation_Date_Attr__c;
 	private String Program_Account_Attr__c;
-	public String DataSourceId;
+	public String dataSourceId;
 
 	public String getDataSourceId() {
-		return DataSourceId;
+		return dataSourceId;
 	}
 
 	public void setDataSourceId(String dataSourceId) {
-		DataSourceId = dataSourceId;
+		this.dataSourceId = dataSourceId;
 	}
 
 	public String getDelimiter__c() {
