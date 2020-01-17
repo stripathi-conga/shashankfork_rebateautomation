@@ -181,18 +181,18 @@ public class CIMAdmin {
 			templateData.setTemplateId(templateId);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Create New AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Create New Template API call failed with exception trace : " + e);
 		}
 	}
 
 	public Response getTemplate() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getTemplateURL.replace("{TemplateId}",
-					templateData.getTemplateId()));
+			response = sfdcRestUtils
+					.getData(urlGenerator.getTemplateURL.replace("{TemplateId}", templateData.getTemplateId()));
 			validateResponseCode(response, 200);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Get AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Get Template API call failed with exception trace : " + e);
 		}
 	}
 
@@ -202,7 +202,7 @@ public class CIMAdmin {
 					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
 			validateResponseCode(response, 204);
 		} catch (Exception e) {
-			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
 		}
 	}
 
@@ -225,11 +225,11 @@ public class CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"AdminTemplate and DataSource mapping API call failed with exception trace : " + e);
+					"Template and DataSource mapping API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response activateAdminTemplate(int resposecode) throws ApplicationException {
+	public Response activateTemplate(int resposecode) throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
@@ -237,7 +237,7 @@ public class CIMAdmin {
 			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Activate AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Activate Template API call failed with exception trace : " + e);
 		}
 	}
 
@@ -429,23 +429,23 @@ public class CIMAdmin {
 			validateResponseCode(response, 204);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Deactivate AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Deactivate Template API call failed with exception trace : " + e);
 		}
 	}
 
 	public Response editTemplate(Map<String, String> testData, String qnbLayoutId, int responsecode)
 			throws ApplicationException {
 		try {
-			String adminTemplateId = templateData.getTemplateId();
+			String templateId = templateData.getTemplateId();
 			requestString = templateData.createTemplateRequest(testData, this, qnbLayoutId);
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.templateURL + adminTemplateId, requestString);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.templateURL + templateId, requestString);
 			validateResponseCode(response, responsecode);
 			String Name = templateData.getName();
-			templateData.setTemplateId(adminTemplateId);
+			templateData.setTemplateId(templateId);
 			templateData.setName(Name);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Update AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Update Template API call failed with exception trace : " + e);
 		}
 	}
 
@@ -455,7 +455,7 @@ public class CIMAdmin {
 					.deleteWithoutPayload(urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId());
 			validateResponseCode(response, responseCode);
 		} catch (Exception e) {
-			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
+			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
 		}
 		return response;
 	}

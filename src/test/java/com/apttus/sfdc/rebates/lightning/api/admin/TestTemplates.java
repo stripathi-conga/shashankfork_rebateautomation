@@ -66,7 +66,7 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
-		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
@@ -98,11 +98,11 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
-		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.deleteActiveInactiveTemplate();
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageDeleteActiveInactiveTemplate);
@@ -131,7 +131,7 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
-		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateGetTemplate(response, cimAdmin);
 		cimAdmin.deleteTemplate();
 		response = cimAdmin.getTemplate();
 		responseValidator.validateDeleteSuccess(response);
@@ -160,12 +160,12 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
-		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		cimAdmin.activateAdminTemplate(RebatesConstants.responseNocontent);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
 
@@ -201,7 +201,7 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		Response response = cimAdmin.getTemplate();
-		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateGetTemplate(response, cimAdmin);
 
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
@@ -244,9 +244,9 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		Response response = cimAdmin.getTemplate();
-		responseValidator.validateGetAdminTemplate(response, cimAdmin);
+		responseValidator.validateGetTemplate(response, cimAdmin);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		response = cimAdmin.activateAdminTemplate(RebatesConstants.responseBadRequest);
+		response = cimAdmin.activateTemplate(RebatesConstants.responseBadRequest);
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageMandatoryTemplatefields);
 	}
