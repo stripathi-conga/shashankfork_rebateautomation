@@ -18,14 +18,14 @@
 	<test name="SFDC Rebates Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
 		<groups>
 			<run>
-				<include name="Regression" />				
+				<include name="API" />				
 			</run>
 		</groups>
 
 		<classes>
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestLinkTemplates" />
-			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestAdminTemplates" />
+			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestTemplates" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentives" />
 		</classes>
 	</test>

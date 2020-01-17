@@ -56,7 +56,7 @@ public class CreateLinkTemplatesPojo {
 		CreateLinkTemplatesPojo linkTemplate = new CreateLinkTemplatesPojo();
 		linkTemplate.setProgram_Type__c(testData.get("Program_Type__c"));
 		linkTemplate.setProgram_Sub_Type__c(testData.get("Program_Sub_Type__c"));
-		linkTemplate.setTemplate_Id__c(cimAdmin.getAdminTemplateData().getAdminTemplateId());
+		linkTemplate.setTemplate_Id__c(cimAdmin.getTemplateData().getTemplateId());
 		cimAdmin.setLinkTemplatesData(linkTemplate);
 		return new Gson().toJson(linkTemplate);
 	}

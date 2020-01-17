@@ -46,9 +46,9 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
 				"Validate Admin Template id");
-		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getTemplateData().getName(),
 				"Validate Admin template Name");
 		softassert.assertAll();
 	}
@@ -113,7 +113,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
 				"Validate Admin Template id");
 		softassert.assertEquals(records.get("Status__c").getAsString(), Status,
 				"Validate Admin template Status-Draft/Active/Inactive");
@@ -136,11 +136,11 @@ public class ResponseValidatorBase {
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getAdminTemplateData().getAdminTemplateId(),
+		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
 				"Validate Admin Template id");
 		softassert.assertEquals(records.get("Description__c").getAsString(), testData.get("Description__c"),
 				"Validate updated Admin Template Decription");
-		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getAdminTemplateData().getName(),
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getTemplateData().getName(),
 				"Validate Admin template Name");
 		softassert.assertEquals(records.get("QnB_Layout_Id__c").getAsString(), qnbLayoutId,
 				"Validate Updated Admin Template QnB Layout Id");

@@ -5,13 +5,13 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
-public class CreateAdminTemplatePojo {
+public class CreateTemplatePojo {
 
 	private String Description__c;
 	private String Status__c;
 	private String QnB_Layout_Id__c;
 	private String Name;
-	public String adminTemplateId;
+	public String templateId;
 	public String QnB_Layout_Id_c;
 
 	public String getQnB_Layout_Id_c() {
@@ -22,12 +22,12 @@ public class CreateAdminTemplatePojo {
 		QnB_Layout_Id_c = qnB_Layout_Id_c;
 	}
 
-	public String getAdminTemplateId() {
-		return adminTemplateId;
+	public String getTemplateId() {
+		return templateId;
 	}
 
-	public void setAdminTemplateId(String templateId) {
-		adminTemplateId = templateId;
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
 	}
 
 	public String getDescription__c() {
@@ -62,21 +62,21 @@ public class CreateAdminTemplatePojo {
 		this.Name = name;
 	}
 
-	public String createAdminTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin, String qnbLayoutId) {
+	public String createTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin, String qnbLayoutId) {
 
-		CreateAdminTemplatePojo createAdminTemplatePojo = new CreateAdminTemplatePojo();
-		createAdminTemplatePojo.setName(testData.get("Name"));
+		CreateTemplatePojo createTemplatePojo = new CreateTemplatePojo();
+		createTemplatePojo.setName(testData.get("Name"));
 		if (testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
-			createAdminTemplatePojo.setName("Rebates_Auto_AdminTemplate_" + SFDCHelper.randomNumberGenerator());
+			createTemplatePojo.setName("Rebates_Auto_Template_" + SFDCHelper.randomNumberGenerator());
 		}
-		createAdminTemplatePojo.setDescription__c(testData.get("Description__c"));
-		createAdminTemplatePojo.setQnB_Layout_Id__c(qnbLayoutId);
-		createAdminTemplatePojo.setStatus__c(testData.get("Status__c"));
-		cimAdmin.setAdmintemplatedata(createAdminTemplatePojo);
-		return new Gson().toJson(createAdminTemplatePojo);
+		createTemplatePojo.setDescription__c(testData.get("Description__c"));
+		createTemplatePojo.setQnB_Layout_Id__c(qnbLayoutId);
+		createTemplatePojo.setStatus__c(testData.get("Status__c"));
+		cimAdmin.setTemplateData(createTemplatePojo);
+		return new Gson().toJson(createTemplatePojo);
 	}
 }
-/*------------------- Create Admin Template Request ------------------
+/*------------------- Create Template Request ------------------
  {
   "Description__c": "Shashank T3", "Name": "Test",
   "QnB_Layout_Id__c": "a593i000000LC0tAAG", "Status__c": "Draft"

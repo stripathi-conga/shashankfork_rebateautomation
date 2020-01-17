@@ -77,7 +77,7 @@ public class TestDatasource extends UnifiedFramework {
 		responseValidator.validateDeleteSuccess(response);
 	}
 
-	@Test(description = "TC371-Verify the Data Source with multiplecombination", groups = { "Regression", "Medium",
+	@Test(description = "TC371- Verify the Data Source with multiple combination", groups = { "Regression", "Medium",
 			"API" })
 	public void createDataSourceMultipleFileExtension() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");

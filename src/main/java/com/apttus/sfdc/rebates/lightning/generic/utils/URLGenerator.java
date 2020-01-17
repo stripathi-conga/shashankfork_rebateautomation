@@ -14,7 +14,7 @@ public class URLGenerator {
 	public String getqnblayoutURL = "/query/?q=SELECT Id FROM Qualification_and_Benefit_Layout__c where type__c='{QnBLayoutType}' and tier__c='{QnBLayoutTier}'";
 	public String qnbLayoutIdURL = "/sobjects/Qualification_and_Benefit_Layout__c/";
 	public String adminTemplateURL = "/sobjects/Program_Template__c/";
-	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name ,status__c,Description__c ,QnB_Layout_Id__c FROM Program_Template__c WHERE id = '{AdminTemplateId}'";
+	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name ,status__c,Description__c ,QnB_Layout_Id__c FROM Program_Template__c WHERE id = '{TemplateId}'";
 	public String mapAdminTemplateToDatasourceURL = "/sobjects/Program_Template_Data_Source__c/";
 	public String linkTemplatesURL = "/sobjects/Program_Template_Map__c/";
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where id = '{LinkTemplateId}'";

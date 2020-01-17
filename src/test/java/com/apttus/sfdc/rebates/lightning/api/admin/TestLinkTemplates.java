@@ -63,9 +63,9 @@ public class TestLinkTemplates {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
-		response = cimAdmin.createAdminTemplate(jsonData, qnbLayoutId);
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getAdminTemplate();
+		response = cimAdmin.getTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
@@ -99,9 +99,9 @@ public class TestLinkTemplates {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
-		response = cimAdmin.createAdminTemplate(jsonData, qnbLayoutId);
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getAdminTemplate();
+		response = cimAdmin.getTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
@@ -137,9 +137,9 @@ public class TestLinkTemplates {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
-		response = cimAdmin.createAdminTemplate(jsonData, qnbLayoutId);
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getAdminTemplate();
+		response = cimAdmin.getTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
@@ -175,9 +175,9 @@ public class TestLinkTemplates {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewAdminTemplateAPI");
-		response = cimAdmin.createAdminTemplate(jsonData, qnbLayoutId);
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getAdminTemplate();
+		response = cimAdmin.getTemplate();
 		responseValidator.validateGetAdminTemplate(response, cimAdmin);
 		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
@@ -190,7 +190,7 @@ public class TestLinkTemplates {
 		response = cimAdmin.getLinkTemplatesViaId();
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
 
-		cimAdmin.deActivateLinkTemplate();
+		cimAdmin.deactivateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.Deactivate);
 
