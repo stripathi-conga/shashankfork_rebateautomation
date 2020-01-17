@@ -15,10 +15,8 @@ import com.jayway.restassured.response.Response;
 
 public class TestIncentives {
 	private Properties configProperties;
-	protected String baseURL;
 	private Efficacies efficacies;
 	private SFDCRestUtils sfdcRestUtils;
-	protected SFDCHelper sfdcHelper;
 	private String instanceURL;
 	private ResponseValidatorBase responseValidator;
 	private CIM cim;
@@ -32,10 +30,8 @@ public class TestIncentives {
 		efficacies = new Efficacies();
 		sfdcRestUtils = new SFDCRestUtils();
 		configProperties = efficacies.loadPropertyFile(environment);
-		baseURL = configProperties.getProperty("baseURL");
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
-		sfdcHelper = new SFDCHelper(instanceURL);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 	}
 

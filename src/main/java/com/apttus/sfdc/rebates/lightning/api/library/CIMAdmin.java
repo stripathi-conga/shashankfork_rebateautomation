@@ -2,7 +2,6 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.Calendar;
 import java.util.Map;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateAdminTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
@@ -27,13 +26,11 @@ public class CIMAdmin {
 	public SFDCRestUtils sfdcRestUtils;
 	public JsonParser parser;
 	public String adminTemplateId;
-	public String mapAdminTemplateDataSourceId;
 	private String requestString;
 	private Response response;
 	public URLGenerator urlGenerator;
 	public CreateNewDataSourcePojo dataSourceData = new CreateNewDataSourcePojo();
 	public CreateAdminTemplatePojo adminTemplateData = new CreateAdminTemplatePojo();
-	public MapTemplateAndDataSourcePojo templateDataSourceMapData;
 	public CreateLinkTemplatesPojo linkTemplatesData = new CreateLinkTemplatesPojo();
 	public GetFieldExpressionIdPojo createNewFieldExpressionId = new GetFieldExpressionIdPojo();
 	public GetCalculationFormulaIdPojo createCalcFormulaId = new GetCalculationFormulaIdPojo();
@@ -56,10 +53,6 @@ public class CIMAdmin {
 
 	public void setAdmintemplatedata(CreateAdminTemplatePojo adminTemplateData) {
 		this.adminTemplateData = adminTemplateData;
-	}
-
-	public void setAdminTemplateDataSourcedata(MapTemplateAndDataSourcePojo templateDataSourceMapData) {
-		this.templateDataSourceMapData = templateDataSourceMapData;
 	}
 
 	public CreateLinkTemplatesPojo getLinkTemplatesData() {
@@ -229,8 +222,6 @@ public class CIMAdmin {
 			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapAdminTemplateToDatasourceURL, requestString);
 			validateResponseCode(response, 201);
-			mapAdminTemplateDataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")
-					.getAsString();
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
@@ -364,7 +355,7 @@ public class CIMAdmin {
 	}
 
 	public String getCIMDateValue(String dateValue) throws ApplicationException {
-		SFDCHelper sfdcHelper = new SFDCHelper(null);
+		SFDCHelper sfdcHelper = new SFDCHelper();
 		String returnDate = null;
 		int year;
 		try {

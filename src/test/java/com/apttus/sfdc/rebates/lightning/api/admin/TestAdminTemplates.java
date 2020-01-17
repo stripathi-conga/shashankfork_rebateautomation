@@ -18,10 +18,8 @@ import com.jayway.restassured.response.Response;
 public class TestAdminTemplates extends UnifiedFramework {
 
 	private Properties configProperties;
-	protected String baseURL;
 	private Efficacies efficacies;
 	private SFDCRestUtils sfdcRestUtils;
-	protected SFDCHelper sfdcHelper;
 	private String instanceURL;
 	private ResponseValidatorBase responseValidator;
 	private CIMAdmin cimAdmin;
@@ -34,10 +32,8 @@ public class TestAdminTemplates extends UnifiedFramework {
 		efficacies = new Efficacies();
 		sfdcRestUtils = new SFDCRestUtils();
 		configProperties = efficacies.loadPropertyFile(environment);
-		baseURL = configProperties.getProperty("baseURL");
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
-		sfdcHelper = new SFDCHelper(instanceURL);
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
 	}
 
