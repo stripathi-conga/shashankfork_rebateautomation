@@ -160,7 +160,6 @@ public class TestLinkTemplates {
 	
     @Test(description = "TC-410 Unable to Delete Link Template which is in Active or Inactive Status", groups = { "Regression", "Medium", "API" })
     public void deleteActivateLinkTemplate() throws Exception {
-        // NEW TC
         jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
         String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
         jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");

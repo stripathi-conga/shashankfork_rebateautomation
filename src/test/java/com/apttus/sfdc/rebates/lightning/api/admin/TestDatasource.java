@@ -80,12 +80,13 @@ public class TestDatasource extends UnifiedFramework {
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
 	}
-	
-	@Test(description = "TC371-Verify the Data Source with multiplecombination", groups = { "Regression", "High",
+
+	@Test(description = "TC371-Verify the Data Source with multiplecombination", groups = { "Regression", "Medium",
 			"API" })
 	public void createDataSourceMultipleFileExtension() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceMultipleFileExtension");
+		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewDataSourceMultipleFileExtension");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		response = cimAdmin.createDataSource(jsonData);
 		responseValidator.validateCreateSuccess(response);
@@ -94,8 +95,8 @@ public class TestDatasource extends UnifiedFramework {
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
-	}	
-	
+	}
+
 	@Test(description = "TC-225 Verify mandatory fields in Data Source", groups = { "Regression", "Medium", "API" })
 	public void verifyDataSourceMandatoryFields() throws Exception {
 		response = cimAdmin.createDataSourceWithoutAnyFields();
@@ -111,5 +112,5 @@ public class TestDatasource extends UnifiedFramework {
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
-	}	 
+	}
 }
