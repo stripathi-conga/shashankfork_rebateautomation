@@ -175,7 +175,7 @@ public class CIMAdmin {
 	public Response createTemplate(Map<String, String> testData, String qnbLayoutId) throws ApplicationException {
 		try {
 			requestString = templateData.createTemplateRequest(testData, this, qnbLayoutId);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.adminTemplateURL, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.templateURL, requestString);
 			validateResponseCode(response, 201);
 			templateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			templateData.setTemplateId(templateId);
@@ -187,7 +187,7 @@ public class CIMAdmin {
 
 	public Response getTemplate() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getAdminTemplateURL.replace("{TemplateId}",
+			response = sfdcRestUtils.getData(urlGenerator.getTemplateURL.replace("{TemplateId}",
 					templateData.getTemplateId()));
 			validateResponseCode(response, 200);
 			return response;
@@ -199,7 +199,7 @@ public class CIMAdmin {
 	public void deleteTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.adminTemplateURL + templateData.getTemplateId());
+					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
 			validateResponseCode(response, 204);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete AdminTemplate API call failed with exception trace : " + e);
@@ -209,7 +209,7 @@ public class CIMAdmin {
 	public Response deleteActiveInactiveTemplate() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.adminTemplateURL + templateData.getTemplateId());
+					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
 			validateResponseCode(response, 400);
 			return response;
 		} catch (Exception e) {
@@ -220,7 +220,7 @@ public class CIMAdmin {
 	public Response mapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
 		try {
 			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapAdminTemplateToDatasourceURL, requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapTemplateToDatasourceURL, requestString);
 			validateResponseCode(response, 201);
 			return response;
 		} catch (Exception e) {
@@ -233,7 +233,7 @@ public class CIMAdmin {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + templateData.getTemplateId(), requestString);
+					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
 			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {
@@ -425,7 +425,7 @@ public class CIMAdmin {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
-					urlGenerator.adminTemplateURL + templateData.getTemplateId(), requestString);
+					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
 			validateResponseCode(response, 204);
 			return response;
 		} catch (Exception e) {
@@ -438,7 +438,7 @@ public class CIMAdmin {
 		try {
 			String adminTemplateId = templateData.getTemplateId();
 			requestString = templateData.createTemplateRequest(testData, this, qnbLayoutId);
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.adminTemplateURL + adminTemplateId, requestString);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.templateURL + adminTemplateId, requestString);
 			validateResponseCode(response, responsecode);
 			String Name = templateData.getName();
 			templateData.setTemplateId(adminTemplateId);

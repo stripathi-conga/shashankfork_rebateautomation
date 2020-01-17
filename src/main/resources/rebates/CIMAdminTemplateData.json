@@ -33,7 +33,7 @@
 		"Sequence__c": "1",
 		"Type__c": "Line"
 	},
-	"createNewAdminTemplateAPI": {
+	"createNewTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "Automation"
@@ -58,7 +58,7 @@
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Sales"
 	},
-	"updateAdminTemplateAPI": {
+	"updateTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "UpdatedAutomation"

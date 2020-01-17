@@ -13,9 +13,9 @@ public class URLGenerator {
 	public String linkDatasourceIdURL = "/sobjects/Data_Source_Formula__c/";
 	public String getqnblayoutURL = "/query/?q=SELECT Id FROM Qualification_and_Benefit_Layout__c where type__c='{QnBLayoutType}' and tier__c='{QnBLayoutTier}'";
 	public String qnbLayoutIdURL = "/sobjects/Qualification_and_Benefit_Layout__c/";
-	public String adminTemplateURL = "/sobjects/Program_Template__c/";
-	public String getAdminTemplateURL = "/query/?q=SELECT Id,Name ,status__c,Description__c ,QnB_Layout_Id__c FROM Program_Template__c WHERE id = '{TemplateId}'";
-	public String mapAdminTemplateToDatasourceURL = "/sobjects/Program_Template_Data_Source__c/";
+	public String templateURL = "/sobjects/Program_Template__c/";
+	public String getTemplateURL = "/query/?q=SELECT Id,Name ,status__c,Description__c ,QnB_Layout_Id__c FROM Program_Template__c WHERE id = '{TemplateId}'";
+	public String mapTemplateToDatasourceURL = "/sobjects/Program_Template_Data_Source__c/";
 	public String linkTemplatesURL = "/sobjects/Program_Template_Map__c/";
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where id = '{LinkTemplateId}'";
 	public String getLinkTemplatesViaProgramTypeURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where Program_Type__c = '{ProgramType}' and Program_Sub_Type__c = '{ProgramSubType}'";
@@ -32,9 +32,9 @@ public class URLGenerator {
 		this.calcFormulaIdURL = baseURL + this.calcFormulaIdURL;
 		this.linkCalcFormulaIdURL = baseURL + this.linkCalcFormulaIdURL;
 		this.linkDatasourceIdURL = baseURL + this.linkDatasourceIdURL;
-		this.getAdminTemplateURL = baseURL + this.getAdminTemplateURL;
-		this.adminTemplateURL = baseURL + this.adminTemplateURL;
-		this.mapAdminTemplateToDatasourceURL = baseURL + this.mapAdminTemplateToDatasourceURL;
+		this.getTemplateURL = baseURL + this.getTemplateURL;
+		this.templateURL = baseURL + this.templateURL;
+		this.mapTemplateToDatasourceURL = baseURL + this.mapTemplateToDatasourceURL;
 		this.linkTemplatesURL = baseURL + this.linkTemplatesURL;
 		this.qnbLayoutIdURL = baseURL + this.qnbLayoutIdURL;
 		this.getqnblayoutURL = baseURL + this.getqnblayoutURL;
