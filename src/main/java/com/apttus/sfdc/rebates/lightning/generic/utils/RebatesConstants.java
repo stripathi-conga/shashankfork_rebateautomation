@@ -5,7 +5,7 @@ public class RebatesConstants {
 	public static final int responseBadRequest = 400;
 	public static final int responseNocontent = 204;
 	public static final String activate = "Active";
-	public static final String Deactivate = "Inactive";
+	public static final String deactivate = "Inactive";
 	public static final String draft = "Draft";
 	public static final String errorCodeCustomValidation = "FIELD_CUSTOM_VALIDATION_EXCEPTION";
 	public static final String errorCodeMissingFields = "REQUIRED_FIELD_MISSING";

@@ -196,7 +196,7 @@ public class TestLinkTemplates {
 		
 		cimAdmin.deactivateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
-		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.Deactivate);
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.deactivate);
 
 		response = cimAdmin.deleteLinkTemplate(RebatesConstants.responseBadRequest);
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,

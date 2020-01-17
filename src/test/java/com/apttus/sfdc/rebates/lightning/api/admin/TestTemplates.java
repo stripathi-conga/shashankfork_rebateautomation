@@ -174,7 +174,7 @@ public class TestTemplates extends UnifiedFramework {
 				RebatesConstants.messageUpdateActiveInactiveTemplate);
 		cimAdmin.deactivateTemplate();
 		response = cimAdmin.getTemplate();
-		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.Deactivate);
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.deactivate);
 	}
 
 	@Test(description = "TC-431 Verify Edit for the Template in Draft Status", groups = { "Regression", "API",

@@ -343,7 +343,7 @@ public class CIMAdmin {
 			linkTemplateStatus = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records")
 					.get(0).getAsJsonObject().get("Status__c").getAsString();
 			if (!linkTemplateStatus.equals("Inctive") || !linkTemplateStatus.equals("Draft")) {
-				requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+				requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
 				response = sfdcRestUtils.patchWithoutAppUrl(
 						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
 				validateResponseCode(response, 204);
@@ -423,7 +423,7 @@ public class CIMAdmin {
 
 	public Response deactivateTemplate() throws ApplicationException {
 		try {
-			requestString = "{\"Status__c\": \"" + RebatesConstants.Deactivate + "\"}";
+			requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
 			validateResponseCode(response, 204);
