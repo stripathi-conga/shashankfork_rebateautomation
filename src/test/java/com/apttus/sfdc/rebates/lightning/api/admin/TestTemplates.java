@@ -214,7 +214,7 @@ public class TestTemplates extends UnifiedFramework {
 		cimAdmin.editTemplate(jsonData, discreteQnBLayoutId, RebatesConstants.responseNocontent);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
-		responseValidator.validateUpdatedAdminTemplate(response, cimAdmin, jsonData, discreteQnBLayoutId);
+		responseValidator.validateUpdatedTemplate(response, cimAdmin, jsonData, discreteQnBLayoutId);
 		cimAdmin.deleteTemplate();
 		response = cimAdmin.getTemplate();
 		responseValidator.validateDeleteSuccess(response);

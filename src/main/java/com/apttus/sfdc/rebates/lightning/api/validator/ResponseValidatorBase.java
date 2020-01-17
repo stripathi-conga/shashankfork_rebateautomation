@@ -120,15 +120,7 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateMapProgramAdminTemplate(Response response, CIMAdmin cimAdmin, String calcFormulaIdBenefit,
-			String datasourceId) {
-		softassert = new SoftAssert();
-		boolean success = (parser.parse(response.getBody().asString())).getAsJsonObject().get("success").getAsBoolean();
-		softassert.assertEquals(success, true, "Validate success flag");
-		softassert.assertAll();
-	}
-
-	public void validateUpdatedAdminTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
+	public void validateUpdatedTemplate(Response response, CIMAdmin cimAdmin, Map<String, String> testData,
 			String qnbLayoutId) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
