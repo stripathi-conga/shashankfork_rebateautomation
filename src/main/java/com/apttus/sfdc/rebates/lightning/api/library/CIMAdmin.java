@@ -213,7 +213,7 @@ public class CIMAdmin {
 			validateResponseCode(response, 400);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Failed to verify the deletion of Active/Inactive Admin template : " + e);
+			throw new ApplicationException("Failed to verify the deletion of Active/Inactive template : " + e);
 		}
 	}
 
