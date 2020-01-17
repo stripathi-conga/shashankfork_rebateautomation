@@ -76,7 +76,7 @@ public class TestTemplates extends UnifiedFramework {
 	}
 
 	@Test(description = "TC409-Unable to Delete  Active Template", groups = { "Regression", "API", "High" })
-	public void verifyActiveAdminTemplateDelete() throws Exception {
+	public void verifyActiveTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
@@ -109,7 +109,7 @@ public class TestTemplates extends UnifiedFramework {
 	}
 
 	@Test(description = "TC411-Verify the Delete for Draft Template", groups = { "Regression", "API", "Medium" })
-	public void verifyDraftAdminTemplateDelete() throws Exception {
+	public void verifyDraftTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
@@ -139,7 +139,7 @@ public class TestTemplates extends UnifiedFramework {
 
 	@Test(description = "TC432-Verify that user should allow to deactivate the active Template", groups = {
 			"Regression", "API", "Medium" })
-	public void verifyActiveAdminTemplateDeactivation() throws Exception {
+	public void verifyActiveTemplateDeactivation() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
@@ -179,7 +179,7 @@ public class TestTemplates extends UnifiedFramework {
 
 	@Test(description = "TC-431 Verify Edit for the Template in Draft Status", groups = { "Regression", "API",
 			"Medium" })
-	public void verifyEditAdminTemplate() throws Exception {
+	public void verifyEditTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
