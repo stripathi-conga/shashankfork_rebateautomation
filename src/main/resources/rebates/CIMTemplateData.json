@@ -1,5 +1,5 @@
 {
-	"createNewProgram": {
+	"createNewIncentive": {
 		"Name": "{Random}",
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
 		"Apttus_Config2__ExpirationDate__c": "endofcurrentmonth",
@@ -14,7 +14,7 @@
 		"Apttus_Config2__UseType__c": "Rebates 2.0",
 		"Apttus_Config2__SubUseType__c": "Loyalty"
 	},
-	"updateProgram": {
+	"updateIncentive": {
 		"BenefitLevel__c": "Agreement Account",
 		"AccountName": "Automation_Account_1"
 	},

@@ -54,7 +54,7 @@ public class AddParticipantPojo {
 		this.EffectiveDate__c = EffectiveDate__c;
 	}
 
-	public String addParticipantsRequest(Map<String, String> testData, String incentiveId, CIM cim)
+	public String addParticipantsRequest(Map<String, String> testData, CIM cim)
 			throws ApplicationException {
 		String startDate, endDate;
 		AddParticipantPojo addParticipantpojo = new AddParticipantPojo();
@@ -67,9 +67,8 @@ public class AddParticipantPojo {
 			endDate = cim.getCIMDateValue(testData.get("ExpirationDate__c"));
 			addParticipantpojo.setExpirationDate__c(endDate);
 		}
-
 		addParticipantpojo.setAccount__c(cim.getAccountId(testData.get("AccountName")));
-		addParticipantpojo.setIncentive__c(incentiveId);
+		addParticipantpojo.setIncentive__c(cim.getIncentiveData().incentiveId);
 		cim.setParticipantData(addParticipantpojo);
 		return new Gson().toJson(addParticipantpojo);
 	}

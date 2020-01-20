@@ -46,16 +46,15 @@ public class TestParticipants {
 
 	@Test(description = "TC 377 Verify adding a participant to a program", groups = { "Regression", "API", "High" })
 	public void addParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
-		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		String programTemplateId = cim.getTemplateIdForIncentives(jsonData);
 		jsonData.put("Program_Template_Id__c", programTemplateId);
-		cim.creatNewProgram(jsonData);
-		response = cim.getProgramDetails();
-		String programId = cim.programData.getProgramId();
-		responseValidator.validateProgramDetails(jsonData, response, cim);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
-		cim.addParticipants(jsonData, programId);
+		cim.addParticipants(jsonData);
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 	}

@@ -19,12 +19,12 @@ public class URLGenerator {
 	public String linkTemplatesURL = "/sobjects/Program_Template_Map__c/";
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where id = '{LinkTemplateId}'";
 	public String getLinkTemplatesViaProgramTypeURL = "/query/?q=SELECT Id,Name,Program_Sub_Type__c,Program_Type__c,Status__c,Template_Id__c FROM Program_Template_Map__c where Program_Type__c = '{ProgramType}' and Program_Sub_Type__c = '{ProgramSubType}'";
-	public String programURL = "/sobjects/Apttus_Config2__Incentive__c/";
-	public String getProgramURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,Apttus_Config2__SubUseType__c,Program_Template_Id__c FROM Apttus_Config2__Incentive__c where id='{ProgramId}'";
+	public String incentiveURL = "/sobjects/Apttus_Config2__Incentive__c/";
+	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,Apttus_Config2__SubUseType__c,Program_Template_Id__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
 	public String createAccountURL = "/sobjects/Account/";
 	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
 	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";
-	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{ParticipantId}'";
+	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";
 	
 	public URLGenerator(String instanceURL) {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
@@ -42,8 +42,8 @@ public class URLGenerator {
 		this.getqnblayoutURL = baseURL + this.getqnblayoutURL;
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
 		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
-		this.programURL = baseURL + this.programURL;
-		this.getProgramURL = baseURL + this.getProgramURL;
+		this.incentiveURL = baseURL + this.incentiveURL;
+		this.getIncentiveURL = baseURL + this.getIncentiveURL;
 		this.createAccountURL = baseURL + this.createAccountURL;
 		this.getAccountURL = baseURL + this.getAccountURL;
 		this.addParticipantsURL= baseURL + this.addParticipantsURL;

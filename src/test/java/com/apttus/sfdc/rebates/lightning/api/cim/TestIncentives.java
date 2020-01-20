@@ -41,25 +41,26 @@ public class TestIncentives {
 	}
 
 	@Test(description = "TC345-Verify the creation of New Rebate Program", groups = { "Smoke", "API" })
-	public void createNewLoyaltyProgram() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
-		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
+	public void createNewLoyaltyIncentive() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		String programTemplateId = cim.getTemplateIdForIncentives(jsonData);
 		jsonData.put("Program_Template_Id__c", programTemplateId);
-		cim.creatNewProgram(jsonData);
-		response = cim.getProgramDetails();
-		responseValidator.validateProgramDetails(jsonData, response, cim);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
 
 	@Test(description = "TC420-Update Program Payee field on Edit page", groups = { "Regression", "High", "API" })
-	public void updateProgramPayee() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
-		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
+	public void updateIncentivePayee() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		String programTemplateId = cim.getTemplateIdForIncentives(jsonData);
 		jsonData.put("Program_Template_Id__c", programTemplateId);
-		cim.creatNewProgram(jsonData);
-		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateProgram");
+		cim.createNewIncentive(jsonData);
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentive");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
-		cim.updateProgram(jsonData);
-		response = cim.getProgramDetails();
-		responseValidator.validateProgramDetails(jsonData, response, cim);
+		cim.updateIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
 }
