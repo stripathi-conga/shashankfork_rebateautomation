@@ -18,9 +18,9 @@
 		"BenefitLevel__c": "Agreement Account",
 		"AccountName": "Automation_Account_1"
 	},
-	"addIncentiveParticiant": {
+	"addParticiants": {
 		"ExpirationDate__c": "endofcurrentmonth",
-		"Account__c": "0013i00000EZGpOAAX",
-		"EffectiveDate__c": "today"
-	}
+		"EffectiveDate__c": "today",
+		"AccountName":"Automation"
+			}
 }

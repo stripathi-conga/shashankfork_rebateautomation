@@ -45,18 +45,19 @@ public class TestParticipants {
 	}
 
 	@Test(description = "TC 377 Verify adding a participant to a program", groups = { "Regression", "API", "High" })
-	public void addIncentiveParticipant() throws Exception {
+	public void addParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
 		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
 		jsonData.put("Program_Template_Id__c", programTemplateId);
 		cim.creatNewProgram(jsonData);
 		response = cim.getProgramDetails();
-		String incentiveProgram = cim.programData.getProgramId();
+		String programId = cim.programData.getProgramId();
 		responseValidator.validateProgramDetails(jsonData, response, cim);
-
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addIncentiveParticiant");
-		cim.addIncentiveParticipant(jsonData, incentiveProgram);
-		response = cim.getIncentiveParticipantDetails();
-		responseValidator.validateIncentiveParticipantDetails(jsonData, response, cim);
+		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticiants");
+		String account=cim.getAccountId(cim.getAccountId("Automation"));
+		cim.addParticipants(jsonData, programId,account);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim,account);
 	}
 }

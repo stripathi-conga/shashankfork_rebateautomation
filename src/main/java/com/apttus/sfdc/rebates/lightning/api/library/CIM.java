@@ -12,24 +12,22 @@ import com.google.gson.JsonObject;
 import com.jayway.restassured.response.Response;
 
 public class CIM extends CIMAdmin {
-
+	
+	private String requestString;
+	private Response response;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewProgramPojo programData = new CreateNewProgramPojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
-	public AddParticipantPojo incentiveParticipantData=new AddParticipantPojo();
+	public AddParticipantPojo participantsData=new AddParticipantPojo();
 	
-	public AddParticipantPojo getIncentiveParticipantData() {
-		return incentiveParticipantData;
+	public AddParticipantPojo getParticipantData() {
+		return participantsData;
 	}
 
-	public void setIncentiveParticipantData(AddParticipantPojo incentiveParticipantData) {
-		this.incentiveParticipantData = incentiveParticipantData;
+	public void setParticipantData(AddParticipantPojo participantData) {
+		this.participantsData = participantData;
 	}
-
-	private String requestString;
-	private Response response;
 	
-
 	public CreateNewProgramPojo getProgramData() {
 		return programData;
 	}
@@ -149,29 +147,29 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public void addIncentiveParticipant(Map<String, String> testData,String incentiveParticipantId) throws ApplicationException {
+	public void addParticipants(Map<String, String> testData,String participantId,String account) throws ApplicationException {
 		try {
-			String incentiveParticipantid;
-			requestString = incentiveParticipantData.addIncentiveParticipantRequest(testData,  incentiveParticipantId,this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addIncentiveParticipantURL, requestString);
+			String participantid;
+			requestString = participantsData.addParticipantsRequest(testData,  participantId,this, account);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
 			validateResponseCode(response, 201);
-			incentiveParticipantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			incentiveParticipantData.setIncentiveParticipantId(incentiveParticipantid);
+			participantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			participantsData.setParticipantsId(participantid);
 			
 		} catch (Exception e) {
-			throw new ApplicationException("Add Incentive Participant API call failed with exception trace : " + e);
+			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
 		}
 		
 	}
 
-	public Response getIncentiveParticipantDetails() throws ApplicationException {
+	public Response getParticipantsDetails() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.getData(urlGenerator.getIncentiveParticipantURL.replace("{IncentiveId}", incentiveParticipantData.getIncentiveParticipantId()));
+					.getData(urlGenerator.getParticipantsURL.replace("{ParticipantId}",participantsData.getParticipantsId()));
 			validateResponseCode(response, 200);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Get Incentive Participant Details API call failed with exception trace : " + e);
+			throw new ApplicationException("Get  Participant Details API call failed with exception trace : " + e);
 		}
 	}
 }
