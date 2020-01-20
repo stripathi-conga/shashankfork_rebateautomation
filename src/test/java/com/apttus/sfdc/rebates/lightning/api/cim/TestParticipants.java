@@ -53,11 +53,10 @@ public class TestParticipants {
 		response = cim.getProgramDetails();
 		String programId = cim.programData.getProgramId();
 		responseValidator.validateProgramDetails(jsonData, response, cim);
-		
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticiants");
-		String account=cim.getAccountId(cim.getAccountId("Automation"));
-		cim.addParticipants(jsonData, programId,account);
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
+		cim.addParticipants(jsonData, programId);
 		response = cim.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, cim,account);
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 	}
 }

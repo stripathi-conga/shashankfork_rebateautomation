@@ -2,6 +2,7 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
@@ -12,14 +13,14 @@ import com.google.gson.JsonObject;
 import com.jayway.restassured.response.Response;
 
 public class CIM extends CIMAdmin {
-	
+
 	private String requestString;
 	private Response response;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewProgramPojo programData = new CreateNewProgramPojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
-	public AddParticipantPojo participantsData=new AddParticipantPojo();
-	
+	public AddParticipantPojo participantsData = new AddParticipantPojo();
+
 	public AddParticipantPojo getParticipantData() {
 		return participantsData;
 	}
@@ -27,7 +28,7 @@ public class CIM extends CIMAdmin {
 	public void setParticipantData(AddParticipantPojo participantData) {
 		this.participantsData = participantData;
 	}
-	
+
 	public CreateNewProgramPojo getProgramData() {
 		return programData;
 	}
@@ -100,7 +101,7 @@ public class CIM extends CIMAdmin {
 			throw new ApplicationException("Get Program Details API call failed with exception trace : " + e);
 		}
 	}
-	
+
 	public String getAccountId(String accountName) throws ApplicationException {
 		String accountId;
 		int count;
@@ -138,8 +139,7 @@ public class CIM extends CIMAdmin {
 		String updateProgram = programData.getProgramId();
 		try {
 			requestString = programData.createNewProgramRequest(testData, this);
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.programURL + updateProgram,
-					requestString);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.programURL + updateProgram, requestString);
 			validateResponseCode(response, 204);
 			programData.setProgramId(updateProgram);
 		} catch (Exception e) {
@@ -147,29 +147,29 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public void addParticipants(Map<String, String> testData,String participantId,String account) throws ApplicationException {
+	public void addParticipants(Map<String, String> testData, String programId) throws ApplicationException {
 		try {
 			String participantid;
-			requestString = participantsData.addParticipantsRequest(testData,  participantId,this, account);
+			requestString = participantsData.addParticipantsRequest(testData, programId, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
 			validateResponseCode(response, 201);
 			participantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			participantsData.setParticipantsId(participantid);
-			
+
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
 		}
-		
 	}
 
 	public Response getParticipantsDetails() throws ApplicationException {
 		try {
-			response = sfdcRestUtils
-					.getData(urlGenerator.getParticipantsURL.replace("{ParticipantId}",participantsData.getParticipantsId()));
+			response = sfdcRestUtils.getData(
+					urlGenerator.getParticipantsURL.replace("{ParticipantId}", participantsData.getParticipantsId()));
 			validateResponseCode(response, 200);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get  Participant Details API call failed with exception trace : " + e);
 		}
 	}
+
 }

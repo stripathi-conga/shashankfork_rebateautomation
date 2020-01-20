@@ -2,6 +2,8 @@ package com.apttus.sfdc.rebates.lightning.api.validator;
 
 import java.util.Map;
 import org.testng.asserts.SoftAssert;
+
+import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.JsonArray;
@@ -149,22 +151,21 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateParticipantsDetails(Map<String, String> testData, Response response, CIM cim,String account) {
+	public void validateParticipantsDetails(Map<String, String> testData, Response response, CIM cim)
+			throws ApplicationException {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		System.out.println(resp);
-		System.out.println((response.getBody().asString()));
+
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1,
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
-		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();		
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("EffectiveDate__c").getAsString(),
 				cim.participantsData.getEffectiveDate__c(), "Validate Participant Effective Date");
 		softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
 				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
-		softassert.assertEquals(records.get("Id").getAsString(),
-				cim.participantsData.getParticipantsId(), "Validate Participant Name");
+		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
+				"Validate Participant Name");
 		softassert.assertAll();
-
 	}
 }

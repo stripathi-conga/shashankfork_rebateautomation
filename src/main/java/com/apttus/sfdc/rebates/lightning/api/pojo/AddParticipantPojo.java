@@ -54,7 +54,7 @@ public class AddParticipantPojo {
 		this.EffectiveDate__c = EffectiveDate__c;
 	}
 
-	public String addParticipantsRequest(Map<String, String> testData, String incentiveId, CIM cim,String account)
+	public String addParticipantsRequest(Map<String, String> testData, String incentiveId, CIM cim)
 			throws ApplicationException {
 		String startDate, endDate;
 		AddParticipantPojo addParticipantpojo = new AddParticipantPojo();
@@ -67,18 +67,16 @@ public class AddParticipantPojo {
 			endDate = cim.getCIMDateValue(testData.get("ExpirationDate__c"));
 			addParticipantpojo.setExpirationDate__c(endDate);
 		}
-		
-		addParticipantpojo.setAccount__c(cim.getAccountId(testData.get("AccountName"))); 
+
+		addParticipantpojo.setAccount__c(cim.getAccountId(testData.get("AccountName")));
 		addParticipantpojo.setIncentive__c(incentiveId);
 		cim.setParticipantData(addParticipantpojo);
 		return new Gson().toJson(addParticipantpojo);
 	}
 }
-/* ----Add Incentive Participant ----
-  
-  { 
-    "Account__c": "0012f00000RPq9ZAAT", 
-    "EffectiveDate__c": "2019-12-01",
-    "ExpirationDate__c": "2019-12-31", 
-    "Incentive__c": "a3r2f0000000N5yAAE" }
+/*
+ * ----Add Incentive Participant ----
+ * 
+ * { "Account__c": "0012f00000RPq9ZAAT", "EffectiveDate__c": "2019-12-01",
+ * "ExpirationDate__c": "2019-12-31", "Incentive__c": "a3r2f0000000N5yAAE" }
  */
