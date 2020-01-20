@@ -15,7 +15,7 @@ import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestAddParticipant {
+public class TestParticipants {
 	private Properties configProperties;
 	protected String baseURL;
 	private Efficacies efficacies;
@@ -25,7 +25,6 @@ public class TestAddParticipant {
 	private ResponseValidatorBase responseValidator;
 	private CIM cim;
 	private Map<String, String> jsonData;
-
 	Response response;
 
 	@BeforeClass(alwaysRun = true)
@@ -45,7 +44,7 @@ public class TestAddParticipant {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "TC 377 Verify the adding the participant to the program", groups = { "Regression", "API", "High" })
+	@Test(description = "TC 377 Verify adding a participant to a program", groups = { "Regression", "API", "High" })
 	public void addIncentiveParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewProgram");
 		String programTemplateId = cim.getTemplateIdForProgram(jsonData);
