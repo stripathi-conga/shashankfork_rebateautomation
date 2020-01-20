@@ -23,6 +23,8 @@ public class URLGenerator {
 	public String getProgramURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,Apttus_Config2__SubUseType__c,Program_Template_Id__c FROM Apttus_Config2__Incentive__c where id='{ProgramId}'";
 	public String createAccountURL = "/sobjects/Account/";
 	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
+	public String addIncentiveParticipantURL = "/sobjects/IncentiveParticipant__C/";
+	public String getIncentiveParticipantURL = "/query/?q=SELECT Id,ExpirationDate__c,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{IncentiveId}'";
 	
 	public URLGenerator(String instanceURL) {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
@@ -44,6 +46,8 @@ public class URLGenerator {
 		this.getProgramURL = baseURL + this.getProgramURL;
 		this.createAccountURL = baseURL + this.createAccountURL;
 		this.getAccountURL = baseURL + this.getAccountURL;
+		this.addIncentiveParticipantURL= baseURL + this.addIncentiveParticipantURL;
+		this.getIncentiveParticipantURL= baseURL + this.getIncentiveParticipantURL;
 
 	}
 }
