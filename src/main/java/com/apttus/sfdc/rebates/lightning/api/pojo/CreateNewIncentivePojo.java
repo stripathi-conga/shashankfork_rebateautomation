@@ -6,7 +6,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
-public class CreateNewProgramPojo {
+public class CreateNewIncentivePojo {
 	
 	private String Apttus_Config2__Description__c;
 	private String MeasurementFrequency__c;
@@ -26,16 +26,15 @@ public class CreateNewProgramPojo {
 	private String Apttus_Config2__EffectiveDate__c;
 	private String Apttus_Config2__SubUseType__c;
 	private String Apttus_Config2__Sequence__c;
-	public String programId;
-
-	public String getProgramId() {
-		return programId;
+	public String incentiveId;
+	
+	public String getIncentiveId() {
+		return incentiveId;
 	}
 
-	public void setProgramId(String programId) {
-		this.programId = programId;
+	public void setIncentiveId(String incentiveId) {
+		this.incentiveId = incentiveId;
 	}
-
 	public String getApttus_Config2__Description__c() {
 		return Apttus_Config2__Description__c;
 	}
@@ -180,48 +179,48 @@ public class CreateNewProgramPojo {
 		this.Apttus_Config2__Sequence__c = apttus_Config2__Sequence__c;
 	}
 
-	public String createNewProgramRequest(Map<String, String> testData, CIM cim) throws ApplicationException {
+	public String createNewIncentiveRequest(Map<String, String> testData, CIM cim) throws ApplicationException {
 		String startDate, endDate;
-		CreateNewProgramPojo createNewProgram = new CreateNewProgramPojo();
-		createNewProgram.setName(testData.get("Name"));
+		CreateNewIncentivePojo createNewIncentive = new CreateNewIncentivePojo();
+		createNewIncentive.setName(testData.get("Name"));
 		if (testData.get("Name") != null) {
 			if (testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
-				createNewProgram.setName("Rebates_Auto_Program_" + SFDCHelper.randomNumberGenerator());
+				createNewIncentive.setName("Rebates_Auto_Incentive_" + SFDCHelper.randomNumberGenerator());
 			}
 		}
 		if (testData.get("Apttus_Config2__EffectiveDate__c") != null) {
 			startDate = cim.getCIMDateValue(testData.get("Apttus_Config2__EffectiveDate__c"));
-			createNewProgram.setApttus_Config2__EffectiveDate__c(startDate);
+			createNewIncentive.setApttus_Config2__EffectiveDate__c(startDate);
 		}
 		if (testData.get("Apttus_Config2__ExpirationDate__c") != null) {
 			endDate = cim.getCIMDateValue(testData.get("Apttus_Config2__ExpirationDate__c"));
-			createNewProgram.setApttus_Config2__ExpirationDate__c(endDate);
+			createNewIncentive.setApttus_Config2__ExpirationDate__c(endDate);
 		}		
-		createNewProgram.setCurrency__c(testData.get("Currency__c"));
-		createNewProgram.setApttus_Config2__Description__c("Automation Program");
-		createNewProgram.setApttus_Config2__Status__c("New");
-		createNewProgram.setApttus_Config2__UseType__c(testData.get("Apttus_Config2__UseType__c"));
-		createNewProgram.setApttus_Config2__SubUseType__c(testData.get("Apttus_Config2__SubUseType__c"));
-		createNewProgram.setApttus_Config2__Sequence__c("1");
-		createNewProgram.setCalendar__c(testData.get("Calendar__c"));
-		createNewProgram.setPaymentMethod__c(testData.get("PaymentMethod__c"));
-		createNewProgram.setPayoutFrequency__c(testData.get("PayoutFrequency__c"));
-		createNewProgram.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
-		createNewProgram.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
-		createNewProgram.setProgram_Template_Id__c(testData.get("Program_Template_Id__c"));
-		createNewProgram.setBenefitLevel__c(testData.get("BenefitLevel__c"));
+		createNewIncentive.setCurrency__c(testData.get("Currency__c"));
+		createNewIncentive.setApttus_Config2__Description__c("Automation Program");
+		createNewIncentive.setApttus_Config2__Status__c("New");
+		createNewIncentive.setApttus_Config2__UseType__c(testData.get("Apttus_Config2__UseType__c"));
+		createNewIncentive.setApttus_Config2__SubUseType__c(testData.get("Apttus_Config2__SubUseType__c"));
+		createNewIncentive.setApttus_Config2__Sequence__c("1");
+		createNewIncentive.setCalendar__c(testData.get("Calendar__c"));
+		createNewIncentive.setPaymentMethod__c(testData.get("PaymentMethod__c"));
+		createNewIncentive.setPayoutFrequency__c(testData.get("PayoutFrequency__c"));
+		createNewIncentive.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
+		createNewIncentive.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
+		createNewIncentive.setProgram_Template_Id__c(testData.get("Program_Template_Id__c"));
+		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
 		if (testData.get("BenefitLevel__c") != null) {
 			if (testData.get("BenefitLevel__c").equals("Agreement Account")) {
-				createNewProgram.setAccountId__c(cim.getAccountId(testData.get("AccountName")));
+				createNewIncentive.setAccountId__c(cim.getAccountId(testData.get("AccountName")));
 			}
 		}
-		cim.setProgramData(createNewProgram);
-		return new Gson().toJson(createNewProgram);
+		cim.setIncentiveData(createNewIncentive);
+		return new Gson().toJson(createNewIncentive);
 	}
 }
 
 /*
------------------------------- Create New Program Request -------------------------------{
+------------------------------ Create New Incentive Request -------------------------------{
     "Name": "TEST AUTO MJ_01",
     "Apttus_Config2__EffectiveDate__c": "2020-01-01",
     "Apttus_Config2__ExpirationDate__c": "2020-12-31",

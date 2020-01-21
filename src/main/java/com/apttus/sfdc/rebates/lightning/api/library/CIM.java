@@ -2,9 +2,11 @@ package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import com.apttus.customException.ApplicationException;
+import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
-import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewProgramPojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewIncentivePojo;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -12,25 +14,36 @@ import com.jayway.restassured.response.Response;
 
 public class CIM extends CIMAdmin {
 
-	private Map<String, String> mapData = new HashMap<String, String>();
-	public CreateNewProgramPojo programData = new CreateNewProgramPojo();
-	public CreateNewAccountPojo account = new CreateNewAccountPojo();
 	private String requestString;
 	private Response response;
-
-	public CreateNewProgramPojo getProgramData() {
-		return programData;
+	private Map<String, String> mapData = new HashMap<String, String>();
+	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
+	public CreateNewIncentivePojo getIncentiveData() {
+		return incentiveData;
 	}
 
-	public void setProgramData(CreateNewProgramPojo programData) {
-		this.programData = programData;
+	public void setIncentiveData(CreateNewIncentivePojo incentiveData) {
+		this.incentiveData = incentiveData;
 	}
+
+	public CreateNewAccountPojo account = new CreateNewAccountPojo();
+	public AddParticipantPojo participantsData = new AddParticipantPojo();
+
+	public AddParticipantPojo getParticipantData() {
+		return participantsData;
+	}
+
+	public void setParticipantData(AddParticipantPojo participantData) {
+		this.participantsData = participantData;
+	}
+
+	
 
 	public CIM(String baseURL, SFDCRestUtils sfdcRestUtils) {
 		super(baseURL, sfdcRestUtils);
 	}
 
-	public String getTemplateIdForProgram(Map<String, String> testData) throws ApplicationException {
+	public String getTemplateIdForIncentives(Map<String, String> testData) throws ApplicationException {
 		String templateId = null, status, activeInactiveLinkTemplateId;
 		JsonObject resp;
 		JsonArray records;
@@ -66,31 +79,31 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public String creatNewProgram(Map<String, String> testData) throws ApplicationException {
-		String programId;
+	public String createNewIncentive(Map<String, String> testData) throws ApplicationException {
+		String incentiveId;
 		try {
-			requestString = programData.createNewProgramRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.programURL, requestString);
+			requestString = incentiveData.createNewIncentiveRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.incentiveURL, requestString);
 			validateResponseCode(response, 201);
-			programId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			programData.setProgramId(programId);
-			return programId;
+			incentiveId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			incentiveData.setIncentiveId(incentiveId);
+			return incentiveId;
 		} catch (Exception e) {
-			throw new ApplicationException("Create New Rebates Program API call failed with exception trace : " + e);
+			throw new ApplicationException("Create New Incentive API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response getProgramDetails() throws ApplicationException {
+	public Response getIncentiveDetails() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.getData(urlGenerator.getProgramURL.replace("{ProgramId}", programData.getProgramId()));
+					.getData(urlGenerator.getIncentiveURL.replace("{incentiveId}", incentiveData.getIncentiveId()));
 			validateResponseCode(response, 200);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Get Program Details API call failed with exception trace : " + e);
+			throw new ApplicationException("Get Incentive Details API call failed with exception trace : " + e);
 		}
 	}
-	
+
 	public String getAccountId(String accountName) throws ApplicationException {
 		String accountId;
 		int count;
@@ -124,16 +137,41 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public void updateProgram(Map<String, String> testData) throws ApplicationException {
-		String updateProgram = programData.getProgramId();
+	public void updateIncentive(Map<String, String> testData) throws ApplicationException {
+		String updateincentive = incentiveData.getIncentiveId();
+		
 		try {
-			requestString = programData.createNewProgramRequest(testData, this);
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.programURL + updateProgram,
-					requestString);
+			requestString = incentiveData.createNewIncentiveRequest(testData, this);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.incentiveURL + updateincentive, requestString);
 			validateResponseCode(response, 204);
-			programData.setProgramId(updateProgram);
+			incentiveData.setIncentiveId(updateincentive);
 		} catch (Exception e) {
-			throw new ApplicationException("Update Program details API call failed with exception trace : " + e);
+			throw new ApplicationException("Update Incentive details API call failed with exception trace : " + e);
 		}
 	}
+
+	public void addParticipants(Map<String, String> testData) throws ApplicationException {
+		String participantid;
+		try {
+			requestString = participantsData.addParticipantsRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
+			validateResponseCode(response, 201);
+			participantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			participantsData.setParticipantsId(participantid);
+		} catch (Exception e) {
+			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response getParticipantsDetails() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.getData(
+					urlGenerator.getParticipantsURL.replace("{participantId}", participantsData.getParticipantsId()));
+			validateResponseCode(response, 200);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Get  Participant Details API call failed with exception trace : " + e);
+		}
+	}
+
 }
