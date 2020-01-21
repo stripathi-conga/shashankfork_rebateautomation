@@ -14,6 +14,9 @@
 		"Apttus_Config2__UseType__c": "Rebates 2.0",
 		"Apttus_Config2__SubUseType__c": "Loyalty"
 	},
+	"createNewIncentiveRebates": {
+		"Apttus_Config2__SubUseType__c": "Rebate"
+	},
 	"updateIncentive": {
 		"BenefitLevel__c": "Agreement Account",
 		"AccountName": "Automation_Account_1"
@@ -21,6 +24,6 @@
 	"addParticipants": {
 		"ExpirationDate__c": "endofcurrentmonth",
 		"EffectiveDate__c": "today",
-		"AccountName":"Automation_Participant_Account_1"
+		"AccountName": "Automation_Participant_Account_1"
 	}
 }

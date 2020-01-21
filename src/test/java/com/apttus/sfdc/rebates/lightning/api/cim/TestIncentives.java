@@ -43,9 +43,10 @@ public class TestIncentives {
 	@Test(description = "TC345-Verify the creation of new Incentive", groups = { "Smoke", "API" })
 	public void createNewLoyaltyIncentive() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
-		String programTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", programTemplateId);
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveRebates");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
+		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
@@ -54,6 +55,8 @@ public class TestIncentives {
 	@Test(description = "TC420-Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
 	public void updateIncentivePayee() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveRebates");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
 		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
