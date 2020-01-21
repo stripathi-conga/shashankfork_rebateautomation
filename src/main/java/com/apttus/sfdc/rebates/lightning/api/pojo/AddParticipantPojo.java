@@ -26,32 +26,32 @@ public class AddParticipantPojo {
 		return ExpirationDate__c;
 	}
 
-	public void setExpirationDate__c(String ExpirationDate__c) {
-		this.ExpirationDate__c = ExpirationDate__c;
+	public void setExpirationDate__c(String expirationDate__c) {
+		this.ExpirationDate__c = expirationDate__c;
 	}
 
 	public String getAccount__c() {
 		return Account__c;
 	}
 
-	public void setAccount__c(String Account__c) {
-		this.Account__c = Account__c;
+	public void setAccount__c(String account__c) {
+		this.Account__c = account__c;
 	}
 
 	public String getIncentive__c() {
 		return Incentive__c;
 	}
 
-	public void setIncentive__c(String Incentive__c) {
-		this.Incentive__c = Incentive__c;
+	public void setIncentive__c(String incentive__c) {
+		this.Incentive__c = incentive__c;
 	}
 
 	public String getEffectiveDate__c() {
 		return EffectiveDate__c;
 	}
 
-	public void setEffectiveDate__c(String EffectiveDate__c) {
-		this.EffectiveDate__c = EffectiveDate__c;
+	public void setEffectiveDate__c(String effectiveDate__c) {
+		this.EffectiveDate__c = effectiveDate__c;
 	}
 
 	public String addParticipantsRequest(Map<String, String> testData, CIM cim)
