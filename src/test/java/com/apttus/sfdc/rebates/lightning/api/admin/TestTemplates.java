@@ -251,7 +251,7 @@ public class TestTemplates extends UnifiedFramework {
 				RebatesConstants.messageMandatoryTemplatefields);
 	}
 	@Test(description = "TC413-Unable to Delete Inactivated Template", groups = { "Regression", "API", "High" })
-	public void verifyInActiveTemplateDelete() throws Exception {
+	public void verifyInactiveTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
@@ -278,10 +278,7 @@ public class TestTemplates extends UnifiedFramework {
 		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
-		response = cimAdmin.deleteActiveInactiveTemplate();
-		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
-				RebatesConstants.messageDeleteActiveInactiveTemplate);
-		
+				
 		cimAdmin.deactivateTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.deleteActiveInactiveTemplate();
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
