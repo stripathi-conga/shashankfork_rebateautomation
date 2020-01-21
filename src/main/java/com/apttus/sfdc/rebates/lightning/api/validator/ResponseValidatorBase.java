@@ -93,11 +93,11 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Apttus_Config2__ExpirationDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__ExpirationDate__c(), "Validate Incentive End Date");
 		softassert.assertEquals(records.get("BenefitLevel__c").getAsString(), testData.get("BenefitLevel__c"),
-				"Validate Program BenefitLevel");
+				"Validate Incentive BenefitLevel");
 		softassert.assertEquals(records.get("MeasurementLevel__c").getAsString(), testData.get("MeasurementLevel__c"),
-				"Validate Program MeasurementLevel");
+				"Validate Incentive MeasurementLevel");
 		softassert.assertEquals(records.get("Currency__c").getAsString(), testData.get("Currency__c"),
-				"Validate Program Currency");
+				"Validate Incentive Currency");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
 		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(), "Validate Incentive Name");
 		softassert.assertEquals(records.get("Apttus_Config2__UseType__c").getAsString(),
@@ -168,7 +168,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
 				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
-				"Validate Participant Name");
+				"Validate Participant Name");		
 		softassert.assertAll();
 	}
 }

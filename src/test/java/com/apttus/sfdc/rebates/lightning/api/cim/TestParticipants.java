@@ -44,11 +44,11 @@ public class TestParticipants {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "TC 377 Verify adding a participant to a program", groups = { "Regression", "API", "High" })
+	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
 	public void addParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
-		String programTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", programTemplateId);
+		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
+		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);

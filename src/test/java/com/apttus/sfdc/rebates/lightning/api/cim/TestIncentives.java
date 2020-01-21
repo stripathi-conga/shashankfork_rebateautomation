@@ -40,7 +40,7 @@ public class TestIncentives {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "TC345-Verify the creation of New Rebate Program", groups = { "Smoke", "API" })
+	@Test(description = "TC345-Verify the creation of new Incentive", groups = { "Smoke", "API" })
 	public void createNewLoyaltyIncentive() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
@@ -51,11 +51,11 @@ public class TestIncentives {
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
 
-	@Test(description = "TC420-Update Program Payee field on Edit page", groups = { "Regression", "High", "API" })
+	@Test(description = "TC420-Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
 	public void updateIncentivePayee() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
-		String programTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", programTemplateId);
+		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
+		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentive");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);

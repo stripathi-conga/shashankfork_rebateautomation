@@ -185,7 +185,7 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setName(testData.get("Name"));
 		if (testData.get("Name") != null) {
 			if (testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
-				createNewIncentive.setName("Rebates_Auto_Program_" + SFDCHelper.randomNumberGenerator());
+				createNewIncentive.setName("Rebates_Auto_Incentive_" + SFDCHelper.randomNumberGenerator());
 			}
 		}
 		if (testData.get("Apttus_Config2__EffectiveDate__c") != null) {
@@ -220,7 +220,7 @@ public class CreateNewIncentivePojo {
 }
 
 /*
------------------------------- Create New Program Request -------------------------------{
+------------------------------ Create New Incentive Request -------------------------------{
     "Name": "TEST AUTO MJ_01",
     "Apttus_Config2__EffectiveDate__c": "2020-01-01",
     "Apttus_Config2__ExpirationDate__c": "2020-12-31",
