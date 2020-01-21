@@ -421,12 +421,12 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response deactivateTemplate() throws ApplicationException {
+	public Response deactivateTemplate(int resposecode) throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
-			validateResponseCode(response, 204);
+			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Deactivate Template API call failed with exception trace : " + e);
