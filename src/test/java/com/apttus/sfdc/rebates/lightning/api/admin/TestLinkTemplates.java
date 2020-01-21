@@ -286,7 +286,7 @@ public class TestLinkTemplates {
 	}
 
 	@Test(description = "TC-462 Deactivation of Active template association automatically when Template is deactivated", groups = {
-			"Regression1", "Medium", "API" })
+			"Regression", "Medium", "API" })
 	public void deactivateTemplateOfActivateLinkTemplate() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
