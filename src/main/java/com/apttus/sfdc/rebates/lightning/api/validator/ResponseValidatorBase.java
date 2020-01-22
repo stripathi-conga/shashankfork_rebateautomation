@@ -172,5 +172,6 @@ public class ResponseValidatorBase {
 				"Validate Account Name");
 		softassert.assertEquals(records.get("Incentive__c").getAsString(), response.getBody().asString(),
 				"Validate Incentive Id");
+		softassert.assertAll();
 	}
 }
