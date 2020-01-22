@@ -251,7 +251,7 @@ public class TestTemplates extends UnifiedFramework {
 				RebatesConstants.messageMandatoryTemplatefields);
 	}
 
-	@Test(description = "TC413-Unable to Delete Inactivated Template", groups = { "Regression", "API", "High" })
+	@Test(description = "TC413-Unable to Delete Inactivated Template", groups = { "Regression", "API", "Medium" })
 	public void verifyInactiveTemplateDelete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
