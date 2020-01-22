@@ -89,7 +89,7 @@ public class ResponseValidatorBase {
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Apttus_Config2__EffectiveDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__EffectiveDate__c(), "Validate Incentive Start Date");
-		
+
 		softassert.assertEquals(records.get("Apttus_Config2__ExpirationDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__ExpirationDate__c(), "Validate Incentive End Date");
 		softassert.assertEquals(records.get("BenefitLevel__c").getAsString(), testData.get("BenefitLevel__c"),
@@ -98,19 +98,21 @@ public class ResponseValidatorBase {
 				"Validate Incentive MeasurementLevel");
 		softassert.assertEquals(records.get("Currency__c").getAsString(), testData.get("Currency__c"),
 				"Validate Incentive Currency");
-		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
-		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(), "Validate Incentive Name");
+		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(),
+				"Validate Incentive Id");
+		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(),
+				"Validate Incentive Name");
 		softassert.assertEquals(records.get("Apttus_Config2__UseType__c").getAsString(),
 				testData.get("Apttus_Config2__UseType__c"), "Validate Program Type");
 		softassert.assertEquals(records.get("Apttus_Config2__SubUseType__c").getAsString(),
 				testData.get("Apttus_Config2__SubUseType__c"), "Validate Program SubType");
 		softassert.assertEquals(records.get("Program_Template_Id__c").getAsString(),
 				cim.incentiveData.getProgram_Template_Id__c(), "Validate Program TemplateId");
-		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
+		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(),
+				"Validate Incentive Id");
 		softassert.assertAll();
-		 
-	}
 
+	}
 
 	public void validateTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
 		softassert = new SoftAssert();
@@ -154,12 +156,10 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateParticipantsDetails(Map<String, String> testData, Response response,
-			CIM cim)
-			throws ApplicationException {
+	public void validateParticipantsDetails(Map<String, String> testData, Response response, CIM cim,
+			String incentiveId) throws ApplicationException {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1,
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
@@ -169,11 +169,9 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
 				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
-				"Validate Participant Name");			
-		softassert.assertAll();
-		softassert = new SoftAssert();
-		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
-		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(), "Validate Incentive Name");
-		
+				"Validate Incentive Participant Id");
+		softassert.assertEquals(records.get("AccountNumber__c").getAsString(), cim.participantsData.getIncentive__c(),
+				"Validate Account Name");
+		softassert.assertEquals(records.get("Incentive__c").getAsString(), incentiveId, "Validate Account");
 	}
 }
