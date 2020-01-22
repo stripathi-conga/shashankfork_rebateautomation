@@ -49,13 +49,13 @@ public class TestParticipants {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
 		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
-		String incentiveId=cim.createNewIncentive(jsonData);
+		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		cim.addParticipants(jsonData);
 		response = cim.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, cim,incentiveId);
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 	}
 }
