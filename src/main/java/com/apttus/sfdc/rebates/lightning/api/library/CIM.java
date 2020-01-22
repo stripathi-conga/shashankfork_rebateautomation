@@ -57,6 +57,7 @@ public class CIM extends CIMAdmin {
 			count = resp.get("totalSize").getAsInt();
 			records = resp.getAsJsonArray("records");
 			if (count > 0) {
+				// Get TemplateId from active linkTemplate
 				for (int i = 0; i < count; i++) {
 					status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
 					if (status.equals("Active")) {
@@ -65,11 +66,13 @@ public class CIM extends CIMAdmin {
 					}
 				}
 				if (templateId == null) {
+					// Get Inactive linkTemplate
 					for (int i = 0; i < count; i++) {
 						status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
 						if (status.equals("Inactive")) {
 							inactiveLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
 							linkTemplatesData.setLinkTemplateId(inactiveLinkTemplateId);
+							// Active  the Inactive linkTemplate and get the TemplateId
 							activateLinkTemplate();
 							templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
 							break;
