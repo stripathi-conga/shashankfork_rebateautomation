@@ -58,6 +58,10 @@
 		"Program_Type__c": "Rebates 2.0",
 		"Program_Sub_Type__c": "Sales"
 	},
+	"createNewLinkTemplateSubTypePriceProgramAPI": {
+		"Program_Type__c": "Rebates 2.0",
+		"Program_Sub_Type__c": "Price Program"
+	},
 	"updateTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",

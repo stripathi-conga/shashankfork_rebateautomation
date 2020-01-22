@@ -7,6 +7,7 @@ import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewIncentivePojo;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -44,7 +45,7 @@ public class CIM extends CIMAdmin {
 	}
 
 	public String getTemplateIdForIncentives(Map<String, String> testData) throws ApplicationException {
-		String templateId = null, status, activeInactiveLinkTemplateId;
+		String templateId = null, status, inactiveLinkTemplateId;
 		JsonObject resp;
 		JsonArray records;
 		int count;
@@ -56,18 +57,26 @@ public class CIM extends CIMAdmin {
 			count = resp.get("totalSize").getAsInt();
 			records = resp.getAsJsonArray("records");
 			if (count > 0) {
+				// Get TemplateId from active linkTemplate
 				for (int i = 0; i < count; i++) {
 					status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
 					if (status.equals("Active")) {
 						templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
 						break;
 					}
-					if (status.equals("Inactive")) {
-						activeInactiveLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
-						linkTemplatesData.setLinkTemplateId(activeInactiveLinkTemplateId);
-						activateLinkTemplate();
-						templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
-						break;
+				}
+				if (templateId == null) {
+					// Get Inactive linkTemplate
+					for (int i = 0; i < count; i++) {
+						status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
+						if (status.equals("Inactive")) {
+							inactiveLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
+							linkTemplatesData.setLinkTemplateId(inactiveLinkTemplateId);
+							// Active  the Inactive linkTemplate and get the TemplateId
+							activateLinkTemplate();
+							templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
+							break;
+						}
 					}
 				}
 			}
@@ -84,7 +93,7 @@ public class CIM extends CIMAdmin {
 		try {
 			requestString = incentiveData.createNewIncentiveRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.incentiveURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			incentiveId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			incentiveData.setIncentiveId(incentiveId);
 			return incentiveId;
@@ -97,7 +106,7 @@ public class CIM extends CIMAdmin {
 		try {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getIncentiveURL.replace("{incentiveId}", incentiveData.getIncentiveId()));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Incentive Details API call failed with exception trace : " + e);
@@ -109,7 +118,7 @@ public class CIM extends CIMAdmin {
 		int count;
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getAccountURL.replace("{AccountName}", accountName));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 			count = resp.get("totalSize").getAsInt();
 			if (count > 0) {
@@ -129,7 +138,7 @@ public class CIM extends CIMAdmin {
 		try {
 			requestString = account.createNewAccountRequest(accountName);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.createAccountURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			accountId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return accountId;
 		} catch (Exception e) {
@@ -143,7 +152,7 @@ public class CIM extends CIMAdmin {
 		try {
 			requestString = incentiveData.createNewIncentiveRequest(testData, this);
 			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.incentiveURL + updateincentive, requestString);
-			validateResponseCode(response, 204);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
 			incentiveData.setIncentiveId(updateincentive);
 		} catch (Exception e) {
 			throw new ApplicationException("Update Incentive details API call failed with exception trace : " + e);
@@ -155,7 +164,7 @@ public class CIM extends CIMAdmin {
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			participantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			participantsData.setParticipantsId(participantid);
 		} catch (Exception e) {
@@ -167,7 +176,7 @@ public class CIM extends CIMAdmin {
 		try {
 			response = sfdcRestUtils.getData(
 					urlGenerator.getParticipantsURL.replace("{participantId}", participantsData.getParticipantsId()));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get  Participant Details API call failed with exception trace : " + e);
