@@ -154,7 +154,7 @@ public class TestLinkTemplates {
 		responseValidator.validateDeleteSuccess(response);
 	}
 	
-	@Test(description = "TC-410 Unable to Delete Link Template which is in Active or Inactive Status", groups = {
+	@Test(description = "TC-410 Unable to Delete Link Template which is in Active or Inactive Status from spillover menu", groups = {
 			"Regression", "Medium", "API" })
 	public void deleteActivateLinkTemplate() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -201,5 +201,158 @@ public class TestLinkTemplates {
 		response = cimAdmin.deleteLinkTemplate(RebatesConstants.responseBadRequest);
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageDeleteActiveInactiveLinkTemplate);
+	}
+
+	@Test(description = "TC-284 Verify the linking of active templates when the link status of the previously linked templates is Draft", groups = {
+			"Regression", "Medium", "API" })
+	public void addInactiveLinkTemplateAgain() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
+		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewLinkTemplateSubTypePriceProgramAPI");
+		response = cimAdmin.createLinkTemplates(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
+		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewLinkTemplateSubTypePriceProgramAPI");
+		response = cimAdmin.createLinkTemplates(jsonData);
+
+		cimAdmin.activateLinkTemplate();
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
+
+		cimAdmin.deactivateLinkTemplate();
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.deactivate);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
+		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewLinkTemplateSubTypePriceProgramAPI");
+		response = cimAdmin.createLinkTemplates(jsonData);
+		cimAdmin.activateLinkTemplate();
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
+
+		response = cimAdmin.draftLinkTemplateNegative();
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageChangeLinkTemplateStatusToDraft);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewLinkTemplateSubTypePriceProgramAPI");
+		response = cimAdmin.createLinkTemplatesNegative(jsonData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageActiveMappingExists);
+
+		cimAdmin.deactivateLinkTemplate();
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.deactivate);
+	}
+
+	@Test(description = "TC-462 Deactivation of Active template association automatically when Template is deactivated", groups = {
+			"Regression", "Medium", "API" })
+	public void deactivateTemplateOfActivateLinkTemplate() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateGetTemplate(response, cimAdmin);
+		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
+		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewLinkTemplateSubTypePriceProgramAPI");
+		response = cimAdmin.createLinkTemplates(jsonData);
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
+
+		cimAdmin.deactivateTemplate();
+		response = cimAdmin.getTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.deactivate);
+
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
+
+		response = cimAdmin.deleteLinkTemplate(RebatesConstants.responseNocontent);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateGetTemplate(response, cimAdmin);
+		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
+		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"createNewLinkTemplateSubTypePriceProgramAPI");
+		response = cimAdmin.createLinkTemplates(jsonData);
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
+
+		cimAdmin.activateLinkTemplate();
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
+
+		cimAdmin.deactivateTemplate();
+		response = cimAdmin.getTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.deactivate);
+
+		response = cimAdmin.getLinkTemplatesViaId();
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.deactivate);
 	}
 }

@@ -82,7 +82,7 @@ public class CIMAdmin {
 		try {
 			requestString = dataSourceData.createDataSourceRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			dataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			dataSourceData.setDataSourceId(dataSourceId);
 			return response;
@@ -95,7 +95,7 @@ public class CIMAdmin {
 		try {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getDataSourceURL.replace("{DataSourceId}", dataSourceData.getDataSourceId()));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get DataSource API call failed with exception trace : " + e);
@@ -106,7 +106,7 @@ public class CIMAdmin {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.dataSourceURL + dataSourceData.getDataSourceId());
-			validateResponseCode(response, 204);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete DataSource API call failed with exception trace : " + e);
 		}
@@ -127,7 +127,7 @@ public class CIMAdmin {
 		try {
 			requestString = createNewFieldExpressionId.getExpressionIdRequest(testData);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionIdURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			fieldExpressionId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return fieldExpressionId;
 		} catch (Exception e) {
@@ -140,7 +140,7 @@ public class CIMAdmin {
 		try {
 			requestString = createCalcFormulaId.getCalculationFormulaIdRequest(testData);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.calcFormulaIdURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			calcFormulaId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			return calcFormulaId;
 		} catch (Exception e) {
@@ -154,7 +154,7 @@ public class CIMAdmin {
 			requestString = linkCalcFormula.linkCalculationFormulaPojoRequest(testData, calculationFormulaId,
 					expressionId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkCalcFormulaIdURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 		} catch (Exception e) {
 			throw new ApplicationException(
 					"Link CalcFormulaId To ExpressionId API call failed with exception trace : " + e);
@@ -165,7 +165,7 @@ public class CIMAdmin {
 		try {
 			requestString = linkDatasource.linkDatasourceIdRequest(calculationFormulaId, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkDatasourceIdURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 		} catch (Exception e) {
 			throw new ApplicationException(
 					"Link DatasourceId To CalcFormulaId API call failed with exception trace : " + e);
@@ -176,7 +176,7 @@ public class CIMAdmin {
 		try {
 			requestString = templateData.createTemplateRequest(testData, this, qnbLayoutId);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.templateURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			templateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			templateData.setTemplateId(templateId);
 			return response;
@@ -189,7 +189,7 @@ public class CIMAdmin {
 		try {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getTemplateURL.replace("{TemplateId}", templateData.getTemplateId()));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Template API call failed with exception trace : " + e);
@@ -200,7 +200,7 @@ public class CIMAdmin {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
-			validateResponseCode(response, 204);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
 		}
@@ -210,7 +210,7 @@ public class CIMAdmin {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.templateURL + templateData.getTemplateId());
-			validateResponseCode(response, 400);
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Failed to verify the deletion of Active/Inactive template : " + e);
@@ -221,7 +221,7 @@ public class CIMAdmin {
 		try {
 			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapTemplateToDatasourceURL, requestString);
-			validateResponseCode(response, 201);
+			validateResponseCode(response, RebatesConstants.responseCreated);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
@@ -243,24 +243,21 @@ public class CIMAdmin {
 
 	public Response createLinkTemplates(Map<String, String> testData) throws ApplicationException {
 		response = getLinkTemplatesViaProgramType(testData);
-		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		int count = resp.get("totalSize").getAsInt();
-		String linkTemplateId = getActiveInactiveTemplateIdFromGetLinkTemplates(response, testData);
-		if (count == 0 || linkTemplateId == null) {
-			try {
-				requestString = linkTemplatesData.createLinkTemplateRequest(testData, this);
-				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkTemplatesURL, requestString);
-				validateResponseCode(response, 201);
-				linkTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id")
-						.getAsString();
-				linkTemplatesData.setLinkTemplateId(linkTemplateId);
-				response = getLinkTemplatesViaId();
-				return response;
-			} catch (Exception e) {
-				throw new ApplicationException("Create New Link Templates API call failed with exception trace : " + e);
-			}
+		String linkTemplateId = getActiveTemplateIdFromGetLinkTemplates(response, testData);
+		if (!(linkTemplateId == null)) {
+			deactivateLinkTemplate();
 		}
-		return response;
+		try {
+			requestString = linkTemplatesData.createLinkTemplateRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkTemplatesURL, requestString);
+			validateResponseCode(response, RebatesConstants.responseCreated);
+			linkTemplateId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			linkTemplatesData.setLinkTemplateId(linkTemplateId);
+			response = getLinkTemplatesViaId();
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Create New Link Templates API call failed with exception trace : " + e);
+		}
 	}
 
 	public Response getLinkTemplatesViaId() throws ApplicationException {
@@ -268,7 +265,7 @@ public class CIMAdmin {
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIDURL.replace("{LinkTemplateId}",
 					linkTemplatesData.getLinkTemplateId()));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			linkTemplateName = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records")
 					.get(0).getAsJsonObject().get("Name").getAsString();
 			linkTemplatesData.setLinkTemplateName(linkTemplateName);
@@ -283,7 +280,7 @@ public class CIMAdmin {
 			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaProgramTypeURL
 					.replace("{ProgramType}", testData.get("Program_Type__c"))
 					.replace("{ProgramSubType}", testData.get("Program_Sub_Type__c")));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
@@ -292,7 +289,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public String getActiveInactiveTemplateIdFromGetLinkTemplates(Response response, Map<String, String> testData)
+	public String getActiveTemplateIdFromGetLinkTemplates(Response response, Map<String, String> testData)
 			throws ApplicationException {
 		String activeInactiveLinkTemplateId = null, status;
 		JsonObject resp;
@@ -304,7 +301,7 @@ public class CIMAdmin {
 			records = resp.getAsJsonArray("records");
 			for (int i = 0; i < count; i++) {
 				status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
-				if (status.equals("Active") || status.equals("Inactive")) {
+				if (status.equals("Active")) {
 					activeInactiveLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
 					linkTemplatesData.setLinkTemplateId(activeInactiveLinkTemplateId);
 					break;
@@ -313,7 +310,7 @@ public class CIMAdmin {
 			return activeInactiveLinkTemplateId;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"No Active/Inactive LinkTemplate Exists for ProgramType : " + testData.get("Program_Type__c")
+					"No Active LinkTemplate Exists for ProgramType : " + testData.get("Program_Type__c")
 							+ " and ProgramSubType : " + testData.get("Program_Sub_Type__c") + ". " + e);
 		}
 	}
@@ -328,7 +325,7 @@ public class CIMAdmin {
 				requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 				response = sfdcRestUtils.patchWithoutAppUrl(
 						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
-				validateResponseCode(response, 204);
+				validateResponseCode(response, RebatesConstants.responseNocontent);
 			}
 			return response;
 		} catch (Exception e) {
@@ -346,7 +343,7 @@ public class CIMAdmin {
 				requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
 				response = sfdcRestUtils.patchWithoutAppUrl(
 						urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
-				validateResponseCode(response, 204);
+				validateResponseCode(response, RebatesConstants.responseNocontent);
 			}
 			return response;
 		} catch (Exception e) {
@@ -404,7 +401,7 @@ public class CIMAdmin {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
 							.replace("{QnBLayoutTier}", testData.get("tier__c")));
-			validateResponseCode(response, 200);
+			validateResponseCode(response, RebatesConstants.responseOk);
 			responsebody = parser.parse(response.getBody().asString()).getAsJsonObject();
 			recordsize = responsebody.get("totalSize").getAsInt();
 			if (recordsize > 0) {
@@ -412,7 +409,7 @@ public class CIMAdmin {
 			} else {
 				requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData);
 				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutIdURL, requestString);
-				validateResponseCode(response, 201);
+				validateResponseCode(response, RebatesConstants.responseCreated);
 				qnblayoutId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			}
 			return qnblayoutId;
@@ -421,12 +418,12 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response deactivateTemplate(int resposecode) throws ApplicationException {
+	public Response deactivateTemplate() throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
-			validateResponseCode(response, resposecode);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Deactivate Template API call failed with exception trace : " + e);
@@ -458,5 +455,33 @@ public class CIMAdmin {
 			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
 		}
 		return response;
+	}
+
+	public Response draftLinkTemplateNegative() throws ApplicationException {
+		String currentLinkTemplateId = linkTemplatesData.getLinkTemplateId();
+		try {
+			requestString = "{\"Status__c\": \"" + RebatesConstants.draft + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(
+					urlGenerator.linkTemplatesURL + linkTemplatesData.getLinkTemplateId(), requestString);
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			linkTemplatesData.setLinkTemplateId(currentLinkTemplateId);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException(
+					"Link Template Status should not be changed to Draft from Active/Inactive, exception trace : " + e);
+		}
+	}
+
+	public Response createLinkTemplatesNegative(Map<String, String> testData) throws ApplicationException {
+		String currentLinkTemplateId = linkTemplatesData.getLinkTemplateId();
+		try {
+			requestString = linkTemplatesData.createLinkTemplateRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkTemplatesURL, requestString);
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			linkTemplatesData.setLinkTemplateId(currentLinkTemplateId);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Create New Link Templates API call did not fail for Negative Scenario with exception trace : " + e);
+		}
 	}
 }

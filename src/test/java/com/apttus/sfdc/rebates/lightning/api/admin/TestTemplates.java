@@ -172,7 +172,7 @@ public class TestTemplates extends UnifiedFramework {
 		Response editresponse = cimAdmin.editTemplate(jsonData, qnbLayoutId, RebatesConstants.responseBadRequest);
 		responseValidator.validateFailureResponse(editresponse, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageUpdateActiveInactiveTemplate);
-		cimAdmin.deactivateTemplate(RebatesConstants.responseNocontent);
+		cimAdmin.deactivateTemplate();
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.deactivate);
 	}
@@ -250,6 +250,7 @@ public class TestTemplates extends UnifiedFramework {
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageMandatoryTemplatefields);
 	}
+
 	@Test(description = "TC413-Unable to Delete Inactivated Template", groups = { "Regression", "API", "High" })
 	public void verifyInactiveTemplateDelete() throws Exception {
 
@@ -279,7 +280,7 @@ public class TestTemplates extends UnifiedFramework {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 				
-		cimAdmin.deactivateTemplate(RebatesConstants.responseNocontent);
+		cimAdmin.deactivateTemplate();
 		response = cimAdmin.deleteActiveInactiveTemplate();
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageDeleteActiveInactiveTemplate);

@@ -154,7 +154,8 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateParticipantsDetails(Map<String, String> testData, Response response, CIM cim)
+	public void validateParticipantsDetails(Map<String, String> testData, Response response,
+			CIM cim)
 			throws ApplicationException {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -168,10 +169,11 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
 				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
-				"Validate Participant Name");	
-		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
-				"Validate Participant Name");
-		
+				"Validate Participant Name");			
 		softassert.assertAll();
+		softassert = new SoftAssert();
+		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
+		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(), "Validate Incentive Name");
+		
 	}
 }
