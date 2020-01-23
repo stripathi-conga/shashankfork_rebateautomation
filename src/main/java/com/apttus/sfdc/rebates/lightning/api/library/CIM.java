@@ -19,6 +19,7 @@ public class CIM extends CIMAdmin {
 	private Response response;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
+	
 	public CreateNewIncentivePojo getIncentiveData() {
 		return incentiveData;
 	}
@@ -36,9 +37,7 @@ public class CIM extends CIMAdmin {
 
 	public void setParticipantData(AddParticipantPojo participantData) {
 		this.participantsData = participantData;
-	}
-
-	
+	}	
 
 	public CIM(String baseURL, SFDCRestUtils sfdcRestUtils) {
 		super(baseURL, sfdcRestUtils);
