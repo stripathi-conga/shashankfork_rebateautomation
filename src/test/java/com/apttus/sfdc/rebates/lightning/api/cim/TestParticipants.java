@@ -58,7 +58,7 @@ public class TestParticipants {
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 	}
-	@Test(description = "Verify that the user is able to delete a participant added from the grid", groups = {
+	@Test(description = "TC-384 Verify that the user is able to delete a participant added from the grid", groups = {
 			"Regression", "API", "Medium" })
 	public void deleteParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
