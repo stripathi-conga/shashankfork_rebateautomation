@@ -183,4 +183,13 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
+	public void deleteParticipants() throws ApplicationException {
+		try {
+			response = sfdcRestUtils
+					.deleteWithoutPayload(urlGenerator.addParticipantsURL + participantsData.getParticipantsId());
+			validateResponseCode(response, RebatesConstants.responseNocontent);
+		} catch (Exception e) {
+			throw new ApplicationException("Delete Template API call failed with exception trace : " + e);
+		}
+	}
 }

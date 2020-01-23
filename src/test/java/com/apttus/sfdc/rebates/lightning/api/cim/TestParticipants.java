@@ -58,4 +58,22 @@ public class TestParticipants {
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 	}
+	@Test(description = "Verify that the user is able to delete a participant added from the grid", groups = {
+			"Regression", "API", "Medium" })
+	public void deleteParticipant() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
+		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
+			
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+		cim.deleteParticipants();
+		response = cim.getParticipantsDetails();
+		responseValidator.validateDeleteSuccess(response);
+	}
 }
