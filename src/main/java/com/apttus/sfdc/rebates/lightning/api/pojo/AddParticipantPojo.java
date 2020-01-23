@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
 public class AddParticipantPojo {
@@ -67,7 +68,9 @@ public class AddParticipantPojo {
 			endDate = cim.getCIMDateValue(testData.get("ExpirationDate__c"));
 			addParticipantpojo.setExpirationDate__c(endDate);
 		}
-		addParticipantpojo.setAccount__c(cim.getAccountId(testData.get("AccountName")));
+			
+		addParticipantpojo.setAccount__c(cim.getAccountId(testData.get("AccountName")+SFDCHelper.randomNumberGenerator()));
+		 
 		addParticipantpojo.setIncentive__c(cim.getIncentiveData().incentiveId);
 		cim.setParticipantData(addParticipantpojo);
 		return new Gson().toJson(addParticipantpojo);

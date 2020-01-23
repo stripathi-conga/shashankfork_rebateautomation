@@ -66,14 +66,26 @@ public class TestParticipants {
 		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
+		
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
-			
-		cim.addParticipants(jsonData);
+		
+		 Map<String, String> jsonDataParticipant1 = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
+		cim.addParticipants(jsonDataParticipant1);
+		
+		 Map<String, String> jsonDataParticipant2=efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
+		cim.addParticipants(jsonDataParticipant2);
+		
+		 Map<String, String> jsonData3=efficacies.readJsonElement("CIMTemplateData.json", "addParticipantThree");
+		cim.addParticipants(jsonData3);
+		
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+		
 		cim.deleteParticipants();
 		response = cim.getParticipantsDetails();
-		responseValidator.validateDeleteSuccess(response);
+		
+		response=cim.getParticipantIdViaIncentiveId();
+		responseValidator.validateAvailableParticipant(jsonData, response, cim,jsonDataParticipant1,jsonDataParticipant2);
+		
 	}
 }

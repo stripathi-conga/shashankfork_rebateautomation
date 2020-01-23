@@ -2,7 +2,7 @@
 	"createNewIncentive": {
 		"Name": "{Random}",
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
-		"Apttus_Config2__ExpirationDate__c": "endofcurrentmonth",
+		"Apttus_Config2__ExpirationDate__c": "endofcurrentyear",
 		"Currency__c": "Dollar",
 		"Apttus_Config2__Description__c": "Automation Program",
 		"Calendar__c": "Gregorian",
@@ -25,5 +25,15 @@
 		"ExpirationDate__c": "endofcurrentmonth",
 		"EffectiveDate__c": "today",
 		"AccountName": "Automation_Participant_Account_1"
+	},
+	"addParticipantTwo": {
+		"ExpirationDate__c": "endofcurrentyear",
+		"EffectiveDate__c": "today",
+		"AccountName": "Automation_Participant_Account_2"
+	},
+	"addParticipantThree": {
+		"ExpirationDate__c": "endofnextmonth",
+		"EffectiveDate__c": "today",
+		"AccountName": "Automation_Participant_Account_3"
 	}
 }

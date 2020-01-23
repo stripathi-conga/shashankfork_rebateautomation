@@ -159,7 +159,7 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public void addParticipants(Map<String, String> testData) throws ApplicationException {
+	public Response addParticipants(Map<String, String> testData) throws ApplicationException {
 		String participantid;
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
@@ -167,6 +167,8 @@ public class CIM extends CIMAdmin {
 			validateResponseCode(response, RebatesConstants.responseCreated);
 			participantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			participantsData.setParticipantsId(participantid);
+			return response;
+			
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
 		}
@@ -191,5 +193,18 @@ public class CIM extends CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Delete Participant API call failed with exception trace : " + e);
 		}
+	}
+
+	public Response getParticipantIdViaIncentiveId() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.getData(
+					urlGenerator.getParticipantsViaURL.replace("{IncentiveId}", participantsData.getIncentive__c()));
+			validateResponseCode(response, RebatesConstants.responseOk);
+						
+		} catch (Exception e) {
+			throw new ApplicationException("Get Participant Details API call failed with exception trace : " + e);
+		}
+		return response;
+		
 	}
 }

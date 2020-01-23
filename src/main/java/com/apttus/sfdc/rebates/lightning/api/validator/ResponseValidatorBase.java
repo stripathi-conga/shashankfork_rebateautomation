@@ -168,10 +168,24 @@ public class ResponseValidatorBase {
 				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
 				"Validate Incentive Participant Id");
-
 		softassert.assertEquals(records.get("Incentive__c").getAsString(), cim.incentiveData.getIncentiveId(),
 				"Validate Incentive Id");
-
 		softassert.assertAll();
+	}
+
+	public void validateAvailableParticipant(Map<String, String> testData, Response response, CIM cim,Map<String, String> testDataParticipant1,Map<String, String> testDataParticipant2) {
+		
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 2,
+				"Validate response size, Response does not have single record");
+		JsonObject recordsParticipant1 = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		softassert.assertEquals(recordsParticipant1.get("Id").getAsString(), testDataParticipant1.get("AccountName"),
+				"Validate Incentive Participant Id");
+		JsonObject recordsParticipant2 = resp.getAsJsonArray("records").get(1).getAsJsonObject();
+		softassert.assertEquals(recordsParticipant2.get("Id").getAsString(), testDataParticipant2.get("AccountName"),
+				"Validate Incentive Participant Id");
+
 	}
 }
