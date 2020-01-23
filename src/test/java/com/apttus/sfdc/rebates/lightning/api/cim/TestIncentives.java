@@ -63,7 +63,7 @@ public class TestIncentives {
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
 	
-	@Test(description = "TC-419 Payee field values new page", groups = { "Regression1", "Medium", "API" })
+	@Test(description = "TC-419 Payee field values new page", groups = { "Regression", "Medium", "API" })
 	public void addIncentiveWithDifferentPayeeValues() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
