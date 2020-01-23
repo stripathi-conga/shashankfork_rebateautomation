@@ -168,10 +168,10 @@ public class ResponseValidatorBase {
 				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
 				"Validate Incentive Participant Id");
-		softassert.assertEquals(records.get("AccountNumber__c").getAsString(), cim.participantsData.getIncentive__c(),
-				"Validate Account Name");
-		softassert.assertEquals(records.get("Incentive__c").getAsString(), response.getBody().asString(),
+
+		softassert.assertEquals(records.get("Incentive__c").getAsString(), cim.incentiveData.getIncentiveId(),
 				"Validate Incentive Id");
+
 		softassert.assertAll();
 	}
 }
