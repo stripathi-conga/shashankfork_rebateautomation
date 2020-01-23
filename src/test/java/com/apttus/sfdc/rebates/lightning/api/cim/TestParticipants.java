@@ -2,12 +2,10 @@ package com.apttus.sfdc.rebates.lightning.api.cim;
 
 import java.util.Map;
 import java.util.Properties;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
@@ -46,7 +44,7 @@ public class TestParticipants {
 
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
 	public void addParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentive");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
 		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
