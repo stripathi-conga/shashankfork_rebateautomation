@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.cim;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import org.testng.annotations.BeforeClass;
@@ -23,6 +24,7 @@ public class TestParticipants {
 	private ResponseValidatorBase responseValidator;
 	private CIM cim;
 	private Map<String, String> jsonData;
+	private HashMap<String, String> tempjsonData;
 	Response response;
 
 	@BeforeClass(alwaysRun = true)
@@ -40,6 +42,7 @@ public class TestParticipants {
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
 		responseValidator = new ResponseValidatorBase();
+		tempjsonData = new HashMap<String, String>();
 	}
 
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
@@ -55,5 +58,30 @@ public class TestParticipants {
 		cim.addParticipants(jsonData);
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+	}
+
+	@Test(description = "TC-384 Verify that the user is able to delete a participant added from the grid", groups = {
+			"Regression", "API", "Medium" })
+	public void deleteParticipant() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
+		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
+		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
+		cim.addParticipants(jsonData);
+		String accountId = cim.getParticipantData().getAccount__c();
+		tempjsonData.put("Automation_Participant_Account_1", accountId);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
+		cim.addParticipants(jsonData);
+		accountId = cim.getParticipantData().getAccount__c();
+		tempjsonData.put("Automation_Participant_Account_2", accountId);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantThree");
+		cim.addParticipants(jsonData);
+		cim.deleteParticipants();
+		response = cim.getParticipantIdViaIncentiveId();
+		responseValidator.validateAvailableParticipant(tempjsonData, response);
 	}
 }
