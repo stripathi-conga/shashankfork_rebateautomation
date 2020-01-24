@@ -19,6 +19,7 @@ public class CIM extends CIMAdmin {
 	private Response response;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
+	
 	public CreateNewIncentivePojo getIncentiveData() {
 		return incentiveData;
 	}
@@ -36,9 +37,7 @@ public class CIM extends CIMAdmin {
 
 	public void setParticipantData(AddParticipantPojo participantData) {
 		this.participantsData = participantData;
-	}
-
-	
+	}	
 
 	public CIM(String baseURL, SFDCRestUtils sfdcRestUtils) {
 		super(baseURL, sfdcRestUtils);
@@ -185,7 +184,7 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public void deleteParticipants() throws ApplicationException {
+	public Response deleteParticipants() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
 					.deleteWithoutPayload(urlGenerator.addParticipantsURL + participantsData.getParticipantsId());
@@ -193,12 +192,13 @@ public class CIM extends CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Delete Participant API call failed with exception trace : " + e);
 		}
+		return response;
 	}
 
 	public Response getParticipantIdViaIncentiveId() throws ApplicationException {
 		try {
 			response = sfdcRestUtils.getData(
-					urlGenerator.getParticipantsViaURL.replace("{IncentiveId}", participantsData.getIncentive__c()));
+					urlGenerator.getParticipantsViaIncentiveIdURL.replace("{IncentiveId}", participantsData.getIncentive__c()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 						
 		} catch (Exception e) {

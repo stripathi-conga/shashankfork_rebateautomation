@@ -25,7 +25,7 @@ public class URLGenerator {
 	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
 	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";
 	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";
-	public String getParticipantsViaURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where Incentive__c='{IncentiveId}'";
+	public String getParticipantsViaIncentiveIdURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where Incentive__c='{IncentiveId}'";
 	
 	public URLGenerator(String instanceURL) {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
@@ -49,7 +49,7 @@ public class URLGenerator {
 		this.getAccountURL = baseURL + this.getAccountURL;
 		this.addParticipantsURL= baseURL + this.addParticipantsURL;
 		this.getParticipantsURL= baseURL + this.getParticipantsURL;
-		this.getParticipantsViaURL=baseURL+ this.getParticipantsViaURL;
+		this.getParticipantsViaIncentiveIdURL=baseURL+ this.getParticipantsViaIncentiveIdURL;
 
 	}
 }

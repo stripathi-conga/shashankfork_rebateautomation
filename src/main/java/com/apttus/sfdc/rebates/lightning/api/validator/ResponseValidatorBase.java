@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.testng.asserts.SoftAssert;
 
@@ -35,6 +36,7 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
+	//TDOD -  Shashank will check this methos and optimize it
 	public void validateDeleteSuccess(Response response) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -173,19 +175,21 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateAvailableParticipant(Map<String, String> testData, Response response, CIM cim,Map<String, String> testDataParticipant1,Map<String, String> testDataParticipant2) {
-		
+	public void validateAvailableParticipant(Map<String, String> testData, Response response)
+			throws ApplicationException {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 2,
 				"Validate response size, Response does not have single record");
+		softassert.assertAll();
 		JsonObject recordsParticipant1 = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(recordsParticipant1.get("Id").getAsString(), testDataParticipant1.get("AccountName"),
-				"Validate Incentive Participant Id");
+		softassert.assertEquals(recordsParticipant1.get("Account__c").getAsString(),
+				testData.get("Automation_Participant_Account_1"), "Validate Incentive Participant Id");
 		JsonObject recordsParticipant2 = resp.getAsJsonArray("records").get(1).getAsJsonObject();
-		softassert.assertEquals(recordsParticipant2.get("Id").getAsString(), testDataParticipant2.get("AccountName"),
-				"Validate Incentive Participant Id");
+		softassert.assertEquals(recordsParticipant2.get("Account__c").getAsString(),
+				testData.get("Automation_Participant_Account_2"), "Validate Incentive Participant Id");
+		softassert.assertAll();
 
 	}
 }
+
