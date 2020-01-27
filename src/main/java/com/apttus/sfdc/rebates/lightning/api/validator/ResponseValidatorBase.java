@@ -1,6 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
-import java.util.HashMap;
+
 import java.util.Map;
 import org.testng.asserts.SoftAssert;
 
@@ -65,10 +65,10 @@ public class ResponseValidatorBase {
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.linkTemplatesData.getLinkTemplateId(),
 				"Validate linkTemplate id");
-		softassert.assertEquals(records.get("Program_Type__c").getAsString(), testData.get("Program_Type__c"),
-				"Validate Program_Type in linkTemplate");
-		softassert.assertEquals(records.get("Program_Sub_Type__c").getAsString(), testData.get("Program_Sub_Type__c"),
-				"Validate Program_Sub_Type in linkTemplate");
+		softassert.assertEquals(records.get("ProgramType__c").getAsString(), testData.get("ProgramType__c"),
+				"Validate ProgramType in linkTemplate");
+		softassert.assertEquals(records.get("ProgramSubType__c").getAsString(), testData.get("ProgramSubType__c"),
+				"Validate ProgramSub_Type in linkTemplate");
 		softassert.assertAll();
 	}
 
@@ -141,7 +141,7 @@ public class ResponseValidatorBase {
 				"Validate updated Template Decription");
 		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getTemplateData().getName(),
 				"Validate template Name");
-		softassert.assertEquals(records.get("QnB_Layout_Id__c").getAsString(), qnbLayoutId,
+		softassert.assertEquals(records.get("QnBLayoutId__c").getAsString(), qnbLayoutId,
 				"Validate Updated Template QnB Layout Id");
 		softassert.assertAll();
 	}

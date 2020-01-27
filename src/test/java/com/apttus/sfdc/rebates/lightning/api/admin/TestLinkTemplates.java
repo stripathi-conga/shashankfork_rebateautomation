@@ -67,8 +67,8 @@ public class TestLinkTemplates {
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -103,8 +103,8 @@ public class TestLinkTemplates {
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -141,8 +141,8 @@ public class TestLinkTemplates {
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -151,7 +151,7 @@ public class TestLinkTemplates {
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 		cimAdmin.deleteLinkTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getLinkTemplatesViaProgramType(jsonData); 
-		responseValidator.validateDeleteSuccess(response);
+		responseValidator.validateDeleteSuccess(response); 
 	}
 	
 	@Test(description = "TC-410 Unable to Delete Link Template which is in Active or Inactive Status from spillover menu", groups = {
@@ -179,8 +179,8 @@ public class TestLinkTemplates {
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -226,8 +226,8 @@ public class TestLinkTemplates {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -238,8 +238,8 @@ public class TestLinkTemplates {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -258,8 +258,8 @@ public class TestLinkTemplates {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -310,8 +310,8 @@ public class TestLinkTemplates {
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
@@ -334,8 +334,8 @@ public class TestLinkTemplates {
 		responseValidator.validateCreateSuccess(response);
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
-		jsonData.put("Formula_Id__c", calcFormulaIdBenefit);
-		jsonData.put("Data_Source_Id__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
