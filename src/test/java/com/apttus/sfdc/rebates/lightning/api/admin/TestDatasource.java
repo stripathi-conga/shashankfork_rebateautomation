@@ -43,6 +43,7 @@ public class TestDatasource extends UnifiedFramework {
 		responseValidator = new ResponseValidatorBase();
 	}
 
+	
 	@Test(description = "TC215-Verify Create New Data Source", groups = { "Smoke", "API" })
 	public void createNewDataSource() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
@@ -92,7 +93,7 @@ public class TestDatasource extends UnifiedFramework {
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
 	}
-
+	 
 	@Test(description = "TC-225 Verify mandatory fields in Data Source", groups = { "Regression", "Medium", "API" })
 	public void verifyDataSourceMandatoryFields() throws Exception {
 		response = cimAdmin.createDataSourceWithoutAnyFields();
@@ -109,4 +110,5 @@ public class TestDatasource extends UnifiedFramework {
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
 	}
+
 }

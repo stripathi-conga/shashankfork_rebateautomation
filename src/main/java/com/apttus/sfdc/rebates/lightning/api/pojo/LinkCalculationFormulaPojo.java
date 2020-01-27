@@ -5,18 +5,26 @@ import com.google.gson.Gson;
 
 public class LinkCalculationFormulaPojo {
 
-	private String Calculation_Formula__c;
+	private String CalculationFormula__c;
 	private String Type__c;
 	private String Sequence__c;
 	private String ReferenceName__c;
-	private String Expression_Id__c;
-
-	public String getCalculation_Formula__c() {
-		return Calculation_Formula__c;
+	private String ExpressionId__c;
+	private String Status__c;
+	
+	public String getStatus__c() {
+		return Status__c;
 	}
 
-	public void setCalculation_Formula__c(String calculation_Formula__c) {
-		this.Calculation_Formula__c = calculation_Formula__c;
+	public void setStatus__c(String status__c) {
+		Status__c = status__c;
+	}
+	public String getCalculationFormula__c() {
+		return CalculationFormula__c;
+	}
+
+	public void setCalculation_Formula__c(String calculationFormula__c) {
+		this.CalculationFormula__c = calculationFormula__c;
 	}
 
 	public String getType__c() {
@@ -44,11 +52,11 @@ public class LinkCalculationFormulaPojo {
 	}
 
 	public String getExpression_Id__c() {
-		return Expression_Id__c;
+		return ExpressionId__c;
 	}
 
-	public void setExpression_Id__c(String expression_Id__c) {
-		this.Expression_Id__c = expression_Id__c;
+	public void setExpression_Id__c(String expressionId__c) {
+		this.ExpressionId__c = expressionId__c;
 	}
 
 	public String linkCalculationFormulaPojoRequest(Map<String, String> testData, String calculationFormulaId,
@@ -59,6 +67,7 @@ public class LinkCalculationFormulaPojo {
 		linkCalcFormulaId.setReferenceName__c(testData.get("ReferenceName__c"));
 		linkCalcFormulaId.setSequence__c(testData.get("Sequence__c"));
 		linkCalcFormulaId.setType__c(testData.get("Type__c"));
+		linkCalcFormulaId.setStatus__c(testData.get("Status__c"));
 		return new Gson().toJson(linkCalcFormulaId);
 	}
 }
