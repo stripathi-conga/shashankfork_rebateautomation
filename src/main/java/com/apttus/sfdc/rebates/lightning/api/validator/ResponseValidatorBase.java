@@ -89,6 +89,7 @@ public class ResponseValidatorBase {
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		System.out.println("Records--"+records);
 		softassert.assertEquals(records.get("Apttus_Config2__EffectiveDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__EffectiveDate__c(), "Validate Incentive Start Date");
 
@@ -108,8 +109,8 @@ public class ResponseValidatorBase {
 				testData.get("Apttus_Config2__UseType__c"), "Validate Program Type");
 		softassert.assertEquals(records.get("Apttus_Config2__SubUseType__c").getAsString(),
 				testData.get("Apttus_Config2__SubUseType__c"), "Validate Program SubType");
-		softassert.assertEquals(records.get("Program_Template_Id__c").getAsString(),
-				cim.incentiveData.getProgram_Template_Id__c(), "Validate Program TemplateId");
+		softassert.assertEquals(records.get("ProgramTemplateId__c").getAsString(),
+				cim.incentiveData.getProgramTemplateId__c(), "Validate Program TemplateId");
 		softassert.assertAll();
 
 	}

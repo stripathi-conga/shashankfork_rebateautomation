@@ -44,7 +44,7 @@ public class TestIncentives {
 	public void createNewLoyaltyIncentive() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
@@ -54,7 +54,7 @@ public class TestIncentives {
 	public void updateIncentivePayee() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentive");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
@@ -62,22 +62,24 @@ public class TestIncentives {
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
-	
-	@Test(description = "TC-419 Verify Incentive creation for different Payee values", groups = { "Regression", "Medium", "API" })
+
+	@Test(description = "TC-419 Verify Incentive creation for different Payee values", groups = { "Regression",
+			"Medium", "API" })
 	public void addIncentiveWithDifferentPayeeValues() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveAgreementAccount");
 		incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
+	 
 }

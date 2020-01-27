@@ -10,7 +10,7 @@ public class CreateNewIncentivePojo {
 	
 	private String Apttus_Config2__Description__c;
 	private String MeasurementFrequency__c;
-	private String Program_Template_Id__c;
+	private String ProgramTemplateId__c;
 	private String Apttus_Config2__Status__c;
 	private String Apttus_Config2__ExpirationDate__c;
 	private String Calendar__c;
@@ -51,12 +51,12 @@ public class CreateNewIncentivePojo {
 		this.MeasurementFrequency__c = measurementFrequency__c;
 	}
 
-	public String getProgram_Template_Id__c() {
-		return Program_Template_Id__c;
+	public String getProgramTemplateId__c() {
+		return ProgramTemplateId__c;
 	}
 
-	public void setProgram_Template_Id__c(String program_Template_Id__c) {
-		this.Program_Template_Id__c = program_Template_Id__c;
+	public void setProgramTemplateId__c(String programTemplateId__c) {
+		this.ProgramTemplateId__c = programTemplateId__c;
 	}
 
 	public String getApttus_Config2__Status__c() {
@@ -207,7 +207,7 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setPayoutFrequency__c(testData.get("PayoutFrequency__c"));
 		createNewIncentive.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
 		createNewIncentive.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
-		createNewIncentive.setProgram_Template_Id__c(testData.get("Program_Template_Id__c"));
+		createNewIncentive.setProgramTemplateId__c(testData.get("ProgramTemplateId__c"));
 		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
 		if (testData.get("BenefitLevel__c") != null) {
 			if (testData.get("BenefitLevel__c").equals("Agreement Account")) {
