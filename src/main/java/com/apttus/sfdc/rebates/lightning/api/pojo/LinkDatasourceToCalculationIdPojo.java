@@ -5,29 +5,29 @@ import com.google.gson.Gson;
 
 public class LinkDatasourceToCalculationIdPojo {
 
-	private String Calculation_Formula__c;
-	private String Data_Source__c;
+	private String CalculationFormula__c;
+	private String DataSource__c;
 
-	public String getCalculation_Formula__c() {
-		return Calculation_Formula__c;
+	public String getCalculationFormula__c() {
+		return CalculationFormula__c;
 	}
 
-	public void setCalculation_Formula__c(String calculation_Formula__c) {
-		this.Calculation_Formula__c = calculation_Formula__c;
+	public void setCalculationFormula__c(String calculationFormula__c) {
+		this.CalculationFormula__c = calculationFormula__c;
 	}
 
-	public String getData_Source__c() {
-		return Data_Source__c;
+	public String getDataSource__c() {
+		return DataSource__c;
 	}
 
-	public void setData_Source__c(String data_Source__c) {
-		this.Data_Source__c = data_Source__c;
+	public void setDataSource__c(String dataSource__c) {
+		this.DataSource__c = dataSource__c;
 	}
 
 	public String linkDatasourceIdRequest(String calculationFormulaId, CIMAdmin cimAdmin) {
 		LinkDatasourceToCalculationIdPojo linkDatasourceId = new LinkDatasourceToCalculationIdPojo();
-		linkDatasourceId.setCalculation_Formula__c(calculationFormulaId);
-		linkDatasourceId.setData_Source__c(cimAdmin.getDataSourceData().getDataSourceId());
+		linkDatasourceId.setCalculationFormula__c(calculationFormulaId);
+		linkDatasourceId.setDataSource__c(cimAdmin.getDataSourceData().getDataSourceId());
 		return new Gson().toJson(linkDatasourceId);
 	}
 }

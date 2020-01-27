@@ -7,46 +7,46 @@ import com.google.gson.Gson;
 
 public class MapTemplateAndDataSourcePojo {
 
-	private String Template_Id__c;
-	private String Formula_Id__c;
-	private String Data_Source_Id__c;
+	private String TemplateId__c;
+	private String FormulaId__c;
+	private String DataSourceId__c;
 	
-	public String getTemplate_Id__c() {
-		return Template_Id__c;
+	public String getTemplateId__c() {
+		return TemplateId__c;
 	}
 
-	public void setTemplate_Id__c(String template_Id__c) {
-		this.Template_Id__c = template_Id__c;
+	public void setTemplateId__c(String templateId__c) {
+		this.TemplateId__c = templateId__c;
 	}
 
-	public String getFormula_Id__c() {
-		return Formula_Id__c;
+	public String getFormulaId__c() {
+		return FormulaId__c;
 	}
 
-	public void setFormula_Id__c(String formula_Id__c) {
-		this.Formula_Id__c = formula_Id__c;
+	public void setFormulaId__c(String formulaId__c) {
+		this.FormulaId__c = formulaId__c;
 	}
 
-	public String getData_Source_Id__c() {
-		return Data_Source_Id__c;
+	public String getDataSourceId__c() {
+		return DataSourceId__c;
 	}
 
-	public void setData_Source_Id__c(String data_Source_Id__c) {
-		this.Data_Source_Id__c = data_Source_Id__c;
+	public void setDataSourceId__c(String dataSourceId__c) {
+		this.DataSourceId__c = dataSourceId__c;
 	}
 
 	public String createTemplateDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 
 		MapTemplateAndDataSourcePojo mapTemplateAndDataSourcepojo = new MapTemplateAndDataSourcePojo();
-		mapTemplateAndDataSourcepojo.setTemplate_Id__c(cimAdmin.getTemplateData().getTemplateId());
-		mapTemplateAndDataSourcepojo.setFormula_Id__c(testData.get("Formula_Id__c"));
-		mapTemplateAndDataSourcepojo.setData_Source_Id__c(testData.get("Data_Source_Id__c"));
+		mapTemplateAndDataSourcepojo.setTemplateId__c(cimAdmin.getTemplateData().getTemplateId());
+		mapTemplateAndDataSourcepojo.setFormulaId__c(testData.get("FormulaId__c"));
+		mapTemplateAndDataSourcepojo.setDataSourceId__c(testData.get("DataSourceId__c"));
 		return new Gson().toJson(mapTemplateAndDataSourcepojo);
 	}
 }
 /*--------------------Map dataSource and Template Id
-  { "Data_Source_Id__c": "a543i0000001fgPAAQ", 
-    "Template_Id__c":"a593i000000LCdxAAG", 
-    "Formula_Id__c": "a523i000000TfOMAA0"
+  { "DataSource_Id__c": "a543i0000001fgPAAQ", 
+    "TemplateId__c":"a593i000000LCdxAAG", 
+    "FormulaId__c": "a523i000000TfOMAA0"
   }
  */
