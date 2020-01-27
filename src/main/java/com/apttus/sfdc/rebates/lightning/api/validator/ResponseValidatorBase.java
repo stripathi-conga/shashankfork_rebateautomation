@@ -1,6 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
-import java.util.HashMap;
+
 import java.util.Map;
 import org.testng.asserts.SoftAssert;
 
@@ -65,10 +65,10 @@ public class ResponseValidatorBase {
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.linkTemplatesData.getLinkTemplateId(),
 				"Validate linkTemplate id");
-		softassert.assertEquals(records.get("Program_Type__c").getAsString(), testData.get("Program_Type__c"),
-				"Validate Program_Type in linkTemplate");
-		softassert.assertEquals(records.get("Program_Sub_Type__c").getAsString(), testData.get("Program_Sub_Type__c"),
-				"Validate Program_Sub_Type in linkTemplate");
+		softassert.assertEquals(records.get("ProgramType__c").getAsString(), testData.get("ProgramType__c"),
+				"Validate ProgramType in linkTemplate");
+		softassert.assertEquals(records.get("ProgramSubType__c").getAsString(), testData.get("ProgramSubType__c"),
+				"Validate ProgramSub_Type in linkTemplate");
 		softassert.assertAll();
 	}
 
@@ -89,6 +89,7 @@ public class ResponseValidatorBase {
 				"Validate response size, Response does not have single record");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+	
 		softassert.assertEquals(records.get("Apttus_Config2__EffectiveDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__EffectiveDate__c(), "Validate Incentive Start Date");
 
@@ -106,10 +107,8 @@ public class ResponseValidatorBase {
 				"Validate Incentive Name");
 		softassert.assertEquals(records.get("Apttus_Config2__UseType__c").getAsString(),
 				testData.get("Apttus_Config2__UseType__c"), "Validate Program Type");
-		softassert.assertEquals(records.get("Apttus_Config2__SubUseType__c").getAsString(),
-				testData.get("Apttus_Config2__SubUseType__c"), "Validate Program SubType");
-		softassert.assertEquals(records.get("Program_Template_Id__c").getAsString(),
-				cim.incentiveData.getProgram_Template_Id__c(), "Validate Program TemplateId");
+		softassert.assertEquals(records.get("ProgramTemplateId__c").getAsString(),
+				cim.incentiveData.getProgramTemplateId__c(), "Validate Program TemplateId");
 		softassert.assertAll();
 
 	}
@@ -141,7 +140,7 @@ public class ResponseValidatorBase {
 				"Validate updated Template Decription");
 		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getTemplateData().getName(),
 				"Validate template Name");
-		softassert.assertEquals(records.get("QnB_Layout_Id__c").getAsString(), qnbLayoutId,
+		softassert.assertEquals(records.get("QnBLayoutId__c").getAsString(), qnbLayoutId,
 				"Validate Updated Template QnB Layout Id");
 		softassert.assertAll();
 	}

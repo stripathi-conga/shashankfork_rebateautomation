@@ -9,7 +9,7 @@ public class CreateTemplatePojo {
 
 	private String Description__c;
 	private String Status__c;
-	private String QnB_Layout_Id__c;
+	private String QnBLayoutId__c;
 	private String Name;
 	public String templateId;
 	public String QnB_Layout_Id_c;
@@ -46,12 +46,12 @@ public class CreateTemplatePojo {
 		this.Status__c = status__c;
 	}
 
-	public String getQnB_Layout_Id__c() {
-		return QnB_Layout_Id__c;
+	public String getQnBLayoutId__c() {
+		return QnBLayoutId__c;
 	}
 
-	public void setQnB_Layout_Id__c(String qnb_Layout_Id__c) {
-		this.QnB_Layout_Id__c = qnb_Layout_Id__c;
+	public void setQnBLayoutId__c(String qnBLayoutId__c) {
+		this.QnBLayoutId__c = qnBLayoutId__c;
 	}
 
 	public String getName() {
@@ -70,7 +70,7 @@ public class CreateTemplatePojo {
 			createTemplatePojo.setName("Rebates_Auto_Template_" + SFDCHelper.randomNumberGenerator());
 		}
 		createTemplatePojo.setDescription__c(testData.get("Description__c"));
-		createTemplatePojo.setQnB_Layout_Id__c(qnbLayoutId);
+		createTemplatePojo.setQnBLayoutId__c(qnbLayoutId);
 		createTemplatePojo.setStatus__c(testData.get("Status__c"));
 		cimAdmin.setTemplateData(createTemplatePojo);
 		return new Gson().toJson(createTemplatePojo);

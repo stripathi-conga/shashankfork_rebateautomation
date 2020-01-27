@@ -49,7 +49,7 @@ public class TestParticipants {
 	public void addParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
@@ -65,7 +65,7 @@ public class TestParticipants {
 	public void deleteParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
 		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("Program_Template_Id__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
