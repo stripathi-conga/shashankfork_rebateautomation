@@ -72,7 +72,7 @@ public class TestLinkTemplates {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeRebateAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeTieredAPI");
 		cimAdmin.createLinkTemplates(jsonData);
 		response = cimAdmin.getLinkTemplatesViaId();
 		responseValidator.validateGetLinkTemplates(jsonData, response, cimAdmin);
@@ -108,7 +108,7 @@ public class TestLinkTemplates {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeLoyaltyAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeTieredAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 		cimAdmin.activateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
@@ -146,12 +146,11 @@ public class TestLinkTemplates {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypePromotionAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 		cimAdmin.deleteLinkTemplate(RebatesConstants.responseNocontent);
-		response = cimAdmin.getLinkTemplatesViaProgramType(jsonData); 
-		responseValidator.validateDeleteSuccess(response); 
+		
 	}
 	
 	@Test(description = "TC-410 Unable to Delete Link Template which is in Active or Inactive Status from spillover menu", groups = {
@@ -184,7 +183,7 @@ public class TestLinkTemplates {
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeSalesAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 		cimAdmin.activateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
@@ -264,7 +263,7 @@ public class TestLinkTemplates {
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"createNewLinkTemplateSubTypePriceProgramAPI");
+				"createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 		cimAdmin.activateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
@@ -275,7 +274,7 @@ public class TestLinkTemplates {
 				RebatesConstants.messageChangeLinkTemplateStatusToDraft);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"createNewLinkTemplateSubTypePriceProgramAPI");
+				"createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cimAdmin.createLinkTemplatesNegative(jsonData);
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageActiveMappingExists);
@@ -316,7 +315,7 @@ public class TestLinkTemplates {
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"createNewLinkTemplateSubTypePriceProgramAPI");
+				"createNewLinkTemplateSubTypeTieredAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 
@@ -340,7 +339,7 @@ public class TestLinkTemplates {
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"createNewLinkTemplateSubTypePriceProgramAPI");
+				"createNewLinkTemplateSubTypeTieredAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 

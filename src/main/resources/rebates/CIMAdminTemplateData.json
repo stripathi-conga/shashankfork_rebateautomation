@@ -45,30 +45,16 @@
 		"type__c": "Benefit Product",
 		"tier__c": "Tiered"
 	},
-	"createNewLinkTemplateSubTypeRebateAPI": {
+	"createNewLinkTemplateSubTypeTieredAPI": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Tiered",
 		"Status__c":"Draft"
 	},
-	"createNewLinkTemplateSubTypeLoyaltyAPI": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Tiered",
-		"Status__c":"Draft"
-	},
-	"createNewLinkTemplateSubTypePromotionAPI": {
+	
+	"createNewLinkTemplateSubTypeDiscreteAPI": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Discrete",
 		"Status__c":"Draft"
-	},
-	"createNewLinkTemplateSubTypeSalesAPI": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Discrete",
-		"Status__c":"Draft"
-	},
-	"createNewLinkTemplateSubTypePriceProgramAPI": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Discrete",
-		"Status__c":"Active"
 	},
 	"updateTemplateAPI": {
 		"Name": "{Random}",
