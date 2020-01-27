@@ -278,8 +278,7 @@ public class CIMAdmin {
 	public Response getLinkTemplatesViaProgramType(Map<String, String> testData) throws ApplicationException {
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaProgramTypeURL
-					.replace("{ProgramType}", testData.get("ProgramType__c"))
-					.replace("{ProgramSubType}", testData.get("ProgramSubType__c")));
+					.replace("{ProgramType}", testData.get("ProgramType__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {

@@ -24,9 +24,26 @@ public class CreateNewIncentivePojo {
 	private String BenefitLevel__c;
 	private String AccountId__c;
 	private String Apttus_Config2__EffectiveDate__c;
-	private String Apttus_Config2__SubUseType__c;
 	private String Apttus_Config2__Sequence__c;
 	public String incentiveId;
+	private String ProgramType__c;
+	private String ProgramSubType__c;
+	
+	public String getProgramSubType__c() {
+		return ProgramSubType__c;
+	}
+
+	public void setProgramSubType__c(String programSubType__c) {
+		ProgramSubType__c = programSubType__c;
+	}
+
+	public String getProgramType__c() {
+		return ProgramType__c;
+	}
+
+	public void setProgramType__c(String programType__c) {
+		ProgramType__c = programType__c;
+	}
 	
 	public String getIncentiveId() {
 		return incentiveId;
@@ -163,14 +180,6 @@ public class CreateNewIncentivePojo {
 		this.Apttus_Config2__EffectiveDate__c = apttus_Config2__EffectiveDate__c;
 	}
 
-	public String getApttus_Config2__SubUseType__c() {
-		return Apttus_Config2__SubUseType__c;
-	}
-
-	public void setApttus_Config2__SubUseType__c(String apttus_Config2__SubUseType__c) {
-		this.Apttus_Config2__SubUseType__c = apttus_Config2__SubUseType__c;
-	}
-
 	public String getApttus_Config2__Sequence__c() {
 		return Apttus_Config2__Sequence__c;
 	}
@@ -200,7 +209,6 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setApttus_Config2__Description__c("Automation Program");
 		createNewIncentive.setApttus_Config2__Status__c("New");
 		createNewIncentive.setApttus_Config2__UseType__c(testData.get("Apttus_Config2__UseType__c"));
-		createNewIncentive.setApttus_Config2__SubUseType__c(testData.get("Apttus_Config2__SubUseType__c"));
 		createNewIncentive.setApttus_Config2__Sequence__c("1");
 		createNewIncentive.setCalendar__c(testData.get("Calendar__c"));
 		createNewIncentive.setPaymentMethod__c(testData.get("PaymentMethod__c"));
@@ -209,6 +217,8 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
 		createNewIncentive.setProgramTemplateId__c(testData.get("ProgramTemplateId__c"));
 		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
+		createNewIncentive.setProgramType__c(testData.get("ProgramType__c"));
+		createNewIncentive.setProgramSubType__c(testData.get("ProgramSubType__c"));
 		if (testData.get("BenefitLevel__c") != null) {
 			if (testData.get("BenefitLevel__c").equals("Agreement Account")) {
 				createNewIncentive.setAccountId__c(cim.getAccountId(testData.get("AccountName")));
@@ -217,6 +227,8 @@ public class CreateNewIncentivePojo {
 		cim.setIncentiveData(createNewIncentive);
 		return new Gson().toJson(createNewIncentive);
 	}
+
+	
 }
 
 /*
@@ -236,7 +248,7 @@ public class CreateNewIncentivePojo {
     "Program_Template_Id__c": "a593i000000LC4lAAG",
     "Apttus_Config2__Sequence__c": 1,
     "Apttus_Config2__UseType__c": "Rebates 2.0",
-    "Apttus_Config2__SubUseType__c": "Loyalty"
+   
 }
 
 {
@@ -256,6 +268,6 @@ public class CreateNewIncentivePojo {
     "Program_Template_Id__c": "a593i000000LC4lAAG",
     "Apttus_Config2__Sequence__c": 1,
     "Apttus_Config2__UseType__c": "Rebates 2.0",
-    "Apttus_Config2__SubUseType__c": "Loyalty"
+  
 }
 */

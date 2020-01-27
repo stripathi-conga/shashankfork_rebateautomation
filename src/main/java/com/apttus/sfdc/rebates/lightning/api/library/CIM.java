@@ -49,7 +49,6 @@ public class CIM extends CIMAdmin {
 		JsonArray records;
 		int count;
 		mapData.put("ProgramType__c", testData.get("Apttus_Config2__UseType__c"));
-		mapData.put("ProgramSubType__c", testData.get("Apttus_Config2__SubUseType__c"));
 		try {
 			response = getLinkTemplatesViaProgramType(mapData);
 			resp = parser.parse(response.getBody().asString()).getAsJsonObject();

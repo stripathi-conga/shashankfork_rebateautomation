@@ -231,7 +231,7 @@ public class TestLinkTemplates {
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"createNewLinkTemplateSubTypePriceProgramAPI");
+				"createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -243,7 +243,7 @@ public class TestLinkTemplates {
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"createNewLinkTemplateSubTypePriceProgramAPI");
+				"createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cimAdmin.createLinkTemplates(jsonData);
 
 		cimAdmin.activateLinkTemplate();
