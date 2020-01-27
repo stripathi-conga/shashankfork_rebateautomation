@@ -1,19 +1,19 @@
 {
 	"createNewDataSourceAPI": {
 		"Name__c": "{Random}",
-		"Transaction_MetaData__c": "Apttus_Config2__OrderLineItem__c",
-		"Calculation_Date_Attr__c": "Apttus_Config2__PricingDate__c",
-		"Program_Account_Attr__c": "Apttus_Config2__BillToAccountId__c",
-		"Product_Attr__c": "Apttus_Config2__ProductId__c",
-		"File_Extension__c": "csv",
-		"File_Suffix_To_ignore__c": "test",
+		"TransactionMetaData__c": "Apttus_Config2__OrderLineItem__c",
+		"CalculationDateAttr__c": "Apttus_Config2__PricingDate__c",
+		"ProgramAccountAttr__c": "Apttus_Config2__BillToAccountId__c",
+		"ProductAttr__c": "Apttus_Config2__ProductId__c",
+		"FileExtension__c": "csv",
+		"FileSuffixToignore__c": "test",
 		"Delimiter__c": "\\u002c"
 	},
 	"createNewDataSourceMultipleFileExtension": {
-		"File_Extension__c": "csv,tsv,txt,dat,log"
+		"FileExtension__c": "csv,tsv,txt,dat,log"
 	},
 	"createNewDataSourceTwoFileExtension": {
-		"File_Extension__c": "tsv,dat",
+		"FileExtension__c": "tsv,dat",
 		"Delimiter__c": "\\u002f"
 	},
 	"createFieldExpressionId": {
@@ -22,15 +22,18 @@
 	},
 	"createCalcFormulaIdBenefit": {
 		"Type__c": "Benefit",
+		 "Status__c":"Active",
 		"Name": "Auto_Benefit SUM(Rebate_Amount)"
 	},
 	"createCalcFormulaIdQualification": {
 		"Type__c": "Qualification",
-		"Name": "Auto_Qualification SUM(Rebate_Amount)"
+		"Name": "Auto_Qualification SUM(Rebate_Amount)",
+		 "Status__c":"Active"
 	},
 	"linkCalcFormulaToExpressionId": {
 		"ReferenceName__c": "Auto SUM(Rebate_Amount)",
 		"Sequence__c": "1",
+		"Status__c":"Active",
 		"Type__c": "Line"
 	},
 	"createNewTemplateAPI": {
@@ -43,23 +46,24 @@
 		"tier__c": "Tiered"
 	},
 	"createNewLinkTemplateSubTypeRebateAPI": {
-		"Program_Type__c": "Rebates 2.0",
-		"Program_Sub_Type__c": "Rebate"
+		"ProgramType__c": "Rebate",
+		"ProgramSubType__c": "Benefit Product Tiered",
+		"Status__c":"Active"
 	},
 	"createNewLinkTemplateSubTypeLoyaltyAPI": {
-		"Program_Type__c": "Rebates 2.0",
-		"Program_Sub_Type__c": "Loyalty"
+		"Program_Type__c": "Rebate",
+		"Program_Sub_Type__c": "Benefit Product Tiered"
 	},
 	"createNewLinkTemplateSubTypePromotionAPI": {
-		"Program_Type__c": "Rebates 2.0",
-		"Program_Sub_Type__c": "Promotion"
+		"Program_Type__c": "Rebate",
+		"Program_Sub_Type__c": "Benefit Product Discrete"
 	},
 	"createNewLinkTemplateSubTypeSalesAPI": {
-		"Program_Type__c": "Rebates 2.0",
+		"Program_Type__c": "Rebate",
 		"Program_Sub_Type__c": "Sales"
 	},
 	"createNewLinkTemplateSubTypePriceProgramAPI": {
-		"Program_Type__c": "Rebates 2.0",
+		"Program_Type__c": "Rebate",
 		"Program_Sub_Type__c": "Price Program"
 	},
 	"updateTemplateAPI": {
@@ -68,7 +72,7 @@
 		"Description__c": "UpdatedAutomation"
 	},
 	"createDiscreteQnBLayoutAPI": {
-		"type__c": "Qualification Formulas",
-		"tier__c": "Discrete"
+		"type__c": "Qualification & Benefit Product",
+    "tier__c": "Discrete"
 	}
 }

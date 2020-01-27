@@ -15,7 +15,7 @@ public class RebatesConstants {
 	public static final String messageMandatoryTemplatefields = "Template must have at least one benefit formula";
 	public static final String messageUpdateActiveInactiveTemplate = "Cannot change status from Active/Inactive to Draft";
 	public static final String messageDeleteActiveInactiveLinkTemplate = "Cannot delete Active or Inactive link.";
-	public static final String messageCreateDataSourceWithoutFields = "Required fields are missing: [File_Extension__c, File_Suffix_To_ignore__c, Name__c, Transaction_MetaData__c]";
+	public static final String messageCreateDataSourceWithoutFields = "Required fields are missing: [FileExtension__c, FileSuffixToignore__c, Name__c, TransactionMetaData__c]";
 	public static final String messageChangeLinkTemplateStatusToDraft = "Cannot change Status from \"Active\" to \"Draft\"";
 	public static final String messageActiveMappingExists = "An active mapping already exists.";
 }
