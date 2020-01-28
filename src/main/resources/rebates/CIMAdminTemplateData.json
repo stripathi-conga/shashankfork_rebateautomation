@@ -45,26 +45,16 @@
 		"type__c": "Benefit Product",
 		"tier__c": "Tiered"
 	},
-	"createNewLinkTemplateSubTypeRebateAPI": {
+	"createNewLinkTemplateSubTypeTieredAPI": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Tiered",
-		"Status__c":"Active"
+		"Status__c":"Draft"
 	},
-	"createNewLinkTemplateSubTypeLoyaltyAPI": {
-		"Program_Type__c": "Rebate",
-		"Program_Sub_Type__c": "Benefit Product Tiered"
-	},
-	"createNewLinkTemplateSubTypePromotionAPI": {
-		"Program_Type__c": "Rebate",
-		"Program_Sub_Type__c": "Benefit Product Discrete"
-	},
-	"createNewLinkTemplateSubTypeSalesAPI": {
-		"Program_Type__c": "Rebate",
-		"Program_Sub_Type__c": "Sales"
-	},
-	"createNewLinkTemplateSubTypePriceProgramAPI": {
-		"Program_Type__c": "Rebate",
-		"Program_Sub_Type__c": "Price Program"
+	
+	"createNewLinkTemplateSubTypeDiscreteAPI": {
+		"ProgramType__c": "Rebate",
+		"ProgramSubType__c": "Benefit Product Discrete",
+		"Status__c":"Draft"
 	},
 	"updateTemplateAPI": {
 		"Name": "{Random}",
@@ -72,7 +62,7 @@
 		"Description__c": "UpdatedAutomation"
 	},
 	"createDiscreteQnBLayoutAPI": {
-		"type__c": "Qualification & Benefit Product",
+		"type__c": "Benefit Product",
     "tier__c": "Discrete"
 	}
 }

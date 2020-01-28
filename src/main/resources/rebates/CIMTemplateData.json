@@ -11,8 +11,9 @@
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Agreement Account",
 		"MeasurementFrequency__c": "Monthly",
-		"Apttus_Config2__UseType__c": "Rebates 2.0",
-		"Apttus_Config2__SubUseType__c": "Loyalty"
+		"Apttus_Config2__UseType__c": "Rebate",
+		"ProgramType__c": "Rebate",
+        "ProgramSubType__c": "Benefit Product Tiered"
 	},
 	"createNewIncentiveAgreementAccount": {
 		"Name": "{Random}",
@@ -27,12 +28,11 @@
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Agreement Account",
 		"MeasurementFrequency__c": "Monthly",
-		"Apttus_Config2__UseType__c": "Rebates 2.0",
-		"Apttus_Config2__SubUseType__c": "Loyalty"
+		"Apttus_Config2__UseType__c": "Rebate",
+		"ProgramType__c": "Rebate",
+        "ProgramSubType__c": "Benefit Product Tiered"
 	},
-	"createNewIncentiveRebates": {
-		"Apttus_Config2__SubUseType__c": "Rebate"
-	},
+	
 	"updateIncentive": {
 		"BenefitLevel__c": "Agreement Account",
 		"AccountName": "Automation_Account_1"

@@ -48,8 +48,7 @@ public class CIM extends CIMAdmin {
 		JsonObject resp;
 		JsonArray records;
 		int count;
-		mapData.put("Program_Type__c", testData.get("Apttus_Config2__UseType__c"));
-		mapData.put("Program_Sub_Type__c", testData.get("Apttus_Config2__SubUseType__c"));
+		mapData.put("ProgramType__c", testData.get("Apttus_Config2__UseType__c"));
 		try {
 			response = getLinkTemplatesViaProgramType(mapData);
 			resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -60,7 +59,7 @@ public class CIM extends CIMAdmin {
 				for (int i = 0; i < count; i++) {
 					status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
 					if (status.equals("Active")) {
-						templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
+						templateId = records.get(i).getAsJsonObject().get("TemplateId__c").getAsString();
 						break;
 					}
 				}
@@ -73,7 +72,7 @@ public class CIM extends CIMAdmin {
 							linkTemplatesData.setLinkTemplateId(inactiveLinkTemplateId);
 							// Active  the Inactive linkTemplate and get the TemplateId
 							activateLinkTemplate();
-							templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
+							templateId = records.get(i).getAsJsonObject().get("TemplateId__c").getAsString();
 							break;
 						}
 					}
@@ -82,8 +81,8 @@ public class CIM extends CIMAdmin {
 			return templateId;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"No Active/Inactive LinkTemplate Exists for ProgramType : " + testData.get("Program_Type__c")
-							+ " and ProgramSubType : " + testData.get("Program_Sub_Type__c") + ". " + e);
+					"No Active/Inactive LinkTemplate Exists for ProgramType : " + testData.get("ProgramType__c")
+							+ " and ProgramSubType : " + testData.get("ProgramSubType__c") + ". " + e);
 		}
 	}
 
