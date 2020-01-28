@@ -72,7 +72,7 @@ public class CIM extends CIMAdmin {
 							linkTemplatesData.setLinkTemplateId(inactiveLinkTemplateId);
 							// Active  the Inactive linkTemplate and get the TemplateId
 							activateLinkTemplate();
-							templateId = records.get(i).getAsJsonObject().get("Template_Id__c").getAsString();
+							templateId = records.get(i).getAsJsonObject().get("TemplateId__c").getAsString();
 							break;
 						}
 					}
