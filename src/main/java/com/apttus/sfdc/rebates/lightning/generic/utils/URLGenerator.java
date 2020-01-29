@@ -20,7 +20,7 @@ public class URLGenerator {
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,ProgramSubType__c,ProgramType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where id = '{LinkTemplateId}'";
 	public String getLinkTemplatesViaProgramTypeAndSubtypeURL = "/query/?q=SELECT Id,Name,ProgramSubType__c,ProgramType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where ProgramType__c = '{ProgramType}' and ProgramSubType__c = '{ProgramSubType}'";
 	public String incentiveURL = "/sobjects/Apttus_Config2__Incentive__c/";
-	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,Apttus_Config2__SubUseType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
+	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,ProgramType__c,ProgramSubType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
 	public String createAccountURL = "/sobjects/Account/";
 	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
 	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";

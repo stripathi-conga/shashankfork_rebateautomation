@@ -51,11 +51,11 @@
 		"EffectiveDate__c": "today",
 		"AccountName": "Automation_Participant_Account_3"
 	},
-	"activeTemplateIdForRebatesTiered": {
+	"activeTemplateIdForRebateTiered": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Tiered"
 	},
-	"activeTemplateIdForRebatesDiscrete": {
+	"activeTemplateIdForRebateDiscrete": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Discrete"
 	}

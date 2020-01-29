@@ -39,7 +39,7 @@ public class TestParticipants {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebatesTiered");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
 		incentiveTemplateIdTiered = cim.getTemplateIdForIncentives(jsonData);
 	}
 
