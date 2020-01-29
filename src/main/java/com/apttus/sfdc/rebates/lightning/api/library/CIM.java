@@ -19,7 +19,7 @@ public class CIM extends CIMAdmin {
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
-	public AddParticipantPojo participantsData = new AddParticipantPojo();	
+	public AddParticipantPojo participantsData = new AddParticipantPojo();
 	
 	public CreateNewIncentivePojo getIncentiveData() {
 		return incentiveData;
@@ -49,7 +49,7 @@ public class CIM extends CIMAdmin {
 		mapData.put("ProgramType__c", testData.get("ProgramType__c"));
 		mapData.put("ProgramSubType__c", testData.get("ProgramSubType__c"));
 		try {
-			response = getLinkTemplatesViaProgramTypeAndSubtype(mapData);
+			response = getLinkTemplatesViaProgramTypeAndSubType(mapData);
 			resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 			count = resp.get("totalSize").getAsInt();
 			records = resp.getAsJsonArray("records");
@@ -203,5 +203,4 @@ public class CIM extends CIMAdmin {
 		}
 		return response;		
 	}
-
 }
