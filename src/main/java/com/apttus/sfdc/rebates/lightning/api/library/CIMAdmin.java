@@ -242,7 +242,7 @@ public class CIMAdmin {
 	}
 
 	public Response createLinkTemplates(Map<String, String> testData) throws ApplicationException {
-		response = getLinkTemplatesViaProgramType(testData);
+		response = getLinkTemplatesViaProgramTypeAndSubtype(testData);
 		String linkTemplateId = getActiveTemplateIdFromGetLinkTemplates(response, testData);
 		if (!(linkTemplateId == null)) {
 			deactivateLinkTemplate();
@@ -275,10 +275,10 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response getLinkTemplatesViaProgramType(Map<String, String> testData) throws ApplicationException {
+	public Response getLinkTemplatesViaProgramTypeAndSubtype(Map<String, String> testData) throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaProgramTypeURL
-					.replace("{ProgramType}", testData.get("ProgramType__c")));
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaProgramTypeAndSubtypeURL
+					.replace("{ProgramType}", testData.get("ProgramType__c")).replace("{ProgramSubType}", testData.get("ProgramSubType__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {

@@ -92,7 +92,6 @@ public class ResponseValidatorBase {
 	
 		softassert.assertEquals(records.get("Apttus_Config2__EffectiveDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__EffectiveDate__c(), "Validate Incentive Start Date");
-
 		softassert.assertEquals(records.get("Apttus_Config2__ExpirationDate__c").getAsString(),
 				cim.incentiveData.getApttus_Config2__ExpirationDate__c(), "Validate Incentive End Date");
 		softassert.assertEquals(records.get("BenefitLevel__c").getAsString(), testData.get("BenefitLevel__c"),
@@ -106,7 +105,11 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(),
 				"Validate Incentive Name");
 		softassert.assertEquals(records.get("Apttus_Config2__UseType__c").getAsString(),
-				testData.get("Apttus_Config2__UseType__c"), "Validate Program Type");
+				testData.get("Apttus_Config2__UseType__c"), "Validate Program UseType");
+		softassert.assertEquals(records.get("ProgramType__c").getAsString(),
+				testData.get("ProgramType__c"), "Validate Program Type");
+		softassert.assertEquals(records.get("ProgramSubType__c").getAsString(),
+				testData.get("ProgramSubType__c"), "Validate Program SubType");
 		softassert.assertEquals(records.get("ProgramTemplateId__c").getAsString(),
 				cim.incentiveData.getProgramTemplateId__c(), "Validate Program TemplateId");
 		softassert.assertAll();

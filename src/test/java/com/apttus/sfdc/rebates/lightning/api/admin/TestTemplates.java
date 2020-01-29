@@ -24,7 +24,7 @@ public class TestTemplates extends UnifiedFramework {
 	private ResponseValidatorBase responseValidator;
 	private CIMAdmin cimAdmin;
 	private Map<String, String> jsonData;
-	Response response;
+	private Response response;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })

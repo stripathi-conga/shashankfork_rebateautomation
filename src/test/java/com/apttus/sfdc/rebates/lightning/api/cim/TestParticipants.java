@@ -25,7 +25,8 @@ public class TestParticipants {
 	private CIM cim;
 	private Map<String, String> jsonData;
 	private HashMap<String, String> tempjsonData;
-	Response response;
+	private Response response;
+	private String incentiveTemplateIdTiered;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -37,6 +38,9 @@ public class TestParticipants {
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
+		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
+		incentiveTemplateIdTiered = cim.getTemplateIdForIncentives(jsonData);
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -47,13 +51,11 @@ public class TestParticipants {
 
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
 	public void addParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
-		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");		
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
-
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		cim.addParticipants(jsonData);
 		response = cim.getParticipantsDetails();
@@ -64,8 +66,7 @@ public class TestParticipants {
 			"Regression", "API", "Medium" })
 	public void deleteParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
-		String incentiveTemplateId = cim.getTemplateIdForIncentives(jsonData);
-		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);

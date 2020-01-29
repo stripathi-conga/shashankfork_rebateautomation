@@ -18,14 +18,15 @@ public class URLGenerator {
 	public String mapTemplateToDatasourceURL = "/sobjects/TemplateDataSourceMapping__c/";
 	public String linkTemplatesURL = "/sobjects/IncentiveProgramTemplateMap__c/";
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,ProgramSubType__c,ProgramType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where id = '{LinkTemplateId}'";
-	public String getLinkTemplatesViaProgramTypeURL = "/query/?q=SELECT Id,Name,ProgramSubType__c,ProgramType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where ProgramType__c = '{ProgramType}'";
+	public String getLinkTemplatesViaProgramTypeAndSubtypeURL = "/query/?q=SELECT Id,Name,ProgramSubType__c,ProgramType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where ProgramType__c = '{ProgramType}' and ProgramSubType__c = '{ProgramSubType}'";
 	public String incentiveURL = "/sobjects/Apttus_Config2__Incentive__c/";
-	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,Apttus_Config2__SubUseType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
+	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,ProgramType__c,ProgramSubType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
 	public String createAccountURL = "/sobjects/Account/";
 	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
 	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";
 	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";
 	public String getParticipantsViaIncentiveIdURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where Incentive__c='{IncentiveId}'";
+	public String getProductIdURL = "/query/?q=SELECT Name,ProductCode,Id,IsActive FROM Product2 where name = '{Product}'";	
 	
 	public URLGenerator(String instanceURL) {
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
@@ -42,14 +43,14 @@ public class URLGenerator {
 		this.qnbLayoutIdURL = baseURL + this.qnbLayoutIdURL;
 		this.getqnblayoutURL = baseURL + this.getqnblayoutURL;
 		this.getLinkTemplatesViaIDURL = baseURL + this.getLinkTemplatesViaIDURL;
-		this.getLinkTemplatesViaProgramTypeURL = baseURL + this.getLinkTemplatesViaProgramTypeURL;
+		this.getLinkTemplatesViaProgramTypeAndSubtypeURL = baseURL + this.getLinkTemplatesViaProgramTypeAndSubtypeURL;
 		this.incentiveURL = baseURL + this.incentiveURL;
 		this.getIncentiveURL = baseURL + this.getIncentiveURL;
 		this.createAccountURL = baseURL + this.createAccountURL;
 		this.getAccountURL = baseURL + this.getAccountURL;
-		this.addParticipantsURL= baseURL + this.addParticipantsURL;
-		this.getParticipantsURL= baseURL + this.getParticipantsURL;
-		this.getParticipantsViaIncentiveIdURL=baseURL+ this.getParticipantsViaIncentiveIdURL;
-
+		this.addParticipantsURL = baseURL + this.addParticipantsURL;
+		this.getParticipantsURL = baseURL + this.getParticipantsURL;
+		this.getParticipantsViaIncentiveIdURL = baseURL+ this.getParticipantsViaIncentiveIdURL;
+		this.getProductIdURL = baseURL + this.getProductIdURL;
 	}
 }
