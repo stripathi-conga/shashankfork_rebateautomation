@@ -1,12 +1,13 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewIncentivePojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.QnBAddBenefitPojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
@@ -19,6 +20,11 @@ public class CIM extends CIMAdmin {
 	private Response response;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
+	public CreateNewAccountPojo account = new CreateNewAccountPojo();
+	public AddParticipantPojo participantsData = new AddParticipantPojo();
+	public QnBAddBenefitPojo qnbData = new QnBAddBenefitPojo();
+	public Map<String, Map<String, String>> qualificationTierDataMap;
+	public Map<String, Map<String, String>> benefitTierDataMap;
 	
 	public CreateNewIncentivePojo getIncentiveData() {
 		return incentiveData;
@@ -27,9 +33,6 @@ public class CIM extends CIMAdmin {
 	public void setIncentiveData(CreateNewIncentivePojo incentiveData) {
 		this.incentiveData = incentiveData;
 	}
-
-	public CreateNewAccountPojo account = new CreateNewAccountPojo();
-	public AddParticipantPojo participantsData = new AddParticipantPojo();
 
 	public AddParticipantPojo getParticipantData() {
 		return participantsData;
@@ -48,9 +51,10 @@ public class CIM extends CIMAdmin {
 		JsonObject resp;
 		JsonArray records;
 		int count;
-		mapData.put("ProgramType__c", testData.get("Apttus_Config2__UseType__c"));
+		mapData.put("ProgramType__c", testData.get("ProgramType__c"));
+		mapData.put("ProgramSubType__c", testData.get("ProgramSubType__c"));
 		try {
-			response = getLinkTemplatesViaProgramType(mapData);
+			response = getLinkTemplatesViaProgramTypeAndSubtype(mapData);
 			resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 			count = resp.get("totalSize").getAsInt();
 			records = resp.getAsJsonArray("records");
@@ -158,13 +162,13 @@ public class CIM extends CIMAdmin {
 	}
 
 	public Response addParticipants(Map<String, String> testData) throws ApplicationException {
-		String participantid;
+		String participantId;
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
 			validateResponseCode(response, RebatesConstants.responseCreated);
-			participantid = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			participantsData.setParticipantsId(participantid);
+			participantId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			participantsData.setParticipantsId(participantId);
 			return response;
 			
 		} catch (Exception e) {
@@ -198,12 +202,10 @@ public class CIM extends CIMAdmin {
 		try {
 			response = sfdcRestUtils.getData(
 					urlGenerator.getParticipantsViaIncentiveIdURL.replace("{IncentiveId}", participantsData.getIncentive__c()));
-			validateResponseCode(response, RebatesConstants.responseOk);
-						
+			validateResponseCode(response, RebatesConstants.responseOk);						
 		} catch (Exception e) {
 			throw new ApplicationException("Get Participant Details API call failed with exception trace : " + e);
 		}
-		return response;
-		
+		return response;		
 	}
 }

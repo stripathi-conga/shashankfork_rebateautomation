@@ -22,18 +22,18 @@
 	},
 	"createCalcFormulaIdBenefit": {
 		"Type__c": "Benefit",
-		 "Status__c":"Active",
+		"Status__c": "Active",
 		"Name": "Auto_Benefit SUM(Rebate_Amount)"
 	},
 	"createCalcFormulaIdQualification": {
 		"Type__c": "Qualification",
 		"Name": "Auto_Qualification SUM(Rebate_Amount)",
-		 "Status__c":"Active"
+		"Status__c": "Active"
 	},
 	"linkCalcFormulaToExpressionId": {
 		"ReferenceName__c": "Auto SUM(Rebate_Amount)",
 		"Sequence__c": "1",
-		"Status__c":"Active",
+		"Status__c": "Active",
 		"Type__c": "Line"
 	},
 	"createNewTemplateAPI": {
@@ -48,13 +48,12 @@
 	"createNewLinkTemplateSubTypeTieredAPI": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Tiered",
-		"Status__c":"Draft"
+		"Status__c": "Draft"
 	},
-	
 	"createNewLinkTemplateSubTypeDiscreteAPI": {
 		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Benefit Product Discrete",
-		"Status__c":"Draft"
+		"Status__c": "Draft"
 	},
 	"updateTemplateAPI": {
 		"Name": "{Random}",
@@ -63,6 +62,6 @@
 	},
 	"createDiscreteQnBLayoutAPI": {
 		"type__c": "Benefit Product",
-    "tier__c": "Discrete"
+		"tier__c": "Discrete"
 	}
 }
