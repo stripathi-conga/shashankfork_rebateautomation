@@ -1,13 +1,11 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewIncentivePojo;
-import com.apttus.sfdc.rebates.lightning.api.pojo.QnBAddBenefitPojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
@@ -21,10 +19,7 @@ public class CIM extends CIMAdmin {
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
-	public AddParticipantPojo participantsData = new AddParticipantPojo();
-	public QnBAddBenefitPojo qnbData = new QnBAddBenefitPojo();
-	public Map<String, Map<String, String>> qualificationTierDataMap;
-	public Map<String, Map<String, String>> benefitTierDataMap;
+	public AddParticipantPojo participantsData = new AddParticipantPojo();	
 	
 	public CreateNewIncentivePojo getIncentiveData() {
 		return incentiveData;
@@ -208,4 +203,5 @@ public class CIM extends CIMAdmin {
 		}
 		return response;		
 	}
+
 }
