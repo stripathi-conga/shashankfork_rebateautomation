@@ -104,8 +104,6 @@ public class CIM extends CIMAdmin {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getIncentiveURL.replace("{incentiveId}", incentiveData.getIncentiveId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
-			System.out.println("incentiveId  "+ incentiveData.getIncentiveId());
-			System.out.println(response);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Incentive Details API call failed with exception trace : " + e);
