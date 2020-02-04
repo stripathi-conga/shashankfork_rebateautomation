@@ -10,7 +10,8 @@ public class CreateNewIncentivePojo {
 	
 	private String Apttus_Config2__Description__c;
 	private String MeasurementFrequency__c;
-	private String ProgramTemplateId__c;
+	private String ProgramTemplateId__c; 
+	
 	private String Apttus_Config2__Status__c;
 	private String Apttus_Config2__ExpirationDate__c;
 	private String Calendar__c;
@@ -26,23 +27,23 @@ public class CreateNewIncentivePojo {
 	private String Apttus_Config2__EffectiveDate__c;
 	private String Apttus_Config2__Sequence__c;
 	public String incentiveId;
-	private String ProgramType__c;
-	private String ProgramSubType__c;
+	private String IncentiveType__c;
+	private String IncentiveSubType__c;
 	
-	public String getProgramSubType__c() {
-		return ProgramSubType__c;
+	public String geIncentiveSubType__c() {
+		return IncentiveSubType__c;
 	}
 
-	public void setProgramSubType__c(String programSubType__c) {
-		ProgramSubType__c = programSubType__c;
+	public void setIncentiveSubType__c(String incentiveSubType__c) {
+		IncentiveSubType__c = incentiveSubType__c;
 	}
 
-	public String getProgramType__c() {
-		return ProgramType__c;
+	public String getIncentiveType__c() {
+		return IncentiveType__c;
 	}
 
-	public void setProgramType__c(String programType__c) {
-		ProgramType__c = programType__c;
+	public void setProgramType__c(String incentiveType__c) {
+		IncentiveType__c = incentiveType__c;
 	}
 	
 	public String getIncentiveId() {
@@ -215,10 +216,10 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setPayoutFrequency__c(testData.get("PayoutFrequency__c"));
 		createNewIncentive.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
 		createNewIncentive.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
-		createNewIncentive.setProgramTemplateId__c(testData.get("ProgramTemplateId__c"));
+		createNewIncentive.setProgramTemplateId__c(testData.get("Id"));
 		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
-		createNewIncentive.setProgramType__c(testData.get("ProgramType__c"));
-		createNewIncentive.setProgramSubType__c(testData.get("ProgramSubType__c"));
+		createNewIncentive.setProgramType__c(testData.get("IncentiveType__c"));
+		createNewIncentive.setIncentiveSubType__c(testData.get("IncentiveSubType__c"));
 		if (testData.get("BenefitLevel__c") != null) {
 			if (testData.get("BenefitLevel__c").equals("Agreement Account")) {
 				createNewIncentive.setAccountId__c(cim.getAccountId(testData.get("AccountName")));

@@ -73,9 +73,11 @@ public class TestDatasource extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
+		
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
+		 
 	}
 
 	@Test(description = "TC371- Verify the Data Source with multiple combination", groups = { "Regression", "Medium",

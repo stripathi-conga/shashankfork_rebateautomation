@@ -5,9 +5,9 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.google.gson.Gson;
 
 public class CreateLinkTemplatesPojo {
-	private String ProgramType__c;
+	private String IncentiveType__c;
 	private String TemplateId__c;
-	private String ProgramSubType__c;
+	private String IncentiveSubType__c;
 	public String linkTemplateId;
 	public String linkTemplateName;
 	private String Status__c;
@@ -36,12 +36,12 @@ public class CreateLinkTemplatesPojo {
 		this.linkTemplateId = linkTemplateId;
 	}
 
-	public String getProgramType__c() {
-		return ProgramType__c;
+	public String getIncentiveType__c() {
+		return IncentiveType__c;
 	}
 
-	public void setProgramType__c(String programType__c) {
-		this.ProgramType__c = programType__c;
+	public void setIncentiveType__c(String incentiveType__c) {
+		this.IncentiveType__c = incentiveType__c;
 	}
 
 	public String getTemplateId__c() {
@@ -52,19 +52,19 @@ public class CreateLinkTemplatesPojo {
 		this.TemplateId__c = templateId__c;
 	}
 
-	public String getProgramSubType__c() {
-		return ProgramSubType__c;
+	public String IncentiveSubType__c() {
+		return IncentiveSubType__c;
 	}
 
-	public void setProgramSubType__c(String programSubType__c) {
-		this.ProgramSubType__c = programSubType__c;
+	public void setIncentiveSubType__c(String incentiveSubType__c) {
+		this.IncentiveSubType__c = incentiveSubType__c;
 	}
 
 	public String createLinkTemplateRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 
 		CreateLinkTemplatesPojo linkTemplate = new CreateLinkTemplatesPojo();
-		linkTemplate.setProgramType__c(testData.get("ProgramType__c"));
-		linkTemplate.setProgramSubType__c(testData.get("ProgramSubType__c"));
+		linkTemplate.setIncentiveType__c(testData.get("IncentiveType__c"));
+		linkTemplate.setIncentiveSubType__c(testData.get("IncentiveSubType__c"));
 		linkTemplate.setTemplateId__c(cimAdmin.getTemplateData().getTemplateId());
 		linkTemplate.setStatus__c(testData.get("Status__c"));
 		cimAdmin.setLinkTemplatesData(linkTemplate);
