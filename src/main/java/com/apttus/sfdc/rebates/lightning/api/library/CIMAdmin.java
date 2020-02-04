@@ -129,6 +129,7 @@ public class CIMAdmin {
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionIdURL, requestString);
 			validateResponseCode(response, RebatesConstants.responseCreated);
 			fieldExpressionId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+			
 			return fieldExpressionId;
 		} catch (Exception e) {
 			throw new ApplicationException("Create FieldExpressionId API call failed with exception trace : " + e);
@@ -242,7 +243,7 @@ public class CIMAdmin {
 	}
 
 	public Response createLinkTemplates(Map<String, String> testData) throws ApplicationException {
-		response = getLinkTemplatesViaProgramTypeAndSubType(testData);
+		response = getLinkTemplatesViaIncentiveTypeAndSubtype(testData);
 		String linkTemplateId = getActiveTemplateIdFromGetLinkTemplates(response, testData);
 		if (!(linkTemplateId == null)) {
 			deactivateLinkTemplate();
@@ -275,15 +276,15 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response getLinkTemplatesViaProgramTypeAndSubType(Map<String, String> testData) throws ApplicationException {
+	public Response getLinkTemplatesViaIncentiveTypeAndSubtype(Map<String, String> testData) throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaProgramTypeAndSubtypeURL
-					.replace("{ProgramType}", testData.get("ProgramType__c")).replace("{ProgramSubType}", testData.get("ProgramSubType__c")));
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIncentiveTypeAndSubtypeURL
+					.replace("{IncentiveType}", testData.get("IncentiveType__c")).replace("{IncentiveSubType}", testData.get("IncentiveSubType__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"Get LinkTemplates using ProgramType and ProgramSubType, API call failed with exception trace : "
+					"Get LinkTemplates using IncentiveType and IncentiveSubType, API call failed with exception trace : "
 							+ e);
 		}
 	}
@@ -309,8 +310,8 @@ public class CIMAdmin {
 			return activeInactiveLinkTemplateId;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"No Active LinkTemplate Exists for ProgramType : " + testData.get("ProgramType__c")
-							+ " and ProgramSubType : " + testData.get("ProgramSubType__c") + ". " + e);
+					"No Active LinkTemplate Exists for IncentiveType : " + testData.get("IncentiveType__c")
+							+ " and IncentiveSubType : " + testData.get("IncentiveSubType__c") + ". " + e);
 		}
 	}
 

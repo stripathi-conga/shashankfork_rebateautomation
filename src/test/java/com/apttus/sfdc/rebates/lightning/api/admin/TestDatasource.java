@@ -72,8 +72,6 @@ public class TestDatasource extends UnifiedFramework {
 		cimAdmin.createDataSource(jsonData);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
-
-		
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);

@@ -56,12 +56,12 @@
 		"Status__c": "Draft"
 	},
 	"autoNewLinkTemplateSubTypeTieredAPI": {
-		"ProgramType__c": "Automation Rebate",
+		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Automation Benefit Product Tiered",
 		"Status__c": "Draft"
 	},
 	"autoNewLinkTemplateSubTypeDiscreteAPI": {
-		"ProgramType__c": "Automation Rebate",
+		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Automation Benefit Product Discrete",
 		"Status__c": "Draft"
 	},

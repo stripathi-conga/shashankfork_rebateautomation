@@ -35,12 +35,12 @@ public class TestIncentives {
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
-		
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateDiscrete");
 		incentiveTemplateIdDiscrete = cim.getTemplateIdForIncentives(jsonData);
-		
+				
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
 		incentiveTemplateIdTiered = cim.getTemplateIdForIncentives(jsonData);
+		 		 
 	}
 
 	@BeforeMethod(alwaysRun = true)
