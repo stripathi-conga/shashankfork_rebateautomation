@@ -481,7 +481,7 @@ public class CIMAdmin {
 			linkTemplatesData.setLinkTemplateId(currentLinkTemplateId);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Create New Link Templates API call did not fail for Negative Scenario with exception trace : " + e);
+			throw new ApplicationException("Create New Link Templates API call did not fail for Negative Scenario with exception trace :" + e);
 		}
 	}
 }
