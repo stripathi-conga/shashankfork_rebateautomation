@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 
 public class GetCalculationFormulaIdPojo {
 
-	private String Type__c;
+	private String FormulaType__c;
 	private String IsStep__c;
 	private String Name;
 	private String Status__c;
@@ -18,12 +18,12 @@ public class GetCalculationFormulaIdPojo {
 		Status__c = status__c;
 	}
 
-	public String getType__c() {
-		return Type__c;
+	public String getFormulaType__c() {
+		return FormulaType__c;
 	}
 
-	public void setType__c(String type__c) {
-		this.Type__c = type__c;
+	public void setFormulaType__c(String formulaType__c) {
+		this.FormulaType__c = formulaType__c;
 	}
 
 	public String getIsStep__c() {
@@ -45,7 +45,7 @@ public class GetCalculationFormulaIdPojo {
 	public String getCalculationFormulaIdRequest(Map<String, String> testData) {
 		GetCalculationFormulaIdPojo getCalcFormulaId = new GetCalculationFormulaIdPojo();
 		getCalcFormulaId.setIsStep__c("true");
-		getCalcFormulaId.setType__c(testData.get("Type__c"));
+		getCalcFormulaId.setFormulaType__c(testData.get("FormulaType__c"));
 		getCalcFormulaId.setName(testData.get("Name"));
 		getCalcFormulaId.setStatus__c(testData.get("Status__c"));
 		return new Gson().toJson(getCalcFormulaId);

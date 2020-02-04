@@ -81,7 +81,7 @@ public class CIM extends CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException(
 					"No Active/Inactive LinkTemplate Exists for IncentiveType : " + testData.get("IncentiveType__c")
-							+ " and IncentiveSubType : " + testData.get("IncentiveType__c") + ". " + e);
+							+ " and IncentiveSubType : " + testData.get("IncentiveSubType__c") + ". " + e);
 		}
 	}
 
@@ -105,6 +105,7 @@ public class CIM extends CIMAdmin {
 					.getData(urlGenerator.getIncentiveURL.replace("{incentiveId}", incentiveData.getIncentiveId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			System.out.println("incentiveId  "+ incentiveData.getIncentiveId());
+			System.out.println(response);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Incentive Details API call failed with exception trace : " + e);
