@@ -12,8 +12,8 @@
 		"MeasurementLevel__c": "Agreement Account",
 		"MeasurementFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Tiered"
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Tiered"
 	},
 	"createNewIncentiveAgreementAccount": {
 		"Name": "{Random}",
@@ -29,8 +29,8 @@
 		"MeasurementLevel__c": "Agreement Account",
 		"MeasurementFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Discrete"
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Discrete"
 	},
 	"updateIncentive": {
 		"BenefitLevel__c": "Agreement Account",
@@ -52,11 +52,11 @@
 		"AccountName": "Automation_Participant_Account_3"
 	},
 	"activeTemplateIdForRebateTiered": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Tiered"
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Tiered"
 	},
 	"activeTemplateIdForRebateDiscrete": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Discrete"
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Discrete"
 	}
 }

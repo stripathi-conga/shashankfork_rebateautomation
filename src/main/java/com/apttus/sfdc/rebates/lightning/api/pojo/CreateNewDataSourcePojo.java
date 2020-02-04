@@ -14,7 +14,7 @@ public class CreateNewDataSourcePojo {
 	private String TransactionMetaData__c;
 	private String FileExtension__c;
 	private String CalculationDateAttr__c;
-	private String Program_Account_Attr__c;
+	private String ProgramAccountAttr__c;
 	public String dataSourceId;
 
 	public String getDataSourceId() {
@@ -81,26 +81,26 @@ public class CreateNewDataSourcePojo {
 		this.CalculationDateAttr__c = calculationDateAttr__c;
 	}
 
-	public String getProgram_Account_Attr__c() {
-		return Program_Account_Attr__c;
+	public String getProgramAccountAttr__c() {
+		return ProgramAccountAttr__c;
 	}
 
-	public void setProgram_Account_Attr__c(String program_Account_Attr__c) {
-		this.Program_Account_Attr__c = program_Account_Attr__c;
+	public void setProgramAccountAttr__c(String programAccountAttr__c) {
+		this.ProgramAccountAttr__c = programAccountAttr__c;
 	}
 
 	public String createDataSourceRequest(Map<String, String> testData, CIMAdmin cimAdmin) {
 		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo();
 		createDataSource.setName__c(testData.get("Name__c"));
 		if (testData.get("Name__c").equalsIgnoreCase("{RANDOM}")) {
-			createDataSource.setName__c("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
+			createDataSource.setName__c("SHASHANK_01" + SFDCHelper.randomNumberGenerator());
 		}		
 		createDataSource.setCalculationDateAttr__c(testData.get("CalculationDateAttr__c"));
 		createDataSource.setDelimiter__c(testData.get("Delimiter__c"));
 		createDataSource.setFileExtension__c(testData.get("FileExtension__c"));
 		createDataSource.setFileSuffixToignore__c(testData.get("FileSuffixToignore__c"));
 		createDataSource.setProductAttr__c(testData.get("ProductAttr__c"));
-		createDataSource.setProgram_Account_Attr__c(testData.get("Program_Account_Attr__c"));
+		createDataSource.setProgramAccountAttr__c(testData.get("ProgramAccountAttr__c"));
 		createDataSource.setTransactionMetaData__c(testData.get("TransactionMetaData__c"));
 		cimAdmin.setDataSourceData(createDataSource);
 		return new Gson().toJson(createDataSource);

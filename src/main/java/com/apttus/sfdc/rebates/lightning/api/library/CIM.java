@@ -46,10 +46,10 @@ public class CIM extends CIMAdmin {
 		JsonObject resp;
 		JsonArray records;
 		int count;
-		mapData.put("ProgramType__c", testData.get("ProgramType__c"));
-		mapData.put("ProgramSubType__c", testData.get("ProgramSubType__c"));
+		mapData.put("IncentiveType__c", testData.get("IncentiveType__c"));
+		mapData.put("IncentiveSubType__c", testData.get("IncentiveSubType__c"));
 		try {
-			response = getLinkTemplatesViaProgramTypeAndSubType(mapData);
+			response = getLinkTemplatesViaIncentiveTypeAndSubtype(mapData);
 			resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 			count = resp.get("totalSize").getAsInt();
 			records = resp.getAsJsonArray("records");
@@ -80,8 +80,8 @@ public class CIM extends CIMAdmin {
 			return templateId;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"No Active/Inactive LinkTemplate Exists for ProgramType : " + testData.get("ProgramType__c")
-							+ " and ProgramSubType : " + testData.get("ProgramSubType__c") + ". " + e);
+					"No Active/Inactive LinkTemplate Exists for IncentiveType : " + testData.get("IncentiveType__c")
+							+ " and IncentiveSubType : " + testData.get("IncentiveType__c") + ". " + e);
 		}
 	}
 
@@ -104,6 +104,7 @@ public class CIM extends CIMAdmin {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getIncentiveURL.replace("{incentiveId}", incentiveData.getIncentiveId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
+			System.out.println("incentiveId  "+ incentiveData.getIncentiveId());
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Incentive Details API call failed with exception trace : " + e);
