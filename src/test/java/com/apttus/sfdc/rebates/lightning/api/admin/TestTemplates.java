@@ -70,9 +70,11 @@ public class TestTemplates extends UnifiedFramework {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		
 		cimAdmin.deleteTemplate();
 		response = cimAdmin.getTemplate();
 		responseValidator.validateDeleteSuccess(response);
+		 
 	}
 
 	@Test(description = "TC409-Unable to Delete  Active Template", groups = { "Regression", "API", "High" })

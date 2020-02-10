@@ -21,12 +21,12 @@
 		"Name": "Auto SUM(Rebate_Amount)"
 	},
 	"createCalcFormulaIdBenefit": {
-		"Type__c": "Benefit",
+		"FormulaType__c": "Benefit",
 		"Status__c": "Active",
 		"Name": "Auto_Benefit SUM(Rebate_Amount)"
 	},
 	"createCalcFormulaIdQualification": {
-		"Type__c": "Qualification",
+		"FormulaType__c": "Qualification",
 		"Name": "Auto_Qualification SUM(Rebate_Amount)",
 		"Status__c": "Active"
 	},
@@ -46,22 +46,22 @@
 		"tier__c": "Tiered"
 	},
 	"createNewLinkTemplateSubTypeTieredAPI": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Tiered",
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Tiered",
 		"Status__c": "Draft"
 	},
 	"createNewLinkTemplateSubTypeDiscreteAPI": {
-		"ProgramType__c": "Rebate",
-		"ProgramSubType__c": "Benefit Product Discrete",
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Discrete",
 		"Status__c": "Draft"
 	},
 	"autoNewLinkTemplateSubTypeTieredAPI": {
-		"ProgramType__c": "Automation Rebate",
+		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Automation Benefit Product Tiered",
 		"Status__c": "Draft"
 	},
 	"autoNewLinkTemplateSubTypeDiscreteAPI": {
-		"ProgramType__c": "Automation Rebate",
+		"ProgramType__c": "Rebate",
 		"ProgramSubType__c": "Automation Benefit Product Discrete",
 		"Status__c": "Draft"
 	},
