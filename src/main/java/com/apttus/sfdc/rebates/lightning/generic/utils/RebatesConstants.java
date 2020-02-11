@@ -2,6 +2,12 @@ package com.apttus.sfdc.rebates.lightning.generic.utils;
 
 public class RebatesConstants {
 
+	
+	public static String benefitFormulaId;
+	public static String qualificationFormulaId;
+	public static String incentiveTemplateIdBenefitProductTiered;
+	public static String incentiveTemplateIdBenefitProductDiscrete;
+	
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
 	public static final int responseNocontent = 204;

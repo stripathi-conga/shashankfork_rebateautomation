@@ -93,7 +93,7 @@ public class CreateNewDataSourcePojo {
 		CreateNewDataSourcePojo createDataSource = new CreateNewDataSourcePojo();
 		createDataSource.setName__c(testData.get("Name__c"));
 		if (testData.get("Name__c").equalsIgnoreCase("{RANDOM}")) {
-			createDataSource.setName__c("SHASHANK_01" + SFDCHelper.randomNumberGenerator());
+			createDataSource.setName__c("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
 		}		
 		createDataSource.setCalculationDateAttr__c(testData.get("CalculationDateAttr__c"));
 		createDataSource.setDelimiter__c(testData.get("Delimiter__c"));

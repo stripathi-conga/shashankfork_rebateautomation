@@ -37,7 +37,6 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	//TDOD -  Shashank will check this methos and optimize it
 	public void validateDeleteSuccess(Response response) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
@@ -111,7 +110,6 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("IncentiveSubType__c").getAsString(),
 				testData.get("IncentiveSubType__c"), "Validate Incentive SubType");	 
 		softassert.assertAll();
-
 	}
 
 	public void validateTemplateStatus(Response response, CIMAdmin cimAdmin, String Status) {
@@ -189,7 +187,5 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(recordsParticipant2.get("Account__c").getAsString(),
 				testData.get("Automation_Participant_Account_2"), "Validate Incentive Participant Id");
 		softassert.assertAll();
-
 	}
 }
-
