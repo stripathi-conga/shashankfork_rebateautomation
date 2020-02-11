@@ -139,7 +139,7 @@ public class TestIncentiveQnB {
 		benefitProductQnB.createNewIncentive(jsonData);
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
-		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "Tiered");
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
 		benefitProductQnB.addIncentiveQnB(jsonArrayData);
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
@@ -154,7 +154,7 @@ public class TestIncentiveQnB {
 		benefitProductQnB.createNewIncentive(jsonData);
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
-		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "Discrete");
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
 		benefitProductQnB.addIncentiveQnB(jsonArrayData);
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);

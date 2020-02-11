@@ -10,14 +10,12 @@ import com.google.gson.JsonParser;
 import com.jayway.restassured.response.Response;
 
 public class BenefitProductValidator extends ResponseValidatorBase {
-
 	protected JsonParser parser = new JsonParser();
 	protected SoftAssert softassert;
 	protected static final DecimalFormat decimalFormatter = new DecimalFormat(".##");
 
 	public void validateIncentiveQnB(String request, Response response) throws ApplicationException {
 		softassert = new SoftAssert();
-
 		String responseBody = response.getBody().asString();
 		JsonArray qnbResArray = parser.parse(responseBody).getAsJsonArray();
 		int responseSize = qnbResArray.size();
@@ -70,9 +68,9 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 				softassert.assertEquals(resQualification.get("IsQualification").getAsString(),
 						reqQualification.get("IsQualification").getAsString(),
 						"Verify IsQualification falg value for Qualification");
+				softassert.assertAll();
 
 				// ------------ Verify Benefit Details --------------------------
-
 				JsonObject reqBenefit = reqQnbLinesData.get("QnBLines").getAsJsonArray().get(1).getAsJsonObject();
 				JsonObject resBenefit = resQnbLinesData.get("QnBLines").getAsJsonArray().get(1).getAsJsonObject();
 

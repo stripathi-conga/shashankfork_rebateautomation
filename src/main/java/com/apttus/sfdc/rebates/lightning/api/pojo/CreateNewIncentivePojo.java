@@ -227,7 +227,7 @@ public class CreateNewIncentivePojo {
 		}
 		cim.setIncentiveData(createNewIncentive);
 		return new Gson().toJson(createNewIncentive);
-	}	
+	}
 }
 
 /*

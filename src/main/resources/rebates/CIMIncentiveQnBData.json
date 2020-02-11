@@ -1,17 +1,5 @@
 {
-	"XXTBenefitOnly": [
-		{
-			"Apttus_Config2__Sequence__c": 1,
-			"Apttus_Config2__EffectiveDate__c": "2020-01-01",
-			"Apttus_Config2__ExpirationDate__c": "2020-01-31",
-			"TierCount__c": "2",
-			"Name": "SEC-00000001",
-			"PriceRulesetId__c": "a2W3i000000DkgCEAS",
-			"QualificationName": "Q1",
-			"Apttus_Config2__RuleType__c": "Qualification"
-		}
-	],
-	"Tiered": [
+	"XXTBenefitProduct": [
 		{
 			"SectionId": "SEC-00000001",
 			"TierCount": "2",
@@ -45,7 +33,7 @@
 			"EndDate": "2020-01-31"
 		}
 	],
-	"Discrete": [
+	"XXDBenefitProduct": [
 		{
 			"SectionId": "SEC-00000001",
 			"QualificationProductType": "Product",

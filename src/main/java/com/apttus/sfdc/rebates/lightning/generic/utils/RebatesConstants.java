@@ -1,8 +1,8 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
 public class RebatesConstants {
-
 	
+	// These values will be set in @BeforeSuite and used in all Incentive classes
 	public static String benefitFormulaId;
 	public static String qualificationFormulaId;
 	public static String incentiveTemplateIdBenefitProductTiered;
