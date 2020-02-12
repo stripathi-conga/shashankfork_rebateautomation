@@ -32,6 +32,7 @@ public class URLGenerator {
 	// ----------------- URL Exposed for apex rest Custom API ------------------
 	public String addIncentiveQnBURL = "/services/apexrest/api/QnB";
 	public String getIncentiveQnBURL = "/services/apexrest/api/QnB?incentiveId={incentiveId}";
+	public String deleteQnBBenefitLineURL = "/services/apexrest/api/QnB?id={sectionId}";
 
 	public URLGenerator(String instanceURL) {
 		// ----------------- URL for SObjects as API ---------------------
@@ -62,5 +63,6 @@ public class URLGenerator {
 		// ----------------- URL Exposed for apex rest Custom API -------------------
 		this.addIncentiveQnBURL = instanceURL + this.addIncentiveQnBURL;
 		this.getIncentiveQnBURL = instanceURL + this.getIncentiveQnBURL;
+		this.deleteQnBBenefitLineURL = instanceURL + this.deleteQnBBenefitLineURL;
 	}
 }

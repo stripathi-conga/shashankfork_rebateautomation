@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
@@ -7,6 +8,7 @@ import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewIncentivePojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -21,6 +23,7 @@ public class CIM extends CIMAdmin {
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
 	public AddParticipantPojo participantsData = new AddParticipantPojo();
 	public Map<String, String> mapRequestResponse;
+	public Map<String, String> sectionIdMap;
 
 	public void setRequestValue(String key, String value) {
 		mapRequestResponse.put(key, value);
@@ -50,6 +53,52 @@ public class CIM extends CIMAdmin {
 		super(baseURL, sfdcRestUtils);
 	}
 
+	public String getCIMDateValue(String dateValue) throws ApplicationException {
+		SFDCHelper sfdcHelper = new SFDCHelper();
+		String returnDate = null;
+		int year;
+		try {
+			boolean checkDate = sfdcHelper.checkValidDate(dateValue, null);
+			if (checkDate) {
+				returnDate = dateValue;
+			} else {
+				String date = dateValue.toLowerCase();
+				if (date.contains("today")) {
+					returnDate = sfdcHelper.getTodaysDate();
+				} else if (date.contains("startofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-01-01";
+				} else if (date.contains("endofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-12-31";
+				} else if (date.contains("midofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-07-01";
+				} else if (date.contains("startofcurrentmonth")) {
+					returnDate = sfdcHelper.firstDayOfCurrentMonth();
+				} else if (date.contains("endofcurrentmonth")) {
+					returnDate = sfdcHelper.lastDayOfCurrentMonth();
+				} else if (date.contains("startofpreviousmonth")) {
+					returnDate = sfdcHelper.firstDayOfPreviousMonth();
+				} else if (date.contains("startofprevioustwomonth")) {
+					returnDate = sfdcHelper.firstDayOfPreviousTwoMonth();
+				} else if (date.contains("endofnextmonth")) {
+					returnDate = sfdcHelper.lastDayOfNextMonth();
+				} else if (date.contains("incentivestartdate")) {
+					returnDate = incentiveData.getApttus_Config2__EffectiveDate__c();
+				} else if (date.contains("incentiveenddate")) {
+					returnDate = incentiveData.getApttus_Config2__ExpirationDate__c();
+				}
+				if (date.contains("=")) {
+					returnDate = sfdcHelper.getPastorFutureDate(returnDate, date.split("=")[1]);
+				}
+			}
+			return returnDate;
+		} catch (Exception e) {
+			throw new ApplicationException("Getting run time error while using getCIMDateValue : " + e);
+		}
+	}
+	
 	public String getTemplateIdForIncentives(Map<String, String> testData) throws ApplicationException {
 		String templateId = null, status, inactiveLinkTemplateId;
 		JsonObject resp;
