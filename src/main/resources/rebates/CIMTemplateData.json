@@ -1,5 +1,5 @@
 {
-	"createNewIncentiveIndividualParticipant": {
+	"createIncentiveIndividualParticipantBenefitProductTiered": {
 		"Name": "{Random}",
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
 		"Apttus_Config2__ExpirationDate__c": "endofcurrentyear",
@@ -15,7 +15,7 @@
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Tiered"
 	},
-	"createNewIncentiveAgreementAccount": {
+	"createNewIncentiveAgreementAccountBenefitProductDiscrete": {
 		"Name": "{Random}",
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
 		"Apttus_Config2__ExpirationDate__c": "endofcurrentmonth",

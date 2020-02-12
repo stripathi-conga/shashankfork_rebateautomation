@@ -1,7 +1,8 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
 public class URLGenerator {
-	
+
+	// ----------------- URL for SObjects as API ---------------------
 	public String baseURL = null;
 	public String REST_ENDPOINT = "/services/data";
 	public String API_VERSION = "/v47.0";
@@ -26,9 +27,14 @@ public class URLGenerator {
 	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";
 	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";
 	public String getParticipantsViaIncentiveIdURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where Incentive__c='{IncentiveId}'";
-	public String getProductIdURL = "/query/?q=SELECT Name,ProductCode,Id,IsActive FROM Product2 where name = '{Product}'";	
-	
+	public String getProductIdURL = "/query/?q=SELECT Name,ProductCode,Id,IsActive FROM Product2 where name = '{Product}'";
+
+	// ----------------- URL Exposed for apex rest Custom API ------------------
+	public String addIncentiveQnBURL = "/services/apexrest/api/QnB";
+	public String getIncentiveQnBURL = "/services/apexrest/api/QnB?incentiveId={incentiveId}";
+
 	public URLGenerator(String instanceURL) {
+		// ----------------- URL for SObjects as API ---------------------
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
 		this.dataSourceURL = baseURL + this.dataSourceURL;
 		this.getDataSourceURL = baseURL + this.getDataSourceURL;
@@ -50,7 +56,11 @@ public class URLGenerator {
 		this.getAccountURL = baseURL + this.getAccountURL;
 		this.addParticipantsURL = baseURL + this.addParticipantsURL;
 		this.getParticipantsURL = baseURL + this.getParticipantsURL;
-		this.getParticipantsViaIncentiveIdURL = baseURL+ this.getParticipantsViaIncentiveIdURL;
+		this.getParticipantsViaIncentiveIdURL = baseURL + this.getParticipantsViaIncentiveIdURL;
 		this.getProductIdURL = baseURL + this.getProductIdURL;
+
+		// ----------------- URL Exposed for apex rest Custom API -------------------
+		this.addIncentiveQnBURL = instanceURL + this.addIncentiveQnBURL;
+		this.getIncentiveQnBURL = instanceURL + this.getIncentiveQnBURL;
 	}
 }
