@@ -26,7 +26,7 @@ public class TestParticipants {
 	private Map<String, String> jsonData;
 	private HashMap<String, String> tempjsonData;
 	private Response response;
-	private String incentiveTemplateIdTiered;
+	private String incentiveTemplateIdBenefitProductTiered;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -40,7 +40,7 @@ public class TestParticipants {
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
-		incentiveTemplateIdTiered = cim.getTemplateIdForIncentives(jsonData);
+		incentiveTemplateIdBenefitProductTiered = cim.getTemplateIdForIncentives(jsonData);
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -51,8 +51,8 @@ public class TestParticipants {
 
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
 	public void addParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");		
-		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdTiered);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");		
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
@@ -65,8 +65,8 @@ public class TestParticipants {
 	@Test(description = "TC-384 Verify that the user is able to delete a participant added from the grid", groups = {
 			"Regression", "API", "Medium" })
 	public void deleteParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveIndividualParticipant");
-		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdTiered);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);

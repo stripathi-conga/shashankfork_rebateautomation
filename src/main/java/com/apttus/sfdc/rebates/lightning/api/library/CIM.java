@@ -20,7 +20,16 @@ public class CIM extends CIMAdmin {
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
 	public AddParticipantPojo participantsData = new AddParticipantPojo();
-	
+	public Map<String, String> mapRequestResponse;
+
+	public void setRequestValue(String key, String value) {
+		mapRequestResponse.put(key, value);
+	}
+
+	public String getRequestValue(String key) {
+		return mapRequestResponse.get(key);
+	}
+
 	public CreateNewIncentivePojo getIncentiveData() {
 		return incentiveData;
 	}
@@ -35,7 +44,7 @@ public class CIM extends CIMAdmin {
 
 	public void setParticipantData(AddParticipantPojo participantData) {
 		this.participantsData = participantData;
-	}	
+	}
 
 	public CIM(String baseURL, SFDCRestUtils sfdcRestUtils) {
 		super(baseURL, sfdcRestUtils);
@@ -69,7 +78,7 @@ public class CIM extends CIMAdmin {
 						if (status.equals("Inactive")) {
 							inactiveLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
 							linkTemplatesData.setLinkTemplateId(inactiveLinkTemplateId);
-							// Active  the Inactive linkTemplate and get the TemplateId
+							// Active the Inactive linkTemplate and get the TemplateId
 							activateLinkTemplate();
 							templateId = records.get(i).getAsJsonObject().get("TemplateId__c").getAsString();
 							break;
@@ -145,7 +154,7 @@ public class CIM extends CIMAdmin {
 
 	public void updateIncentive(Map<String, String> testData) throws ApplicationException {
 		String updateincentive = incentiveData.getIncentiveId();
-		
+
 		try {
 			requestString = incentiveData.createNewIncentiveRequest(testData, this);
 			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.incentiveURL + updateincentive, requestString);
@@ -165,7 +174,7 @@ public class CIM extends CIMAdmin {
 			participantId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			participantsData.setParticipantsId(participantId);
 			return response;
-			
+
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
 		}
@@ -195,12 +204,57 @@ public class CIM extends CIMAdmin {
 
 	public Response getParticipantIdViaIncentiveId() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(
-					urlGenerator.getParticipantsViaIncentiveIdURL.replace("{IncentiveId}", participantsData.getIncentive__c()));
-			validateResponseCode(response, RebatesConstants.responseOk);						
+			response = sfdcRestUtils.getData(urlGenerator.getParticipantsViaIncentiveIdURL.replace("{IncentiveId}",
+					participantsData.getIncentive__c()));
+			validateResponseCode(response, RebatesConstants.responseOk);
 		} catch (Exception e) {
 			throw new ApplicationException("Get Participant Details API call failed with exception trace : " + e);
 		}
-		return response;		
+		return response;
 	}
+
+	public String deactivateLinkTemplateForIncentives(Map<String, String> testData) throws ApplicationException {
+		String templateId = null, status, activeLinkTemplateId;
+		JsonObject resp;
+		JsonArray records;
+		int count;
+		mapData.put("IncentiveType__c", testData.get("IncentiveType__c"));
+		mapData.put("IncentiveSubType__c", testData.get("IncentiveSubType__c"));
+		try {
+			response = getLinkTemplatesViaIncentiveTypeAndSubtype(mapData);
+			resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+			count = resp.get("totalSize").getAsInt();
+			records = resp.getAsJsonArray("records");
+			if (count > 0) {
+				// Get TemplateId from active linkTemplate
+				for (int i = 0; i < count; i++) {
+					status = records.get(i).getAsJsonObject().get("Status__c").getAsString();
+					if (status.equals("Active")) {
+						activeLinkTemplateId = records.get(i).getAsJsonObject().get("Id").getAsString();
+						deactivateLinkTemplateViaId(activeLinkTemplateId);
+						break;
+					}
+				}
+			}
+			return templateId;
+		} catch (Exception e) {
+			throw new ApplicationException(
+					"Not able to deactivate link template for : " + testData.get("IncentiveType__c")
+							+ " and IncentiveSubType : " + testData.get("IncentiveSubType__c") + ". " + e);
+		}
+	}
+
+	public String getProductId(String productName) throws ApplicationException {
+		String productId;
+		try {
+			response = sfdcRestUtils.getData(urlGenerator.getProductIdURL.replace("{Product}", productName));
+			validateResponseCode(response, RebatesConstants.responseOk);
+			productId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("records").getAsJsonArray()
+					.get(0).getAsJsonObject().get("Id").getAsString();
+			return productId;
+		} catch (Exception e) {
+			throw new ApplicationException("Get Product ID API call failed with exception trace : " + e);
+		}
+	}
+
 }

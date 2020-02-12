@@ -216,7 +216,7 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setPayoutFrequency__c(testData.get("PayoutFrequency__c"));
 		createNewIncentive.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
 		createNewIncentive.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
-		createNewIncentive.setProgramTemplateId__c(testData.get("Id"));
+		createNewIncentive.setProgramTemplateId__c(testData.get("ProgramTemplateId__c"));
 		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
 		createNewIncentive.setProgramType__c(testData.get("IncentiveType__c"));
 		createNewIncentive.setIncentiveSubType__c(testData.get("IncentiveSubType__c"));
@@ -228,8 +228,6 @@ public class CreateNewIncentivePojo {
 		cim.setIncentiveData(createNewIncentive);
 		return new Gson().toJson(createNewIncentive);
 	}
-
-	
 }
 
 /*

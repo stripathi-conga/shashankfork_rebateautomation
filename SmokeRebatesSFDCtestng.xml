@@ -15,7 +15,7 @@
 	<parameter name="qTestPropertyFile" value="SmokeQtest.properties" />
 	<parameter name="buildName" value="0.0.1" />
 	<parameter name="reportName" value="SFDC Rebates Smoke Test" />
-	
+
 	<test name="SFDC Rebates Smoke Test" parallel="classes" group-by-instances="false" preserve-order="true">
 		<groups>
 			<run>
@@ -26,6 +26,7 @@
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestTemplates" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentives" />
+			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentiveQnB" />
 		</classes>
 	</test>
 </suite> 

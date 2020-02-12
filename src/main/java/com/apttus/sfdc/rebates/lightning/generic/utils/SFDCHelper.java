@@ -1,15 +1,24 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class SFDCHelper {
 
@@ -129,4 +138,28 @@ public class SFDCHelper {
 			allData.put(dataToOverrideKeys.getKey(), dataToOverride.get(dataToOverrideKeys.getKey()));
 		return allData;
 	}
+	
+	public static String getResourceFolderPath()	{
+		return System.getProperty("user.dir") + File.separator + "src" + File.separator + "main" + File.separator +
+				"resources" + File.separator + "rebates" + File.separator; 
+	}
+	
+	public static synchronized List<Map<String, String>> readJsonArray(String jsonFileName, String elementName)
+            throws Exception {
+       String filePath = getResourceFolderPath() + jsonFileName;
+       JsonElement root = new JsonParser().parse(new InputStreamReader(new FileInputStream(filePath),"UTF-8"));
+       JsonObject jsonObject = root.getAsJsonObject();
+       JsonElement some = jsonObject.get(elementName);
+       JsonArray testData = some.getAsJsonArray();
+       List<Map<String, String>> jsonData = new ArrayList<Map<String, String>>();
+       for (int i = 0; i < testData.size(); i++) {
+            Map<String, String> testDataMap = new HashMap<String, String>();
+            JsonObject objElement = testData.get(i).getAsJsonObject();
+            for (Map.Entry<String, JsonElement> entry : objElement.entrySet()) {
+                  testDataMap.put(((String) entry.getKey()).toString(), ((JsonElement) entry.getValue()).getAsString());
+            }
+            jsonData.add(testDataMap);
+       }
+       return jsonData;
+ }
 }

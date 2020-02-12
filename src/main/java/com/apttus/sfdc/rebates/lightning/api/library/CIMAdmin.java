@@ -350,6 +350,17 @@ public class CIMAdmin {
 			throw new ApplicationException("Deactivate Link Template API call failed with exception trace : " + e);
 		}
 	}
+	
+	public Response deactivateLinkTemplateViaId(String linkTemplateId) throws ApplicationException {
+		try {
+			requestString = "{\"Status__c\": \"" + RebatesConstants.deactivate + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.linkTemplatesURL + linkTemplateId, requestString);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Deactivate Link Template API call failed with exception trace : " + e);
+		}
+	}
 
 	public String getCIMDateValue(String dateValue) throws ApplicationException {
 		SFDCHelper sfdcHelper = new SFDCHelper();
