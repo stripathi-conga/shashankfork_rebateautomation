@@ -69,12 +69,14 @@ public class TestTemplates extends UnifiedFramework {
 		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);		
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		
 		cimAdmin.deleteTemplate();
 		response = cimAdmin.getTemplate();
-		responseValidator.validateDeleteSuccess(response);
-		 
+		responseValidator.validateDeleteSuccess(response);		 
 	}
 
 	@Test(description = "TC409-Unable to Delete  Active Template", groups = { "Regression", "API", "High" })
@@ -102,6 +104,9 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
@@ -166,6 +171,9 @@ public class TestTemplates extends UnifiedFramework {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 		response = cimAdmin.getTemplate();
@@ -206,6 +214,9 @@ public class TestTemplates extends UnifiedFramework {
 		responseValidator.validateGetTemplate(response, cimAdmin);
 
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
@@ -278,6 +289,9 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);

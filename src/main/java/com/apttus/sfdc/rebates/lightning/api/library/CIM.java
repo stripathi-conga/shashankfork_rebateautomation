@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
+import com.apttus.sfdc.rebates.lightning.api.pojo.ActivateIncentivePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.AddParticipantPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewAccountPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewIncentivePojo;
@@ -18,12 +19,14 @@ public class CIM extends CIMAdmin {
 
 	private String requestString;
 	private Response response;
+	public Map<String, String> mapRequestResponse;
+	public Map<String, String> sectionIdMap;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
 	public AddParticipantPojo participantsData = new AddParticipantPojo();
-	public Map<String, String> mapRequestResponse;
-	public Map<String, String> sectionIdMap;
+	public ActivateIncentivePojo activateIncentive = new ActivateIncentivePojo();
+
 
 	public void setRequestValue(String key, String value) {
 		mapRequestResponse.put(key, value);
@@ -305,5 +308,15 @@ public class CIM extends CIMAdmin {
 			throw new ApplicationException("Get Product ID API call failed with exception trace : " + e);
 		}
 	}
-
+	
+	public Response activateIncentive() throws ApplicationException {
+		try {
+			requestString = activateIncentive.activateIncentiveRequest(getIncentiveData().incentiveId);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.activateIncentiveURL, requestString);
+			validateResponseCode(response, RebatesConstants.responseOk);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Activate Incentive API call failed with exception trace : " + e);
+		}
+	}
 }

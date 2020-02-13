@@ -10,8 +10,7 @@ public class CreateNewIncentivePojo {
 	
 	private String Apttus_Config2__Description__c;
 	private String MeasurementFrequency__c;
-	private String ProgramTemplateId__c; 
-	
+	private String ProgramTemplateId__c;	
 	private String Apttus_Config2__Status__c;
 	private String Apttus_Config2__ExpirationDate__c;
 	private String Calendar__c;
