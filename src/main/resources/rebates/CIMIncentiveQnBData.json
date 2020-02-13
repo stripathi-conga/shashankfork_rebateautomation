@@ -13,8 +13,8 @@
 			"BenefitProductCode": "IN7080",
 			"BenefitAmount": "120;100",
 			"BenefitAliasName":"B1",
-			"StartDate": "2020-01-01",
-			"EndDate": "2020-01-31"
+			"StartDate": "incentivestartdate",
+			"EndDate": "incentiveenddate"
 		},
 		{
 			"SectionId": "SEC-00000002",
@@ -29,8 +29,8 @@
 			"BenefitProductCode": "GC1040",
 			"BenefitAmount": "100;90;80",
 			"BenefitAliasName":"B2",
-			"StartDate": "2020-01-01",
-			"EndDate": "2020-01-31"
+			"StartDate": "incentivestartdate",
+			"EndDate": "incentiveenddate"
 		}
 	],
 	"XXDBenefitProduct": [
@@ -46,8 +46,8 @@
 			"BenefitProductCode": "IN7080",
 			"BenefitAmount": "120",
 			"BenefitAliasName":"B1",
-			"StartDate": "2020-01-01",
-			"EndDate": "2020-01-31"
+			"StartDate": "incentivestartdate",
+			"EndDate": "incentiveenddate"
 		},
 		{
 			"SectionId": "SEC-00000002",
@@ -61,8 +61,11 @@
 			"BenefitProductCode": "GC1040",
 			"BenefitAmount": "100",
 			"BenefitAliasName":"B2",
-			"StartDate": "2020-01-01",
-			"EndDate": "2020-01-31"
+			"StartDate": "incentivestartdate",
+			"EndDate": "incentiveenddate"
 		}
-	]
+	],
+	"deleteBenefitLine":{
+			"SectionId": "SEC-00000002"
+	}
 }

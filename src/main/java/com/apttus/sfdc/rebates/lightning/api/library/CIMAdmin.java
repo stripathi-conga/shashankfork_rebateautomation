@@ -1,19 +1,17 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
-import java.util.Calendar;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
-import com.apttus.sfdc.rebates.lightning.api.pojo.CreateTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateLinkTemplatesPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateNewDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.CreateQnBLayoutIdPojo;
+import com.apttus.sfdc.rebates.lightning.api.pojo.CreateTemplatePojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetCalculationFormulaIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.GetFieldExpressionIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkCalculationFormulaPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.LinkDatasourceToCalculationIdPojo;
 import com.apttus.sfdc.rebates.lightning.api.pojo.MapTemplateAndDataSourcePojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
-import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
@@ -359,48 +357,6 @@ public class CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Deactivate Link Template API call failed with exception trace : " + e);
-		}
-	}
-
-	public String getCIMDateValue(String dateValue) throws ApplicationException {
-		SFDCHelper sfdcHelper = new SFDCHelper();
-		String returnDate = null;
-		int year;
-		try {
-			boolean checkDate = sfdcHelper.checkValidDate(dateValue, null);
-			if (checkDate) {
-				returnDate = dateValue;
-			} else {
-				String date = dateValue.toLowerCase();
-				if (date.contains("today")) {
-					returnDate = sfdcHelper.getTodaysDate();
-				} else if (date.contains("startofcurrentyear")) {
-					year = Calendar.getInstance().get(Calendar.YEAR);
-					returnDate = String.valueOf(year) + "-01-01";
-				} else if (date.contains("endofcurrentyear")) {
-					year = Calendar.getInstance().get(Calendar.YEAR);
-					returnDate = String.valueOf(year) + "-12-31";
-				} else if (date.contains("midofcurrentyear")) {
-					year = Calendar.getInstance().get(Calendar.YEAR);
-					returnDate = String.valueOf(year) + "-07-01";
-				} else if (date.contains("startofcurrentmonth")) {
-					returnDate = sfdcHelper.firstDayOfCurrentMonth();
-				} else if (date.contains("endofcurrentmonth")) {
-					returnDate = sfdcHelper.lastDayOfCurrentMonth();
-				} else if (date.contains("startofpreviousmonth")) {
-					returnDate = sfdcHelper.firstDayOfPreviousMonth();
-				} else if (date.contains("startofprevioustwomonth")) {
-					returnDate = sfdcHelper.firstDayOfPreviousTwoMonth();
-				} else if (date.contains("endofnextmonth")) {
-					returnDate = sfdcHelper.lastDayOfNextMonth();
-				}
-				if (date.contains("=")) {
-					returnDate = sfdcHelper.getPastorFutureDate(returnDate, date.split("=")[1]);
-				}
-			}
-			return returnDate;
-		} catch (Exception e) {
-			throw new ApplicationException("Getting run time error while using getCIMDateValue : " + e);
 		}
 	}
 

@@ -110,4 +110,19 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 			throw new ApplicationException("QnB Validation fails, benefit lines are not added on QnB Page");
 		}
 	}
+	
+	public void validateDeleteQnBBenefitLine(Response response, String sectionId) {
+		softassert = new SoftAssert();
+		String responseBody = response.getBody().asString();
+		JsonArray qnbResArray = parser.parse(responseBody).getAsJsonArray();
+		int responseSize = qnbResArray.size();
+		if (responseSize > 0) {
+			for (int i = 0; i < responseSize; i++) {
+				JsonObject resQnbLinesData = qnbResArray.get(i).getAsJsonObject();
+				String sectiondIdName = resQnbLinesData.get("SectionId").getAsString();
+				softassert.assertNotEquals(sectiondIdName, sectionId, "Benefit Line is not Deleted");
+			}
+		}
+		softassert.assertAll();
+	}
 }
