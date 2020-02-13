@@ -130,7 +130,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1,
-				"Validate response size, Response does not have single record");
+				"Validate response size, Response should have single record");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getTemplateData().getTemplateId(),
@@ -179,7 +179,7 @@ public class ResponseValidatorBase {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 				softassert.assertEquals(resp.get("totalSize").getAsInt(), 2,
-				"Validate response size, Response should have single record");
+				"Validate response size, Response does not have single record");
 		softassert.assertAll();
 		JsonObject recordsParticipant1 = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(recordsParticipant1.get("Account__c").getAsString(),
