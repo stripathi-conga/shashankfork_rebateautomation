@@ -108,6 +108,7 @@ public class TestIncentives {
 		// ------------ Activate Incentive -------------------
 		benefitProductQnB.activateIncentive();
 		response = benefitProductQnB.getIncentiveDetails();
-		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response, benefitProductQnB);
+		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
+				benefitProductQnB.getIncentiveData().incentiveId);
 	}
 }
