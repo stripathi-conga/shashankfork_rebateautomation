@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 public class GetCalculationFormulaIdPojo {
 
 	private String FormulaType__c;
-	private String IsStep__c;
+	private String IsStepBased__c;
 	private String Name;
 	private String Status__c;
 	
@@ -26,12 +26,12 @@ public class GetCalculationFormulaIdPojo {
 		this.FormulaType__c = formulaType__c;
 	}
 
-	public String getIsStep__c() {
-		return IsStep__c;
+	public String getIsStepBased__c() {
+		return IsStepBased__c;
 	}
 
-	public void setIsStep__c(String isStep__c) {
-		this.IsStep__c = isStep__c;
+	public void setIsStepBased__c(String isStep__c) {
+		this.IsStepBased__c = isStep__c;
 	}
 
 	public String getName() {
@@ -44,7 +44,7 @@ public class GetCalculationFormulaIdPojo {
 
 	public String getCalculationFormulaIdRequest(Map<String, String> testData) {
 		GetCalculationFormulaIdPojo getCalcFormulaId = new GetCalculationFormulaIdPojo();
-		getCalcFormulaId.setIsStep__c("true");
+		getCalcFormulaId.setIsStepBased__c("true");
 		getCalcFormulaId.setFormulaType__c(testData.get("FormulaType__c"));
 		getCalcFormulaId.setName(testData.get("Name"));
 		getCalcFormulaId.setStatus__c(testData.get("Status__c"));
@@ -56,7 +56,7 @@ public class GetCalculationFormulaIdPojo {
 
 /*------------------ GetCalculationFormulaId Request ----------------------
 {
-    "IsStep__c": true,
+    "IsStepBased__c": true,
     "Type__c": "Benefit",
     "Name": "AutoBenefit SUM(Rebate_Amount)"
 }*/

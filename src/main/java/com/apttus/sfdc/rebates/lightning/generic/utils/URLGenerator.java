@@ -21,7 +21,7 @@ public class URLGenerator {
 	public String getLinkTemplatesViaIDURL = "/query/?q=SELECT Id,Name,IncentiveSubType__c,IncentiveType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where id = '{LinkTemplateId}'";
 	public String getLinkTemplatesViaIncentiveTypeAndSubtypeURL = "/query/?q=SELECT Id,Name,IncentiveSubType__c,IncentiveType__c,Status__c,TemplateId__c FROM IncentiveProgramTemplateMap__c where IncentiveType__c = '{IncentiveType}' and IncentiveSubType__c = '{IncentiveSubType}'";
 	public String incentiveURL = "/sobjects/Apttus_Config2__Incentive__c/";
-	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,IncentiveType__c,IncentiveSubType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
+	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,Apttus_Config2__Status__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,IncentiveType__c,IncentiveSubType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
 	public String createAccountURL = "/sobjects/Account/";
 	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
 	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";
@@ -33,7 +33,9 @@ public class URLGenerator {
 	public String addIncentiveQnBURL = "/services/apexrest/api/QnB";
 	public String getIncentiveQnBURL = "/services/apexrest/api/QnB?incentiveId={incentiveId}";
 	public String deleteQnBBenefitLineURL = "/services/apexrest/api/QnB?id={sectionId}";
-
+	public String activateIncentiveURL = "/services/apexrest/api/IncentiveProgramDetail";
+	
+	
 	public URLGenerator(String instanceURL) {
 		// ----------------- URL for SObjects as API ---------------------
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;
@@ -64,5 +66,6 @@ public class URLGenerator {
 		this.addIncentiveQnBURL = instanceURL + this.addIncentiveQnBURL;
 		this.getIncentiveQnBURL = instanceURL + this.getIncentiveQnBURL;
 		this.deleteQnBBenefitLineURL = instanceURL + this.deleteQnBBenefitLineURL;
+		this.activateIncentiveURL = instanceURL + this.activateIncentiveURL;
 	}
 }

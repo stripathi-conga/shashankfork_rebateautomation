@@ -15,10 +15,11 @@ public class RebatesConstants {
 	public static final String activate = "Active";
 	public static final String deactivate = "Inactive";
 	public static final String draft = "Draft";
+	public static final String statusActivated = "Activated";
 	public static final String errorCodeCustomValidation = "FIELD_CUSTOM_VALIDATION_EXCEPTION";
 	public static final String errorCodeMissingFields = "REQUIRED_FIELD_MISSING";
 	public static final String messageDeleteActiveInactiveTemplate = "Cannot delete Active or Inactive Template.";
-	public static final String messageMandatoryTemplatefields = "Template must have at least one benefit formula";
+	public static final String messageMandatoryTemplatefields = "Please input mandatory fields";
 	public static final String messageUpdateActiveInactiveTemplate = "Cannot change status from Active/Inactive to Draft";
 	public static final String messageDeleteActiveInactiveLinkTemplate = "Cannot delete Active or Inactive link.";
 	public static final String messageCreateDataSourceWithoutFields = "Required fields are missing: [FileExtension__c, FileSuffixToignore__c, Name__c, TransactionMetaData__c]";

@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
@@ -26,7 +27,6 @@ public class TestParticipants {
 	private Map<String, String> jsonData;
 	private HashMap<String, String> tempjsonData;
 	private Response response;
-	private String incentiveTemplateIdBenefitProductTiered;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -40,7 +40,6 @@ public class TestParticipants {
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
-		incentiveTemplateIdBenefitProductTiered = cim.getTemplateIdForIncentives(jsonData);
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -52,7 +51,7 @@ public class TestParticipants {
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
 	public void addParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");		
-		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdBenefitProductTiered);
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
@@ -66,7 +65,7 @@ public class TestParticipants {
 			"Regression", "API", "Medium" })
 	public void deleteParticipant() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", incentiveTemplateIdBenefitProductTiered);
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
