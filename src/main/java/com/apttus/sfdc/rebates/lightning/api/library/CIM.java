@@ -27,7 +27,6 @@ public class CIM extends CIMAdmin {
 	public AddParticipantPojo participantsData = new AddParticipantPojo();
 	public ActivateIncentivePojo activateIncentive = new ActivateIncentivePojo();
 
-
 	public void setRequestValue(String key, String value) {
 		mapRequestResponse.put(key, value);
 	}
@@ -215,7 +214,7 @@ public class CIM extends CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Update Incentive details API call failed with exception trace : " + e);
 		}
-	}
+	}	
 
 	public Response addParticipants(Map<String, String> testData) throws ApplicationException {
 		String participantId;
@@ -317,6 +316,18 @@ public class CIM extends CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Activate Incentive API call failed with exception trace : " + e);
+		}
+	}
+	
+	public Response getPayoutSchedules() throws ApplicationException {
+		try {
+			String incentiveId = incentiveData.getIncentiveId();
+			response = sfdcRestUtils.getData(
+					urlGenerator.getPayoutScheduleURL.replace("{incentiveId}", incentiveId));
+			validateResponseCode(response, RebatesConstants.responseOk);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Get Payout Schedules API call failed with exception trace : " + e);
 		}
 	}
 }

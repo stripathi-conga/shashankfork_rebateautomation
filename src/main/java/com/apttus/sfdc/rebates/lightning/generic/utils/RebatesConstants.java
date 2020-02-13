@@ -25,4 +25,7 @@ public class RebatesConstants {
 	public static final String messageCreateDataSourceWithoutFields = "Required fields are missing: [FileExtension__c, FileSuffixToignore__c, Name__c, TransactionMetaData__c]";
 	public static final String messageChangeLinkTemplateStatusToDraft = "Cannot change Status from \"Active\" to \"Draft\"";
 	public static final String messageActiveMappingExists = "An active mapping already exists.";
+	public static final String scheduleStatusOpen = "Open";
+	public static final String scheduleStatusPending = "Pending";
+	public static final String paymentFrequencyMonthly = "Monthly";
 }
