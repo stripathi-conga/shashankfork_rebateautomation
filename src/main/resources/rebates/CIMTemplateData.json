@@ -26,7 +26,7 @@
 		"AccountName": "Automation_Account_1",
 		"PayoutFrequency__c": "Monthly",
 		"PaymentMethod__c": "Credit Memo",
-		"MeasurementLevel__c": "Agreement Account",
+		"MeasurementLevel__c": "Individual Participants",
 		"MeasurementFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",

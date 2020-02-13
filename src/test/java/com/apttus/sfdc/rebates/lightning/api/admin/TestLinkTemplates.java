@@ -70,6 +70,9 @@ public class TestLinkTemplates {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "autoNewLinkTemplateSubTypeTieredAPI");
@@ -104,6 +107,9 @@ public class TestLinkTemplates {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
@@ -144,6 +150,9 @@ public class TestLinkTemplates {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "autoNewLinkTemplateSubTypeDiscreteAPI");
@@ -180,6 +189,9 @@ public class TestLinkTemplates {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
@@ -202,6 +214,9 @@ public class TestLinkTemplates {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateGetTemplate(response, cimAdmin);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
@@ -251,6 +266,9 @@ public class TestLinkTemplates {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "autoNewLinkTemplateSubTypeDiscreteAPI");
@@ -298,6 +316,9 @@ public class TestLinkTemplates {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
@@ -308,6 +329,9 @@ public class TestLinkTemplates {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
@@ -328,6 +352,9 @@ public class TestLinkTemplates {
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
 		responseValidator.validateCreateSuccess(response);
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);

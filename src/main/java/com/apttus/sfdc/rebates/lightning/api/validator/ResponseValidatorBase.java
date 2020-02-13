@@ -189,4 +189,18 @@ public class ResponseValidatorBase {
 				testData.get("Automation_Participant_Account_2"), "Validate Incentive Participant Id");
 		softassert.assertAll();
 	}
+	
+	public void validateIncentiveStatus(String status, Response response, CIM cim) {
+		softassert = new SoftAssert();
+		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1,
+				"Validate response size, Response does not have single record");
+		softassert.assertAll();
+		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
+		softassert.assertEquals(records.get("Apttus_Config2__Status__c").getAsString(), status,
+				"Validate Incentive Status");
+		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(),
+				"Validate Incentive Id");
+		softassert.assertAll();
+	}
 }

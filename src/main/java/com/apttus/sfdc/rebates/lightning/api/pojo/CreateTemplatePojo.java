@@ -12,15 +12,6 @@ public class CreateTemplatePojo {
 	private String QnBLayoutId__c;
 	private String Name;
 	public String templateId;
-	public String QnB_Layout_Id_c;
-
-	public String getQnB_Layout_Id_c() {
-		return QnB_Layout_Id_c;
-	}
-
-	public void setQnB_Layout_Id_c(String qnB_Layout_Id_c) {
-		QnB_Layout_Id_c = qnB_Layout_Id_c;
-	}
 
 	public String getTemplateId() {
 		return templateId;
