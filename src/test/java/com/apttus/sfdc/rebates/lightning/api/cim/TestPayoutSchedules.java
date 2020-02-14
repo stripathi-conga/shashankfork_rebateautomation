@@ -38,19 +38,19 @@ public class TestPayoutSchedules {
 		payoutScheduleValidator = new PayoutScheduleValidator();
 	}
 
-	@Test(description = "TC417-Verify the schedule generated when the Payment frequency selected as Monthly", groups = {
+	@Test(description = "TC-417 Verify the schedule generated when the Payment frequency selected as Monthly ", groups = {
 			"Regression","API", "High" })
 	public void generatePayoutSchedulesForMonthlyFrequency() throws Exception {
 
 		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
-		response = IncentiveCreationHelper.CreateIncentiveAndFetchSchedules(sfdcHelper.firstDayOfCurrentMonth(),
+		response = IncentiveCreationHelper.createDiscreteIncentiveAndFetchSchedules(sfdcHelper.firstDayOfCurrentMonth(),
 						sfdcHelper.lastDayOfCurrentMonth(), RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 1, 1, 0);
 
 		// -------- Scenario 2 -Monthly frequency with Incentive date spanning 5 months---------
 		String incentiveStartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfPreviousTwoMonth(), "10");
 		String incentiveEndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfNextTwoMonth(), "-10");
-		response = IncentiveCreationHelper.CreateIncentiveAndFetchSchedules(incentiveStartDate, incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		response = IncentiveCreationHelper.createDiscreteIncentiveAndFetchSchedules(incentiveStartDate, incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 5, 3, 2);
 	}
 }

@@ -16,7 +16,7 @@ public class IncentiveCreationHelper {
 	private static Response response;
 	private static ResponseValidatorBase responseValidator;
 	
-	public static Response CreateIncentiveAndFetchSchedules(String startDate, String endDate, String paymentFrequency)
+	public static Response createDiscreteIncentiveAndFetchSchedules(String startDate, String endDate, String paymentFrequency)
 			throws Exception {
 		
 		sfdcRestUtils = new SFDCRestUtils();
