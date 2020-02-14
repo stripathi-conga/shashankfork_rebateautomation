@@ -16,7 +16,7 @@ public class IncentiveCreationHelper {
 	private static Response response;
 	private static ResponseValidatorBase responseValidator;
 	
-	public static Response createDiscreteIncentiveAndFetchSchedules(String startDate, String endDate, String paymentFrequency)
+	public static Response createIncentiveAndFetchSchedules(Map<String, String> createIncentiveJson, String startDate, String endDate, String paymentFrequency)
 			throws Exception {
 		
 		sfdcRestUtils = new SFDCRestUtils();
@@ -27,9 +27,7 @@ public class IncentiveCreationHelper {
 		CIM cim = new CIM(instanceURL, sfdcRestUtils);		
 		
 		// -------- Set-up JSON data for creating Incentive -----------------
-		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateDiscrete");
 		String incentiveTemplateIdBenefitProductDiscrete = cim.getTemplateIdForIncentives(createIncentiveJson);
-		createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveAgreementAccountBenefitProductDiscrete");
 		createIncentiveJson.put("ProgramTemplateId__c", incentiveTemplateIdBenefitProductDiscrete);
 		createIncentiveJson.put("Apttus_Config2__EffectiveDate__c", startDate);
 		createIncentiveJson.put("Apttus_Config2__ExpirationDate__c", endDate);

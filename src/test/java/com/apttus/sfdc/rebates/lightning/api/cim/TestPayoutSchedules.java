@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.cim;
 
+import java.util.Map;
 import java.util.Properties;
 
 import org.testng.annotations.BeforeClass;
@@ -39,18 +40,20 @@ public class TestPayoutSchedules {
 	}
 
 	@Test(description = "TC-417 Verify the schedule generated when the Payment frequency selected as Monthly ", groups = {
-			"Regression","API", "High" })
+			"Regression", "API", "High" })
 	public void generatePayoutSchedulesForMonthlyFrequency() throws Exception {
 
 		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
-		response = IncentiveCreationHelper.createDiscreteIncentiveAndFetchSchedules(sfdcHelper.firstDayOfCurrentMonth(),
-						sfdcHelper.lastDayOfCurrentMonth(), RebatesConstants.paymentFrequencyMonthly);
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,sfdcHelper.firstDayOfCurrentMonth(), sfdcHelper.lastDayOfCurrentMonth(),
+				RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 1, 1, 0);
 
 		// -------- Scenario 2 -Monthly frequency with Incentive date spanning 5 months---------
 		String incentiveStartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfPreviousTwoMonth(), "10");
 		String incentiveEndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfNextTwoMonth(), "-10");
-		response = IncentiveCreationHelper.createDiscreteIncentiveAndFetchSchedules(incentiveStartDate, incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 5, 3, 2);
 	}
 }
