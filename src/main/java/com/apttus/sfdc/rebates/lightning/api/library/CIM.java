@@ -321,9 +321,8 @@ public class CIM extends CIMAdmin {
 	
 	public Response getPayoutSchedules() throws ApplicationException {
 		try {
-			String incentiveId = incentiveData.getIncentiveId();
 			response = sfdcRestUtils.getData(
-					urlGenerator.getPayoutScheduleURL.replace("{incentiveId}", incentiveId));
+					urlGenerator.getPayoutScheduleURL.replace("{incentiveId}", incentiveData.getIncentiveId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {

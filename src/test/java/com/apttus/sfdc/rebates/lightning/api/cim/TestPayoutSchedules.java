@@ -54,13 +54,13 @@ public class TestPayoutSchedules {
 		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
 		response = CreateIncentiveAndFetchSchedules(sfdcHelper.firstDayOfCurrentMonth(),
 				sfdcHelper.lastDayOfCurrentMonth(), RebatesConstants.paymentFrequencyMonthly);
-		payoutScheduleValidator.validatMonthlyFrequencyForOneMonthProgram(response);
+		payoutScheduleValidator.validatePayoutSchedules(response, 1, 1, 0);
 
 		// -------- Scenario 2 -Monthly frequency with Incentive date spanning 5 months---------
 		String incentiveStartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfPreviousTwoMonth(), "10");
 		String incentiveEndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfNextTwoMonth(), "-10");
 		response = CreateIncentiveAndFetchSchedules(incentiveStartDate, incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
-		payoutScheduleValidator.validatMonthlyFrequencyForFiveMonthProgram(response);
+		payoutScheduleValidator.validatePayoutSchedules(response, 5, 3, 2);
 	}	
 
 	private Response CreateIncentiveAndFetchSchedules(String startDate, String endDate, String paymentFrequency)
