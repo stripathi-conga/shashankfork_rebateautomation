@@ -125,6 +125,13 @@ public class SFDCHelper {
 		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
 		return dateFormat.format(calendar.getTime());
 	}
+	
+	public String lastDayOfNextTwoMonth() throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 2);
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
 
 	public String lastDayOfNextMonth() throws Exception {
 		Calendar calendar = Calendar.getInstance();
