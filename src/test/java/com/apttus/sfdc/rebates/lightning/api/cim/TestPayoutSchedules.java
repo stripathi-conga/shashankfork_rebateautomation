@@ -47,8 +47,8 @@ public class TestPayoutSchedules {
 		payoutScheduleValidator = new PayoutScheduleValidator();
 	}
 
-	@Test(description = "TC417-Verify the schedule generated when the Payment frequency selected as \"Monthly\" ", groups = {
-			"Regression", "High" })
+	@Test(description = "TC417-Verify the schedule generated when the Payment frequency selected as Monthly", groups = {
+			"Regression","API", "High" })
 	public void generatePayoutSchedulesForMonthlyFrequency() throws Exception {
 
 		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
