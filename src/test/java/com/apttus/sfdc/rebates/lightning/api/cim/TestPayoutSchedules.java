@@ -40,20 +40,33 @@ public class TestPayoutSchedules {
 	}
 
 	@Test(description = "TC-417 Verify the schedule generated when the Payment frequency selected as Monthly ", groups = {
-			"Regression", "API", "High" })
+			"Smoke", "API", "Urgent" })
 	public void generatePayoutSchedulesForMonthlyFrequency() throws Exception {
 
 		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
-		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,sfdcHelper.firstDayOfCurrentMonth(), sfdcHelper.lastDayOfCurrentMonth(),
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, sfdcHelper.firstDayOfCurrentMonth(), sfdcHelper.lastDayOfCurrentMonth(),
 				RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 1, 1, 0);
 
 		// -------- Scenario 2 -Monthly frequency with Incentive date spanning 5 months---------
 		String incentiveStartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfPreviousTwoMonth(), "10");
 		String incentiveEndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfNextTwoMonth(), "-10");
-		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 5, 3, 2);
+	}
+	
+	@Test(description = "TC-473 Schedules staus will be Pending when Start and End dates in the future based on the current date ", groups = {
+			"Regression", "API", "High" })
+	public void generatePayoutSchedulesWithPendingStatus() throws Exception {
+
+		// -------- Scenario 1 -Monthly frequency with start date 1 month prior to today and end date 4 months in future---------
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+
+		String incentiveStartDate = sfdcHelper.addMonthsToCurrentDate(-1);
+		String incentiveEndDate = sfdcHelper.addMonthsToCurrentDate(6);
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		payoutScheduleValidator.validatePayoutSchedules(response, 8, 2, 6);
 	}
 }

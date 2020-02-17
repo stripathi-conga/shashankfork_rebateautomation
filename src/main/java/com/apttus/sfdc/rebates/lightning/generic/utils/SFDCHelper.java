@@ -91,6 +91,12 @@ public class SFDCHelper {
 		calendar.add(Calendar.DATE, +Integer.parseInt(days));
 		return dateFormat.format(calendar.getTime());
 	}
+	
+	public String addMonthsToCurrentDate(int monthsToAdd) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, monthsToAdd);
+		return dateFormat.format(calendar.getTime());
+	}
 
 	public String firstDayOfCurrentMonth() throws Exception {
 		Calendar calendar = Calendar.getInstance();

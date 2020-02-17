@@ -31,8 +31,8 @@ public class PayoutScheduleValidator {
 				pendingStatusSchedules++;
 			}
 		}
-		softassert.assertEquals(openStatusScedules, expectedOpenSchedules, "Validate 'Open' status schedules, should have "+expectedOpenSchedules+"records");
-		softassert.assertEquals(pendingStatusSchedules, expectedPendingSchedules, "Validate 'Pending' status schedules, should have "+expectedPendingSchedules+ "records");
+		softassert.assertEquals(openStatusScedules, expectedOpenSchedules, "Validate 'Open' status schedule count, should have " + expectedOpenSchedules + "records");
+		softassert.assertEquals(pendingStatusSchedules, expectedPendingSchedules, "Validate 'Pending' status schedule count, should have " + expectedPendingSchedules + "records");
 		softassert.assertAll();
 	}
 
