@@ -40,7 +40,7 @@ public class TestPayoutSchedules {
 	}
 
 	@Test(description = "TC-417 Verify the schedule generated when the Payment frequency selected as Monthly ", groups = {
-			"Smoke", "API", "Urgent" })
+			"Smoke", "API" })
 	public void generatePayoutSchedulesForMonthlyFrequency() throws Exception {
 
 		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
@@ -61,7 +61,7 @@ public class TestPayoutSchedules {
 			"Regression", "API", "High" })
 	public void generatePayoutSchedulesWithPendingStatus() throws Exception {
 
-		// -------- Scenario 1 -Monthly frequency with start date 1 month prior to today and end date 4 months in future---------
+		// -------- Scenario 1 -Monthly frequency with start date 1 month prior to today and end date 6 months in future---------
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
 		String incentiveStartDate = sfdcHelper.addMonthsToCurrentDate(-1);
