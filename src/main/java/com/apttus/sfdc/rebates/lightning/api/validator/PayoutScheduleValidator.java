@@ -19,6 +19,7 @@ public class PayoutScheduleValidator {
 
 		int responseSize = schedulesResponse.size();
 		softassert.assertEquals(responseSize, expectedScheduleCount, "Validate response size, Response should have"+expectedScheduleCount+" record");
+		softassert.assertAll();
 		int openStatusScedules = 0;
 		int pendingStatusSchedules = 0;
 		for (int i = 0; i < responseSize; i++) {
