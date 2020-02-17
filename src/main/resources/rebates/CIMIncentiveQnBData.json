@@ -67,5 +67,67 @@
 	],
 	"deleteBenefitLine":{
 			"SectionId": "SEC-00000002"
-	}
+	},
+	"XXDBenefitProductFourBenefits": [
+		{
+			"SectionId": "SEC-00000001",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "Installation: Industrial - High",
+			"QualificationProductCode": "IN7080",
+			"QualificationQuantity": "10",
+			"QualificationAliasName":"Q1",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "Installation: Industrial - High",
+			"BenefitProductCode": "IN7080",
+			"BenefitAmount": "120",
+			"BenefitAliasName":"B1",
+			"StartDate": "startofcurrentmonth",
+			"EndDate": "endofcurrentmonth"
+		},
+		{
+			"SectionId": "SEC-00000001",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "Installation: Industrial - High",
+			"QualificationProductCode": "IN7080",
+			"QualificationQuantity": "10",
+			"QualificationAliasName":"Q2",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "Installation: Industrial - High",
+			"BenefitProductCode": "IN7080",
+			"BenefitAmount": "120",
+			"BenefitAliasName":"B2",
+			"StartDate": "endofcurrentmonth=+1",
+			"EndDate": "endofnextmonth"
+		},
+		{
+			"SectionId": "SEC-00000002",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "GenWatt Diesel 200kW",
+			"QualificationProductCode": "GC1040",
+			"QualificationQuantity": "10",
+			"QualificationAliasName":"Q3",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "GenWatt Diesel 200kW",
+			"BenefitProductCode": "GC1040",
+			"BenefitAmount": "100",
+			"BenefitAliasName":"B3",
+			"StartDate": "startofcurrentmonth",
+			"EndDate": "endofcurrentmonth"
+		},
+		{
+			"SectionId": "SEC-00000002",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "GenWatt Diesel 200kW",
+			"QualificationProductCode": "GC1040",
+			"QualificationQuantity": "10",
+			"QualificationAliasName":"Q4",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "GenWatt Diesel 200kW",
+			"BenefitProductCode": "GC1040",
+			"BenefitAmount": "100",
+			"BenefitAliasName":"B4",
+			"StartDate": "endofcurrentmonth=+1",
+			"EndDate": "endofnextmonth"
+		}
+	]
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import com.apttus.customException.ApplicationException;
+import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -152,21 +153,66 @@ public class SFDCHelper {
 	}
 	
 	public static synchronized List<Map<String, String>> readJsonArray(String jsonFileName, String elementName)
-            throws Exception {
-       String filePath = getResourceFolderPath() + jsonFileName;
-       JsonElement root = new JsonParser().parse(new InputStreamReader(new FileInputStream(filePath),"UTF-8"));
-       JsonObject jsonObject = root.getAsJsonObject();
-       JsonElement some = jsonObject.get(elementName);
-       JsonArray testData = some.getAsJsonArray();
-       List<Map<String, String>> jsonData = new ArrayList<Map<String, String>>();
-       for (int i = 0; i < testData.size(); i++) {
-            Map<String, String> testDataMap = new HashMap<String, String>();
-            JsonObject objElement = testData.get(i).getAsJsonObject();
-            for (Map.Entry<String, JsonElement> entry : objElement.entrySet()) {
-                  testDataMap.put(((String) entry.getKey()).toString(), ((JsonElement) entry.getValue()).getAsString());
-            }
-            jsonData.add(testDataMap);
-       }
-       return jsonData;
- }
+			throws Exception {
+		String filePath = getResourceFolderPath() + jsonFileName;
+		JsonElement root = new JsonParser().parse(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
+		JsonObject jsonObject = root.getAsJsonObject();
+		JsonElement some = jsonObject.get(elementName);
+		JsonArray testData = some.getAsJsonArray();
+		List<Map<String, String>> jsonData = new ArrayList<Map<String, String>>();
+		for (int i = 0; i < testData.size(); i++) {
+			Map<String, String> testDataMap = new HashMap<String, String>();
+			JsonObject objElement = testData.get(i).getAsJsonObject();
+			for (Map.Entry<String, JsonElement> entry : objElement.entrySet()) {
+				testDataMap.put(((String) entry.getKey()).toString(), ((JsonElement) entry.getValue()).getAsString());
+			}
+			jsonData.add(testDataMap);
+		}
+		return jsonData;
+	}
+	public static String getCIMDateValue(String dateValue, CIM cim) throws ApplicationException {
+		SFDCHelper sfdcHelper = new SFDCHelper();
+		String returnDate = null;
+		int year;
+		try {
+			boolean checkDate = sfdcHelper.checkValidDate(dateValue, null);
+			if (checkDate) {
+				returnDate = dateValue;
+			} else {
+				String date = dateValue.toLowerCase();
+				if (date.contains("today")) {
+					returnDate = sfdcHelper.getTodaysDate();
+				} else if (date.contains("startofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-01-01";
+				} else if (date.contains("endofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-12-31";
+				} else if (date.contains("midofcurrentyear")) {
+					year = Calendar.getInstance().get(Calendar.YEAR);
+					returnDate = String.valueOf(year) + "-07-01";
+				} else if (date.contains("startofcurrentmonth")) {
+					returnDate = sfdcHelper.firstDayOfCurrentMonth();
+				} else if (date.contains("endofcurrentmonth")) {
+					returnDate = sfdcHelper.lastDayOfCurrentMonth();
+				} else if (date.contains("startofpreviousmonth")) {
+					returnDate = sfdcHelper.firstDayOfPreviousMonth();
+				} else if (date.contains("startofprevioustwomonth")) {
+					returnDate = sfdcHelper.firstDayOfPreviousTwoMonth();
+				} else if (date.contains("endofnextmonth")) {
+					returnDate = sfdcHelper.lastDayOfNextMonth();
+				} else if (date.contains("incentivestartdate")) {
+					returnDate = cim.incentiveData.getApttus_Config2__EffectiveDate__c();
+				} else if (date.contains("incentiveenddate")) {
+					returnDate = cim.incentiveData.getApttus_Config2__ExpirationDate__c();
+				}
+				if (date.contains("=")) {
+					returnDate = sfdcHelper.getPastorFutureDate(returnDate, date.split("=")[1]);
+				}
+			}
+			return returnDate;
+		} catch (Exception e) {
+			throw new ApplicationException("Getting run time error while using getCIMDateValue : " + e);
+		}
+	}
 }
