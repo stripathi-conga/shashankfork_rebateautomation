@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
 public class QnBAddBenefitPojo {
@@ -66,8 +67,8 @@ public class QnBAddBenefitPojo {
 			} else
 				qnbData.setTierCount("1");
 
-			startDate = cim.getCIMDateValue(row.get("StartDate"));
-			endDate = cim.getCIMDateValue(row.get("EndDate"));
+			startDate = SFDCHelper.getCIMDateValue(row.get("StartDate"),cim);
+			endDate = SFDCHelper.getCIMDateValue(row.get("EndDate"),cim);
 
 			// ------------- Set Qualification Data ------------------------
 			qualification.setStartDate(startDate);

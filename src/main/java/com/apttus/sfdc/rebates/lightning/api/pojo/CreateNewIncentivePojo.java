@@ -198,11 +198,11 @@ public class CreateNewIncentivePojo {
 			}
 		}
 		if (testData.get("Apttus_Config2__EffectiveDate__c") != null) {
-			startDate = cim.getCIMDateValue(testData.get("Apttus_Config2__EffectiveDate__c"));
+			startDate = SFDCHelper.getCIMDateValue(testData.get("Apttus_Config2__EffectiveDate__c"),cim);
 			createNewIncentive.setApttus_Config2__EffectiveDate__c(startDate);
 		}
 		if (testData.get("Apttus_Config2__ExpirationDate__c") != null) {
-			endDate = cim.getCIMDateValue(testData.get("Apttus_Config2__ExpirationDate__c"));
+			endDate = SFDCHelper.getCIMDateValue(testData.get("Apttus_Config2__ExpirationDate__c"),cim);
 			createNewIncentive.setApttus_Config2__ExpirationDate__c(endDate);
 		}		
 		createNewIncentive.setCurrency__c(testData.get("Currency__c"));

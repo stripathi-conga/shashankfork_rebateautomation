@@ -113,6 +113,7 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 	
 	public void validateDeleteQnBBenefitLine(Response response, String sectionId) {
 		softassert = new SoftAssert();
+		boolean flag = true;
 		String responseBody = response.getBody().asString();
 		JsonArray qnbResArray = parser.parse(responseBody).getAsJsonArray();
 		int responseSize = qnbResArray.size();
@@ -120,7 +121,8 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 			for (int i = 0; i < responseSize; i++) {
 				JsonObject resQnbLinesData = qnbResArray.get(i).getAsJsonObject();
 				String sectiondIdName = resQnbLinesData.get("SectionId").getAsString();
-				softassert.assertNotEquals(sectiondIdName, sectionId, "Benefit Line is not Deleted");
+				flag = sectiondIdName.equalsIgnoreCase(sectionId);
+				softassert.assertEquals(flag, false, "Benefit Line is not Deleted");
 			}
 		}
 		softassert.assertAll();
