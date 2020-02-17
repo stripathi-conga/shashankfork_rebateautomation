@@ -19,6 +19,7 @@ public class PayoutScheduleValidator {
 
 		int responseSize = schedulesResponse.size();
 		softassert.assertEquals(responseSize, expectedScheduleCount, "Validate response size, Response should have"+expectedScheduleCount+" record");
+		softassert.assertAll();
 		int openStatusScedules = 0;
 		int pendingStatusSchedules = 0;
 		for (int i = 0; i < responseSize; i++) {
@@ -31,8 +32,8 @@ public class PayoutScheduleValidator {
 				pendingStatusSchedules++;
 			}
 		}
-		softassert.assertEquals(openStatusScedules, expectedOpenSchedules, "Validate 'Open' status schedules, should have "+expectedOpenSchedules+"records");
-		softassert.assertEquals(pendingStatusSchedules, expectedPendingSchedules, "Validate 'Pending' status schedules, should have "+expectedPendingSchedules+ "records");
+		softassert.assertEquals(openStatusScedules, expectedOpenSchedules, "Validate 'Open' status schedule count, should have " + expectedOpenSchedules + "records");
+		softassert.assertEquals(pendingStatusSchedules, expectedPendingSchedules, "Validate 'Pending' status schedule count, should have " + expectedPendingSchedules + "records");
 		softassert.assertAll();
 	}
 
