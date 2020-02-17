@@ -1,9 +1,9 @@
 package com.apttus.sfdc.rebates.lightning.api.pojo;
 
 import java.util.Map;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
 public class AddParticipantPojo {
@@ -54,22 +54,18 @@ public class AddParticipantPojo {
 		this.EffectiveDate__c = effectiveDate__c;
 	}
 
-	public String addParticipantsRequest(Map<String, String> testData, CIM cim)
-			throws ApplicationException {
+	public String addParticipantsRequest(Map<String, String> testData, CIM cim) throws ApplicationException {
 		String startDate, endDate;
 		AddParticipantPojo addParticipantpojo = new AddParticipantPojo();
 		if (testData.get("EffectiveDate__c") != null) {
-
-			startDate = cim.getCIMDateValue(testData.get("EffectiveDate__c"));
+			startDate = SFDCHelper.getCIMDateValue(testData.get("EffectiveDate__c"), cim);
 			addParticipantpojo.setEffectiveDate__c(startDate);
 		}
 		if (testData.get("ExpirationDate__c") != null) {
-			endDate = cim.getCIMDateValue(testData.get("ExpirationDate__c"));
+			endDate = SFDCHelper.getCIMDateValue(testData.get("ExpirationDate__c"), cim);
 			addParticipantpojo.setExpirationDate__c(endDate);
 		}
-			
 		addParticipantpojo.setAccount__c(cim.getAccountId(testData.get("AccountName")));
-		 
 		addParticipantpojo.setIncentive__c(cim.getIncentiveData().incentiveId);
 		cim.setParticipantData(addParticipantpojo);
 		return new Gson().toJson(addParticipantpojo);

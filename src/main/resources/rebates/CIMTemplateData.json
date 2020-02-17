@@ -32,6 +32,10 @@
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete"
 	},
+	"createNewIncentiveAgreementAccountBenefitProductDiscreteTwoMonths": {
+		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
+		"Apttus_Config2__ExpirationDate__c": "endofnextmonth"
+	},
 	"updateIncentive": {
 		"BenefitLevel__c": "Agreement Account",
 		"AccountName": "Automation_Account_1"
@@ -50,6 +54,10 @@
 		"ExpirationDate__c": "endofnextmonth",
 		"EffectiveDate__c": "today",
 		"AccountName": "Automation_Participant_Account_3"
+	},
+	"setParticipantDatesForTwoMonth": {
+		"ExpirationDate__c": "endofnextmonth",
+		"EffectiveDate__c": "startofcurrentmonth"
 	},
 	"activeTemplateIdForRebateTiered": {
 		"IncentiveType__c": "Rebate",

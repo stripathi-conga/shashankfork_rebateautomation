@@ -111,4 +111,45 @@ public class TestIncentives {
 		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
 				benefitProductQnB.getIncentiveData().incentiveId);
 	}
+
+	@Test(description = "TC-536 Verify for the Program Activation Using the Activate button", groups = { "Regression",
+			"High", "API" })
+	public void activateIncentiveWithMultipleQnBAndParticipantsXXD() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscreteTwoMonths");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
+		benefitProductQnB.createNewIncentive(jsonData);
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+
+		// ------------ Add QnB Benefit Lines -------------------
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProductFourBenefits");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+
+		// ------------ Add Incentive Participants -------------------
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "setParticipantDatesForTwoMonth");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		benefitProductQnB.addParticipants(jsonData);
+		response = benefitProductQnB.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
+		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		benefitProductQnB.addParticipants(jsonData);
+		response = benefitProductQnB.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
+
+		// ------------ Activate Incentive -------------------
+		benefitProductQnB.activateIncentive();
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
+				benefitProductQnB.getIncentiveData().incentiveId);
+	}
 }
