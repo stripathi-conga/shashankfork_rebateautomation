@@ -14,13 +14,7 @@ import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
 public class TemplatePage extends GenericPage {
 
-	@FindBy(xpath = "//input[@placeholder='Enter a name']")
-	public WebElement TemplateName;
-
-	@FindBy(xpath = "//*[text()='Description']//..//*[@name='template-description']")
-	public WebElement TemplateDescription;
-
-	@FindBy(xpath = "//div[@title='New']")
+	@FindBy(css = "div[title='New']")
 	public WebElement Newbtn;
 
 	@FindBy(xpath = "//*[text()='Q&B Layout']//..//input[@placeholder='Select an Option']")
