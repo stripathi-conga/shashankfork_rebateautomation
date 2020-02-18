@@ -28,4 +28,5 @@ public class RebatesConstants {
 	public static final String scheduleStatusOpen = "Open";
 	public static final String scheduleStatusPending = "Pending";
 	public static final String paymentFrequencyMonthly = "Monthly";
+	public static final String paymentFrequencyYearly = "Yearly";
 }
