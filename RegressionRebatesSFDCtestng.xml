@@ -19,7 +19,7 @@
 	<test name="SFDC Rebates Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
 		<groups>
 			<run>
-				<include name="Regression2" />
+				<include name="Regression" />
 			</run>
 		</groups>
 		<classes>

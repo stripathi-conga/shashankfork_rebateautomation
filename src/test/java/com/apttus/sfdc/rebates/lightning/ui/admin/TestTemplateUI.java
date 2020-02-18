@@ -55,7 +55,7 @@ public class TestTemplateUI {
 
 	@Test(description = "Verify  Qualification formulas on the Benefit only templates", groups = { "Regression",
 			"Medium", "UI" })
-	public void verifyQualificationOnDiscrete() throws Exception {
+	public void verifyTemplateQualificationOnDiscrete() throws Exception {
 		try {
 
 			softassert = new SoftAssert();

@@ -6,74 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import com.apttus.ui.fundamentals.Acolyte;
 
 public class GenericPage {
 
 	public WebDriver driver;
 	public Acolyte sfdcAcolyte;
-
-	@FindBy(xpath = "//span[text()='Recently Viewed']")
-	public WebElement lnkRecentlyViewed;
-
-	@FindBy(xpath = "//span[text()='All']")
-	public WebElement lnkAllViewed;
-
-	@FindBy(xpath = "//span[@class='slds-truncate uiOutputText'][contains(text(),'DSrcAutomation')]")
-	public WebElement txtColumnName;
-
-	@FindBy(xpath = "//span[@title='Name']")
-	public WebElement titleNameColumn;
-
-	@FindBy(xpath = "//*[@data-key='filterList']")
-	public WebElement filterIcon;
-
-	@FindBy(xpath = "//a[text()='Add Filter']")
-	public WebElement lnkAddFilter;
-
-	@FindBy(css = "input[placeholder='Select an Option'][input]")
-	public WebElement ddlSelectField;
-
-	@FindBy(css = "div:nth-child(2) > lightning-combobox > div")
-	public WebElement ddlSelectOperator;
-
-	@FindBy(css = "input[data-aura-class*='uiInput uiInputText ui']")
-	public WebElement txtEnterValue;
-
-	@FindBy(css = "button[class$='doneButton uiButton']>span[dir='ltr']")
-	public WebElement btnFilterDone;
-
-	@FindBy(xpath = "//*[text()='List view updated.']")
-	public WebElement filterResponse;
-
-	@FindBy(css = "button[class$='saveButton headerButton']")
-	public WebElement btnFilterSave;
-
-	@FindBy(xpath = "//*[@id=\"brandBand_1\"]//..//span/div/a/lightning-icon/lightning-primitive-icon")
-	public WebElement btnshowMore;
-
-	@FindBy(xpath = "//a[@title='Delete']")
-	public WebElement btnShowDeleteAction;
-
-	@FindBy(xpath = "//button[@title='Delete']")
-	public WebElement btnConfirmDeleteAction;
-
-	@FindBy(css = "[class='removeAll']")
-	public WebElement removeAllfilter;
-
-	@FindBy(css = "button[title='Close']")
-	public WebElement closeToastResponse;
-
 	public int waitTime = 40;
 	public String fieldLabel = ".labelCol";
 
@@ -215,53 +159,4 @@ public class GenericPage {
 				ele.click();
 		}
 	}
-
-	public GenericPage waitTillAttributeContains(WebElement element, String attribute, String value) throws Exception {
-		sfdcAcolyte.waitTillAttributeContains(element, attribute, value);
-		return PageFactory.initElements(driver, GenericPage.class);
-	}
-
-	public void navigatBack(WebElement element) throws Exception {
-		driver.navigate().back();
-		sfdcAcolyte.waitTillElementIsVisible(element);
-
-	}
-
-	public GenericPage searchName(String ColumnName, String ColumnOperator, String FilterValue) throws Exception {
-
-		sfdcAcolyte.click(lnkRecentlyViewed).waitTillElementIsVisible(lnkAllViewed).click(lnkAllViewed);
-		sfdcAcolyte.waitTillElementIsVisible(filterIcon).click(filterIcon);
-		sfdcAcolyte.waitTillElementIsVisible(lnkAddFilter).click(lnkAddFilter);
-		sfdcAcolyte.waitTillElementIsVisible(ddlSelectField).click(ddlSelectField)
-				.sendKeysTo(ddlSelectField, ColumnName).sendBoardKeys(Keys.ENTER);
-
-		sfdcAcolyte.waitTillElementIsVisible(ddlSelectOperator).click(ddlSelectOperator)
-				.sendKeysTo(ddlSelectOperator, ColumnOperator).sendBoardKeys(Keys.ENTER)
-				.sendKeysTo(txtEnterValue, FilterValue).click(btnFilterDone).click(btnFilterSave);
-		sfdcAcolyte.waitTillElementIsVisible(filterResponse);
-		return PageFactory.initElements(driver, GenericPage.class);
-	}
-
-	public GenericPage deleteName() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(btnshowMore).jsClick(btnshowMore);
-		sfdcAcolyte.jsClick(btnShowDeleteAction).jsClick(btnConfirmDeleteAction);
-		return PageFactory.initElements(driver, GenericPage.class);
-
-	}
-
-	public GenericPage deleteRecord() throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(removeAllfilter).click(removeAllfilter).click(btnFilterSave);
-		return PageFactory.initElements(driver, GenericPage.class);
-	}
-
-	public GenericPage closeToastMessage() throws Exception {
-		sfdcAcolyte.waitTillElementIsClickable(closeToastResponse).click(closeToastResponse);
-		return PageFactory.initElements(driver, GenericPage.class);
-	}
-
-	public GenericPage waitTillStaleElementToBeVisible(WebElement ele) {
-		new WebDriverWait(driver, waitTime).until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(ele)));
-		return PageFactory.initElements(driver, GenericPage.class);
-	}
-
 }
