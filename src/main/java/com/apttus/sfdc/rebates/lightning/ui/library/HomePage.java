@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
+
 
 public class HomePage extends GenericPage {
 
@@ -20,8 +22,7 @@ public class HomePage extends GenericPage {
 	@FindBy(css = ".oneUserProfileCardTrigger span .uiImage")
 	public WebElement userProfileIcon;
 
-	public String TemplateURL = RebatesConstants.cimUrl+ RebatesConstants.Templates;
-	
+	public URLGenerator urlGenerator;
 
 	public HomePage(WebDriver driver) {
 		super(driver);
@@ -45,9 +46,10 @@ public class HomePage extends GenericPage {
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 
-	public TemplatePage navigateToTemplates() throws Exception {
+	public TemplatePage navigateToTemplates(Properties properties) throws Exception {
+				
+		sfdcAcolyte.navigateTo(properties.getProperty("cimAdminURL")+ RebatesConstants.Templates);
 		
-		sfdcAcolyte.navigateTo(TemplateURL);
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 }

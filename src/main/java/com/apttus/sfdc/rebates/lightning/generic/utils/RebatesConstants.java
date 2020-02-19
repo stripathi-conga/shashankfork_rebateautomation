@@ -29,6 +29,5 @@ public class RebatesConstants {
 	public static final String scheduleStatusPending = "Pending";
 	public static final String paymentFrequencyMonthly = "Monthly";
 	public static final String messagequalificationformulavalidation="No data to display";
-	public static final String cimUrl="https://rebatesautomationqa-dev-ed.lightning.force.com/lightning/o/";
 	public static final String Templates="IncentiveProgramTemplate__c/home";
 }

@@ -25,7 +25,7 @@ public class TestTemplateUI {
 	public Map<String, String> testData;
 	public TemplatePage templatepage;
 	public HomePage homepage;
-	Properties configProperty;
+	public Properties configProperty;
 	Efficacies efficacies;
 	private CIMAdmin cimAdmin;
 	private Map<String, String> jsonData;
@@ -76,7 +76,7 @@ public class TestTemplateUI {
 			cimAdmin.getQnBLayoutId(jsonData);
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 					"createNewLinkTemplateSubTypeDiscreteAPI");
-			templatepage = homepage.navigateToTemplates();
+			templatepage = homepage.navigateToTemplates(configProperty);
 			templatepage.moveToTemplate(templatepage.Newbtn);
 			templatepage.qnbLayoutDefinition(templatepage.QBselct, templatepage.BenftPrdtValue, templatepage.TierSelect,
 					templatepage.TierDiscrete);
