@@ -183,4 +183,32 @@ public class TestIncentiveQnB {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateDeleteQnBBenefitLine(response, jsonData.get("SectionId"));
 	}
+	
+	@Test(description = "TC-442 Verify deletion of the Product from the QnB layout", groups = {
+			"Regression", "Medium", "API" })
+	public void deleteQnBLayoutproduct() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		benefitProductQnB.createNewIncentive(jsonData);
+		
+		//------------ Add QnB Benefit Lines -------------------
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		benefitProductQnB.setQnBSectionId(response);
+		
+		//-------------- Delete QnB Benefit Line ----------------
+		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "deleteBenefitLine");
+		benefitProductQnB.deleteQnBBenefitLine(jsonData.get("SectionId"));
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateDeleteQnBBenefitLine(response, jsonData.get("SectionId"));
+		
+		//-------------Added previously deleted Product
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+	}
 }
