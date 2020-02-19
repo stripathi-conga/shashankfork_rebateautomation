@@ -12,7 +12,7 @@ import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
-public class TemplatePage extends GenericPage {
+public class TemplatePage extends GenericPage  {
 
 	@FindBy(css = "div[title='New']")
 	public WebElement Newbtn;
@@ -78,7 +78,7 @@ public class TemplatePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public void addqualificationOnDiscrete(CIMAdmin cimAdmin) throws Exception {
+	public void addQualificationOnDiscrete(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(ddldataSource).waitTillElementIsClickable(ddldataSource)
 				.click(ddldataSource);
@@ -86,7 +86,7 @@ public class TemplatePage extends GenericPage {
 
 	}
 
-	public void addqualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
+	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsClickable(TierSelect).click(TierSelect).waitTillElementIsVisible(TierTiered)
 				.waitTillElementIsClickable(TierTiered).click(TierTiered);

@@ -80,10 +80,10 @@ public class TestTemplateUI {
 			templatepage.moveToTemplate(templatepage.Newbtn);
 			templatepage.qnbLayoutDefinition(templatepage.QBselct, templatepage.BenftPrdtValue, templatepage.TierSelect,
 					templatepage.TierDiscrete);
-			templatepage.addqualificationOnDiscrete(cimAdmin);
+			templatepage.addQualificationOnDiscrete(cimAdmin);
 			softassert.assertEquals(RebatesConstants.messagequalificationformulavalidation,
 					templatepage.txtNodatadisplay.get(0).getText());
-			templatepage.addqualificationOnTiered(cimAdmin);
+			templatepage.addQualificationOnTiered(cimAdmin);
 			
 			softassert.assertAll();
 		} catch (Exception e) {
