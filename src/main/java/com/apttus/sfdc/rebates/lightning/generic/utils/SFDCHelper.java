@@ -80,7 +80,44 @@ public class SFDCHelper {
 		}
 		return true;
 	}
-
+	
+	public String firstDayOfYearForDate(String actualDate) throws ParseException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateFormat.parse(actualDate));
+		calendar.set(Calendar.MONTH, calendar.getActualMinimum(Calendar.MONTH));//In java, January starts with zero
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+	
+	public String lastDayOfYearForDate(String actualDate) throws ParseException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateFormat.parse(actualDate));
+		calendar.set(Calendar.MONTH, calendar.getActualMaximum(Calendar.MONTH));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+	
+	public String addYearsToDate(String actualDate,int yearsToAdd) throws ParseException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateFormat.parse(actualDate));
+		calendar.add(Calendar.YEAR, yearsToAdd);
+		return dateFormat.format(calendar.getTime());
+	}
+	
+	public String firstDayOfMonthForDate(String actualDate) throws ParseException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateFormat.parse(actualDate));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+	
+	public String lastDayOfMonthForDate(String actualDate) throws ParseException{
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateFormat.parse(actualDate));
+		calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		return dateFormat.format(calendar.getTime());
+	}
+	
 	public String getPastorFutureDate(String actualDate, String days) throws ParseException {
 		Calendar calendar = Calendar.getInstance();
 		if (actualDate == null) {
@@ -92,12 +129,13 @@ public class SFDCHelper {
 		return dateFormat.format(calendar.getTime());
 	}
 	
-	public String addMonthsToCurrentDate(int monthsToAdd) {
+	public String addMonthsToDate(String actualDate, int monthsToAdd) throws ParseException {
 		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(dateFormat.parse(actualDate));
 		calendar.add(Calendar.MONTH, monthsToAdd);
 		return dateFormat.format(calendar.getTime());
-	}
-
+	}	
+	
 	public String firstDayOfCurrentMonth() throws Exception {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH, 1);

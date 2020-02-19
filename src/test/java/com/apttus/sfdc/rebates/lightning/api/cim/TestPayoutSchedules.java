@@ -1,5 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.api.cim;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Properties;
 
@@ -23,6 +25,7 @@ public class TestPayoutSchedules {
 	protected SFDCHelper sfdcHelper;
 	private PayoutScheduleValidator payoutScheduleValidator;
 	private Response response;
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -64,9 +67,82 @@ public class TestPayoutSchedules {
 		// -------- Scenario 1 -Monthly frequency with start date 1 month prior to today and end date 6 months in future---------
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
-		String incentiveStartDate = sfdcHelper.addMonthsToCurrentDate(-1);
-		String incentiveEndDate = sfdcHelper.addMonthsToCurrentDate(6);
+		String incentiveStartDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), -1);
+		String incentiveEndDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(),6);
 		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
 		payoutScheduleValidator.validatePayoutSchedules(response, 8, 2, 6);
+	}
+	
+	@Test(description = "TC-466 Verify the schedule generated when the Payment frequency selected as Yearly ", groups = {
+			"Regression", "API", "Medium" })
+	public void generatePayoutSchedulesForYearlyFrequency() throws Exception {
+		
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		
+		// -------- Scenario 1 - Incentive date spanning 4 years with start date 16-Jan and end 31-Dec---------
+		String incentiveStartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "15");	
+		String incentiveEndDate = sfdcHelper.lastDayOfYearForDate(sfdcHelper.addYearsToDate(incentiveStartDate,4));
+		
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentiveStartDate, incentiveEndDate,
+				RebatesConstants.paymentFrequencyYearly);
+		
+		//Check open and pending schedules count based on current date
+		if(dateFormat.parse(incentiveStartDate).compareTo(dateFormat.parse(sfdcHelper.getTodaysDate())) > 0) {
+			//Incentive start date is in the future, thus all schedules will be in pending state.
+        	payoutScheduleValidator.validatePayoutSchedules(response, 5, 0, 5);	
+        }
+        else {
+        	payoutScheduleValidator.validatePayoutSchedules(response, 5, 1, 4);
+        }		
+		payoutScheduleValidator.validatePayoutScheduleDates(response, incentiveStartDate, incentiveEndDate,12);
+		
+		// -------- Scenario 2 - Incentive date spanning just 1 month---------
+		String incentive2StartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
+		String incentive2EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfMonthForDate(incentive2StartDate),"-1");
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive2StartDate, incentive2EndDate,
+				RebatesConstants.paymentFrequencyYearly);
+		
+		//Check open and pending schedules count based on current date
+		if(dateFormat.parse(incentive2StartDate).compareTo(dateFormat.parse(sfdcHelper.getTodaysDate())) > 0) {
+			//Incentive start date is in the future, thus all schedules will be in pending state.
+        	payoutScheduleValidator.validatePayoutSchedules(response, 1, 0, 1);	
+        }
+        else {
+        	payoutScheduleValidator.validatePayoutSchedules(response, 1, 1, 0);
+        }
+		payoutScheduleValidator.validatePayoutScheduleDates(response, incentive2StartDate, incentive2EndDate,12);
+
+		// -------- Scenario 3 Incentive date spanning 5 years, start date 1st March and end date 15 Dec---------
+		String incentive3StartDate = sfdcHelper.addMonthsToDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), 2);
+		//Set end date to 15th December 4 years from now		
+		String incentive3EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(sfdcHelper.addYearsToDate(incentive3StartDate,4)),"-16");
+				
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive3StartDate, incentive3EndDate,
+						RebatesConstants.paymentFrequencyYearly);
+		//Check open and pending schedules count based on current date
+		if(dateFormat.parse(incentive3StartDate).compareTo(dateFormat.parse(sfdcHelper.getTodaysDate())) > 0) {
+			//Incentive start date is in the future, thus all schedules will be in pending state.
+		     payoutScheduleValidator.validatePayoutSchedules(response, 5, 0, 5);	
+		}
+		else {
+		       payoutScheduleValidator.validatePayoutSchedules(response, 5, 1, 4);
+		}
+		payoutScheduleValidator.validatePayoutScheduleDates(response, incentive3StartDate, incentive3EndDate,12);
+		
+		// -------- Scenario 4 - Incentive date spanning just 1 year with start and end dates mid of month---------
+		String incentive4StartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
+		String incentive4EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(incentive4StartDate),"-16");
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive4StartDate, incentive4EndDate,
+					RebatesConstants.paymentFrequencyYearly);
+				
+		//Check open and pending schedules count based on current date
+		if(dateFormat.parse(incentive4StartDate).compareTo(dateFormat.parse(sfdcHelper.getTodaysDate())) > 0) {
+			//Incentive start date is in the future, thus all schedules will be in pending state.
+		     payoutScheduleValidator.validatePayoutSchedules(response, 1, 0, 1);	
+		}
+		else {
+		       payoutScheduleValidator.validatePayoutSchedules(response, 1, 1, 0);
+		}
+		payoutScheduleValidator.validatePayoutScheduleDates(response, incentive4StartDate, incentive4EndDate,12);		
 	}
 }
