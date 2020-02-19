@@ -78,7 +78,7 @@ public class TemplatePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public void verifyQualificationOnDiscrete(CIMAdmin cimAdmin) throws Exception {
+	public void addqualificationOnDiscrete(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(ddldataSource).waitTillElementIsClickable(ddldataSource)
 				.click(ddldataSource);
@@ -86,7 +86,7 @@ public class TemplatePage extends GenericPage {
 
 	}
 
-	public void verifyQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
+	public void addqualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsClickable(TierSelect).click(TierSelect).waitTillElementIsVisible(TierTiered)
 				.waitTillElementIsClickable(TierTiered).click(TierTiered);
