@@ -18,7 +18,6 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 		softassert = new SoftAssert();
 		String responseBody = response.getBody().asString();
 		JsonArray qnbResArray = parser.parse(responseBody).getAsJsonArray();
-		
 		int responseSize = qnbResArray.size();
 
 		if (responseSize > 0) {
