@@ -288,7 +288,7 @@ public class CIM extends CIMAdmin {
 			validateResponseCode(response, RebatesConstants.responseBadRequest);
 			return response;
 		} catch (Exception e) {
-			throw new ApplicationException("Add Participant API did not fail with Bad request exception trace : " + e);
+			throw new ApplicationException("Add Participant API did not fail with exception trace : " + e);
 		}
 	}
 
@@ -302,7 +302,7 @@ public class CIM extends CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException(
-					"Update Participant API did not fail with Bad request exception trace : " + e);
+					"Update Participant API did not fail with exception trace : " + e);
 		}
 	}
 }
