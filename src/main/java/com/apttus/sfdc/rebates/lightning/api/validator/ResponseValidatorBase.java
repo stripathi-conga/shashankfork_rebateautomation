@@ -192,8 +192,11 @@ public class ResponseValidatorBase {
 			JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
 			if (testAccount.contains(records.get("Account__c").getAsString())) {
 				int index = testAccount.indexOf(records.get("Account__c").getAsString());
+				String testAcc = testAccount.get(index);
 				String testEff = testEffectiveDates.get(index);
 				String testExp = testExpirationDates.get(index);
+				softassert.assertEquals(records.get("Account__c").getAsString(), testAcc,
+						"Validate Participant Effective Date");
 				softassert.assertEquals(records.get("EffectiveDate__c").getAsString(), testEff,
 						"Validate Participant Effective Date");
 				softassert.assertEquals(records.get("ExpirationDate__c").getAsString(), testExp,
