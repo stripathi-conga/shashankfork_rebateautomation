@@ -1,6 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.api.cim;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import org.testng.annotations.BeforeClass;
@@ -25,7 +26,7 @@ public class TestParticipants {
 	private ResponseValidatorBase responseValidator;
 	private CIM cim;
 	private Map<String, String> jsonData;
-	private HashMap<String, String> tempjsonData;
+	private List<Map<String, String>> jsonArrayData;
 	private Response response;
 
 	@BeforeClass(alwaysRun = true)
@@ -45,7 +46,7 @@ public class TestParticipants {
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
 		responseValidator = new ResponseValidatorBase();
-		tempjsonData = new HashMap<String, String>();
+		jsonArrayData = new ArrayList<Map<String,String>>();
 	}
 
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
@@ -72,16 +73,43 @@ public class TestParticipants {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		cim.addParticipants(jsonData);
-		String accountId = cim.getParticipantData().getAccount__c();
-		tempjsonData.put("Automation_Participant_Account_1", accountId);
+		jsonArrayData.add(jsonData);
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		cim.addParticipants(jsonData);
-		accountId = cim.getParticipantData().getAccount__c();
-		tempjsonData.put("Automation_Participant_Account_2", accountId);
+		jsonArrayData.add(jsonData);
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantThree");
 		cim.addParticipants(jsonData);
 		cim.deleteParticipants();
 		response = cim.getParticipantIdViaIncentiveId();
-		responseValidator.validateAvailableParticipant(tempjsonData, response);
+		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
+	}
+	
+	@Test(description = "TC-381 Check validations on the effective start date and end date of the Participants", groups = {
+			"Regression", "API", "Medium" })
+	public void addParticipantDatevalidation() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		
+		//----------- Add Participants with dates outside Incentive dates ------------
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsOutsideIncentiveDates");
+		response = cim.addParticipantsNegative(jsonData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageParticipantsDateOutOfRange);
+
+		//----------- Add Participants with dates same as Incentive dates ------------
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+
+		//----------- Update Participants dates outside Incentive dates ------------
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsOutsideIncentiveDates");
+		response = cim.updateParticipantsNegative(jsonData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageParticipantsDateOutOfRange);
 	}
 }

@@ -1,9 +1,8 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
-
+import java.util.List;
 import java.util.Map;
 import org.testng.asserts.SoftAssert;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
@@ -154,7 +153,6 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	//TODO - Validation is failing intermittently when more than one participants are added, Shashank will fix this
 	public void validateParticipantsDetails(Map<String, String> testData, Response response, CIM cim)
 			throws ApplicationException {
 		softassert = new SoftAssert();
@@ -174,20 +172,27 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateAvailableParticipant(Map<String, String> testData, Response response)
+	public void validateAvailableParticipant(List<Map<String, String>> testData, Response response, CIM cim)
 			throws ApplicationException {
 		softassert = new SoftAssert();
+		int expectedSize = testData.size();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-				softassert.assertEquals(resp.get("totalSize").getAsInt(), 2,
-				"Validate response size, Response does not have single record");
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), expectedSize, "Validate response size");
 		softassert.assertAll();
-		JsonObject recordsParticipant1 = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(recordsParticipant1.get("Account__c").getAsString(),
-				testData.get("Automation_Participant_Account_1"), "Validate Incentive Participant Id");
-		JsonObject recordsParticipant2 = resp.getAsJsonArray("records").get(1).getAsJsonObject();
-		softassert.assertEquals(recordsParticipant2.get("Account__c").getAsString(),
-				testData.get("Automation_Participant_Account_2"), "Validate Incentive Participant Id");
-		softassert.assertAll();
+		for (int i = 0; i < expectedSize; i++) {
+			String expectedAccountId = cim.getAccountId(testData.get(i).get("AccountName"));
+			for (int j = 0; j < expectedSize; j++) {
+				JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
+				if (expectedAccountId.equals(records.get("Account__c").getAsString())) {
+					softassert.assertEquals(records.get("EffectiveDate__c").getAsString(),
+							cim.participantsData.getEffectiveDate__c(), "Validate Participant Effective Date");
+					softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
+							cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
+					softassert.assertEquals(records.get("Incentive__c").getAsString(),
+							cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
+				}
+			}
+		}
 	}
 	
 	public void validateIncentiveStatus(String expectedStatus, Response response, String incentiveId) {
