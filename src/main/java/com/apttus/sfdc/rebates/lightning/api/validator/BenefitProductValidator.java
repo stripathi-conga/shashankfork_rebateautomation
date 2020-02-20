@@ -1,7 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
 import java.text.DecimalFormat;
-
 import org.testng.asserts.SoftAssert;
 import com.apttus.customException.ApplicationException;
 import com.google.gson.JsonArray;

@@ -1,8 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
 import java.util.Map;
-
-import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
@@ -12,7 +10,6 @@ public class IncentiveCreationHelper {
 	
 	private static String instanceURL;
 	private static SFDCRestUtils sfdcRestUtils;
-	private static Efficacies efficacies;
 	private static Response response;
 	private static ResponseValidatorBase responseValidator;
 	
@@ -20,8 +17,7 @@ public class IncentiveCreationHelper {
 			throws Exception {
 		
 		sfdcRestUtils = new SFDCRestUtils();
-		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
-		efficacies = new Efficacies();		
+		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);	
 		responseValidator = new ResponseValidatorBase();
 		
 		CIM cim = new CIM(instanceURL, sfdcRestUtils);		

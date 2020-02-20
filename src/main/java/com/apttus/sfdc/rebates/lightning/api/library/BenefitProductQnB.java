@@ -98,4 +98,16 @@ public class BenefitProductQnB extends CIM {
 			throw new ApplicationException("Delete QnB Benefit Line API call failed with exception trace : " + e);
 		}
 	}
+	
+	public Response addIncentiveQnBNegative(List<Map<String, String>> testData) throws ApplicationException {
+		try {
+			requestString = qnbData.addBenefitRequest(testData, this);
+			setRequestValue("addQnBRequest", requestString);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addIncentiveQnBURL, requestString);
+			validateResponseCode(response, RebatesConstants.responseServerError);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Add Incentive QnB API call failed with exception trace : " + e);
+		}
+	}
 }

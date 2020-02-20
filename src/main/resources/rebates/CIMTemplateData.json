@@ -66,5 +66,15 @@
 	"activeTemplateIdForRebateDiscrete": {
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete"
+	},
+	"addParticipantsOutsideIncentiveDates": {
+		"ExpirationDate__c": "incentiveenddate=+10",
+		"EffectiveDate__c": "incentivestartdate=-10",
+		"AccountName": "Automation_Participant_Account_1"
+	},
+	"addParticipantsSameAsIncentiveDates": {
+		"ExpirationDate__c": "incentiveenddate",
+		"EffectiveDate__c": "incentivestartdate",
+		"AccountName": "Automation_Participant_Account_1"
 	}
 }
