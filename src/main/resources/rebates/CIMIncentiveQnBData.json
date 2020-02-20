@@ -129,5 +129,23 @@
 			"StartDate": "endofcurrentmonth=+1",
 			"EndDate": "endofnextmonth"
 		}
+	],
+	"XXTBenefitProductOutsideIncentiveDates": [
+		{
+			"SectionId": "SEC-00000001",
+			"TierCount": "2",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "Installation: Industrial - High",
+			"QualificationProductCode": "IN7080",
+			"QualificationQuantity": "10;30",
+			"QualificationAliasName":"Q1",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "Installation: Industrial - High",
+			"BenefitProductCode": "IN7080",
+			"BenefitAmount": "120;100",
+			"BenefitAliasName":"B1",
+			"StartDate": "incentivestartdate=-5",
+			"EndDate": "incentiveenddate=+5"
+		}
 	]
 }

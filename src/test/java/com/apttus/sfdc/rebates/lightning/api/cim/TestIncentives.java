@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.api.cim;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -44,6 +45,7 @@ public class TestIncentives {
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
 		responseValidator = new BenefitProductValidator();
+		jsonArrayData = new ArrayList<Map<String,String>>();
 	}
 	
 	@Test(description = "TC-419 Verify Incentive creation for different Payee values", groups = { "Regression",
@@ -133,18 +135,19 @@ public class TestIncentives {
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 
 		// ------------ Add Incentive Participants -------------------
+		jsonArrayData.clear();
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "setParticipantDatesForTwoMonth");
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
-		response = benefitProductQnB.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData.add(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
-		response = benefitProductQnB.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData.add(jsonData);
+		response = benefitProductQnB.getParticipantIdViaIncentiveId();
+		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
 
 		// ------------ Activate Incentive -------------------
 		benefitProductQnB.activateIncentive();

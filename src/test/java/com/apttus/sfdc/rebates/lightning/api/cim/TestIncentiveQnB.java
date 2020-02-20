@@ -16,6 +16,7 @@ import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
+
 public class TestIncentiveQnB {
 	private Properties configProperties;
 	private Efficacies efficacies;
@@ -211,4 +212,20 @@ public class TestIncentiveQnB {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 	}
+	
+    @Test(description = "TC-538 Validate for dates on the QnB for Benefit only and Tiered Incentive", groups = {
+            "Regression", "Medium", "API" })
+    public void addQnBBenefitOnlyXXDOutsideIncentiveDates() throws Exception {
+        jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+                "createIncentiveIndividualParticipantBenefitProductTiered");
+        jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+        benefitProductQnB.createNewIncentive(jsonData);
+        response = benefitProductQnB.getIncentiveDetails();
+        responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+        jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
+        response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
+        //TODO - Mitu to update errorCode and message after the fix of REBATE-3358
+        responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
+                RebatesConstants.messageBenefitDatesOutOfRange);
+    }
 }
