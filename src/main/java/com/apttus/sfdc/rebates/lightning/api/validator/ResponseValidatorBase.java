@@ -185,9 +185,9 @@ public class ResponseValidatorBase {
 				JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
 				if (expectedAccountId.equals(records.get("Account__c").getAsString())) {
 					softassert.assertEquals(records.get("EffectiveDate__c").getAsString(),
-							cim.participantsData.getEffectiveDate__c(), "Validate Participant Effective Date");
+							testData.get(i).get("EffectiveDate__c"), "Validate Participant Effective Date");
 					softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
-							cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
+							testData.get(i).get("ExpirationDate__c"), "Validate Participant Expired Date");
 					softassert.assertEquals(records.get("Incentive__c").getAsString(),
 							cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
 				}
