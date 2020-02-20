@@ -194,7 +194,7 @@ public class TestPayoutSchedules {
 		payoutScheduleValidator.validateSchedulesCount(response, 2);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive3StartDate, incentive3EndDate,6);
 		
-		// -------- Scenario 4 - Incentive date spanning multiple months within a quarter ---------
+		// -------- Scenario 4 - Incentive date spanning just one day ---------
 		String incentive4StartDate = sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate());
 		String incentive4EndDate = incentive4StartDate;
 		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive4StartDate, incentive4EndDate,
