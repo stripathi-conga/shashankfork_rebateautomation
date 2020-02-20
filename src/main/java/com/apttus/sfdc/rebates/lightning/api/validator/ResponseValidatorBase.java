@@ -2,6 +2,8 @@ package com.apttus.sfdc.rebates.lightning.api.validator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.testng.asserts.SoftAssert;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
@@ -171,7 +173,7 @@ public class ResponseValidatorBase {
 				"Validate Incentive Id");
 		softassert.assertAll();
 	}
-
+	
 	public void validateAvailableParticipant(List<Map<String, String>> testData, Response response, CIM cim)
 			throws ApplicationException {
 		softassert = new SoftAssert();
@@ -179,20 +181,26 @@ public class ResponseValidatorBase {
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), expectedSize, "Validate response size");
 		softassert.assertAll();
-		for (int i = 0; i < expectedSize; i++) {
-			String expectedAccountId = cim.getAccountId(testData.get(i).get("AccountName"));
-			for (int j = 0; j < expectedSize; j++) {
-				JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
-				if (expectedAccountId.equals(records.get("Account__c").getAsString())) {
-					softassert.assertEquals(records.get("EffectiveDate__c").getAsString(),
-							testData.get(i).get("EffectiveDate__c"), "Validate Participant Effective Date");
-					softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
-							testData.get(i).get("ExpirationDate__c"), "Validate Participant Expired Date");
-					softassert.assertEquals(records.get("Incentive__c").getAsString(),
-							cim.incentiveData.getIncentiveId(), "Validate Incentive Id");
-				}
+
+		List<String> testAccount = testData.stream().map(p -> p.get("Account__c")).collect(Collectors.toList());
+		List<String> testEffectiveDates = testData.stream().map(p -> p.get("EffectiveDate__c"))
+				.collect(Collectors.toList());
+		List<String> testExpirationDates = testData.stream().map(p -> p.get("ExpirationDate__c"))
+				.collect(Collectors.toList());
+
+		for (int j = 0; j < expectedSize; j++) {
+			JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
+			if (testAccount.contains(records.get("Account__c").getAsString())) {
+				int index = testAccount.indexOf(records.get("Account__c").getAsString());
+				String testEff = testEffectiveDates.get(index);
+				String testExp = testExpirationDates.get(index);
+				softassert.assertEquals(records.get("EffectiveDate__c").getAsString(), testEff,
+						"Validate Participant Effective Date");
+				softassert.assertEquals(records.get("ExpirationDate__c").getAsString(), testExp,
+						"Validate Participant Expiration Date");
 			}
 		}
+		softassert.assertAll();
 	}
 	
 	public void validateIncentiveStatus(String expectedStatus, Response response, String incentiveId) {
