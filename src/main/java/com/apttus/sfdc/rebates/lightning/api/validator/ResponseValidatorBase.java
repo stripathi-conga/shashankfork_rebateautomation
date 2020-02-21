@@ -202,7 +202,7 @@ public class ResponseValidatorBase {
 						"Validate Participant Expiration Date");
 			}
 			else {
-				throw new ApplicationException("Expected Participants are not availabe on Incentives");
+				throw new ApplicationException("Expected Participants are not availabe on Incentive");
 			}
 		}
 		softassert.assertAll();
