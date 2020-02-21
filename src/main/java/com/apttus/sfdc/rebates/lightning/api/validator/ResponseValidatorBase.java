@@ -33,8 +33,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getDataSourceData().getDataSourceId(),
 				"Validate datasource id");
 		softassert.assertEquals(records.get("Name__c").getAsString(), cimAdmin.getDataSourceData().getName__c(),
-				"Validate datasource name");
-		
+				"Validate datasource name");		
 		softassert.assertAll();
 	}
 
