@@ -13,11 +13,12 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
 
-public class TestIncentiveQnB {
+public class TestIncentiveQnB extends UnifiedFramework {
 	private Properties configProperties;
 	private Efficacies efficacies;
 	private SFDCRestUtils sfdcRestUtils;

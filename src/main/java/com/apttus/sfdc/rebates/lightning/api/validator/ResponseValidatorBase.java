@@ -33,8 +33,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getDataSourceData().getDataSourceId(),
 				"Validate datasource id");
 		softassert.assertEquals(records.get("Name__c").getAsString(), cimAdmin.getDataSourceData().getName__c(),
-				"Validate datasource name");
-		
+				"Validate datasource name");		
 		softassert.assertAll();
 	}
 
@@ -201,6 +200,8 @@ public class ResponseValidatorBase {
 						"Validate Participant Effective Date");
 				softassert.assertEquals(records.get("ExpirationDate__c").getAsString(), testExp,
 						"Validate Participant Expiration Date");
+			} else {
+				throw new ApplicationException("Expected Participants are not availabe on Incentive");
 			}
 		}
 		softassert.assertAll();

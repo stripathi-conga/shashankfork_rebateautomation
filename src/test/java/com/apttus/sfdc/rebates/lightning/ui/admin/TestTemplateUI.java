@@ -13,12 +13,13 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rebates.lightning.ui.library.TemplatePage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
-public class TestTemplateUI {
+public class TestTemplateUI extends UnifiedFramework {
 
 	WebDriver driver;
 	LoginPage loginPage;

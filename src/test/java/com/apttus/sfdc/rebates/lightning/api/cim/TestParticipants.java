@@ -13,10 +13,11 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestParticipants {
+public class TestParticipants extends UnifiedFramework {
 	private Properties configProperties;
 	protected String baseURL;
 	private Efficacies efficacies;
