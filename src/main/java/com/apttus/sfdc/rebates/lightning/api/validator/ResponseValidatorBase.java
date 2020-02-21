@@ -201,6 +201,9 @@ public class ResponseValidatorBase {
 				softassert.assertEquals(records.get("ExpirationDate__c").getAsString(), testExp,
 						"Validate Participant Expiration Date");
 			}
+			else {
+				throw new ApplicationException("Expected Participants are not availabe on Incentives");
+			}
 		}
 		softassert.assertAll();
 	}
