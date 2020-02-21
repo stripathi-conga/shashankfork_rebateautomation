@@ -35,6 +35,7 @@ public class RebatesConstants {
 	public static final String paymentFrequencyMonthly = "Monthly";
 	public static final String paymentFrequencyYearly = "Yearly";
 	public static final String paymentFrequencyQuarterly = "Quarterly";
+	public static final String paymentFrequencyHalfYearly = "Half Yearly";
 	public static final String messagequalificationformulavalidation="No data to display";
 	public static final String Templates="IncentiveProgramTemplate__c/home";
 }

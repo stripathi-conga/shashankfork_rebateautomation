@@ -162,4 +162,44 @@ public class TestPayoutSchedules {
 		payoutScheduleValidator.validateSchedulesCount(response, 1);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive4StartDate, incentive4EndDate,3);
 	}
+	
+	@Test(description = "TC-465 Verify the schedule generated when the Payment frequency selected as Half Yearly", groups = {
+			"Regression", "API", "Medium" })
+	public void generatePayoutSchedulesForHalfYearlyFrequency() throws Exception {
+		
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		
+		// -------- Scenario 1 - Incentive date spanning 1 year with start date 15-Jan and end 31-Dec---------
+		String incentiveStartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");	
+		String incentiveEndDate = sfdcHelper.lastDayOfYearForDate(incentiveStartDate);
+		
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentiveStartDate, incentiveEndDate,
+				RebatesConstants.paymentFrequencyHalfYearly);
+		payoutScheduleValidator.validateSchedulesCount(response, 2);
+		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate,6);
+		
+		// -------- Scenario 2 - Incentive date spanning just 1 month---------
+		String incentive2StartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
+		String incentive2EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfMonthForDate(incentive2StartDate),"-1");
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive2StartDate, incentive2EndDate,
+					RebatesConstants.paymentFrequencyHalfYearly);
+		payoutScheduleValidator.validateSchedulesCount(response, 1);
+		payoutScheduleValidator.validatePayoutSchedules(response, incentive2StartDate, incentive2EndDate,6);
+		
+		// -------- Scenario 3 - Incentive date spanning 1 year with start 1-Jan and end 15-Dec---------
+		String incentive3StartDate = sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate());
+		String incentive3EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(incentive3StartDate),"-16");
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive3StartDate, incentive3EndDate,
+					RebatesConstants.paymentFrequencyHalfYearly);
+		payoutScheduleValidator.validateSchedulesCount(response, 2);
+		payoutScheduleValidator.validatePayoutSchedules(response, incentive3StartDate, incentive3EndDate,6);
+		
+		// -------- Scenario 4 - Incentive date spanning just one day ---------
+		String incentive4StartDate = sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate());
+		String incentive4EndDate = incentive4StartDate;
+		response = IncentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson,RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentive4StartDate, incentive4EndDate,
+						RebatesConstants.paymentFrequencyHalfYearly);
+		payoutScheduleValidator.validateSchedulesCount(response, 1);
+		payoutScheduleValidator.validatePayoutSchedules(response, incentive4StartDate, incentive4EndDate,6);
+	}
 }
