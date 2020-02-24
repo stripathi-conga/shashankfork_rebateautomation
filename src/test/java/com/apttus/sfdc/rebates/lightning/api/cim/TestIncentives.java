@@ -162,23 +162,27 @@ public class TestIncentives extends UnifiedFramework {
 		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
 				benefitProductQnB.getIncentiveData().incentiveId);
 	}
-	
-	@Test(description = "TC- 549 Select measurement level as Individual Participant", groups = { "Regression", "Medium", "API" })
+
+	@Test(description = "TC- 549 Select measurement level as Individual Participant", groups = { "Regression", "Medium",
+			"API" })
 	public void addIncentiveWithPayeeAndMeasurementAsIndividualParticipantBenefitOnly() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
-		System.out.println("Incentive Id : "+cim.getIncentiveData().incentiveId);
+		System.out.println("Incentive Id : " + cim.getIncentiveData().incentiveId);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
-	
-	@Test(description = "TC-548 Select measurement level Agreement Account first to select payee value", groups = { "Regression", "Medium", "API" })
+
+	@Test(description = "TC-548 Select measurement level Agreement Account first to select payee value", groups = {
+			"Regression", "Medium", "API" })
 	public void updateIncentivePayeeToIndividualparticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete");		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
 		cim.createNewIncentive(jsonData);
-		System.out.println("Incentive Id : "+cim.getIncentiveData().incentiveId);
+		System.out.println("Incentive Id : " + cim.getIncentiveData().incentiveId);
 		jsonData.put("BenefitLevel__c", "Individual Participants");
 		cim.updateIncentive(jsonData);
 		response = cim.getIncentiveDetails();
