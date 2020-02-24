@@ -74,9 +74,15 @@ public class TestParticipants extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		cim.addParticipants(jsonData);
+		jsonData.put("Account__c", cim.getParticipantData().getAccount__c());
+		jsonData.put("EffectiveDate__c", cim.getParticipantData().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", cim.getParticipantData().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		cim.addParticipants(jsonData);
+		jsonData.put("Account__c", cim.getParticipantData().getAccount__c());
+		jsonData.put("EffectiveDate__c", cim.getParticipantData().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", cim.getParticipantData().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantThree");
 		cim.addParticipants(jsonData);
