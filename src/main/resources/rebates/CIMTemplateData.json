@@ -35,7 +35,7 @@
 	"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered": {
 		"Name": "{Random}",
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
-		"Apttus_Config2__ExpirationDate__c": "endofcurrentyear",
+		"Apttus_Config2__ExpirationDate__c": "endofcurrentmonth",
 		"Currency__c": "Dollar",
 		"Apttus_Config2__Description__c": "Automation Program",
 		"Calendar__c": "Gregorian",
@@ -50,7 +50,7 @@
 	},
 	"createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete": {
 		"Name": "{Random}",
-		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
+		"Apttus_Config2__EffectiveDate__c": "startofcurrentyear",
 		"Apttus_Config2__ExpirationDate__c": "endofcurrentyear",
 		"Currency__c": "Dollar",
 		"Apttus_Config2__Description__c": "Automation Program",
