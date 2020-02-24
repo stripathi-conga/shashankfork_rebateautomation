@@ -60,7 +60,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -99,7 +99,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -140,7 +140,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -179,7 +179,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -256,7 +256,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -308,7 +308,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");

@@ -75,11 +75,11 @@ public class TestIncentives extends UnifiedFramework {
 	}
 
 	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
-	public void updateIncentivePayee() throws Exception {
+	public void updateIncentivePayeeToAgreementAccount() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");		
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
-		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentive");
+		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentivePayeeToAgreementAccount");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		cim.updateIncentive(jsonData);
 		response = cim.getIncentiveDetails();
@@ -141,11 +141,17 @@ public class TestIncentives extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
+		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getAccount__c());
+		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
+		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getAccount__c());
+		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		response = benefitProductQnB.getParticipantIdViaIncentiveId();
 		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
@@ -155,5 +161,27 @@ public class TestIncentives extends UnifiedFramework {
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
 				benefitProductQnB.getIncentiveData().incentiveId);
+	}
+	
+	@Test(description = "TC- 549 Select measurement level as 'Individual Participant'", groups = { "Regression", "Medium", "API" })
+	public void addIncentiveWithPayeeAndMeasurementAsIndividualParticipantBenefitOnly() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");		
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		cim.createNewIncentive(jsonData);
+		System.out.println("Incentive Id : "+cim.getIncentiveData().incentiveId);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+	}
+	
+	@Test(description = "TC-548 Select measurement level Agreement Account first to select payee value", groups = { "Regression", "Medium", "API" })
+	public void updateIncentivePayeeToIndividualparticipant() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete");		
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
+		cim.createNewIncentive(jsonData);
+		System.out.println("Incentive Id : "+cim.getIncentiveData().incentiveId);
+		jsonData.put("BenefitLevel__c", "Individual Participants");
+		cim.updateIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
 }

@@ -41,9 +41,13 @@
 		"Status__c": "Draft",
 		"Description__c": "Automation"
 	},
-	"createQnBLayoutAPI": {
+	"benefitOnlyTieredQnBLayoutAPI": {
 		"type__c": "Benefit Product",
 		"tier__c": "Tiered"
+	},
+	"benefitOnlyDiscreteQnBLayoutAPI": {
+		"type__c": "Benefit Product",
+		"tier__c": "Discrete"
 	},
 	"createNewLinkTemplateSubTypeTieredAPI": {
 		"IncentiveType__c": "Rebate",
@@ -69,9 +73,5 @@
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "UpdatedAutomation"
-	},
-	"createDiscreteQnBLayoutAPI": {
-		"type__c": "Benefit Product",
-		"tier__c": "Discrete"
 	}
 }

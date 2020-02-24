@@ -32,11 +32,44 @@
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete"
 	},
+	"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered": {
+		"Name": "{Random}",
+		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
+		"Apttus_Config2__ExpirationDate__c": "endofcurrentyear",
+		"Currency__c": "Dollar",
+		"Apttus_Config2__Description__c": "Automation Program",
+		"Calendar__c": "Gregorian",
+		"BenefitLevel__c": "Individual Participants",
+		"PayoutFrequency__c": "Monthly",
+		"PaymentMethod__c": "Credit Memo",
+		"MeasurementLevel__c": "Individual Participants",
+		"MeasurementFrequency__c": "Monthly",
+		"Apttus_Config2__UseType__c": "Rebate 2.0",
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Tiered"
+	},
+	"createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete": {
+		"Name": "{Random}",
+		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
+		"Apttus_Config2__ExpirationDate__c": "endofcurrentyear",
+		"Currency__c": "Dollar",
+		"Apttus_Config2__Description__c": "Automation Program",
+		"Calendar__c": "Gregorian",
+		"BenefitLevel__c": "Agreement Account",
+		"AccountName": "Automation_Account_1",
+		"PayoutFrequency__c": "Monthly",
+		"PaymentMethod__c": "Credit Memo",
+		"MeasurementLevel__c": "Agreement Account",
+		"MeasurementFrequency__c": "Monthly",
+		"Apttus_Config2__UseType__c": "Rebate 2.0",
+		"IncentiveType__c": "Rebate",
+		"IncentiveSubType__c": "Benefit Product Discrete"
+	},
 	"createNewIncentiveAgreementAccountBenefitProductDiscreteTwoMonths": {
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",
 		"Apttus_Config2__ExpirationDate__c": "endofnextmonth"
 	},
-	"updateIncentive": {
+	"updateIncentivePayeeToAgreementAccount": {
 		"BenefitLevel__c": "Agreement Account",
 		"AccountName": "Automation_Account_1"
 	},

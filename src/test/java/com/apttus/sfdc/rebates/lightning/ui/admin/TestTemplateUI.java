@@ -73,7 +73,7 @@ public class TestTemplateUI extends UnifiedFramework {
 			cimAdmin.createDataSource(jsonData);
 			cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 			cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 			cimAdmin.getQnBLayoutId(jsonData);
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 					"createNewLinkTemplateSubTypeDiscreteAPI");

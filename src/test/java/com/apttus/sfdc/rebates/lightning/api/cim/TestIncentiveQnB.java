@@ -68,7 +68,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.linkDatasourceToCalcFormula(calcFormulaIdQualificationTiered);
 
 		//-------- Create and activate Template for Benefit Only Tiered -----------------
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -99,7 +99,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.deactivateLinkTemplateForIncentives(jsonData);
 		
 		//-------- Create and activate Template for Benefit Only Discrete -----------------
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createDiscreteQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
