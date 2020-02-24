@@ -170,7 +170,6 @@ public class TestIncentives extends UnifiedFramework {
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
-		System.out.println("Incentive Id : " + cim.getIncentiveData().incentiveId);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
@@ -182,7 +181,6 @@ public class TestIncentives extends UnifiedFramework {
 				"createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
 		cim.createNewIncentive(jsonData);
-		System.out.println("Incentive Id : " + cim.getIncentiveData().incentiveId);
 		jsonData.put("BenefitLevel__c", "Individual Participants");
 		cim.updateIncentive(jsonData);
 		response = cim.getIncentiveDetails();
