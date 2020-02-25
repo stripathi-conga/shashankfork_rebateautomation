@@ -13,10 +13,12 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestIncentiveQnB {
+
+public class TestIncentiveQnB extends UnifiedFramework {
 	private Properties configProperties;
 	private Efficacies efficacies;
 	private SFDCRestUtils sfdcRestUtils;
@@ -66,7 +68,7 @@ public class TestIncentiveQnB {
 		cim.linkDatasourceToCalcFormula(calcFormulaIdQualificationTiered);
 
 		//-------- Create and activate Template for Benefit Only Tiered -----------------
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -97,7 +99,7 @@ public class TestIncentiveQnB {
 		cim.deactivateLinkTemplateForIncentives(jsonData);
 		
 		//-------- Create and activate Template for Benefit Only Discrete -----------------
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createDiscreteQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
@@ -211,4 +213,20 @@ public class TestIncentiveQnB {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 	}
+	
+    @Test(description = "TC-538 Validate for dates on the QnB for Benefit only and Tiered Incentive", groups = {
+            "Regression", "Medium", "API" })
+    public void addQnBBenefitOnlyXXDOutsideIncentiveDates() throws Exception {
+        jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+                "createIncentiveIndividualParticipantBenefitProductTiered");
+        jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+        benefitProductQnB.createNewIncentive(jsonData);
+        response = benefitProductQnB.getIncentiveDetails();
+        responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+        jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
+        response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
+        //TODO - Mitu to update errorCode and message after the fix of REBATE-3358
+        responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
+                RebatesConstants.messageBenefitDatesOutOfRange);
+    }
 }

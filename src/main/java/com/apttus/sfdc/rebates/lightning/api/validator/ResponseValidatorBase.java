@@ -1,9 +1,10 @@
 package com.apttus.sfdc.rebates.lightning.api.validator;
 
-
+import java.util.List;
 import java.util.Map;
-import org.testng.asserts.SoftAssert;
+import java.util.stream.Collectors;
 
+import org.testng.asserts.SoftAssert;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
@@ -32,8 +33,7 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getDataSourceData().getDataSourceId(),
 				"Validate datasource id");
 		softassert.assertEquals(records.get("Name__c").getAsString(), cimAdmin.getDataSourceData().getName__c(),
-				"Validate datasource name");
-		
+				"Validate datasource name");		
 		softassert.assertAll();
 	}
 
@@ -154,7 +154,6 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	//TODO - Validation is failing intermittently when more than one participants are added, Shashank will fix this
 	public void validateParticipantsDetails(Map<String, String> testData, Response response, CIM cim)
 			throws ApplicationException {
 		softassert = new SoftAssert();
@@ -173,20 +172,38 @@ public class ResponseValidatorBase {
 				"Validate Incentive Id");
 		softassert.assertAll();
 	}
-
-	public void validateAvailableParticipant(Map<String, String> testData, Response response)
+	
+	public void validateAvailableParticipant(List<Map<String, String>> testData, Response response, CIM cim)
 			throws ApplicationException {
 		softassert = new SoftAssert();
+		int expectedSize = testData.size();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-				softassert.assertEquals(resp.get("totalSize").getAsInt(), 2,
-				"Validate response size, Response does not have single record");
+		softassert.assertEquals(resp.get("totalSize").getAsInt(), expectedSize, "Validate response size");
 		softassert.assertAll();
-		JsonObject recordsParticipant1 = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(recordsParticipant1.get("Account__c").getAsString(),
-				testData.get("Automation_Participant_Account_1"), "Validate Incentive Participant Id");
-		JsonObject recordsParticipant2 = resp.getAsJsonArray("records").get(1).getAsJsonObject();
-		softassert.assertEquals(recordsParticipant2.get("Account__c").getAsString(),
-				testData.get("Automation_Participant_Account_2"), "Validate Incentive Participant Id");
+
+		List<String> testAccount = testData.stream().map(p -> p.get("Account__c")).collect(Collectors.toList());
+		List<String> testEffectiveDates = testData.stream().map(p -> p.get("EffectiveDate__c"))
+				.collect(Collectors.toList());
+		List<String> testExpirationDates = testData.stream().map(p -> p.get("ExpirationDate__c"))
+				.collect(Collectors.toList());
+
+		for (int j = 0; j < expectedSize; j++) {
+			JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
+			if (testAccount.contains(records.get("Account__c").getAsString())) {
+				int index = testAccount.indexOf(records.get("Account__c").getAsString());
+				String testAcc = testAccount.get(index);
+				String testEff = testEffectiveDates.get(index);
+				String testExp = testExpirationDates.get(index);
+				softassert.assertEquals(records.get("Account__c").getAsString(), testAcc,
+						"Validate Participant Effective Date");
+				softassert.assertEquals(records.get("EffectiveDate__c").getAsString(), testEff,
+						"Validate Participant Effective Date");
+				softassert.assertEquals(records.get("ExpirationDate__c").getAsString(), testExp,
+						"Validate Participant Expiration Date");
+			} else {
+				throw new ApplicationException("Expected Participants are not availabe on Incentive");
+			}
+		}
 		softassert.assertAll();
 	}
 	

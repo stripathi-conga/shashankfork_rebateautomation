@@ -177,7 +177,6 @@ public class CIM extends CIMAdmin {
 			participantId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
 			participantsData.setParticipantsId(participantId);
 			return response;
-
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
 		}
@@ -270,7 +269,7 @@ public class CIM extends CIMAdmin {
 			throw new ApplicationException("Activate Incentive API call failed with exception trace : " + e);
 		}
 	}
-	
+
 	public Response getPayoutSchedules() throws ApplicationException {
 		try {
 			response = sfdcRestUtils.getData(
@@ -279,6 +278,31 @@ public class CIM extends CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get Payout Schedules API call failed with exception trace : " + e);
+		}
+	}
+
+	public Response addParticipantsNegative(Map<String, String> testData) throws ApplicationException {
+		try {
+			requestString = participantsData.addParticipantsRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Add Participant API did not fail with exception trace : " + e);
+		}
+	}
+
+	public Response updateParticipantsNegative(Map<String, String> testData) throws ApplicationException {
+		String participantsId = participantsData.getParticipantsId();
+		try {
+			requestString = participantsData.addParticipantsRequest(testData, this);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.addParticipantsURL + participantsId,
+					requestString);
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException(
+					"Update Participant API did not fail with exception trace : " + e);
 		}
 	}
 }
