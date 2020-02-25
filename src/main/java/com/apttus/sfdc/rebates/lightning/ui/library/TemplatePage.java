@@ -53,7 +53,7 @@ public class TemplatePage extends GenericPage  {
 
 	public TemplatePage(WebDriver driver) {
 		super(driver);
-		wait = new WebDriverWait(driver, 60);
+		wait = new WebDriverWait(driver, 120);
 		PageFactory.initElements(driver, this);
 	}
 
