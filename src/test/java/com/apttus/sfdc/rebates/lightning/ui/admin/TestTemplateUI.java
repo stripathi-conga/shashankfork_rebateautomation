@@ -53,7 +53,7 @@ public class TestTemplateUI {
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
 	}
 
-	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates", groups = { "Regression",
+	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates",groups = { "Regression",
 			"Medium", "UI" })
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
 		try {
