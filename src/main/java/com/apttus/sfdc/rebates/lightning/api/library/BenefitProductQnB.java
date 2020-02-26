@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.QnBAddBenefitPojo;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
@@ -141,7 +140,7 @@ public class BenefitProductQnB extends CIM {
 				benefitTierIdMap.put(benefitIdName, benefitTierIdList);
 			}
 		} else {
-			throw new ApplicationException("Not able to Set Qualification and Section IDs as Get Incentive QnB API Response is null");
+			throw new ApplicationException("Not able to Set Qualification and Benefit Line IDs as Get Incentive QnB API Response is null");
 		}
 	}
 	

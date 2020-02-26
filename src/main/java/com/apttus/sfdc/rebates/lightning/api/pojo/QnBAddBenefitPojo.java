@@ -76,9 +76,7 @@ public class QnBAddBenefitPojo {
 
 			// ------------- Set Qualification Data ------------------------
 			qualification.setStartDate(startDate);
-			qualification.setEndDate(endDate);
-			
-			//TODO - Check variation for this
+			qualification.setEndDate(endDate);			
 			qualification.setFormulaId(RebatesConstants.qualificationFormulaId);
 			qualification.setAliasName(row.get("QualificationAliasName"));
 			Map<String, String> qualificationIdMap;
