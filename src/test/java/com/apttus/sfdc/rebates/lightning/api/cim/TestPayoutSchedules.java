@@ -15,9 +15,10 @@ import com.apttus.sfdc.rebates.lightning.api.validator.PayoutScheduleValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.IncentiveCreationHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.jayway.restassured.response.Response;
 
-public class TestPayoutSchedules {
+public class TestPayoutSchedules extends UnifiedFramework {
 
 	private Properties configProperties;
 	protected String baseURL;

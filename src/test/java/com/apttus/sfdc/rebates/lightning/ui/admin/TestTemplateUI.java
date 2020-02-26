@@ -13,12 +13,13 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rebates.lightning.ui.library.TemplatePage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
-public class TestTemplateUI {
+public class TestTemplateUI extends UnifiedFramework {
 
 	WebDriver driver;
 	LoginPage loginPage;
@@ -53,7 +54,7 @@ public class TestTemplateUI {
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
 	}
 
-	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates", groups = { "Regression",
+	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates",groups = { "Regression",
 			"Medium", "UI" })
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
 		try {
@@ -72,7 +73,7 @@ public class TestTemplateUI {
 			cimAdmin.createDataSource(jsonData);
 			cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
 			cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createQnBLayoutAPI");
+			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 			cimAdmin.getQnBLayoutId(jsonData);
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 					"createNewLinkTemplateSubTypeDiscreteAPI");

@@ -13,10 +13,11 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestParticipants {
+public class TestParticipants extends UnifiedFramework {
 	private Properties configProperties;
 	protected String baseURL;
 	private Efficacies efficacies;
@@ -73,9 +74,15 @@ public class TestParticipants {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		cim.addParticipants(jsonData);
+		jsonData.put("Account__c", cim.getParticipantData().getAccount__c());
+		jsonData.put("EffectiveDate__c", cim.getParticipantData().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", cim.getParticipantData().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		cim.addParticipants(jsonData);
+		jsonData.put("Account__c", cim.getParticipantData().getAccount__c());
+		jsonData.put("EffectiveDate__c", cim.getParticipantData().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", cim.getParticipantData().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantThree");
 		cim.addParticipants(jsonData);
