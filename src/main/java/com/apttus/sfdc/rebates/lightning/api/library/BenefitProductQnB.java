@@ -132,7 +132,7 @@ public class BenefitProductQnB extends CIM {
 				benefitIdValue = resQnbLinesDataArray.get(1).getAsJsonObject().get("Id").getAsString();
 				benefitIdMap.put(benefitIdName, benefitIdValue);
 
-				// ----------Set Qualification TierId -------------------------
+				// ----------Set Benefit TierId -------------------------
 				JsonArray benefitTierIdArray = resQnbLinesDataArray.get(1).getAsJsonObject().get("Tiers")
 						.getAsJsonArray();
 				benefitTierList = gson.fromJson(benefitTierIdArray, founderListType);
