@@ -147,5 +147,71 @@
 			"StartDate": "incentivestartdate=-5",
 			"EndDate": "incentiveenddate=+5"
 		}
+	],
+	"XXTUpdateBenefitProduct": [
+		{
+			"SectionId": "SEC-00000001",
+			"TierCount": "2",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "Installation: Industrial - High",
+			"QualificationProductCode": "IN7080",
+			"QualificationQuantity": "1;20",
+			"QualificationAliasName":"Q1",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "Installation: Industrial - High",
+			"BenefitProductCode": "IN7080",
+			"BenefitAmount": "220;200",
+			"BenefitAliasName":"B1",
+			"StartDate": "incentivestartdate=+5",
+			"EndDate": "incentiveenddate=-5"
+		},
+		{
+			"SectionId": "SEC-00000002",
+			"TierCount": "3",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "GenWatt Diesel 200kW",
+			"QualificationProductCode": "GC1040",
+			"QualificationQuantity": "1;15;40",
+			"QualificationAliasName":"Q2",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "GenWatt Diesel 200kW",
+			"BenefitProductCode": "GC1040",
+			"BenefitAmount": "200;190;180",
+			"BenefitAliasName":"B2",
+			"StartDate": "incentivestartdate=+2",
+			"EndDate": "incentiveenddate=-2"
+		}
+	],
+	"XXDUpdateBenefitProduct": [
+		{
+			"SectionId": "SEC-00000001",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "Installation: Industrial - High",
+			"QualificationProductCode": "IN7080",
+			"QualificationQuantity": "1",
+			"QualificationAliasName":"Q1",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "Installation: Industrial - High",
+			"BenefitProductCode": "IN7080",
+			"BenefitAmount": "100",
+			"BenefitAliasName":"B1",
+			"StartDate": "incentivestartdate=+5",
+			"EndDate": "incentiveenddate=-5"
+		},
+		{
+			"SectionId": "SEC-00000002",
+			"QualificationProductType": "Product",
+			"QualificationProduct": "GenWatt Diesel 200kW",
+			"QualificationProductCode": "GC1040",
+			"QualificationQuantity": "5",
+			"QualificationAliasName":"Q2",
+			"BenefitProductType": "Product",
+			"BenefitProduct": "GenWatt Diesel 200kW",
+			"BenefitProductCode": "GC1040",
+			"BenefitAmount": "120",
+			"BenefitAliasName":"B2",
+			"StartDate": "incentivestartdate=+2",
+			"EndDate": "incentiveenddate=-2"
+		}
 	]
 }

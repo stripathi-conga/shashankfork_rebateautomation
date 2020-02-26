@@ -1,6 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.api.library;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.apttus.customException.ApplicationException;
 import com.apttus.sfdc.rebates.lightning.api.pojo.ActivateIncentivePojo;
@@ -18,7 +19,11 @@ public class CIM extends CIMAdmin {
 	private String requestString;
 	private Response response;
 	public Map<String, String> mapRequestResponse;
-	public Map<String, String> sectionIdMap;
+	public Map<String, String> sectionIdMap;	
+	public Map<String, String> qualificationIdMap;
+	public Map<String, String> benefitIdMap;	
+	public Map<String, List<String>> qualificationTierIdMap;
+	public Map<String, List<String>> benefitTierIdMap;
 	private Map<String, String> mapData = new HashMap<String, String>();
 	public CreateNewIncentivePojo incentiveData = new CreateNewIncentivePojo();
 	public CreateNewAccountPojo account = new CreateNewAccountPojo();
