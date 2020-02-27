@@ -39,7 +39,14 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//b[text()='No data to display']")
 	public List<WebElement> txtNodatadisplay;
 
+	String BenefitProduct = "Benefit Product";
+	String Discrete = "Discrete";
+	String Tiered = "Tiered";
+
 	String cmbTxt = "//*[@data-value='OPTION']";
+	String benefitproductpath = cmbTxt.replace("OPTION", BenefitProduct);
+	String discretepath = cmbTxt.replace("OPTION", Discrete);
+	String tieredpath = cmbTxt.replace("OPTION", Tiered);
 
 	GenericPage genericPage;
 	WebDriverWait wait;
@@ -50,6 +57,7 @@ public class TemplatePage extends GenericPage {
 		wait = new WebDriverWait(driver, 120);
 		PageFactory.initElements(driver, this);
 	}
+
 	public TemplatePage moveToNewtemplatepage(WebElement newbutton, WebElement Labelnewtemplate) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(newbutton).click(newbutton).waitTillElementIsVisible(Labelnewtemplate);
@@ -64,12 +72,11 @@ public class TemplatePage extends GenericPage {
 
 	public TemplatePage qnbLayoutDefinition(WebElement ddlQBselect, WebElement ddlTierSelect) throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
-				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Benefit Product")))
-				.waitTillElementIsClickable(By.xpath(cmbTxt.replace("OPTION", "Benefit Product")))
-				.click(By.xpath(cmbTxt.replace("OPTION", "Benefit Product"))).waitTillElementIsClickable(ddlTierSelect)
-				.click(ddlTierSelect).waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Discrete")))
-				.waitTillElementIsClickable(By.xpath(cmbTxt.replace("OPTION", "Discrete")))
-				.click(By.xpath(cmbTxt.replace("OPTION", "Discrete")));
+				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(benefitproductpath))
+				.waitTillElementIsClickable(By.xpath(benefitproductpath)).click(By.xpath(benefitproductpath));
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
+				.waitTillElementIsVisible(By.xpath(discretepath)).waitTillElementIsClickable(By.xpath(discretepath))
+				.click(By.xpath(discretepath));
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
@@ -84,9 +91,8 @@ public class TemplatePage extends GenericPage {
 	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
-				.waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Tiered")))
-				.waitTillElementIsClickable(By.xpath(cmbTxt.replace("OPTION", "Tiered"))).
-				click(By.xpath(cmbTxt.replace("OPTION", "Tiered")));
+				.waitTillElementIsVisible(By.xpath(tieredpath)).waitTillElementIsClickable(By.xpath(tieredpath))
+				.click(By.xpath(tieredpath));
 		sfdcAcolyte.click(ddldataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName__c()).sendBoardKeys(Keys.ENTER);
 		for (int i = 0; i < chkqualification.size(); i++) {
