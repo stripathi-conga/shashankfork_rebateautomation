@@ -331,4 +331,14 @@ public class CIM extends CIMAdmin {
 			throw new ApplicationException("Pending to open status modifier API call failed with exception trace : " + e);
 		}
 	}
+	
+	public Response openToReadyStatusModifier() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.payoutScheduleStatusModifierURL.replace("{statusModifier}", "OpenToReady"),"");
+			validateResponseCode(response, RebatesConstants.responseOk);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Open to ready status modifier API call failed with exception trace : " + e);
+		}
+	}
 }
