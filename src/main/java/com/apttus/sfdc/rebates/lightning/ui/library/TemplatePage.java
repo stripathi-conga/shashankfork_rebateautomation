@@ -44,9 +44,6 @@ public class TemplatePage extends GenericPage {
 	String Tiered = "Tiered";
 
 	String cmbTxt = "//*[@data-value='OPTION']";
-	String benefitproductpath = cmbTxt.replace("OPTION", BenefitProduct);
-	String discretepath = cmbTxt.replace("OPTION", Discrete);
-	String tieredpath = cmbTxt.replace("OPTION", Tiered);
 
 	GenericPage genericPage;
 	WebDriverWait wait;
