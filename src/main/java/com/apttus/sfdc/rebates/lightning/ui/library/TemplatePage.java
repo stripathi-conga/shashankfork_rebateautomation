@@ -71,6 +71,10 @@ public class TemplatePage extends GenericPage {
 	}
 
 	public TemplatePage qnbLayoutDefinition(WebElement ddlQBselect, WebElement ddlTierSelect) throws Exception {
+		
+		String benefitproductpath = cmbTxt.replace("OPTION", BenefitProduct);
+		String discretepath = cmbTxt.replace("OPTION", Discrete);
+				
 		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
 				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(benefitproductpath))
 				.waitTillElementIsClickable(By.xpath(benefitproductpath)).click(By.xpath(benefitproductpath));
@@ -89,6 +93,8 @@ public class TemplatePage extends GenericPage {
 	}
 
 	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
+		
+		String tieredpath = cmbTxt.replace("OPTION", Tiered);
 
 		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(tieredpath)).waitTillElementIsClickable(By.xpath(tieredpath))
