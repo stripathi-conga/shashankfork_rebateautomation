@@ -66,5 +66,46 @@ public class PayoutScheduleValidator {
 			softassert.assertAll();
 		}
 	}
+	
+	public void validateReadyPayoutSchedules(Response response, String incentiveStartDate, String incentiveEndDate,
+			int intervalInMonths,int gracePriodInDays) throws Exception {
+		SoftAssert softassert = new SoftAssert();
+		String responseBody = response.getBody().asString();
+		JsonArray schedulesResponse = parser.parse(responseBody).getAsJsonArray();
+		int responseSize = schedulesResponse.size();
+
+		String expectedScheduleStartDate = incentiveStartDate;
+		String expectedScheduleEndDate = expectedScheduleStartDate;
+
+		for (int i = 0; i < responseSize; i++) {
+			// Read schedule start date and end date
+			JsonObject schedule = schedulesResponse.get(i).getAsJsonObject();
+			String scheduleStartDate = schedule.get("PeriodStartDate__c").getAsString();
+			String scheduleEndDate = schedule.get("PeriodEndDate__c").getAsString();
+			String scheduleStatus = schedule.get("Status__c").getAsString();
+			String readyStatusCutOffDate = sfdcHelper.getPastorFutureDate(scheduleEndDate,String.valueOf(gracePriodInDays));
+			
+			expectedScheduleEndDate = sfdcHelper
+					.firstDayOfMonthForDate(sfdcHelper.addMonthsToDate(expectedScheduleStartDate, intervalInMonths));
+			if (i == (responseSize - 1)) {
+				expectedScheduleEndDate = incentiveEndDate;
+			} else {
+				expectedScheduleEndDate = sfdcHelper.getPastorFutureDate(expectedScheduleEndDate, "-1");
+			}
+			softassert.assertEquals(expectedScheduleStartDate, scheduleStartDate, "Validate schedule start date");
+			softassert.assertEquals(expectedScheduleEndDate, scheduleEndDate, "Validate schedule end date");
+			if(dateFormat.parse(readyStatusCutOffDate).compareTo(dateFormat.parse(sfdcHelper.getTodaysDate())) < 0) {
+				softassert.assertEquals(RebatesConstants.scheduleStatusReady,scheduleStatus,"Validate schedule status, Status should be Ready");
+			}
+			else if(dateFormat.parse(scheduleStartDate).compareTo(dateFormat.parse(sfdcHelper.getTodaysDate())) > 0) {
+				softassert.assertEquals(RebatesConstants.scheduleStatusPending,scheduleStatus,"Validate schedule status, Status should be Pending");
+			}
+			else {
+				softassert.assertEquals(RebatesConstants.scheduleStatusOpen,scheduleStatus,"Validate schedule status, Status should be Open");
+			}
+			expectedScheduleStartDate = sfdcHelper.getPastorFutureDate(expectedScheduleEndDate, "1");
+			softassert.assertAll();
+		}
+	}
 
 }

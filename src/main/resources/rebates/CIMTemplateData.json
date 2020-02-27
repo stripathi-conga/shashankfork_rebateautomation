@@ -28,6 +28,7 @@
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Individual Participants",
 		"MeasurementFrequency__c": "Monthly",
+		"GracePeriod__c":0,
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete"

@@ -204,7 +204,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive4StartDate, incentive4EndDate,6);
 	}
 	
-	@Test(description = "TC-474 Schedule status will change from 'Pending' to 'Open' when Start date > Current date", groups = {
+	@Test(description = "TC-474 Schedule status will change from Pending to Open when Start date greater than Current date", groups = {
 			"Smoke", "API" })
 	public void payoutSchedulesFromPendingToOpen() throws Exception {
 		
@@ -220,11 +220,35 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		incentiveCreationHelper.createIncentiveAndUpdateSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
 		
 		// -------- call pending to open status modifier job---------
-		incentiveCreationHelper.cim.pendingToOpenStatusModifier();
+		incentiveCreationHelper.benefitProductQnB.pendingToOpenStatusModifier();
 		
 		// -------- get latest schedules and verify that they are in correct state---------
-		response = incentiveCreationHelper.cim.getPayoutSchedules();		
+		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();		
 		payoutScheduleValidator.validateSchedulesCount(response, 8);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
+	}
+	
+	@Test(description = "TC-475 Schedule status will change from Open to Ready when current date greater than end date plus program grace period", groups = {
+			"Smoke", "API" })
+	public void payoutSchedulesFromOpenToReady() throws Exception {
+		
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		int gracePeriod = 2;
+		createIncentiveJson.put("GracePeriod__c", String.valueOf(gracePeriod));
+		
+		// -------- Monthly frequency with grace period 2 days ---------		
+		String incentiveStartDate =sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), -1);
+		String incentiveEndDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), 6);
+		
+		// -------- Create incentive ---------
+		IncentiveCreationHelper incentiveCreationHelper = new IncentiveCreationHelper();
+		incentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		
+		// -------- call open to ready status modifier job ---------
+		incentiveCreationHelper.benefitProductQnB.openToReadyStatusModifier();
+		
+		// -------- get latest schedules and verify that they are in correct state---------
+		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
+		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,gracePeriod);
 	}
 }
