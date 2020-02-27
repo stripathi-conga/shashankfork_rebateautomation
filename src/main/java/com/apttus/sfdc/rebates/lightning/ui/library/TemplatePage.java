@@ -50,7 +50,6 @@ public class TemplatePage extends GenericPage {
 		wait = new WebDriverWait(driver, 120);
 		PageFactory.initElements(driver, this);
 	}
-
 	public TemplatePage moveToNewtemplatepage(WebElement newbutton, WebElement Labelnewtemplate) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(newbutton).click(newbutton).waitTillElementIsVisible(Labelnewtemplate);
