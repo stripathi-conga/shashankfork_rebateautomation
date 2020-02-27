@@ -310,4 +310,25 @@ public class CIM extends CIMAdmin {
 					"Update Participant API did not fail with exception trace : " + e);
 		}
 	}
+	
+	public Response updatePayoutScheduleStatusToPending(String payoutScheduleId) throws ApplicationException {
+		try {
+			requestString = "{\"Status__c\": \"" + RebatesConstants.scheduleStatusPending + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.payoutSchedulesURL + payoutScheduleId, requestString);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Update payout schedule API call failed with exception trace : " + e);
+		}
+	}	
+	
+	public Response pendingToOpenStatusModifier() throws ApplicationException {
+		try {
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.payoutScheduleStatusModifierURL.replace("{statusModifier}", "PendingToOpen"),"");
+			validateResponseCode(response, RebatesConstants.responseOk);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Pending to open status modifier API call failed with exception trace : " + e);
+		}
+	}
 }
