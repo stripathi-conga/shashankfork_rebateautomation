@@ -204,7 +204,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive4StartDate, incentive4EndDate,6);
 	}
 	
-	@Test(description = "TC-474 Schedule status will change from 'Pending' to 'Open' when Start date > Current date", groups = {
+	@Test(description = "TC-474 Schedule status will change from Pending to Open when Start date greater than Current date", groups = {
 			"Smoke", "API" })
 	public void payoutSchedulesFromPendingToOpen() throws Exception {
 		
@@ -228,7 +228,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
 	}
 	
-	@Test(description = "TC-475 Schedule status will change from 'Open' to 'Ready' when current date > end date + program grace period", groups = {
+	@Test(description = "TC-475 Schedule status will change from Open to Ready when current date greater than end date plus program grace period", groups = {
 			"Smoke", "API" })
 	public void payoutSchedulesFromOpenToReady() throws Exception {
 		
