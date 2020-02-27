@@ -62,12 +62,12 @@ public class TemplatePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public TemplatePage qnbLayoutDefinition(WebElement QBselct, WebElement TierSelect) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(QBselct).waitTillElementIsClickable(QBselct).jsScroll(QBselct)
-				.click(QBselct).waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Benefit Product")))
+	public TemplatePage qnbLayoutDefinition(WebElement ddlQBselect, WebElement ddlTierSelect) throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
+				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Benefit Product")))
 				.waitTillElementIsClickable(By.xpath(cmbTxt.replace("OPTION", "Benefit Product")))
-				.click(By.xpath(cmbTxt.replace("OPTION", "Benefit Product"))).waitTillElementIsClickable(TierSelect)
-				.click(TierSelect).waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Discrete")))
+				.click(By.xpath(cmbTxt.replace("OPTION", "Benefit Product"))).waitTillElementIsClickable(ddlTierSelect)
+				.click(ddlTierSelect).waitTillElementIsVisible(By.xpath(cmbTxt.replace("OPTION", "Discrete")))
 				.waitTillElementIsClickable(By.xpath(cmbTxt.replace("OPTION", "Discrete")))
 				.click(By.xpath(cmbTxt.replace("OPTION", "Discrete")));
 		return PageFactory.initElements(driver, TemplatePage.class);
