@@ -187,6 +187,18 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
+	public void updateParticipants(Map<String, String> testData) throws ApplicationException {
+		String participantId = participantsData.getParticipantsId();
+		try {
+			requestString = participantsData.addParticipantsRequest(testData, this);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.addParticipantsURL + participantId, requestString);
+			validateResponseCode(response, RebatesConstants.responseNocontent);
+			participantsData.setParticipantsId(participantId);
+		} catch (Exception e) {
+			throw new ApplicationException("Update Participant API failed with exception trace : " + e);
+		}
+	}
+
 	public Response getParticipantsDetails() throws ApplicationException {
 		try {
 			response = sfdcRestUtils.getData(
