@@ -114,8 +114,10 @@ public class BenefitProductQnB extends CIM {
 		
 		if (responseSize > 0) {
 			for (int i = 0; i < responseSize; i++) {
-				// ------------ Set Qualification LineId -------------------------
+				
 				resQnbLinesDataArray = qnbResArray.get(i).getAsJsonObject().get("QnBLines").getAsJsonArray();
+				
+				// ------------ Set Qualification LineId -------------------------				
 				qualificationIdName = resQnbLinesDataArray.get(0).getAsJsonObject().get("Name").getAsString();
 				qualificationIdValue = resQnbLinesDataArray.get(0).getAsJsonObject().get("Id").getAsString();
 				qualificationIdMap.put(qualificationIdName, qualificationIdValue);
