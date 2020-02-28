@@ -119,4 +119,69 @@ public class TestParticipants extends UnifiedFramework {
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageParticipantsDateOutOfRange);
 	}
+	
+	@Test(description = "TC-388 Verify for the error message displayed when the same participant is added multiple times with an overlapping time period", groups = {
+			"Regression", "API", "Medium" })
+	public void addOverlappingParticipant() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+
+		// -------- Add Participant 1-----------------
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsForOverlappingDates");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+
+		// -------- Add Participant 1 with same dates -----------------
+		response = cim.addParticipantsNegative(jsonData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageOverlappingParticipants);
+
+		// -------- Add Participant 1 with overlapping dates -----------------
+		jsonData.put("ExpirationDate__c", "incentiveenddate");
+		jsonData.put("EffectiveDate__c", "incentivestartdate=+5");
+		response = cim.addParticipantsNegative(jsonData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageOverlappingParticipants);
+
+		// -------- Add Participant 1 again with No overlapping dates -----------------
+		jsonData.put("ExpirationDate__c", "incentiveenddate");
+		jsonData.put("EffectiveDate__c", "incentivestartdate=+11");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+	}
+
+	@Test(description = "TC-554 Verify Editing a participant to a program", groups = { "Regression", "API", "Medium" })
+	public void updateEditParticipant() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+
+		// -------- Add Participant 1-----------------
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+
+		// ------- Edit Participant 1 and replace it with participant 2-------------
+		jsonData.put("AccountName", "Automation_Participant_Account_2");
+		cim.updateParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+
+		// -------- Update Participant 2 Start and End date -----------------
+		jsonData.put("ExpirationDate__c", "incentiveenddate=-5");
+		jsonData.put("EffectiveDate__c", "incentivestartdate=+5");
+		cim.updateParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+	}
 }

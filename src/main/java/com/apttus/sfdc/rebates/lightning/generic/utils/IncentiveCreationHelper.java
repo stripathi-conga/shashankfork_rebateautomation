@@ -2,13 +2,10 @@ package com.apttus.sfdc.rebates.lightning.generic.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Map;
 import java.util.List;
-
-import com.apttus.customException.ApplicationException;
+import java.util.Map;
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
-import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
