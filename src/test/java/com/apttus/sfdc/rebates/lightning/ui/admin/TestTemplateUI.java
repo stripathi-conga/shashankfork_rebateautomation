@@ -55,7 +55,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	}
 
 	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates",groups = { "Regression",
-			"Medium", "UI" })
+			"Medium", "UI"})
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
 		try {
 
@@ -78,9 +78,8 @@ public class TestTemplateUI extends UnifiedFramework {
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 					"createNewLinkTemplateSubTypeDiscreteAPI");
 			templatepage = homepage.navigateToTemplates(configProperty);
-			templatepage.moveToTemplate(templatepage.Newbtn);
-			templatepage.qnbLayoutDefinition(templatepage.QBselct, templatepage.BenftPrdtValue, templatepage.TierSelect,
-					templatepage.TierDiscrete);
+			templatepage.moveToTemplate(templatepage.btnNew);
+			templatepage.qnbLayoutDefinition(templatepage.ddlQBselect,  templatepage.ddlTierSelect);
 			templatepage.addQualificationOnDiscrete(cimAdmin);
 			softassert.assertEquals(RebatesConstants.messagequalificationformulavalidation,
 					templatepage.txtNodatadisplay.get(0).getText());
