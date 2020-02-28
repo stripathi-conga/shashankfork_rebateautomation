@@ -123,7 +123,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 	}
 
 	@Test(description = "TC-408 Verify delete Link Template when status is Draft via spillover menu", groups = { "Regression",
-			"High", "API" })
+			"Medium", "API" })
 	public void deleteLinkTemplateDraft() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");

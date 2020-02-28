@@ -3,7 +3,7 @@ package com.apttus.sfdc.rebates.lightning.api.cim;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -127,7 +127,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		responseValidator.validateLinkTemplatesStatus(response, cim, RebatesConstants.activate);
 	}
 	
-	@BeforeClass(alwaysRun = true)
+	@BeforeMethod(alwaysRun = true)
 	public void beforeClass() throws Exception {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
 	}
@@ -229,4 +229,54 @@ public class TestIncentiveQnB extends UnifiedFramework {
         responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
                 RebatesConstants.messageBenefitDatesOutOfRange);
     }
+    
+	@Test(description = "TC-461 QnB line update validation on the Benefit only and Tiered programs using in-line edit", groups = {
+			"Regression", "High", "API" })
+	public void updateQnBBenefitLineXXT() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		benefitProductQnB.createNewIncentive(jsonData);
+		
+		//------------ Add QnB Benefit Lines -------------------
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		benefitProductQnB.setQnBSectionId(response);
+		benefitProductQnB.setQualificationBenefitAndTierIds(response);
+		
+		//-------------- Update QnB Benefit Line ----------------
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTUpdateBenefitProduct");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+	}
+	
+	@Test(description = "TC-443 QnB line update validation on the Benefit only and Discrete programs using in-line edit", groups = {
+			"Regression", "Medium", "API" })
+	public void updateQnBBenefitLineXXD() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
+		benefitProductQnB.createNewIncentive(jsonData);
+		
+		//------------ Add QnB Benefit Lines -------------------
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		benefitProductQnB.setQnBSectionId(response);
+		benefitProductQnB.setQualificationBenefitAndTierIds(response);
+		
+		//-------------- Update QnB Benefit Line ----------------
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDUpdateBenefitProduct");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+	}
 }

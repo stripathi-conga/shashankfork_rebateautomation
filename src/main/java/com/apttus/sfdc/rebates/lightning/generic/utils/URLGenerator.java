@@ -28,13 +28,15 @@ public class URLGenerator {
 	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";
 	public String getParticipantsViaIncentiveIdURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where Incentive__c='{IncentiveId}'";
 	public String getProductIdURL = "/query/?q=SELECT Name,ProductCode,Id,IsActive FROM Product2 where name = '{Product}'";
-
+	public String payoutSchedulesURL = "/sobjects/IncentivePayoutSchedule__c/";
+	
 	// ----------------- URL Exposed for apex rest Custom API ------------------
 	public String addIncentiveQnBURL = "/services/apexrest/api/QnB";
 	public String getIncentiveQnBURL = "/services/apexrest/api/QnB?incentiveId={incentiveId}";
 	public String deleteQnBBenefitLineURL = "/services/apexrest/api/QnB?id={sectionId}";
 	public String activateIncentiveURL = "/services/apexrest/api/IncentiveProgramDetail";
 	public String getPayoutScheduleURL = "/services/apexrest/api/PayoutSchedule?incentiveId={incentiveId}";
+	public String payoutScheduleStatusModifierURL = "/services/apexrest/api/PayoutSchedule?statusModifier={statusModifier}";
 	
 	public URLGenerator(String instanceURL) {
 		// ----------------- URL for SObjects as API ---------------------
@@ -61,6 +63,7 @@ public class URLGenerator {
 		this.getParticipantsURL = baseURL + this.getParticipantsURL;
 		this.getParticipantsViaIncentiveIdURL = baseURL + this.getParticipantsViaIncentiveIdURL;
 		this.getProductIdURL = baseURL + this.getProductIdURL;
+		this.payoutSchedulesURL = baseURL + this.payoutSchedulesURL;
 
 		// ----------------- URL Exposed for apex rest Custom API -------------------
 		this.addIncentiveQnBURL = instanceURL + this.addIncentiveQnBURL;
@@ -68,5 +71,6 @@ public class URLGenerator {
 		this.deleteQnBBenefitLineURL = instanceURL + this.deleteQnBBenefitLineURL;
 		this.activateIncentiveURL = instanceURL + this.activateIncentiveURL;
 		this.getPayoutScheduleURL = instanceURL + this.getPayoutScheduleURL;
+		this.payoutScheduleStatusModifierURL = instanceURL + this.payoutScheduleStatusModifierURL;
 	}
 }
