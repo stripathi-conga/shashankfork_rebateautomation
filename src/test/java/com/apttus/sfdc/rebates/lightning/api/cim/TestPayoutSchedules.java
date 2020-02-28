@@ -251,4 +251,67 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,gracePeriod);
 	}
+	
+	@Test(description = "TC-476 Create multiple Update Schedules Status From Pending to Open jobs", groups = {
+			"Regression", "API", "Low" })
+	public void payoutSchedulesFromPendingToOpenMultipeRun() throws Exception {
+		
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		
+		// -------- Monthly frequency with Incentive date spanning 8 months---------
+		String incentiveStartDate =sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), -1);
+		String incentiveEndDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), 6);
+		
+		// -------- Create incentive and manually update schedule status to pending
+		//--------- as schedules are always created in correct state ---------
+		IncentiveCreationHelper incentiveCreationHelper = new IncentiveCreationHelper();
+		incentiveCreationHelper.createIncentiveAndUpdateSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		
+		// -------- call pending to open status modifier job---------
+		incentiveCreationHelper.benefitProductQnB.pendingToOpenStatusModifier();
+		
+		// -------- get latest schedules and verify that they are in correct state---------
+		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();		
+		payoutScheduleValidator.validateSchedulesCount(response, 8);
+		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
+		
+		// -------- Execute the job one more time ---------
+		incentiveCreationHelper.benefitProductQnB.pendingToOpenStatusModifier();
+				
+		// -------- Ensure multiple runs does not have impact on status of schedules ---------
+		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();		
+		payoutScheduleValidator.validateSchedulesCount(response, 8);
+		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
+	}
+	
+	@Test(description = "TC-477 Create multiple Update Schedules Status From Open to Ready jobs", groups = {
+			"Regression", "API", "Low" })
+	public void payoutSchedulesFromOpenToReadyMultipleRun() throws Exception {
+		
+		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		int gracePeriod = 2;
+		createIncentiveJson.put("GracePeriod__c", String.valueOf(gracePeriod));
+		
+		// -------- Monthly frequency with grace period 2 days ---------		
+		String incentiveStartDate =sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), -1);
+		String incentiveEndDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), 6);
+		
+		// -------- Create incentive ---------
+		IncentiveCreationHelper incentiveCreationHelper = new IncentiveCreationHelper();
+		incentiveCreationHelper.createIncentiveAndFetchSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,incentiveStartDate,incentiveEndDate, RebatesConstants.paymentFrequencyMonthly);
+		
+		// -------- call open to ready status modifier job ---------
+		incentiveCreationHelper.benefitProductQnB.openToReadyStatusModifier();
+		
+		// -------- get latest schedules and verify that they are in correct state---------
+		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
+		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,gracePeriod);
+		
+		// -------- Execute the job one more time ---------
+		incentiveCreationHelper.benefitProductQnB.openToReadyStatusModifier();
+				
+		// -------- Ensure multiple runs does not have impact on status of schedules ---------
+		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
+		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,gracePeriod);
+	}
 }
