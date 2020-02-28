@@ -110,5 +110,10 @@
 		"ExpirationDate__c": "incentiveenddate",
 		"EffectiveDate__c": "incentivestartdate",
 		"AccountName": "Automation_Participant_Account_1"
+	},
+	"addParticipantsForOverlappingDates": {
+		"ExpirationDate__c": "incentivestartdate=+10",
+		"EffectiveDate__c": "incentivestartdate",
+		"AccountName": "Automation_Participant_Account_1"
 	}
 }

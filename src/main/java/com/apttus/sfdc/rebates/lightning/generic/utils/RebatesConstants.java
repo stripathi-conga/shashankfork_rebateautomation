@@ -29,6 +29,7 @@ public class RebatesConstants {
 	public static final String messageActiveMappingExists = "An active mapping already exists.";
 	public static final String messageBenefitDatesOutOfRange = "CustomException: Benefits with dates outside the range of Incentive dates found\n\nClass.QnBController: line 177, column 1";
 	public static final String messageParticipantsDateOutOfRange = "Participants Dates are outside the range of Program Dates.";
+	public static final String messageOverlappingParticipants = "Same participants with overlapping dates found.";
 	
 	public static final String scheduleStatusOpen = "Open";
 	public static final String scheduleStatusPending = "Pending";
