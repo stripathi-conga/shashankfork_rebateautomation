@@ -2,6 +2,7 @@ package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,28 +13,19 @@ import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
-public class TemplatePage extends GenericPage  {
+public class TemplatePage extends GenericPage {
 
 	@FindBy(css = "div[title='New']")
-	public WebElement Newbtn;
+	public WebElement btnNew;
 
-	@FindBy(xpath = "//*[text()='Q&B Layout']//..//input[@placeholder='Select an Option']")
-	public WebElement QBselct;
+	@FindBy(xpath = "//*[text()='Q&B Layout']/..//input")
+	public WebElement ddlQBselect;
 
-	@FindBy(xpath = "//*[text()='Tier']//..//input[@type='text']")
-	public WebElement TierSelect;
+	@FindBy(xpath = "//*[text()='Tier']//..//input")
+	public WebElement ddlTierSelect;
 
-	@FindBy(xpath = "//*[text()='Q&B Layout']//..//lightning-base-combobox-item[@data-value='Benefit Product']")
-	public WebElement BenftPrdtValue;
-
-	@FindBy(xpath = "//*[text()='Tier']//..//lightning-base-combobox-item[@data-value='Discrete']")
-	public WebElement TierDiscrete;
-
-	@FindBy(xpath = "//*[text()='Data Source']//..//input[@placeholder='Select an Option']")
+	@FindBy(xpath = "//*[text()='Data Source']//..//input")
 	public WebElement ddldataSource;
-
-	@FindBy(xpath = "//*[text()='Tier']//..//lightning-base-combobox-item[@data-value='Tiered']")
-	public WebElement TierTiered;
 
 	@FindBy(css = "span[class='slds-checkbox_faux']")
 	public List<WebElement> chkqualification;
@@ -46,6 +38,12 @@ public class TemplatePage extends GenericPage  {
 
 	@FindBy(xpath = "//b[text()='No data to display']")
 	public List<WebElement> txtNodatadisplay;
+
+	String BenefitProduct = "Benefit Product";
+	String Discrete = "Discrete";
+	String Tiered = "Tiered";
+
+	String cmbTxt = "//*[@data-value='OPTION']";
 
 	GenericPage genericPage;
 	WebDriverWait wait;
@@ -69,12 +67,17 @@ public class TemplatePage extends GenericPage  {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public TemplatePage qnbLayoutDefinition(WebElement QBselct, WebElement QBValue, WebElement TierSelect,
-			WebElement TierValue) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(QBselct).waitTillElementIsClickable(QBselct).click(QBselct)
-				.waitTillElementIsVisible(BenftPrdtValue).waitTillElementIsClickable(BenftPrdtValue)
-				.click(BenftPrdtValue).waitTillElementIsClickable(TierSelect).click(TierSelect)
-				.waitTillElementIsVisible(TierValue).waitTillElementIsClickable(TierValue).click(TierValue);
+	public TemplatePage qnbLayoutDefinition(WebElement ddlQBselect, WebElement ddlTierSelect) throws Exception {
+		
+		String benefitproductpath = cmbTxt.replace("OPTION", BenefitProduct);
+		String discretepath = cmbTxt.replace("OPTION", Discrete);
+				
+		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
+				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(benefitproductpath))
+				.waitTillElementIsClickable(By.xpath(benefitproductpath)).click(By.xpath(benefitproductpath));
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
+				.waitTillElementIsVisible(By.xpath(discretepath)).waitTillElementIsClickable(By.xpath(discretepath))
+				.click(By.xpath(discretepath));
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
@@ -87,9 +90,12 @@ public class TemplatePage extends GenericPage  {
 	}
 
 	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
+		
+		String tieredpath = cmbTxt.replace("OPTION", Tiered);
 
-		sfdcAcolyte.waitTillElementIsClickable(TierSelect).click(TierSelect).waitTillElementIsVisible(TierTiered)
-				.waitTillElementIsClickable(TierTiered).click(TierTiered);
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
+				.waitTillElementIsVisible(By.xpath(tieredpath)).waitTillElementIsClickable(By.xpath(tieredpath))
+				.click(By.xpath(tieredpath));
 		sfdcAcolyte.click(ddldataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName__c()).sendBoardKeys(Keys.ENTER);
 		for (int i = 0; i < chkqualification.size(); i++) {
