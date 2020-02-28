@@ -171,8 +171,7 @@ public class TestParticipants extends UnifiedFramework {
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 
-		// -------- Edit Participant 1 and replace it with participant
-		// 2-----------------
+		// ------- Edit Participant 1 and replace it with participant 2-------------
 		jsonData.put("AccountName", "Automation_Participant_Account_2");
 		cim.updateParticipants(jsonData);
 		response = cim.getParticipantsDetails();
