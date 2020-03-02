@@ -219,6 +219,7 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
 		createNewIncentive.setProgramType__c(testData.get("IncentiveType__c"));
 		createNewIncentive.setIncentiveSubType__c(testData.get("IncentiveSubType__c"));
+		createNewIncentive.setGracePeriod__c(testData.get("GracePeriod__c"));
 		if (testData.get("BenefitLevel__c") != null) {
 			if (testData.get("BenefitLevel__c").equals("Agreement Account")) {
 				createNewIncentive.setAccountId__c(cim.getAccountId(testData.get("AccountName")));
