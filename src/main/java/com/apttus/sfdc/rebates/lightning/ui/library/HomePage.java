@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesUIConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
 
 
@@ -52,4 +53,14 @@ public class HomePage extends GenericPage {
 		
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
+	
+
+       public Incentivepage navigateToIncentiveEdit(Properties properties, String incentiveId) throws Exception {
+
+              sfdcAcolyte.navigateTo(
+                               properties.getProperty("cimURL") + RebatesUIConstants.incentive.replace("{incentiveId}", incentiveId));
+
+               return PageFactory.initElements(driver, Incentivepage.class);
+       }
+
 }
