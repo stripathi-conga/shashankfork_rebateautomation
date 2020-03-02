@@ -162,7 +162,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 	}
 
 	@Test(description = "TC-490 Program will not be activated if Q&B is added but participants are empty", groups = {
-			"Regression", "High", "UI" })
+			"Regression", "Medium", "UI" })
 	public void verifyIncentiveWithoutParticipant() throws Exception {
 		try {
 			softassert = new SoftAssert();
@@ -188,7 +188,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 	}
 
 	@Test(description = "TC- 491 Program will not be activated if Q&B is empty but  participants are there", groups = {
-			"Regression", "High", "UI" })
+			"Regression", "Medium", "UI" })
 	public void verifyIncentiveWithoutQnB() throws Exception {
 		try {
 
