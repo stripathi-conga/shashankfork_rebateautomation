@@ -6,7 +6,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
 public class Incentivepage extends GenericPage  {
@@ -19,7 +18,6 @@ public class Incentivepage extends GenericPage  {
 	
 	GenericPage genericPage;
 	WebDriverWait wait;
-	NGHelper nghelper;
 
 	public Incentivepage(WebDriver driver) {
 		super(driver);
