@@ -2,12 +2,14 @@ package com.apttus.sfdc.rebates.lightning.ui.admin;
 
 import java.util.Map;
 import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
 import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
@@ -56,35 +58,34 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert = new SoftAssert();
 	}
 
-	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates",groups = { "Regression",
-			"Medium", "UI"})
+	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates", groups = { "Regression",
+			"Medium", "UI" })
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
-		
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
-			String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
-			String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
-			String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
-			cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
-			cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-			cimAdmin.createDataSource(jsonData);
-			cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
-			cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
-			cimAdmin.getQnBLayoutId(jsonData);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-					"createNewLinkTemplateSubTypeDiscreteAPI");
-			templatepage = homepage.navigateToTemplates();
-			templatepage.moveToTemplate(templatepage.btnNew);
-			templatepage.qnbLayoutDefinition(templatepage.ddlQBselect,  templatepage.ddlTierSelect);
-			templatepage.addQualificationOnDiscrete(cimAdmin);
-			softassert.assertEquals(RebatesConstants.messagequalificationformulavalidation,
-					templatepage.txtNoDataDisplay.get(0).getText());
-			templatepage.addQualificationOnTiered(cimAdmin);
-			softassert.assertAll();
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
+		cimAdmin.getQnBLayoutId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeDiscreteAPI");
+		templatepage = homepage.navigateToTemplates();
+		templatepage.moveToTemplate(templatepage.btnNew);
+		templatepage.qnbLayoutDefinition(templatepage.ddlQBselect, templatepage.ddlTierSelect);
+		templatepage.addQualificationOnDiscrete(cimAdmin);
+		softassert.assertEquals(RebatesConstants.messagequalificationformulavalidation,
+				templatepage.txtNoDataDisplay.get(0).getText());
+		templatepage.addQualificationOnTiered(cimAdmin);
+		softassert.assertAll();
 	}
 
 	@AfterClass(alwaysRun = true)

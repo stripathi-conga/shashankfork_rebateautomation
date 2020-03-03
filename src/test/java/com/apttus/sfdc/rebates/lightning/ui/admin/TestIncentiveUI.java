@@ -3,11 +3,11 @@ package com.apttus.sfdc.rebates.lightning.ui.admin;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -72,52 +72,51 @@ public class TestIncentiveUI extends UnifiedFramework {
 	public void beforeClass() throws Exception {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
-		
+
 	}
 
 	@Test(description = "TC- 491 Program will not be activated if Q&B is empty but  participants are there", groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyIncentiveWithoutQnB() throws Exception {
-		
-			jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-					"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-			jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-			incentiveid = cim.createNewIncentive(jsonData);
-			response = cim.getIncentiveDetails();
-			responseValidator.validateIncentiveDetails(jsonData, response, cim);
-			jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");
-			cim.addParticipants(jsonData);
-			response = cim.getParticipantsDetails();
-			responseValidator.validateParticipantsDetails(jsonData, response, cim);
-			incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
-			incentivepage.activateIncentive();
-			softassert.assertEquals(RebatesConstants.messageFailToActivateWithoutQnB,
-					incentivepage.txtToastMessage.getText());
-			softassert.assertAll();
-		
-		}
-	
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		incentiveid = cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage.activateIncentive();
+		softassert.assertEquals(RebatesConstants.messageFailToActivateWithoutQnB,
+				incentivepage.txtToastMessage.getText());
+		softassert.assertAll();
+
+	}
 
 	@Test(description = "TC-490 Program will not be activated if Q&B is added but participants are empty", groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyIncentiveWithoutParticipant() throws Exception {
-		
-			jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-					"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-			jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
-			incentiveid = benefitProductQnB.createNewIncentive(jsonData);
-			response = benefitProductQnB.getIncentiveDetails();
-			responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
-			jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
-			benefitProductQnB.addIncentiveQnB(jsonArrayData);
-			response = benefitProductQnB.getIncentiveQnB();
-			responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 
-			incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
-			incentivepage.activateIncentive();
-			softassert.assertEquals(RebatesConstants.messageFailToActivateWithoutParticipant,
-					incentivepage.txtToastMessage.getText());
-			softassert.assertAll();	
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
+		incentiveid = benefitProductQnB.createNewIncentive(jsonData);
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
+		benefitProductQnB.addIncentiveQnB(jsonArrayData);
+		response = benefitProductQnB.getIncentiveQnB();
+		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+
+		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage.activateIncentive();
+		softassert.assertEquals(RebatesConstants.messageFailToActivateWithoutParticipant,
+				incentivepage.txtToastMessage.getText());
+		softassert.assertAll();
 	}
 
 	@AfterClass(alwaysRun = true)

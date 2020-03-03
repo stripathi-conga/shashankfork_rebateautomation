@@ -25,7 +25,6 @@ public class HomePage extends GenericPage {
 
 	public HomePage(WebDriver driver, Properties configProperty) {
 		super(driver);
-//		configProperty = new Properties();
 		urlGeneratorUI = new URLGeneratorUI(configProperty);
 		PageFactory.initElements(driver, this);
 	}
