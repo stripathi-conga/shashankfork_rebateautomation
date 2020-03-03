@@ -82,7 +82,7 @@ public class TestTemplateUI extends UnifiedFramework {
 			templatepage.qnbLayoutDefinition(templatepage.ddlQBselect,  templatepage.ddlTierSelect);
 			templatepage.addQualificationOnDiscrete(cimAdmin);
 			softassert.assertEquals(RebatesConstants.messagequalificationformulavalidation,
-					templatepage.txtNodatadisplay.get(0).getText());
+					templatepage.txtNoDataDisplay.get(0).getText());
 			templatepage.addQualificationOnTiered(cimAdmin);
 			softassert.assertAll();
 	}
