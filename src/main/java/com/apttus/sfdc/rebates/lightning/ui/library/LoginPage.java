@@ -33,13 +33,13 @@ public class LoginPage extends GenericPage {
 
 	}
 
-	public HomePage loginToApp(String userName, String password) throws Exception {
+	public void loginToApp(String userName, String password) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsClickable(txtUserName);
 		txtUserName.sendKeys(userName);
 		txtPassword.sendKeys(password);
 		btnLogin.click();
-		return PageFactory.initElements(driver, HomePage.class);
+		
 	}
 
 	public LoginPage navigateToLoginPage(String LoginURL) throws Exception {

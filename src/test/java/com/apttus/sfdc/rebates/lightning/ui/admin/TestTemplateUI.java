@@ -32,6 +32,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	private Map<String, String> jsonData;
 	private SFDCRestUtils sfdcRestUtils;
 	private String instanceURL;
+	public String baseURL;
 	SoftAssert softassert;
 
 	@BeforeClass(alwaysRun = true)
@@ -47,19 +48,18 @@ public class TestTemplateUI extends UnifiedFramework {
 		loginPage = loginPage.navigateToLoginPage(configProperty.getProperty("LoginURL"));
 		loginPage.waitForLoginPageLoad().loginToApp(configProperty.getProperty("LoginUser"),
 				configProperty.getProperty("LoginPassword"));
-		homepage = new HomePage(driver);
+		homepage = new HomePage(driver, configProperty);
 		sfdcRestUtils = new SFDCRestUtils();
 		SFDCHelper.setMasterProperty(configProperty);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
+		softassert = new SoftAssert();
 	}
 
 	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates",groups = { "Regression",
 			"Medium", "UI"})
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
-		try {
-
-			softassert = new SoftAssert();
+		
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 			String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
@@ -77,18 +77,14 @@ public class TestTemplateUI extends UnifiedFramework {
 			cimAdmin.getQnBLayoutId(jsonData);
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 					"createNewLinkTemplateSubTypeDiscreteAPI");
-			templatepage = homepage.navigateToTemplates(configProperty);
+			templatepage = homepage.navigateToTemplates();
 			templatepage.moveToTemplate(templatepage.btnNew);
 			templatepage.qnbLayoutDefinition(templatepage.ddlQBselect,  templatepage.ddlTierSelect);
 			templatepage.addQualificationOnDiscrete(cimAdmin);
 			softassert.assertEquals(RebatesConstants.messagequalificationformulavalidation,
 					templatepage.txtNodatadisplay.get(0).getText());
 			templatepage.addQualificationOnTiered(cimAdmin);
-			
 			softassert.assertAll();
-		} catch (Exception e) {
-			throw new Exception(e);
-		}
 	}
 
 	@AfterClass(alwaysRun = true)

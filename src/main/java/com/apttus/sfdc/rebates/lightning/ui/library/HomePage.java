@@ -8,9 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
-import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesUIConstants;
-import com.apttus.sfdc.rebates.lightning.generic.utils.URLGenerator;
-
+import com.apttus.sfdc.rebates.lightning.generic.utils.URLGeneratorUI;
 
 public class HomePage extends GenericPage {
 
@@ -22,11 +20,13 @@ public class HomePage extends GenericPage {
 
 	@FindBy(css = ".oneUserProfileCardTrigger span .uiImage")
 	public WebElement userProfileIcon;
+	public URLGeneratorUI urlGeneratorUI;
+	public Properties configProperty;
 
-	public URLGenerator urlGenerator;
-
-	public HomePage(WebDriver driver) {
+	public HomePage(WebDriver driver, Properties configProperty) {
 		super(driver);
+//		configProperty = new Properties();
+		urlGeneratorUI = new URLGeneratorUI(configProperty);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -47,20 +47,19 @@ public class HomePage extends GenericPage {
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 
-	public TemplatePage navigateToTemplates(Properties properties) throws Exception {
-				
-		sfdcAcolyte.navigateTo(properties.getProperty("cimAdminURL")+ RebatesConstants.Templates);
-		
+	public TemplatePage navigateToTemplates() throws Exception {
+
+		sfdcAcolyte.navigateTo(urlGeneratorUI.templateHomeURL.replace("{templateId}", RebatesConstants.homePath).replace("{view}", ""));
+
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
+
+	public Incentivepage navigateToIncentiveEdit(String incentiveId) throws Exception {
+
+		sfdcAcolyte.navigateTo(
+				urlGeneratorUI.incentiveEditURL.replace("{incentiveId}", incentiveId).replace("{view}", RebatesConstants.viewPath));
+		return PageFactory.initElements(driver, Incentivepage.class);
+	}
 	
-
-       public Incentivepage navigateToIncentiveEdit(Properties properties, String incentiveId) throws Exception {
-
-              sfdcAcolyte.navigateTo(
-                               properties.getProperty("cimURL") + RebatesUIConstants.incentive.replace("{incentiveId}", incentiveId));
-
-               return PageFactory.initElements(driver, Incentivepage.class);
-       }
-
+	
 }

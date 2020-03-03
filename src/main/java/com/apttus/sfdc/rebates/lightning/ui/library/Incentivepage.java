@@ -27,10 +27,12 @@ public class Incentivepage extends GenericPage  {
 		PageFactory.initElements(driver, this);
 	}
 
-	public void activateIncentive() throws Exception {
+	public Incentivepage activateIncentive() throws Exception {
 		
 		sfdcAcolyte.waitTillElementIsVisible(btnActivate).waitTillElementIsClickable(btnActivate).
 		            jsClick(btnActivate).waitTillElementIsVisible(txtToastMessage);
+		
+		return PageFactory.initElements(driver, Incentivepage.class);
 		
 	}
 }
