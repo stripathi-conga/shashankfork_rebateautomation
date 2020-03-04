@@ -119,6 +119,25 @@ public class TestIncentiveUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
+	@Test(description = "TC- 537 Verify error message when user tries to activate the program with unsaved changes", groups = {
+			"Regression", "Medium", "UI" })
+	public void verifyActivateIncentiveWithUnsavedChanges() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
+		incentiveid = benefitProductQnB.createNewIncentive(jsonData);
+
+		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage.addQualificationBenefit();
+		incentivepage.activateIncentive();
+		softassert.assertEquals(RebatesConstants.mandatoryMessageUnsavedChanges,
+				incentivepage.txtToastMessage.getText());
+
+		softassert.assertAll();
+
+	}
+
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
