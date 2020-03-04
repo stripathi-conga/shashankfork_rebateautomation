@@ -19,7 +19,7 @@
 	<test name="SFDC Rebates Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
 		<groups>
 			<run>
-				<include name="Regression1" />
+				<include name="Regression" />
 			</run>
 		</groups>
 		<classes>
@@ -33,7 +33,7 @@
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestPayoutSchedules" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestIncentiveUI" />
-			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestLinkTemplateUI" />
+			
 		</classes>
 	</test>
 </suite> 
