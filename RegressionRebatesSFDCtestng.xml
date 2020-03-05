@@ -15,25 +15,33 @@
 	<parameter name="qTestPropertyFile" value="RegressionQtest.properties" />
 	<parameter name="buildName" value="0.0.1" />
 	<parameter name="reportName" value="SFDC Rebates Regression Test" />
-	
-	<test name="SFDC Rebates Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
+
+	<test name="SFDC Rebates CIM Admin Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
 		<groups>
 			<run>
 				<include name="Regression" />
 			</run>
 		</groups>
 		<classes>
-		    
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestLinkTemplates" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestTemplates" />
+			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" />
+		</classes>
+	</test>
+
+	<test name="SFDC Rebates CIM Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
+		<groups>
+			<run>
+				<include name="Regression" />
+			</run>
+		</groups>
+		<classes>
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentives" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentiveQnB" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestParticipants" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestPayoutSchedules" />
-			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestIncentiveUI" />
-			
 		</classes>
 	</test>
 </suite> 

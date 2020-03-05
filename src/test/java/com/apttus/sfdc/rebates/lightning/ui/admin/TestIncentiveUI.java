@@ -61,7 +61,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 		loginPage.waitForLoginPageLoad().loginToApp(configProperties.getProperty("LoginUser"),
 				configProperties.getProperty("LoginPassword"));
 		homepage = new HomePage(driver, configProperties);
-
+		homepage.navigateToCIM();
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
@@ -72,7 +72,6 @@ public class TestIncentiveUI extends UnifiedFramework {
 	public void beforeClass() throws Exception {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
-
 	}
 
 	@Test(description = "TC- 491 Program will not be activated if Q&B is empty but  participants are there", groups = {
@@ -133,9 +132,29 @@ public class TestIncentiveUI extends UnifiedFramework {
 		incentivepage.activateIncentive();
 		softassert.assertEquals(RebatesConstants.mandatoryMessageUnsavedChanges,
 				incentivepage.txtToastMessage.getText());
-
 		softassert.assertAll();
 
+	}
+
+	@Test(description = "TC-570 Add Participants button on the participant page", groups = { "Regression", "Medium",
+			"UI" })
+	public void verifyAddParticipant() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		incentiveid = cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+
+		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage.participantIncentive();
+		softassert.assertEquals(RebatesConstants.newParticipant, incentivepage.btnNew.getText());
+		softassert.assertAll();
 	}
 
 	@AfterClass(alwaysRun = true)
