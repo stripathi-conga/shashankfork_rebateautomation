@@ -44,7 +44,7 @@ public class TemplatePage extends GenericPage {
 	public WebElement lbBenefitProductDetails;
 
 	@FindBy(xpath = "//*[contains(text(),'Rebates_Auto_DataSource_')]")
-	public  WebElement lbDataSourceDetails;
+	public WebElement lbDataSourceDetails;
 
 	@FindBy(xpath = "//div[contains(text(),'Automation')]")
 	public WebElement lbDescriptionDetails;
@@ -130,10 +130,8 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lnkTemplateIdPath));
 		sfdcAcolyte.jsClick(By.xpath(lnkTemplateIdPath));
 
-		
-		  sfdcAcolyte.waitTillElementIsVisible(lbDataSourceDetails)
-		  .waitTillElementIsVisible(lbDataSourceDetails);
-		 
+		sfdcAcolyte.waitTillElementIsVisible(lbDataSourceDetails).waitTillElementIsVisible(lbDataSourceDetails);
+
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/view");
 		sfdcAcolyte.waitTillElementIsVisible(lbDescriptionDetails);
 	}
