@@ -1,8 +1,5 @@
 package com.apttus.sfdc.rebates.lightning.ui.library;
 
-import java.util.List;
-
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,29 +8,35 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
-public class Incentivepage extends GenericPage  {
+public class Incentivepage extends GenericPage {
 
 	@FindBy(xpath = "//*[text()='Activate']")
 	public WebElement btnActivate;
-	
+
 	@FindBy(css = ".forceActionsText")
 	public WebElement txtToastMessage;
-		
+
 	@FindBy(xpath = "//*[text()='Add Product']")
 	public WebElement btnAddProduct;
-	
+
 	@FindBy(xpath = "//*[@placeholder='Enter product name or code to search']")
 	public WebElement txtbxSearchProduct;
-	
+
 	@FindBy(xpath = "//*[text()='Select All']")
-	public  WebElement chkProduct;
-	
+	public WebElement chkProduct;
+
 	@FindBy(xpath = "//*[text()='Add']")
 	public WebElement btnAdd;
-	
+
 	@FindBy(xpath = "//*[text()='Save']")
 	public WebElement btnSave;
-	
+
+	@FindBy(xpath = "//*[text()='Participants']")
+	public WebElement btnParticipant;
+
+	@FindBy(xpath = "//*[text()='New']")
+	public WebElement btnNew;
+
 	GenericPage genericPage;
 	WebDriverWait wait;
 
@@ -44,20 +47,25 @@ public class Incentivepage extends GenericPage  {
 	}
 
 	public Incentivepage activateIncentive() throws Exception {
-		
-		sfdcAcolyte.waitTillElementIsVisible(btnActivate).waitTillElementIsClickable(btnActivate).
-		            jsClick(btnActivate).waitTillElementIsVisible(txtToastMessage);
-		
+
+		sfdcAcolyte.waitTillElementIsVisible(btnActivate).waitTillElementIsClickable(btnActivate).jsClick(btnActivate)
+				.waitTillElementIsVisible(txtToastMessage);
 		return PageFactory.initElements(driver, Incentivepage.class);
-		
+
 	}
 
 	public void addQualificationBenefit() throws Exception {
 		sfdcAcolyte.waitTillElementIsClickable(btnAddProduct).click(btnAddProduct);
 		sfdcAcolyte.waitTillElementIsClickable(txtbxSearchProduct).click(txtbxSearchProduct);
 		sfdcAcolyte.waitTillElementIsVisible(chkProduct).waitTillElementIsVisible(chkProduct);
-		sfdcAcolyte.jsClick(chkProduct).
-		waitTillElementIsClickable(btnAdd).click(btnAdd);
-				
+		sfdcAcolyte.jsClick(chkProduct).waitTillElementIsClickable(btnAdd).click(btnAdd);
 	}
+
+	public Incentivepage participantIncentive() throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(btnParticipant).waitTillElementIsClickable(btnParticipant)
+				.jsClick(btnParticipant).waitTillElementIsVisible(btnNew);
+		return PageFactory.initElements(driver, Incentivepage.class);
+	}
+
 }

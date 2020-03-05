@@ -41,6 +41,8 @@ public class TestIncentives extends UnifiedFramework {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
+		
+		
 	}
 
 	@BeforeMethod(alwaysRun = true)

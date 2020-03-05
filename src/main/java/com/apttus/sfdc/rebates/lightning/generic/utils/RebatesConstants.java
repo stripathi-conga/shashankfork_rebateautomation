@@ -47,5 +47,7 @@ public class RebatesConstants {
 	public static final String messageFailToActivateWithoutQnB="Failed to activate incentive - Incentive should have at least one benefit configured.";
 	public static final String viewPath = "view";
 	public static final String homePath = "home";
+	public static final String newParticipant = "New";
+
 	
 }
