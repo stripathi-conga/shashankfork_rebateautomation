@@ -165,27 +165,4 @@ public class TestIncentives extends UnifiedFramework {
 				benefitProductQnB.getIncentiveData().incentiveId);
 	}
 
-	@Test(description = "TC- 549 Select measurement level as Individual Participant", groups = { "Regression", "Medium",
-			"API" })
-	public void addIncentiveWithPayeeAndMeasurementAsIndividualParticipantBenefitOnly() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
-	}
-
-	@Test(description = "TC-548 Select measurement level Agreement Account first to select payee value", groups = {
-			"Regression", "Medium", "API" })
-	public void updateIncentivePayeeToIndividualparticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveAgreementAccountForPayeeAndMeasurementLevelBenefitProductDiscrete");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
-		cim.createNewIncentive(jsonData);
-		jsonData.put("BenefitLevel__c", "Individual Participants");
-		cim.updateIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
-	}
 }
