@@ -54,7 +54,7 @@ public class TemplatePage extends GenericPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Tiered')]")
 	public WebElement lbTierDetails;
-
+	
 	String benefitProduct = "Benefit Product";
 	String discrete = "Discrete";
 	String tiered = "Tiered";
@@ -62,6 +62,7 @@ public class TemplatePage extends GenericPage {
 	String cmbTxt = "//*[@data-value='OPTION']";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@value='OPTION']";
+
 	GenericPage genericPage;
 	WebDriverWait wait;
 	NGHelper nghelper;
@@ -142,7 +143,7 @@ public class TemplatePage extends GenericPage {
 		lblQualificationFormulaPath = lnkFormulaTab.replace("OPTION", calcFormulaIdQualification);
 		lblBenefitFormulaIdPath = lnkFormulaTab.replace("OPTION", calcFormulaIdBenefit);
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblQualificationFormulaPath));
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblBenefitFormulaIdPath));
 
 	}
-
 }

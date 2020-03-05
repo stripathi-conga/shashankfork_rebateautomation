@@ -100,7 +100,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	}
 
 	@Test(description = "TC293-Verify that user is able to access all the template details by clicking on the Template ID from the Template List view", groups = {
-			"Regression", "Medium", "UI" })
+			"Regression1", "Medium", "UI" })
 	public void verifyEditTemplateViaNameClick() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
@@ -145,7 +145,10 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertEquals(jsonData.get("type__c"), templatepage.lbBenefitProductDetails.getText());
 		softassert.assertEquals(jsonData.get("tier__c"), templatepage.lbTierDetails.getText());
 		softassert.assertEquals(jsonData.get("type__c"), templatepage.lbBenefitProductDetails.getText());
-		templatepage.moveToFormulaTab(calcFormulaIdQualification, calcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		templatepage.moveToFormulaTab(calcFormulaIdQualification, calcFormulaIdQualification);	
+		softassert.assertEquals(false, templatepage.lblQualificationFormulaPath.isEmpty());
+		softassert.assertEquals(false, templatepage.lblBenefitFormulaIdPath.isEmpty());
 		softassert.assertAll();
 	}
 
