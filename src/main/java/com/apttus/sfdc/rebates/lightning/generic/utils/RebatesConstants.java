@@ -7,7 +7,7 @@ public class RebatesConstants {
 	public static String qualificationFormulaId;
 	public static String incentiveTemplateIdBenefitProductTiered;
 	public static String incentiveTemplateIdBenefitProductDiscrete;
-	
+		
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
 	public static final int responseNocontent = 204;
@@ -48,6 +48,5 @@ public class RebatesConstants {
 	public static final String viewPath = "view";
 	public static final String homePath = "home";
 	public static final String newParticipant = "New";
-
 	
 }

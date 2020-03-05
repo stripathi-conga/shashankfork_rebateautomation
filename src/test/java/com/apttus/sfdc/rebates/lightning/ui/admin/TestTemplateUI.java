@@ -133,7 +133,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		templatepage = homepage.navigateToTemplates();
-		templatepage.movetoTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
+		templatepage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
 		softassert.assertTrue(templatepage.templateEditURL, "Verify the template Edit Page navigation via Name");
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");

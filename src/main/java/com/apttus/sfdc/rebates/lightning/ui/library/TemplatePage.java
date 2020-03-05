@@ -125,7 +125,7 @@ public class TemplatePage extends GenericPage {
 
 	}
 
-	public void movetoTemplateViaIdClick(String templateId) throws Exception {
+	public void moveToTemplateViaIdClick(String templateId) throws Exception {
 
 		String lnkTemplateIdPath = lnkTemplateId.replace("OPTION", templateId);
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lnkTemplateIdPath));
