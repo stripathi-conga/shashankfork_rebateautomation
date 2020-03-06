@@ -73,7 +73,6 @@ public class TestTemplates extends UnifiedFramework {
 		jsonData.put("FormulaId__c", calcFormulaIdQualification);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		
 		cimAdmin.deleteTemplate();
 		response = cimAdmin.getTemplate();
 		responseValidator.validateDeleteSuccess(response);		 

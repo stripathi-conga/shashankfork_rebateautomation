@@ -1,10 +1,12 @@
 package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.Properties;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
@@ -20,6 +22,19 @@ public class HomePage extends GenericPage {
 
 	@FindBy(css = ".oneUserProfileCardTrigger span .uiImage")
 	public WebElement userProfileIcon;
+	@FindBy(xpath = "//*[text()='App Launcher']")
+	public WebElement btnAppLauncher;
+
+	@FindBy(xpath = "//*[text()='View All']")
+	public WebElement lnkViewAll;
+
+	@FindBy(xpath = "//p[text()='Apttus CIM']")
+	public WebElement lnkApttusCIM;
+	
+	@FindBy(xpath = "//p[text()='Apttus CIM Admin']")
+	public WebElement lnkApttusAdminCIM;
+	
+
 	public URLGeneratorUI urlGeneratorUI;
 	public Properties configProperty;
 
@@ -48,17 +63,36 @@ public class HomePage extends GenericPage {
 
 	public TemplatePage navigateToTemplates() throws Exception {
 
-		sfdcAcolyte.navigateTo(urlGeneratorUI.templateHomeURL.replace("{templateId}", RebatesConstants.homePath).replace("{view}", ""));
+		sfdcAcolyte.navigateTo(urlGeneratorUI.templateHomeURL.replace("{templateId}", RebatesConstants.homePath)
+				.replace("{view}", ""));
 
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
 	public Incentivepage navigateToIncentiveEdit(String incentiveId) throws Exception {
 
-		sfdcAcolyte.navigateTo(
-				urlGeneratorUI.incentiveEditURL.replace("{incentiveId}", incentiveId).replace("{view}", RebatesConstants.viewPath));
+		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveEditURL.replace("{incentiveId}", incentiveId).replace("{view}",
+				RebatesConstants.viewPath));
 		return PageFactory.initElements(driver, Incentivepage.class);
 	}
+
+	public void navigateToCIM() throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(btnAppLauncher).waitTillElementIsClickable(btnAppLauncher)
+				.jsClick(btnAppLauncher);
+		sfdcAcolyte.waitTillElementIsVisible(lnkViewAll).waitTillElementIsClickable(lnkViewAll).jsClick(lnkViewAll);
+		sfdcAcolyte.waitTillElementIsVisible(lnkApttusCIM).waitTillElementIsClickable(lnkApttusCIM)
+				.jsClick(lnkApttusCIM);
+	}
 	
-	
+	public void navigateToCIMAdmin() throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(btnAppLauncher).waitTillElementIsClickable(btnAppLauncher)
+				.jsClick(btnAppLauncher);
+		sfdcAcolyte.waitTillElementIsVisible(lnkViewAll).waitTillElementIsClickable(lnkViewAll).jsClick(lnkViewAll);
+		sfdcAcolyte.waitTillElementIsVisible(lnkApttusCIM).waitTillElementIsClickable(lnkApttusCIM)
+				.jsClick(lnkApttusAdminCIM);
+	}
+
+
 }
