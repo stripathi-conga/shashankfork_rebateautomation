@@ -13,15 +13,6 @@ public class AddParticipantPojo {
 	public IncentiveParticipantPojo incentiveParticipant;
 	private List<String> errorMessages;
 	private List<String> errorFields;
-	public String participantId;
-
-	public String getParticipantId() {
-		return participantId;
-	}
-
-	public void setParticipantId(String participantId) {
-		this.participantId = participantId;
-	}
 
 	public IncentiveParticipantPojo getIncentiveParticipant() {
 		return incentiveParticipant;
