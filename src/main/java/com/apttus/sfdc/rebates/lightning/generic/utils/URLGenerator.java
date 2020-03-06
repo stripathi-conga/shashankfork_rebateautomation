@@ -7,7 +7,7 @@ public class URLGenerator {
 	public String REST_ENDPOINT = "/services/data";
 	public String API_VERSION = "/v47.0";
 	public String dataSourceURL = "/sobjects/DataSource__c/";
-	public String getDataSourceURL = "/query/?q=SELECT Id,Name__c FROM DataSource__c WHERE id = '{DataSourceId}'";
+	public String getDataSourceURL = "/query/?q=SELECT Id,Name FROM DataSource__c WHERE id = '{DataSourceId}'";
 	public String fieldExpressionIdURL = "/sobjects/Apttus_Config2__FieldExpression__c/";
 	public String calcFormulaIdURL = "/sobjects/CalculationFormula__c/";
 	public String linkCalcFormulaIdURL = "/sobjects/CalculationFormulaStep__c/";
@@ -23,10 +23,9 @@ public class URLGenerator {
 	public String incentiveURL = "/sobjects/Apttus_Config2__Incentive__c/";
 	public String getIncentiveURL = "/query/?q=SELECT Apttus_Config2__EffectiveDate__c,Apttus_Config2__ExpirationDate__c,Apttus_Config2__Status__c,BenefitLevel__c,Currency__c,Id,MeasurementFrequency__c,MeasurementLevel__c,Name,Apttus_Config2__UseType__c,IncentiveType__c,IncentiveSubType__c,ProgramTemplateId__c FROM Apttus_Config2__Incentive__c where id='{incentiveId}'";
 	public String createAccountURL = "/sobjects/Account/";
-	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";
-	public String addParticipantsURL = "/sobjects/IncentiveParticipant__C/";
-	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";
-	public String getParticipantsViaIncentiveIdURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where Incentive__c='{IncentiveId}'";
+	public String participantsURL = "/sobjects/IncentiveParticipant__C/";
+	public String getAccountURL = "/query/?q=SELECT AccountNumber,Active__c,Id,Name FROM Account where Name = '{AccountName}'";	
+	public String getParticipantsURL = "/query/?q=SELECT Id,AccountNumber__c,ExpirationDate__c,Incentive__c,Name,Account__c,EffectiveDate__c from IncentiveParticipant__C where id='{participantId}'";	
 	public String getProductIdURL = "/query/?q=SELECT Name,ProductCode,Id,IsActive FROM Product2 where name = '{Product}'";
 	public String payoutSchedulesURL = "/sobjects/IncentivePayoutSchedule__c/";
 	
@@ -37,6 +36,8 @@ public class URLGenerator {
 	public String activateIncentiveURL = "/services/apexrest/api/IncentiveProgramDetail";
 	public String getPayoutScheduleURL = "/services/apexrest/api/PayoutSchedule?incentiveId={incentiveId}";
 	public String payoutScheduleStatusModifierURL = "/services/apexrest/api/PayoutSchedule?statusModifier={statusModifier}";
+	public String addParticipantsURL = "/services/apexrest/api/Participant/";
+	public String getParticipantsViaIncentiveIdURL = "/services/apexrest/api/Participant?incentiveId={IncentiveId}";
 	
 	public URLGenerator(String instanceURL) {
 		// ----------------- URL for SObjects as API ---------------------
@@ -59,9 +60,8 @@ public class URLGenerator {
 		this.getIncentiveURL = baseURL + this.getIncentiveURL;
 		this.createAccountURL = baseURL + this.createAccountURL;
 		this.getAccountURL = baseURL + this.getAccountURL;
-		this.addParticipantsURL = baseURL + this.addParticipantsURL;
-		this.getParticipantsURL = baseURL + this.getParticipantsURL;
-		this.getParticipantsViaIncentiveIdURL = baseURL + this.getParticipantsViaIncentiveIdURL;
+        this.participantsURL = baseURL + this.participantsURL;
+		this.getParticipantsURL = baseURL + this.getParticipantsURL;		
 		this.getProductIdURL = baseURL + this.getProductIdURL;
 		this.payoutSchedulesURL = baseURL + this.payoutSchedulesURL;
 
@@ -72,5 +72,7 @@ public class URLGenerator {
 		this.activateIncentiveURL = instanceURL + this.activateIncentiveURL;
 		this.getPayoutScheduleURL = instanceURL + this.getPayoutScheduleURL;
 		this.payoutScheduleStatusModifierURL = instanceURL + this.payoutScheduleStatusModifierURL;
+		this.addParticipantsURL = instanceURL + this.addParticipantsURL;
+		this.getParticipantsViaIncentiveIdURL = instanceURL + this.getParticipantsViaIncentiveIdURL;
 	}
 }

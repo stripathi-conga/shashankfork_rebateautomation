@@ -177,23 +177,32 @@ public class CIM extends CIMAdmin {
 		String participantId;
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
-			validateResponseCode(response, RebatesConstants.responseCreated);
-			participantId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			participantsData.setParticipantsId(participantId);
+			requestString = requestString.replace("\"", "\\\"");
+			String addParticipantRequest = "{\"incentiveParticipantStr\":\""+requestString+"\"}";			
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, addParticipantRequest);
+			validateResponseCode(response, RebatesConstants.responseOk);
+			participantId = (parser.parse(response.getBody().asString())).getAsJsonArray().get(0).getAsJsonObject()
+					.get("incentiveParticipant").getAsJsonObject().get("Id").getAsString();
+			participantsData.getIncentiveParticipant().setId(participantId);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API call failed with exception trace : " + e);
 		}
 	}
 
-	public void updateParticipants(Map<String, String> testData) throws ApplicationException {
-		String participantId = participantsData.getParticipantsId();
+	public Response updateParticipants(Map<String, String> testData) throws ApplicationException {
+		String participantId = participantsData.getIncentiveParticipant().getId();
+		testData.put("Id", participantId);
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.addParticipantsURL + participantId, requestString);
-			validateResponseCode(response, RebatesConstants.responseNocontent);
-			participantsData.setParticipantsId(participantId);
+			requestString = requestString.replace("\"", "\\\"");
+			String addParticipantRequest = "{\"incentiveParticipantStr\":\""+requestString+"\"}";			
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, addParticipantRequest);
+			validateResponseCode(response, RebatesConstants.responseOk);
+			participantId = (parser.parse(response.getBody().asString())).getAsJsonArray().get(0).getAsJsonObject()
+					.get("incentiveParticipant").getAsJsonObject().get("Id").getAsString();
+			participantsData.getIncentiveParticipant().setId(participantId);
+			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Update Participant API failed with exception trace : " + e);
 		}
@@ -201,8 +210,8 @@ public class CIM extends CIMAdmin {
 
 	public Response getParticipantsDetails() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(
-					urlGenerator.getParticipantsURL.replace("{participantId}", participantsData.getParticipantsId()));
+			response = sfdcRestUtils.getData(urlGenerator.getParticipantsURL.replace("{participantId}",
+					participantsData.getIncentiveParticipant().getId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
@@ -213,7 +222,7 @@ public class CIM extends CIMAdmin {
 	public Response deleteParticipants() throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.addParticipantsURL + participantsData.getParticipantsId());
+					.deleteWithoutPayload(urlGenerator.participantsURL + participantsData.getIncentiveParticipant().getId());
 			validateResponseCode(response, RebatesConstants.responseNocontent);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete Participant API call failed with exception trace : " + e);
@@ -224,7 +233,7 @@ public class CIM extends CIMAdmin {
 	public Response getParticipantIdViaIncentiveId() throws ApplicationException {
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getParticipantsViaIncentiveIdURL.replace("{IncentiveId}",
-					participantsData.getIncentive__c()));
+					participantsData.getIncentiveParticipant().getIncentive__c()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 		} catch (Exception e) {
 			throw new ApplicationException("Get Participant Details API call failed with exception trace : " + e);
@@ -296,21 +305,25 @@ public class CIM extends CIMAdmin {
 		} catch (Exception e) {
 			throw new ApplicationException("Get Payout Schedules API call failed with exception trace : " + e);
 		}
-	}
-
+	}	
+	
 	public Response addParticipantsNegative(Map<String, String> testData) throws ApplicationException {
+		//String participantId = participantsData.getIncentiveParticipant().getId();
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, requestString);
-			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			requestString = requestString.replace("\"", "\\\"");
+			String addParticipantRequest = "{\"incentiveParticipantStr\":\""+requestString+"\"}";			
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, addParticipantRequest);
+			validateResponseCode(response, RebatesConstants.responseOk);
+			//participantsData.getIncentiveParticipant().setId(participantId);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API did not fail with exception trace : " + e);
 		}
-	}
+	}	 
 
 	public Response updateParticipantsNegative(Map<String, String> testData) throws ApplicationException {
-		String participantsId = participantsData.getParticipantsId();
+		String participantsId = participantsData.getIncentiveParticipant().getId();
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
 			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.addParticipantsURL + participantsId,
@@ -326,7 +339,8 @@ public class CIM extends CIMAdmin {
 	public Response updatePayoutScheduleStatusToPending(String payoutScheduleId) throws ApplicationException {
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.scheduleStatusPending + "\"}";
-			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.payoutSchedulesURL + payoutScheduleId, requestString);
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.payoutSchedulesURL + payoutScheduleId,
+					requestString);
 			validateResponseCode(response, RebatesConstants.responseNocontent);
 			return response;
 		} catch (Exception e) {
