@@ -307,22 +307,20 @@ public class CIM extends CIMAdmin {
 		}
 	}	
 	
-	public Response addParticipantsNegative(Map<String, String> testData) throws ApplicationException {
-		//String participantId = participantsData.getIncentiveParticipant().getId();
+	public Response addParticipantsFailure(Map<String, String> testData) throws ApplicationException {
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);
 			requestString = requestString.replace("\"", "\\\"");
 			String addParticipantRequest = "{\"incentiveParticipantStr\":\""+requestString+"\"}";			
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, addParticipantRequest);
 			validateResponseCode(response, RebatesConstants.responseOk);
-			//participantsData.getIncentiveParticipant().setId(participantId);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Add Participant API did not fail with exception trace : " + e);
 		}
 	}	 
 
-	public Response updateParticipantsNegative(Map<String, String> testData) throws ApplicationException {
+	public Response updateParticipantsFailure(Map<String, String> testData) throws ApplicationException {
 		String participantsId = participantsData.getIncentiveParticipant().getId();
 		try {
 			requestString = participantsData.addParticipantsRequest(testData, this);

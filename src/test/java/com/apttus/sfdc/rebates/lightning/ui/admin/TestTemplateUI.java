@@ -99,7 +99,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
-	@Test(description = "TC293-Verify that user is able to access all the template details by clicking on the Template ID from the Template List view", groups = {
+	@Test(description = "TC263 - Verify that user is able to access all the template details by clicking on the Template ID from the Template List view", groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyEditTemplateViaNameClick() throws Exception {
 

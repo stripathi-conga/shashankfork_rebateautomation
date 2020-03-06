@@ -40,7 +40,7 @@ public class AddParticipantPojo {
 
 	public String addParticipantsRequest(Map<String, String> testData, CIM cim) throws ApplicationException {
 		String startDate, endDate;
-		AddParticipantPojo addParticipantpojo = new AddParticipantPojo();
+		AddParticipantPojo addParticipantPojo = new AddParticipantPojo();
 		IncentiveParticipantPojo incentiveParticipant = new IncentiveParticipantPojo();
 		if (testData.get("EffectiveDate__c") != null) {
 			startDate = SFDCHelper.getCIMDateValue(testData.get("EffectiveDate__c"), cim);
@@ -53,15 +53,15 @@ public class AddParticipantPojo {
 		incentiveParticipant.setAccount__c(cim.getAccountId(testData.get("AccountName")));
 		incentiveParticipant.setIncentive__c(cim.getIncentiveData().incentiveId);
 		incentiveParticipant.setId(testData.get("Id"));
-		addParticipantpojo.setIncentiveParticipant(incentiveParticipant);
+		addParticipantPojo.setIncentiveParticipant(incentiveParticipant);
 		List<String> error = new ArrayList<String>();
-		addParticipantpojo.setErrorFields(error);
-		addParticipantpojo.setErrorMessages(error);
+		addParticipantPojo.setErrorFields(error);
+		addParticipantPojo.setErrorMessages(error);
 
 		List<AddParticipantPojo> listpojo = new ArrayList<AddParticipantPojo>();
-		listpojo.add(addParticipantpojo);
+		listpojo.add(addParticipantPojo);
 
-		cim.setParticipantData(addParticipantpojo);
+		cim.setParticipantData(addParticipantPojo);
 		return new Gson().toJson(listpojo);
 	}
 }

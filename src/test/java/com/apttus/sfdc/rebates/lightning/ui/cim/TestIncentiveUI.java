@@ -1,4 +1,4 @@
-package com.apttus.sfdc.rebates.lightning.ui.admin;
+package com.apttus.sfdc.rebates.lightning.ui.cim;
 
 import java.util.List;
 import java.util.Map;
