@@ -138,7 +138,7 @@ public class TestTemplateUI extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
 		softassert.assertEquals(jsonData.get("Description__c"), templatepage.lbDescriptionDetails.getText());
-		softassert.assertEquals(cimAdmin.getDataSourceData().getName__c(),
+		softassert.assertEquals(cimAdmin.getDataSourceData().getName(),
 				templatepage.lbDataSourceDetails.getText());
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");

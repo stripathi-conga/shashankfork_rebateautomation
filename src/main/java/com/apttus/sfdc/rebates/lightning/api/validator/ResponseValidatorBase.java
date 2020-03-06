@@ -32,7 +32,7 @@ public class ResponseValidatorBase {
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getDataSourceData().getDataSourceId(),
 				"Validate datasource id");
-		softassert.assertEquals(records.get("Name__c").getAsString(), cimAdmin.getDataSourceData().getName__c(),
+		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getDataSourceData().getName(),
 				"Validate datasource name");		
 		softassert.assertAll();
 	}
@@ -163,10 +163,10 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
 		softassert.assertEquals(records.get("EffectiveDate__c").getAsString(),
-				cim.participantsData.getEffectiveDate__c(), "Validate Participant Effective Date");
+				cim.participantsData.getIncentiveParticipant().getEffectiveDate__c(), "Validate Participant Effective Date");
 		softassert.assertEquals(records.get("ExpirationDate__c").getAsString(),
-				cim.participantsData.getExpirationDate__c(), "Validate Participant Expired Date");
-		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getParticipantsId(),
+				cim.participantsData.getIncentiveParticipant().getExpirationDate__c(), "Validate Participant Expired Date");
+		softassert.assertEquals(records.get("Id").getAsString(), cim.participantsData.getIncentiveParticipant().getId(),
 				"Validate Incentive Participant Id");
 		softassert.assertEquals(records.get("Incentive__c").getAsString(), cim.incentiveData.getIncentiveId(),
 				"Validate Incentive Id");
@@ -177,8 +177,8 @@ public class ResponseValidatorBase {
 			throws ApplicationException {
 		softassert = new SoftAssert();
 		int expectedSize = testData.size();
-		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
-		softassert.assertEquals(resp.get("totalSize").getAsInt(), expectedSize, "Validate response size");
+		JsonArray resp = parser.parse(response.getBody().asString()).getAsJsonArray();
+		softassert.assertEquals(resp.size(), expectedSize, "Validate response size");
 		softassert.assertAll();
 
 		List<String> testAccount = testData.stream().map(p -> p.get("Account__c")).collect(Collectors.toList());
@@ -188,7 +188,7 @@ public class ResponseValidatorBase {
 				.collect(Collectors.toList());
 
 		for (int j = 0; j < expectedSize; j++) {
-			JsonObject records = resp.getAsJsonArray("records").get(j).getAsJsonObject();
+			JsonObject records = resp.get(j).getAsJsonObject();
 			if (testAccount.contains(records.get("Account__c").getAsString())) {
 				int index = testAccount.indexOf(records.get("Account__c").getAsString());
 				String testAcc = testAccount.get(index);
@@ -217,6 +217,15 @@ public class ResponseValidatorBase {
 		softassert.assertEquals(records.get("Apttus_Config2__Status__c").getAsString(), expectedStatus,
 				"Validate Incentive Status");
 		softassert.assertEquals(records.get("Id").getAsString(), incentiveId, "Validate Incentive Id");
+		softassert.assertAll();
+	}
+
+	public void validateParticipantFailureResponse(Response response, String errorFields, String errorMessage) {
+		softassert = new SoftAssert();
+		JsonObject responsebody = parser.parse(response.getBody().asString()).getAsJsonArray().get(0).getAsJsonObject();
+		softassert.assertEquals(responsebody.get("errorMessages").getAsString(), errorMessage,
+				"Verify failure Error Message");
+		softassert.assertEquals(responsebody.get("errorFields").toString(), errorFields, "Verify failure Error Fields");
 		softassert.assertAll();
 	}
 }

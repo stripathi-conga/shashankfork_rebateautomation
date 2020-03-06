@@ -106,7 +106,7 @@ public class TemplatePage extends GenericPage {
 
 		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
 				.click(ddlDataSource);
-		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName__c()).sendBoardKeys(Keys.ENTER);
+		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
 
 	}
 
@@ -118,7 +118,7 @@ public class TemplatePage extends GenericPage {
 				.waitTillElementIsVisible(By.xpath(tieredPath)).waitTillElementIsClickable(By.xpath(tieredPath))
 				.click(By.xpath(tieredPath));
 		sfdcAcolyte.click(ddlDataSource);
-		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName__c()).sendBoardKeys(Keys.ENTER);
+		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
 		for (int i = 0; i < chkQualification.size(); i++) {
 			sfdcAcolyte.waitTillElementIsClickable(chkQualification.get(i)).jsClick(chkQualification.get(i));
 		}

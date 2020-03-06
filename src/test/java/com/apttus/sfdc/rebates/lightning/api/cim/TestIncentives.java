@@ -143,17 +143,17 @@ public class TestIncentives extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
-		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getAccount__c());
-		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getEffectiveDate__c());
-		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getExpirationDate__c());
+		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getAccount__c());
+		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
-		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getAccount__c());
-		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getEffectiveDate__c());
-		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getExpirationDate__c());
+		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getAccount__c());
+		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		response = benefitProductQnB.getParticipantIdViaIncentiveId();
 		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
