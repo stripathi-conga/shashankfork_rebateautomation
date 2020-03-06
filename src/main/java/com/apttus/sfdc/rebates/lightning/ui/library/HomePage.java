@@ -69,11 +69,11 @@ public class HomePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public Incentivepage navigateToIncentiveEdit(String incentiveId) throws Exception {
+	public IncentivePage navigateToIncentiveEdit(String incentiveId) throws Exception {
 
 		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveEditURL.replace("{incentiveId}", incentiveId).replace("{view}",
 				RebatesConstants.viewPath));
-		return PageFactory.initElements(driver, Incentivepage.class);
+		return PageFactory.initElements(driver, IncentivePage.class);
 	}
 
 	public void navigateToCIM() throws Exception {

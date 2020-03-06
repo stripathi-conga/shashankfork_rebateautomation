@@ -103,7 +103,7 @@ public class TestParticipants extends UnifiedFramework {
 		
 		//----------- Add Participants with dates outside Incentive dates ------------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsOutsideIncentiveDates");
-		response = cim.addParticipantsNegative(jsonData);
+		response = cim.addParticipantsFailure(jsonData);
 		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
 				RebatesConstants.messageParticipantsDateOutOfRange);
 
@@ -115,7 +115,7 @@ public class TestParticipants extends UnifiedFramework {
 
 		//----------- Update Participants dates outside Incentive dates ------------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsOutsideIncentiveDates");
-		response = cim.addParticipantsNegative(jsonData);
+		response = cim.addParticipantsFailure(jsonData);
 		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
 				RebatesConstants.messageParticipantsDateOutOfRange);
 	}
@@ -137,14 +137,14 @@ public class TestParticipants extends UnifiedFramework {
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 
 		// -------- Add Participant 1 with same dates -----------------
-		response = cim.addParticipantsNegative(jsonData);
+		response = cim.addParticipantsFailure(jsonData);
 		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
 				RebatesConstants.messageOverlappingParticipants);
 
 		// -------- Add Participant 1 with overlapping dates -----------------
 		jsonData.put("ExpirationDate__c", "incentiveenddate");
 		jsonData.put("EffectiveDate__c", "incentivestartdate=+5");
-		response = cim.addParticipantsNegative(jsonData);
+		response = cim.addParticipantsFailure(jsonData);
 		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
 				RebatesConstants.messageOverlappingParticipants);
 

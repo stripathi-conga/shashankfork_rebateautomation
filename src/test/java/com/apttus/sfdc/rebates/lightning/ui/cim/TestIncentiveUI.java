@@ -1,4 +1,4 @@
-package com.apttus.sfdc.rebates.lightning.ui.admin;
+package com.apttus.sfdc.rebates.lightning.ui.cim;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
-import com.apttus.sfdc.rebates.lightning.ui.library.Incentivepage;
+import com.apttus.sfdc.rebates.lightning.ui.library.IncentivePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
@@ -38,7 +38,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 	private Response response;
 	private BenefitProductQnB benefitProductQnB;
 	public String calcFormulaIdBenefitTiered, calcFormulaIdQualificationTiered;
-	public Incentivepage incentivepage;
+	public IncentivePage incentivepage;
 	private String incentiveid;
 	WebDriver driver;
 	LoginPage loginPage;
@@ -152,7 +152,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 
 		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
-		incentivepage.participantIncentive();
+		incentivepage.moveToParticipantTab();
 		softassert.assertEquals(RebatesConstants.newParticipant, incentivepage.btnNew.getText());
 		softassert.assertAll();
 	}
