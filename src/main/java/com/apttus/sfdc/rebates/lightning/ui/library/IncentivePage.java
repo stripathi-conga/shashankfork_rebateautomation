@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
-public class Incentivepage extends GenericPage {
+public class IncentivePage extends GenericPage {
 
 	@FindBy(xpath = "//*[text()='Activate']")
 	public WebElement btnActivate;
@@ -16,7 +16,7 @@ public class Incentivepage extends GenericPage {
 	@FindBy(css = ".forceActionsText")
 	public WebElement txtToastMessage;
 
-	@FindBy(xpath = "//*[text()='Add Product']")
+	@FindBy(xpath = "//*[text()='Add']")
 	public WebElement btnAddProduct;
 
 	@FindBy(xpath = "//*[@placeholder='Enter product name or code to search']")
@@ -25,7 +25,7 @@ public class Incentivepage extends GenericPage {
 	@FindBy(xpath = "//*[text()='Select All']")
 	public WebElement chkProduct;
 
-	@FindBy(xpath = "//*[text()='Add']")
+	@FindBy(xpath = "//footer/button[text()='Add']")
 	public WebElement btnAdd;
 
 	@FindBy(xpath = "//*[text()='Save']")
@@ -40,17 +40,17 @@ public class Incentivepage extends GenericPage {
 	GenericPage genericPage;
 	WebDriverWait wait;
 
-	public Incentivepage(WebDriver driver) {
+	public IncentivePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 60);
 		PageFactory.initElements(driver, this);
 	}
 
-	public Incentivepage activateIncentive() throws Exception {
+	public IncentivePage activateIncentive() throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(btnActivate).waitTillElementIsClickable(btnActivate).jsClick(btnActivate)
 				.waitTillElementIsVisible(txtToastMessage);
-		return PageFactory.initElements(driver, Incentivepage.class);
+		return PageFactory.initElements(driver, IncentivePage.class);
 
 	}
 
@@ -61,11 +61,11 @@ public class Incentivepage extends GenericPage {
 		sfdcAcolyte.jsClick(chkProduct).waitTillElementIsClickable(btnAdd).click(btnAdd);
 	}
 
-	public Incentivepage participantIncentive() throws Exception {
+	public IncentivePage moveToParticipantTab() throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(btnParticipant).waitTillElementIsClickable(btnParticipant)
 				.jsClick(btnParticipant).waitTillElementIsVisible(btnNew);
-		return PageFactory.initElements(driver, Incentivepage.class);
+		return PageFactory.initElements(driver, IncentivePage.class);
 	}
 
 }
