@@ -300,4 +300,50 @@ public class TestTemplates extends UnifiedFramework {
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageDeleteActiveInactiveTemplate);
 	}
+	
+	@Test(description = "TC 556 Benefit Product and Discrete Edit Activate Details", groups = { "Regression", "API",
+			"Medium" })
+	public void verifyEditTemplateActivation() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
+		String discreteQnBLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, discreteQnBLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateGetTemplate(response, cimAdmin);
+		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", calcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+
+		// ------------ Update Template Name --------------------
+		String updatedTemplateName = cimAdmin.getTemplateData().getName() + "_Updated";
+		jsonData.put("Name", updatedTemplateName);
+		cimAdmin.editTemplate(jsonData, discreteQnBLayoutId, RebatesConstants.responseNocontent);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+		responseValidator.validateUpdatedTemplate(response, cimAdmin, jsonData, discreteQnBLayoutId);
+
+		// ------------ Activate Template --------------------
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
+	}
 }
