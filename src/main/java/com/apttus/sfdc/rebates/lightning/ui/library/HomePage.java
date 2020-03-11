@@ -30,10 +30,9 @@ public class HomePage extends GenericPage {
 
 	@FindBy(xpath = "//p[text()='Apttus CIM']")
 	public WebElement lnkApttusCIM;
-	
+
 	@FindBy(xpath = "//p[text()='Apttus CIM Admin']")
 	public WebElement lnkApttusAdminCIM;
-	
 
 	public URLGeneratorUI urlGeneratorUI;
 	public Properties configProperty;
@@ -84,7 +83,7 @@ public class HomePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(lnkApttusCIM).waitTillElementIsClickable(lnkApttusCIM)
 				.jsClick(lnkApttusCIM);
 	}
-	
+
 	public void navigateToCIMAdmin() throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(btnAppLauncher).waitTillElementIsClickable(btnAppLauncher)
@@ -92,6 +91,20 @@ public class HomePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(lnkViewAll).waitTillElementIsClickable(lnkViewAll).jsClick(lnkViewAll);
 		sfdcAcolyte.waitTillElementIsVisible(lnkApttusCIM).waitTillElementIsClickable(lnkApttusCIM)
 				.jsClick(lnkApttusAdminCIM);
+	}
+
+	public DataSourcePage navigateToNewDataSource() throws Exception {
+		sfdcAcolyte.navigateTo(urlGeneratorUI.dataSourceNewURL.replace("{dataSourceId}", RebatesConstants.newPath)
+				.replace("{view}", ""));
+	
+		return PageFactory.initElements(driver, DataSourcePage.class);
+	}
+
+	public TemplatePage navigateToEditTemplate(String templateId) throws Exception {
+		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveEditURL.replace("{templateId}", templateId).replace("{view}",
+				RebatesConstants.editPath));
+	
+		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
 
