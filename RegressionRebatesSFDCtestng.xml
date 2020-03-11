@@ -23,10 +23,10 @@
 			</run>
 		</groups>
 		<classes>
-			<!-- <class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
+			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestDatasource" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestLinkTemplates" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestTemplates" />
-			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" /> -->
+			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestDataSourceUI" />
 		</classes>
 	</test>
@@ -38,11 +38,11 @@
 			</run>
 		</groups>
 		<classes>
-			<!-- <class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentives" />
+			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentives" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentiveQnB" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestParticipants" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestPayoutSchedules" />
-			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveUI" /> -->
+			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveUI" />
 		</classes>
 	</test>
 </suite> 
