@@ -66,7 +66,7 @@ public class DataSourcePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 
-	public void VerifyValidationMessageForTransactionLineObject(Map<String, String> testData) throws Exception {
+	public void verifyValidationMessageForTransactionLineObject(Map<String, String> testData) throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
 		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, testData.get("Name"))
 				.click(btnSave);
@@ -78,7 +78,6 @@ public class DataSourcePage extends GenericPage {
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder)
 				.waitTillElementIsClickable(ddlOrder).jsScroll(ddlOrder).click(ddlOrder).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-
 	}
 
 	public void verifyValidationMessageForProduct() throws Exception {
