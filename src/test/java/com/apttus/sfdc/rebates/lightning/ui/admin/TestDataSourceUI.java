@@ -54,7 +54,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 		dataSourcePage.clickSave();
 		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		dataSourcePage.verifyValidationMessageForTransactionLineObject(jsonData);
+		dataSourcePage.verifyValidationMessageForTransactionLineObject();
 		softassert.assertEquals(RebatesConstants.messageMandatoryTransactionLineObject,
 				dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForCalculationDate();

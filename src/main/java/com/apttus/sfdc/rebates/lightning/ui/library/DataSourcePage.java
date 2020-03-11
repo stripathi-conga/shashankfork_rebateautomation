@@ -68,7 +68,7 @@ public class DataSourcePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 
-	public void verifyValidationMessageForTransactionLineObject(Map<String, String> testData) throws Exception {
+	public void verifyValidationMessageForTransactionLineObject() throws Exception {
 			
 		nameDataSource=("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
 		
