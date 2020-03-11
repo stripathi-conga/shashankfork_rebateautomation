@@ -349,7 +349,7 @@ public class TestTemplates extends UnifiedFramework {
 	
 	@Test(description = "TC-561 Activate template with layout as Qualification & Benefit Product and Tier value as Tiered", groups = {
 			"Regression", "API", "Medium" })
-	public void verifyNewTemplateActivationForQualificationAndBenefitProduct() throws Exception {
+	public void verifyNewTemplateActivationForQnBTiered() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
