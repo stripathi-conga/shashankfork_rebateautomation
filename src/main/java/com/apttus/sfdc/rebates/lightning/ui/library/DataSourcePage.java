@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 
 public class DataSourcePage extends GenericPage {
 
@@ -54,6 +55,7 @@ public class DataSourcePage extends GenericPage {
 	@FindBy(xpath = "//option[text()='txt']")
 	public WebElement fileExtension;
 	WebDriverWait wait;
+	String nameDataSource;
 
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
@@ -67,8 +69,12 @@ public class DataSourcePage extends GenericPage {
 	}
 
 	public void verifyValidationMessageForTransactionLineObject(Map<String, String> testData) throws Exception {
+			
+		if(testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
+			nameDataSource=("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
+		}
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, testData.get("Name"))
+		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, nameDataSource)
 				.click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
