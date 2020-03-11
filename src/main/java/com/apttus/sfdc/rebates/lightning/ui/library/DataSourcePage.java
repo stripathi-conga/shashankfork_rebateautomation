@@ -70,9 +70,8 @@ public class DataSourcePage extends GenericPage {
 
 	public void verifyValidationMessageForTransactionLineObject(Map<String, String> testData) throws Exception {
 			
-		if(testData.get("Name").equalsIgnoreCase("{RANDOM}")) {
-			nameDataSource=("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
-		}
+		nameDataSource=("Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator());
+		
 		sfdcAcolyte.click(btnCloseToastMessage);
 		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, nameDataSource)
 				.click(btnSave);
