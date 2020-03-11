@@ -225,7 +225,6 @@ public class TestIncentiveQnB extends UnifiedFramework {
         responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
         jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
         response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
-        //TODO - Mitu to update errorCode and message after the fix of REBATE-3358
         responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
                 RebatesConstants.messageBenefitDatesOutOfRange);
     }

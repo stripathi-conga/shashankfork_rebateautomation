@@ -77,5 +77,13 @@
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "UpdatedAutomation"
+	},
+	"qualificationAndBenefitTieredQnBLayoutAPI": {
+		"type__c": "Qualification \\u0026 Benefit Product",
+		"tier__c": "Tiered"
+	},
+	"qualificationAndBenefitDiscreteQnBLayoutAPI": {
+		"type__c": "Qualification \\u0026 Benefit Product",
+		"tier__c": "Discrete"
 	}
 }
