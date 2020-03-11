@@ -25,10 +25,9 @@ public class TestDataSourceUI extends UnifiedFramework {
 	public HomePage homepage;
 	public Properties configProperty;
 	Efficacies efficacies;
-	
+
 	SoftAssert softassert;
-	
-	
+
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void setUp(String runParallel, String environment, String browser, String hubURL) throws Exception {
@@ -47,14 +46,12 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert = new SoftAssert();
 	}
 
-	@Test(description = "TC216-Verify the Data Source Validation",groups = {
-			"Regression", "Low", "UI" })
+	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
 	public void verifyDataSourceValidations() throws Exception {
 
-		dataSourcePage=homepage.navigateToNewDataSource();
+		dataSourcePage = homepage.navigateToNewDataSource();
 		dataSourcePage.clickSave();
-		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource,
-				dataSourcePage.txtToastMessage.getText());
+		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.VerifyValidationMessageForTransactionLineObject();
 		softassert.assertEquals(RebatesConstants.messageMandatoryTransactionLineObject,
 				dataSourcePage.txtToastMessage.getText());
@@ -62,14 +59,12 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageMandatoryCalculationDate,
 				dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForProduct();
-		softassert.assertEquals(RebatesConstants.messageMandatoryProduct,
-				dataSourcePage.txtToastMessage.getText());
+		softassert.assertEquals(RebatesConstants.messageMandatoryProduct, dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForIncentiveAccount();
 		softassert.assertEquals(RebatesConstants.messageMandatoryIncentiveAccount,
 				dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForFileSuffixToIgnore();
-		softassert.assertEquals(RebatesConstants.messageMandatoryFileSuffix,
-				dataSourcePage.txtToastMessage.getText());
+		softassert.assertEquals(RebatesConstants.messageMandatoryFileSuffix, dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForFileExtension();
 		softassert.assertEquals(RebatesConstants.messageMandatoryFileExtension,
 				dataSourcePage.txtToastMessage.getText());
