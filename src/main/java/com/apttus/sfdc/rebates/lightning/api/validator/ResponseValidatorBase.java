@@ -147,10 +147,10 @@ public class ResponseValidatorBase {
 	public void validateFailureResponse(Response response, String errorcode, String message) {
 		softassert = new SoftAssert();
 		boolean messageExists = false;
-		JsonArray responsebody = parser.parse(response.getBody().asString()).getAsJsonArray();
-		messageExists = responsebody.get(0).getAsJsonObject().get("message").getAsString().contains(message);
+		JsonArray responseBody = parser.parse(response.getBody().asString()).getAsJsonArray();
+		messageExists = responseBody.get(0).getAsJsonObject().get("message").getAsString().contains(message);
 		softassert.assertTrue(messageExists, "Verify failure message exists");
-		softassert.assertEquals(responsebody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
+		softassert.assertEquals(responseBody.get(0).getAsJsonObject().get("errorCode").getAsString(), errorcode,
 				"Verify failure Errorcode");
 		softassert.assertAll();
 	}
