@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.ui.admin;
 
+import java.util.Map;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
@@ -25,7 +26,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 	public HomePage homepage;
 	public Properties configProperty;
 	Efficacies efficacies;
-
+	private Map<String, String> jsonData;
 	SoftAssert softassert;
 
 	@BeforeClass(alwaysRun = true)
@@ -52,7 +53,8 @@ public class TestDataSourceUI extends UnifiedFramework {
 		dataSourcePage = homepage.navigateToNewDataSource();
 		dataSourcePage.clickSave();
 		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
-		dataSourcePage.VerifyValidationMessageForTransactionLineObject();
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		dataSourcePage.VerifyValidationMessageForTransactionLineObject(jsonData);
 		softassert.assertEquals(RebatesConstants.messageMandatoryTransactionLineObject,
 				dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForCalculationDate();
@@ -65,7 +67,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 				dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForFileSuffixToIgnore();
 		softassert.assertEquals(RebatesConstants.messageMandatoryFileSuffix, dataSourcePage.txtToastMessage.getText());
-		dataSourcePage.verifyValidationMessageForFileExtension();
+		dataSourcePage.verifyValidationMessageForFileExtension(jsonData);
 		softassert.assertEquals(RebatesConstants.messageMandatoryFileExtension,
 				dataSourcePage.txtToastMessage.getText());
 		dataSourcePage.verifyValidationMessageForRecordDelimter();

@@ -1,5 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.ui.library;
 
+import java.util.Map;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,11 +9,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
-import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 
 public class DataSourcePage extends GenericPage {
 
-	
 	@FindBy(xpath = "//*[text()='Save']")
 	public WebElement btnSave;
 
@@ -23,37 +23,37 @@ public class DataSourcePage extends GenericPage {
 
 	@FindBy(xpath = "//*[@data-field='DataSourceName']/div[1]")
 	public WebElement txtDataSource;
-	
+
 	@FindBy(xpath = "//*[@data-field='fileSuffix']/div[1]")
 	public WebElement txtFileSuffix;
-	
+
 	@FindBy(xpath = "//input[@name='Transaction Line Object']")
-	public WebElement ddlselctTransMetaData;
-	
+	public WebElement ddlSelectTransMetaData;
+
 	@FindBy(xpath = "//input[@name='Product Field']")
-	public WebElement ddlselctProductField;
-	
+	public WebElement ddlSelectProductField;
+
 	@FindBy(xpath = "//input[@name='Incentive Account Field']")
 	public WebElement ddlIncentiveAccount;
-	
+
 	@FindBy(xpath = "//input[@name='Calculation Date Field']")
-	public WebElement ddlCalculationdate;
-	
+	public WebElement ddlCalculationDate;
+
 	@FindBy(xpath = "//*[text()='Order Line Item']")
 	public WebElement ddlOrder;
-	
+
 	@FindBy(xpath = "//*[text()='Start Date']")
 	public WebElement ddlCalculationDateValue;
-	
+
 	@FindBy(xpath = "//*[text()='Option']")
 	public WebElement ddlProductValue;
-	
+
 	@FindBy(xpath = "//*[text()='Bill To']")
 	public WebElement ddlIncentiveAccountValue;
-	
+
 	@FindBy(xpath = "//option[text()='txt']")
 	public WebElement fileExtension;
-		WebDriverWait wait;
+	WebDriverWait wait;
 
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
@@ -64,59 +64,53 @@ public class DataSourcePage extends GenericPage {
 	public void clickSave() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(btnSave).waitTillElementIsClickable(btnSave).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-
 	}
 
-	public void VerifyValidationMessageForTransactionLineObject() throws Exception {
+	public void VerifyValidationMessageForTransactionLineObject(Map<String, String> testData) throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, RebatesConstants.dataSource).click(btnSave);
+		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, testData.get("Name"))
+				.click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 
 	public void verifyValidationMessageForCalculationDate() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-     
-		sfdcAcolyte.click(ddlselctTransMetaData).waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder)
-				.jsScroll(ddlOrder).click(ddlOrder).click(btnSave);	sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
+		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder)
+				.waitTillElementIsClickable(ddlOrder).jsScroll(ddlOrder).click(ddlOrder).click(btnSave);
+		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 
 	}
 
 	public void verifyValidationMessageForProduct() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-
-		sfdcAcolyte.click(ddlCalculationdate).waitTillElementIsClickable(ddlCalculationDateValue)
+		sfdcAcolyte.click(ddlCalculationDate).waitTillElementIsClickable(ddlCalculationDateValue)
 				.jsScroll(ddlCalculationDateValue).click(ddlCalculationDateValue).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-		
 	}
-	
 
 	public void verifyValidationMessageForIncentiveAccount() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.click(ddlselctProductField).waitTillElementIsClickable(ddlProductValue)
-		.jsScroll(ddlProductValue).click(ddlProductValue).click(btnSave);
+		sfdcAcolyte.click(ddlSelectProductField).waitTillElementIsClickable(ddlProductValue).jsScroll(ddlProductValue)
+				.click(ddlProductValue).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-		
 	}
 
 	public void verifyValidationMessageForFileSuffixToIgnore() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.click(ddlIncentiveAccount).waitTillElementIsClickable(ddlIncentiveAccountValue).jsScroll(ddlIncentiveAccountValue)
-		.click(ddlIncentiveAccountValue).click(btnSave);
+		sfdcAcolyte.click(ddlIncentiveAccount).waitTillElementIsClickable(ddlIncentiveAccountValue)
+				.jsScroll(ddlIncentiveAccountValue).click(ddlIncentiveAccountValue).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-		
 	}
-	public void verifyValidationMessageForFileExtension() throws Exception {
+
+	public void verifyValidationMessageForFileExtension(Map<String, String> testData) throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.clickAndSendkeys(txtFileSuffix, RebatesConstants.suffix).click(btnSave);
+		sfdcAcolyte.clickAndSendkeys(txtFileSuffix, testData.get("FileSuffixToignore__c")).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-		
 	}
+
 	public void verifyValidationMessageForRecordDelimter() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
 		sfdcAcolyte.click(fileExtension).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-		
 	}
-
 }
