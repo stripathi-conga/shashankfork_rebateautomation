@@ -59,8 +59,5 @@ public class RebatesConstants {
 	public static final String messageMandatoryProduct = "Please enter Product Field";
 	public static final String newPath = "new";
 	public static final String editPath = "edit";
-	public static final String dataSource="AutomationDataSource";
-	public static final String suffix="_partSuffix";
-
 
 }
