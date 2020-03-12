@@ -27,19 +27,15 @@ public class LoginPage extends GenericPage {
 	}
 
 	public LoginPage waitForLoginPageLoad() throws Exception {
-
 		sfdcAcolyte.waitTillElementIsVisible(btnLogin).waitTillElementIsClickable(btnLogin);
 		return PageFactory.initElements(driver, LoginPage.class);
-
 	}
 
 	public void loginToApp(String userName, String password) throws Exception {
-
 		sfdcAcolyte.waitTillElementIsClickable(txtUserName);
 		txtUserName.sendKeys(userName);
 		txtPassword.sendKeys(password);
 		btnLogin.click();
-		
 	}
 
 	public LoginPage navigateToLoginPage(String LoginURL) throws Exception {
@@ -47,5 +43,4 @@ public class LoginPage extends GenericPage {
 		sfdcAcolyte.navigateTo(LoginURL);
 		return PageFactory.initElements(driver, LoginPage.class);
 	}
-
 }

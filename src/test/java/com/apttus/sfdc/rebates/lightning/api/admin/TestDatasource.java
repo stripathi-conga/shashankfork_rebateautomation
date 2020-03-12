@@ -2,10 +2,12 @@ package com.apttus.sfdc.rebates.lightning.api.admin;
 
 import java.util.Map;
 import java.util.Properties;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
@@ -43,7 +45,6 @@ public class TestDatasource extends UnifiedFramework {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	
 	@Test(description = "TC215-Verify Create New Data Source", groups = { "Smoke", "API" })
 	public void createNewDataSource() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
@@ -61,20 +62,20 @@ public class TestDatasource extends UnifiedFramework {
 	public void createCalculationFormula() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
-		String calcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
-		String calcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
+		String stepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
+		String stepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
-		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefit, fieldExpressionId);
-		cimAdmin.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualification, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdQualification, fieldExpressionId);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
 		cimAdmin.createDataSource(jsonData);
-		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdBenefit);
-		cimAdmin.linkDatasourceToCalcFormula(calcFormulaIdQualification);
+		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
-		responseValidator.validateDeleteSuccess(response);		 
+		responseValidator.validateDeleteSuccess(response);
 	}
 
 	@Test(description = "TC371- Verify the Data Source with multiple combination", groups = { "Regression", "Medium",
@@ -92,7 +93,7 @@ public class TestDatasource extends UnifiedFramework {
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
 	}
-	 
+
 	@Test(description = "TC-225 Verify mandatory fields in Data Source", groups = { "Regression", "Medium", "API" })
 	public void verifyDataSourceMandatoryFields() throws Exception {
 		response = cimAdmin.createDataSourceWithoutAnyFields();

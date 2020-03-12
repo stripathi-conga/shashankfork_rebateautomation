@@ -233,6 +233,7 @@ public class CIMAdmin {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
 			response = sfdcRestUtils.patchWithoutAppUrl(
 					urlGenerator.templateURL + templateData.getTemplateId(), requestString);
+			
 			validateResponseCode(response, resposecode);
 			return response;
 		} catch (Exception e) {

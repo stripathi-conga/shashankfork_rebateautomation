@@ -3,10 +3,12 @@ package com.apttus.sfdc.rebates.lightning.api.cim;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
@@ -16,7 +18,6 @@ import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
-
 
 public class TestIncentiveQnB extends UnifiedFramework {
 	private Properties configProperties;
@@ -41,24 +42,26 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		responseValidator = new BenefitProductValidator();
-		
-		//------ Deactivate the Active Link Template for LinkTemplate with SubType as Tiered -------
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");		
+
+		// ------ Deactivate the Active Link Template for LinkTemplate with SubType as
+		// Tiered -------
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
 		cim.deactivateLinkTemplateForIncentives(jsonData);
-		
-		//-------- Create Benefit formulaId for SubType as Tiered -----------------
+
+		// -------- Create Benefit formulaId for SubType as Tiered -----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		String fieldExpressionId = cim.getFieldExpressionId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdBenefit");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
 		calcFormulaIdBenefitTiered = cim.getCalcFormulaId(jsonData);
 		RebatesConstants.benefitFormulaId = calcFormulaIdBenefitTiered;
-		
-		//-------- Create Qualification formulaId for SubType as Tiered -----------------
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createCalcFormulaIdQualification");
+
+		// -------- Create Qualification formulaId for SubType as Tiered
+		// -----------------
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
 		calcFormulaIdQualificationTiered = cim.getCalcFormulaId(jsonData);
 		RebatesConstants.qualificationFormulaId = calcFormulaIdQualificationTiered;
-		
-		//-------- Link formulaId to Data Source-----------------
+
+		// -------- Link formulaId to Data Source-----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
 		cim.linkCalcFormulaToExpression(jsonData, calcFormulaIdBenefitTiered, fieldExpressionId);
 		cim.linkCalcFormulaToExpression(jsonData, calcFormulaIdQualificationTiered, fieldExpressionId);
@@ -67,7 +70,8 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.linkDatasourceToCalcFormula(calcFormulaIdBenefitTiered);
 		cim.linkDatasourceToCalcFormula(calcFormulaIdQualificationTiered);
 
-		//-------- Create and activate Template for Benefit Only Tiered -----------------
+		// -------- Create and activate Template for Benefit Only Tiered
+		// -----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
@@ -79,32 +83,35 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		jsonData.put("FormulaId__c", calcFormulaIdBenefitTiered);
 		jsonData.put("DataSourceId__c", cim.getDataSourceData().getDataSourceId());
 		cim.mapProgramTemplateDataSource(jsonData);
-		
+
 		jsonData.put("FormulaId__c", calcFormulaIdQualificationTiered);
 		jsonData.put("DataSourceId__c", cim.getDataSourceData().getDataSourceId());
 		cim.mapProgramTemplateDataSource(jsonData);
-		
+
 		cim.activateTemplate(RebatesConstants.responseNocontent);
-		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cim.getTemplateData().getTemplateId();		
-		
-		//-------- Create and activate Link Template for Subtype as Tiered-----------------
+		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cim.getTemplateData().getTemplateId();
+
+		// -------- Create and activate Link Template for Subtype as
+		// Tiered-----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeTieredAPI");
 		response = cim.createLinkTemplates(jsonData);
 		cim.activateLinkTemplate();
 		response = cim.getLinkTemplatesViaId();
 		responseValidator.validateLinkTemplatesStatus(response, cim, RebatesConstants.activate);
-		
-		//------ Deactivate the Active Link Template for LinkTemplate with SubType as Discrete -------
+
+		// ------ Deactivate the Active Link Template for LinkTemplate with SubType as
+		// Discrete -------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateDiscrete");
 		cim.deactivateLinkTemplateForIncentives(jsonData);
-		
-		//-------- Create and activate Template for Benefit Only Discrete -----------------
+
+		// -------- Create and activate Template for Benefit Only Discrete
+		// -----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
-		response = cim.createTemplate(jsonData, qnbLayoutId);		
-		
+		response = cim.createTemplate(jsonData, qnbLayoutId);
+
 		responseValidator.validateCreateSuccess(response);
 		response = cim.getTemplate();
 		responseValidator.validateGetTemplate(response, cim);
@@ -119,14 +126,15 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.activateTemplate(RebatesConstants.responseNocontent);
 		RebatesConstants.incentiveTemplateIdBenefitProductDiscrete = cim.getTemplateData().getTemplateId();
 
-		// -------- Create and activate Link Template for Subtype as Discrete-----------------
+		// -------- Create and activate Link Template for Subtype as
+		// Discrete-----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cim.createLinkTemplates(jsonData);
 		cim.activateLinkTemplate();
 		response = cim.getLinkTemplatesViaId();
 		responseValidator.validateLinkTemplatesStatus(response, cim, RebatesConstants.activate);
 	}
-	
+
 	@BeforeMethod(alwaysRun = true)
 	public void beforeClass() throws Exception {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
@@ -161,7 +169,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 	}
-	
+
 	@Test(description = "TC-438 Verify for the deletion of the Product added from the QnB layout", groups = {
 			"Regression", "Medium", "API" })
 	public void deleteQnBBenefitLine() throws Exception {
@@ -169,8 +177,8 @@ public class TestIncentiveQnB extends UnifiedFramework {
 				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		benefitProductQnB.createNewIncentive(jsonData);
-		
-		//------------ Add QnB Benefit Lines -------------------
+
+		// ------------ Add QnB Benefit Lines -------------------
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
@@ -178,23 +186,23 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 		benefitProductQnB.setQnBSectionId(response);
-		
-		//-------------- Delete QnB Benefit Line ----------------
+
+		// -------------- Delete QnB Benefit Line ----------------
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "deleteBenefitLine");
 		benefitProductQnB.deleteQnBBenefitLine(jsonData.get("SectionId"));
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateDeleteQnBBenefitLine(response, jsonData.get("SectionId"));
 	}
-	
-	@Test(description = "TC-442 Verify deletion of the Product from the QnB layout", groups = {
-			"Regression", "Medium", "API" })
+
+	@Test(description = "TC-442 Verify deletion of the Product from the QnB layout", groups = { "Regression", "Medium",
+			"API" })
 	public void deleteQnBLayoutproduct() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		benefitProductQnB.createNewIncentive(jsonData);
-		
-		//------------ Add QnB Benefit Lines -------------------
+
+		// ------------ Add QnB Benefit Lines -------------------
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
@@ -202,34 +210,34 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 		benefitProductQnB.setQnBSectionId(response);
-		
-		//-------------- Delete QnB Benefit Line ----------------
+
+		// -------------- Delete QnB Benefit Line ----------------
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "deleteBenefitLine");
 		benefitProductQnB.deleteQnBBenefitLine(jsonData.get("SectionId"));
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateDeleteQnBBenefitLine(response, jsonData.get("SectionId"));
-		
-		//-------------Added previously deleted Product
+
+		// -------------Added previously deleted Product
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 	}
-	
-    @Test(description = "TC-538 Validate for dates on the QnB for Benefit only and Tiered Incentive", groups = {
-            "Regression", "Medium", "API" })
-    public void addQnBBenefitOnlyXXDOutsideIncentiveDates() throws Exception {
-        jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-                "createIncentiveIndividualParticipantBenefitProductTiered");
-        jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-        benefitProductQnB.createNewIncentive(jsonData);
-        response = benefitProductQnB.getIncentiveDetails();
-        responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
-        jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
-        response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
-        //TODO - Mitu to update errorCode and message after the fix of REBATE-3358
-        responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
-                RebatesConstants.messageBenefitDatesOutOfRange);
-    }
-    
+
+	@Test(description = "TC-538 Validate for dates on the QnB for Benefit only and Tiered Incentive", groups = {
+			"Regression", "Medium", "API" })
+	public void addQnBBenefitOnlyXXDOutsideIncentiveDates() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		benefitProductQnB.createNewIncentive(jsonData);
+		response = benefitProductQnB.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
+		response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
+		// TODO - Mitu to update errorCode and message after the fix of REBATE-3358
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
+				RebatesConstants.messageBenefitDatesOutOfRange);
+	}
+
 	@Test(description = "TC-461 QnB line update validation on the Benefit only and Tiered programs using in-line edit", groups = {
 			"Regression", "High", "API" })
 	public void updateQnBBenefitLineXXT() throws Exception {
@@ -237,8 +245,8 @@ public class TestIncentiveQnB extends UnifiedFramework {
 				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		benefitProductQnB.createNewIncentive(jsonData);
-		
-		//------------ Add QnB Benefit Lines -------------------
+
+		// ------------ Add QnB Benefit Lines -------------------
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
@@ -247,14 +255,14 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 		benefitProductQnB.setQnBSectionId(response);
 		benefitProductQnB.setQualificationBenefitAndTierIds(response);
-		
-		//-------------- Update QnB Benefit Line ----------------
+
+		// -------------- Update QnB Benefit Line ----------------
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTUpdateBenefitProduct");
 		benefitProductQnB.addIncentiveQnB(jsonArrayData);
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 	}
-	
+
 	@Test(description = "TC-443 QnB line update validation on the Benefit only and Discrete programs using in-line edit", groups = {
 			"Regression", "Medium", "API" })
 	public void updateQnBBenefitLineXXD() throws Exception {
@@ -262,8 +270,8 @@ public class TestIncentiveQnB extends UnifiedFramework {
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
 		benefitProductQnB.createNewIncentive(jsonData);
-		
-		//------------ Add QnB Benefit Lines -------------------
+
+		// ------------ Add QnB Benefit Lines -------------------
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
@@ -272,8 +280,8 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 		benefitProductQnB.setQnBSectionId(response);
 		benefitProductQnB.setQualificationBenefitAndTierIds(response);
-		
-		//-------------- Update QnB Benefit Line ----------------
+
+		// -------------- Update QnB Benefit Line ----------------
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDUpdateBenefitProduct");
 		benefitProductQnB.addIncentiveQnB(jsonArrayData);
 		response = benefitProductQnB.getIncentiveQnB();
