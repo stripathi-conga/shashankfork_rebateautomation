@@ -413,7 +413,7 @@ public class TestTemplates extends UnifiedFramework {
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageMandatoryTemplatefields);
 
-		// ------- Qualification and Benefit Formula and then Activate the Template --------
+		// ------- Add Qualification and Benefit Formula and then Activate the Template --------
 		jsonData.put("FormulaId__c", calcFormulaIdBenefit);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
