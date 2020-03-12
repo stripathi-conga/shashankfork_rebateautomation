@@ -4,12 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
 import java.util.Properties;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.validator.PayoutScheduleValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.IncentiveCreationHelper;
@@ -47,8 +45,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 			"Smoke", "API" })
 	public void generatePayoutSchedulesForMonthlyFrequency() throws Exception {
 
-		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one
-		// month---------
+		// -------- Scenario 1 -Monthly frequency with Incentive date spanning one month---------
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
@@ -60,8 +57,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 1);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
 
-		// -------- Scenario 2 -Monthly frequency with Incentive date spanning 5
-		// months---------
+		// -------- Scenario 2 -Monthly frequency with Incentive date spanning 5 months---------
 		String incentive2StartDate = sfdcHelper.getPastorFutureDate(sfdcHelper.firstDayOfPreviousTwoMonth(), "10");
 		String incentive2EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfNextTwoMonth(), "-10");
 		response = new IncentiveCreationHelper().createIncentiveAndFetchSchedules(createIncentiveJson,
@@ -75,8 +71,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 			"Regression", "API", "High" })
 	public void generatePayoutSchedulesWithPendingStatus() throws Exception {
 
-		// -------- Scenario 1 -Monthly frequency with start date 1 month prior to today
-		// and end date 6 months in future---------
+		// -------- Scenario 1 -Monthly frequency with start date 1 month prior to today and end date 6 months in future---------
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
@@ -96,8 +91,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
-		// -------- Scenario 1 - Incentive date spanning 4 years with start date 16-Jan
-		// and end 31-Dec---------
+		// -------- Scenario 1 - Incentive date spanning 4 years with start date 16-Jan and end 31-Dec---------
 		String incentiveStartDate = sfdcHelper
 				.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "15");
 		String incentiveEndDate = sfdcHelper.lastDayOfYearForDate(sfdcHelper.addYearsToDate(incentiveStartDate, 4));
@@ -120,12 +114,10 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 1);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive2StartDate, incentive2EndDate, 12);
 
-		/*
-		 * -------- Scenario 3 Incentive date spanning 5 years, start date 1st March
-		 * andend date 15 Dec---------
-		 */
+		// -------- Scenario 3 Incentive date spanning 5 years, start date 1st March and end date 15 Dec---------		 
 		String incentive3StartDate = sfdcHelper
 				.addMonthsToDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), 2);
+		
 		// Set end date to 15th December 4 years from now
 		String incentive3EndDate = sfdcHelper.getPastorFutureDate(
 				sfdcHelper.lastDayOfYearForDate(sfdcHelper.addYearsToDate(incentive3StartDate, 4)), "-16");
@@ -137,7 +129,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 5);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive3StartDate, incentive3EndDate, 12);
 
-		/*------- Scenario 4 - Incentive date spanning just 1 year with start and end dates mid of month---------*/
+		//------- Scenario 4 - Incentive date spanning just 1 year with start and end dates mid of month---------
 		String incentive4StartDate = sfdcHelper
 				.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
 		String incentive4EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(incentive4StartDate),
@@ -157,8 +149,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
-		// Scenario 1 - Incentive date spanning 1 year with start date 15-Jan and end
-		// 31-Dec-
+		// -----Scenario 1 - Incentive date spanning 1 year with start date 15-Jan and end 31-Dec ---------
 		String incentiveStartDate = sfdcHelper
 				.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
 		String incentiveEndDate = sfdcHelper.lastDayOfYearForDate(incentiveStartDate);
@@ -180,8 +171,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 1);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive2StartDate, incentive2EndDate, 3);
 
-		// -------- Scenario 3 - Incentive date spanning 1 year with start 1-Jan and end
-		// 15-Dec---------
+		// -------- Scenario 3 - Incentive date spanning 1 year with start 1-Jan and end 15-Dec---------
 		String incentive3StartDate = sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate());
 		String incentive3EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(incentive3StartDate),
 				"-16");
@@ -191,8 +181,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 4);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive3StartDate, incentive3EndDate, 3);
 
-		// -------- Scenario 4 - Incentive date spanning multiple months within a
-		// quarter ---------
+		// -------- Scenario 4 - Incentive date spanning multiple months within a quarter ---------
 		String incentive4StartDate = sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate());
 		String incentive4EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.addMonthsToDate(incentive4StartDate, 2),
 				"14");
@@ -210,8 +199,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
-		// -------- Scenario 1 - Incentive date spanning 1 year with start date 15-Jan
-		// and end 31-Dec---------
+		// -------- Scenario 1 - Incentive date spanning 1 year with start date 15-Jan and end 31-Dec---------
 		String incentiveStartDate = sfdcHelper
 				.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
 		String incentiveEndDate = sfdcHelper.lastDayOfYearForDate(incentiveStartDate);
@@ -233,8 +221,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 1);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive2StartDate, incentive2EndDate, 6);
 
-		// -------- Scenario 3 - Incentive date spanning 1 year with start 1-Jan and end
-		// 15-Dec---------
+		// -------- Scenario 3 - Incentive date spanning 1 year with start 1-Jan and end 15-Dec---------
 		String incentive3StartDate = sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate());
 		String incentive3EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(incentive3StartDate),
 				"-16");
@@ -265,8 +252,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		String incentiveStartDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), -1);
 		String incentiveEndDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), 6);
 
-		// -------- Create incentive and manually update schedule status to pending
-		// --------- as schedules are always created in correct state ---------
+		// -------- Create incentive and manually update schedule status to pending as schedules are always created in correct state ---------
 		IncentiveCreationHelper incentiveCreationHelper = new IncentiveCreationHelper();
 		incentiveCreationHelper.createIncentiveAndUpdateSchedules(createIncentiveJson,
 				RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentiveStartDate, incentiveEndDate,
@@ -275,8 +261,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		// -------- call pending to open status modifier job---------
 		incentiveCreationHelper.benefitProductQnB.pendingToOpenStatusModifier();
 
-		// -------- get latest schedules and verify that they are in correct
-		// state---------
+		// -------- get latest schedules and verify that they are in correct state---------
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateSchedulesCount(response, 8);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
@@ -304,8 +289,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		// -------- call open to ready status modifier job ---------
 		incentiveCreationHelper.benefitProductQnB.openToReadyStatusModifier();
 
-		// -------- get latest schedules and verify that they are in correct
-		// state---------
+		// -------- get latest schedules and verify that they are in correct state---------
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,
 				gracePeriod);
@@ -322,8 +306,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		String incentiveStartDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), -1);
 		String incentiveEndDate = sfdcHelper.addMonthsToDate(sfdcHelper.getTodaysDate(), 6);
 
-		// -------- Create incentive and manually update schedule status to pending
-		// --------- as schedules are always created in correct state ---------
+		// -------- Create incentive and manually update schedule status to pending as schedules are always created in correct state ---------
 		IncentiveCreationHelper incentiveCreationHelper = new IncentiveCreationHelper();
 		incentiveCreationHelper.createIncentiveAndUpdateSchedules(createIncentiveJson,
 				RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, incentiveStartDate, incentiveEndDate,
@@ -332,8 +315,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		// -------- call pending to open status modifier job---------
 		incentiveCreationHelper.benefitProductQnB.pendingToOpenStatusModifier();
 
-		// -------- get latest schedules and verify that they are in correct
-		// state---------
+		// -------- get latest schedules and verify that they are in correct state---------
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateSchedulesCount(response, 8);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
@@ -341,8 +323,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		// -------- Execute the job one more time ---------
 		incentiveCreationHelper.benefitProductQnB.pendingToOpenStatusModifier();
 
-		// -------- Ensure multiple runs does not have impact on status of schedules
-		// ---------
+		// -------- Ensure multiple runs does not have impact on status of schedules ---------
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateSchedulesCount(response, 8);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1);
@@ -370,8 +351,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		// -------- call open to ready status modifier job ---------
 		incentiveCreationHelper.benefitProductQnB.openToReadyStatusModifier();
 
-		// -------- get latest schedules and verify that they are in correct
-		// state---------
+		// -------- get latest schedules and verify that they are in correct state---------
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,
 				gracePeriod);
@@ -379,8 +359,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		// -------- Execute the job one more time ---------
 		incentiveCreationHelper.benefitProductQnB.openToReadyStatusModifier();
 
-		// -------- Ensure multiple runs does not have impact on status of schedules
-		// ---------
+		// -------- Ensure multiple runs does not have impact on status of schedules ---------
 		response = incentiveCreationHelper.benefitProductQnB.getPayoutSchedules();
 		payoutScheduleValidator.validateReadyPayoutSchedules(response, incentiveStartDate, incentiveEndDate, 1,
 				gracePeriod);
