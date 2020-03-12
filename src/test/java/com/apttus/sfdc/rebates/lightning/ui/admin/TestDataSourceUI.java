@@ -47,7 +47,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert = new SoftAssert();
 	}
 
-	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression1", "Low", "UI" })
+	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
 	public void verifyDataSourceValidations() throws Exception {
 
 		dataSourcePage = homepage.navigateToNewDataSource();

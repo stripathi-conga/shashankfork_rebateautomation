@@ -64,7 +64,6 @@ public class HomePage extends GenericPage {
 
 		sfdcAcolyte.navigateTo(urlGeneratorUI.templateHomeURL.replace("{templateId}", RebatesConstants.homePath)
 				.replace("{view}", ""));
-
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
@@ -96,16 +95,12 @@ public class HomePage extends GenericPage {
 	public DataSourcePage navigateToNewDataSource() throws Exception {
 		sfdcAcolyte.navigateTo(urlGeneratorUI.dataSourceNewURL.replace("{dataSourceId}", RebatesConstants.newPath)
 				.replace("{view}", ""));
-	
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 
 	public TemplatePage navigateToEditTemplate(String templateId) throws Exception {
-		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveEditURL.replace("{templateId}", templateId).replace("{view}",
+		sfdcAcolyte.navigateTo(urlGeneratorUI.templateEditURL.replace("{templateId}", templateId).replace("{view}",
 				RebatesConstants.editPath));
-	
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
-
-
 }

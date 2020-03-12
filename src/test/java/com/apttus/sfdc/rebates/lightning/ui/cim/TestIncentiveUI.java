@@ -48,6 +48,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 	SoftAssert softassert;
 
 	@BeforeClass(alwaysRun = true)
+
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
 		efficacies = new Efficacies();
@@ -93,7 +94,6 @@ public class TestIncentiveUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageFailToActivateWithoutQnB,
 				incentivepage.txtToastMessage.getText());
 		softassert.assertAll();
-
 	}
 
 	@Test(description = "TC-490 Program will not be activated if Q&B is added but participants are empty", groups = {

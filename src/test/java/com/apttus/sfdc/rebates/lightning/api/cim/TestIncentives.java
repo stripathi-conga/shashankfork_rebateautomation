@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
@@ -26,7 +28,7 @@ public class TestIncentives extends UnifiedFramework {
 	private BenefitProductValidator responseValidator;
 	private CIM cim;
 	private Map<String, String> jsonData;
-	private Map<String, String> jsonDataTemp;	
+	private Map<String, String> jsonDataTemp;
 	private Response response;
 	private BenefitProductQnB benefitProductQnB;
 	private List<Map<String, String>> jsonArrayData;
@@ -41,26 +43,26 @@ public class TestIncentives extends UnifiedFramework {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
-		
-		
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
 		responseValidator = new BenefitProductValidator();
-		jsonArrayData = new ArrayList<Map<String,String>>();
+		jsonArrayData = new ArrayList<Map<String, String>>();
 	}
-	
+
 	@Test(description = "TC-419 Verify Incentive creation for different Payee values", groups = { "Regression",
 			"Medium", "API" })
 	public void addIncentiveWithDifferentPayeeValues() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
@@ -69,7 +71,8 @@ public class TestIncentives extends UnifiedFramework {
 
 	@Test(description = "TC-345 Verify the creation of new Incentive", groups = { "Smoke", "API" })
 	public void createNewBenefitProductTieredIncentive() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
@@ -78,7 +81,8 @@ public class TestIncentives extends UnifiedFramework {
 
 	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
 	public void updateIncentivePayeeToAgreementAccount() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
 		cim.createNewIncentive(jsonData);
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentivePayeeToAgreementAccount");
@@ -87,7 +91,7 @@ public class TestIncentives extends UnifiedFramework {
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
-	
+
 	@Test(description = "TC-536 Verify for the Program Activation Using the Activate button", groups = { "Smoke",
 			"API" })
 	public void activateIncentive() throws Exception {
@@ -144,16 +148,20 @@ public class TestIncentives extends UnifiedFramework {
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
 		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getAccount__c());
-		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getEffectiveDate__c());
-		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
+		jsonData.put("EffectiveDate__c",
+				benefitProductQnB.getParticipantData().getIncentiveParticipant().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c",
+				benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantTwo");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		benefitProductQnB.addParticipants(jsonData);
 		jsonData.put("Account__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getAccount__c());
-		jsonData.put("EffectiveDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getEffectiveDate__c());
-		jsonData.put("ExpirationDate__c", benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
+		jsonData.put("EffectiveDate__c",
+				benefitProductQnB.getParticipantData().getIncentiveParticipant().getEffectiveDate__c());
+		jsonData.put("ExpirationDate__c",
+				benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
 		response = benefitProductQnB.getParticipantIdViaIncentiveId();
 		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
