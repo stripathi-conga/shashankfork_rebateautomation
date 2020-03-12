@@ -43,8 +43,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		responseValidator = new BenefitProductValidator();
 
-		// ------ Deactivate the Active Link Template for LinkTemplate with SubType as
-		// Tiered -------
+		// ------ Deactivate the Active Link Template for LinkTemplate with SubType as Tiered -------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
 		cim.deactivateLinkTemplateForIncentives(jsonData);
 
@@ -55,8 +54,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		calcFormulaIdBenefitTiered = cim.getCalcFormulaId(jsonData);
 		RebatesConstants.benefitFormulaId = calcFormulaIdBenefitTiered;
 
-		// -------- Create Qualification formulaId for SubType as Tiered
-		// -----------------
+		// -------- Create Qualification formulaId for SubType as Tiered -----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
 		calcFormulaIdQualificationTiered = cim.getCalcFormulaId(jsonData);
 		RebatesConstants.qualificationFormulaId = calcFormulaIdQualificationTiered;
@@ -70,8 +68,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.linkDatasourceToCalcFormula(calcFormulaIdBenefitTiered);
 		cim.linkDatasourceToCalcFormula(calcFormulaIdQualificationTiered);
 
-		// -------- Create and activate Template for Benefit Only Tiered
-		// -----------------
+		// -------- Create and activate Template for Benefit Only Tiered -----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
@@ -91,21 +88,18 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.activateTemplate(RebatesConstants.responseNocontent);
 		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cim.getTemplateData().getTemplateId();
 
-		// -------- Create and activate Link Template for Subtype as
-		// Tiered-----------------
+		// -------- Create and activate Link Template for Subtype as Tiered-----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeTieredAPI");
 		response = cim.createLinkTemplates(jsonData);
 		cim.activateLinkTemplate();
 		response = cim.getLinkTemplatesViaId();
 		responseValidator.validateLinkTemplatesStatus(response, cim, RebatesConstants.activate);
 
-		// ------ Deactivate the Active Link Template for LinkTemplate with SubType as
-		// Discrete -------
+		// ------ Deactivate the Active Link Template for LinkTemplate with SubType as Discrete -------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateDiscrete");
 		cim.deactivateLinkTemplateForIncentives(jsonData);
 
-		// -------- Create and activate Template for Benefit Only Discrete
-		// -----------------
+		// -------- Create and activate Template for Benefit Only Discrete -----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		qnbLayoutId = cim.getQnBLayoutId(jsonData);
 
@@ -126,8 +120,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cim.activateTemplate(RebatesConstants.responseNocontent);
 		RebatesConstants.incentiveTemplateIdBenefitProductDiscrete = cim.getTemplateData().getTemplateId();
 
-		// -------- Create and activate Link Template for Subtype as
-		// Discrete-----------------
+		// -------- Create and activate Link Template for Subtype as Discrete-----------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewLinkTemplateSubTypeDiscreteAPI");
 		response = cim.createLinkTemplates(jsonData);
 		cim.activateLinkTemplate();
@@ -217,7 +210,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateDeleteQnBBenefitLine(response, jsonData.get("SectionId"));
 
-		// -------------Added previously deleted Product
+		// ------- Added previously deleted Product ------------
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 	}
