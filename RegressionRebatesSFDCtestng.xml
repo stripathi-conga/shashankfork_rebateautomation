@@ -27,6 +27,7 @@
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestLinkTemplates" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.admin.TestTemplates" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" />
+			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestDataSourceUI" />
 		</classes>
 	</test>
 

@@ -1,13 +1,13 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
 public class RebatesConstants {
-	
+
 	// These values will be set in @BeforeSuite and used in all Incentive classes
 	public static String benefitFormulaId;
 	public static String qualificationFormulaId;
 	public static String incentiveTemplateIdBenefitProductTiered;
 	public static String incentiveTemplateIdBenefitProductDiscrete;
-		
+
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
 	public static final int responseNocontent = 204;
@@ -31,7 +31,7 @@ public class RebatesConstants {
 	public static final String messageParticipantsDateOutOfRange = "Participants Dates are outside the range of Incentive Dates.";
 	public static final String messageOverlappingParticipants = "Same participants with overlapping dates found.";
 	public static final String errorFieldsForDates = "[\"EffectiveDate__c\",\"ExpirationDate__c\"]";
-	
+
 	public static final String scheduleStatusOpen = "Open";
 	public static final String scheduleStatusPending = "Pending";
 	public static final String scheduleStatusReady = "Ready";
@@ -39,15 +39,25 @@ public class RebatesConstants {
 	public static final String paymentFrequencyYearly = "Yearly";
 	public static final String paymentFrequencyQuarterly = "Quarterly";
 	public static final String paymentFrequencyHalfYearly = "Half Yearly";
-	
-	/* UI Constants      ------------------------------------------ */
-	public static final String messagequalificationformulavalidation="No data to display";
-	public static final String mandatoryMessageBenefitFormula="Benefit formula is required";
-	public static final String mandatoryMessageUnsavedChanges="Please save the unsaved changes to activate the Incentive";
-	public static final String messageFailToActivateWithoutParticipant="Failed to activate incentive - Incentive should have at least one participant configured.";
-	public static final String messageFailToActivateWithoutQnB="Failed to activate incentive - Incentive should have at least one benefit configured.";
+
+	/* UI Constants ------------------------------------------ */
+	public static final String messagequalificationformulavalidation = "No data to display";
+	public static final String mandatoryMessageBenefitFormula = "Benefit formula is required";
+	public static final String mandatoryMessageUnsavedChanges = "Please save the unsaved changes to activate the Incentive";
+	public static final String messageFailToActivateWithoutParticipant = "Failed to activate incentive - Incentive should have at least one participant configured.";
+	public static final String messageFailToActivateWithoutQnB = "Failed to activate incentive - Incentive should have at least one benefit configured.";
 	public static final String viewPath = "view";
 	public static final String homePath = "home";
 	public static final String newParticipant = "New";
-	
+	public static final String messageMandatoryDataSource = "Please enter Data Source Name";
+	public static final String messageMandatoryTransactionLineObject = "Please enter Transaction Line Object";
+	public static final String messageMandatoryCalculationDate = "Please enter Calculation Date Field";
+	public static final String messageMandatoryIncentiveAccount = "Please enter Incentive Account Field";
+	public static final String messageMandatoryFileSuffix = "Please enter File Suffix To ignore";
+	public static final String messageMandatoryFileExtension = "Please enter File Extension";
+	public static final String messageMandatoryRecordDelimter = "Please enter Record Delimiter";
+	public static final String messageMandatoryProduct = "Please enter Product Field";
+	public static final String newPath = "new";
+	public static final String editPath = "edit";
+
 }
