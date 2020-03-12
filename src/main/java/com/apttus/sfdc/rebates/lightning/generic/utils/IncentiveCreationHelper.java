@@ -52,18 +52,26 @@ public class IncentiveCreationHelper {
 		responseValidator.validateIncentiveDetails(createIncentiveJson, response, benefitProductQnB);
 		
 		// -------- Add QnB Line to the Incentive ------------------
-		List<Map<String,String>> jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
-		benefitProductQnB.addIncentiveQnB(jsonArrayData);
-		response = benefitProductQnB.getIncentiveQnB();
-		qnbResponseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		/*
+		 * List<Map<String,String>> jsonArrayData =
+		 * SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProduct");
+		 * benefitProductQnB.addIncentiveQnB(jsonArrayData); response =
+		 * benefitProductQnB.getIncentiveQnB();
+		 * qnbResponseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue(
+		 * "addQnBRequest"), response);
+		 */
 
 		// -------- Add Participant to the Incentive ------------------
-		Map<String,String> jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
-		jsonData.put("EffectiveDate__c", startDate);
-		jsonData.put("ExpirationDate__c", endDate);
-		benefitProductQnB.addParticipants(jsonData);
-		response = benefitProductQnB.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
+		/*
+		 * Map<String,String> jsonData =
+		 * efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
+		 * jsonData.put("EffectiveDate__c", startDate);
+		 * jsonData.put("ExpirationDate__c", endDate);
+		 * benefitProductQnB.addParticipants(jsonData); response =
+		 * benefitProductQnB.getParticipantsDetails();
+		 * responseValidator.validateParticipantsDetails(jsonData, response,
+		 * benefitProductQnB);
+		 */
 		
 		// -------- Activate the incentive which will generate payout schedules -----------------
 		benefitProductQnB.activateIncentive();
