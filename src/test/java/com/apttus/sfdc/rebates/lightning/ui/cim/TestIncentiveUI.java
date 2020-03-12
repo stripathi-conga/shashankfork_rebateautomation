@@ -159,7 +159,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 
 	
 	@Test(description = "TC 379 - Verify the participant data in the participants grid view", groups = {
-			"Regression", "API", "Medium" })
+			"Regression1", "API", "Medium" })
 	public void verifyParticipantGridData() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
@@ -200,7 +200,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 		
 		softassert.assertEquals("enable", incentivepage.lnkAccountName.get(0).getAttribute("data-navigation"));
 		softassert.assertEquals(true, incentivepage.lnkAccount.get(0).isEnabled());
-		softassert.assertEquals(true, incentivepage.lnkAccount.get(0).isEnabled());
+		softassert.assertEquals(true, incentivepage.lnkAccount.get(1).isEnabled());
 		softassert.assertEquals("enable", incentivepage.effectiveDate.get(0).getAttribute("data-navigation"));
 		softassert.assertEquals("enable", incentivepage.effectiveDate.get(1).getAttribute("data-navigation"));
 		
