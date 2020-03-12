@@ -69,9 +69,8 @@ public class DataSourcePage extends GenericPage {
 	}
 
 	public void verifyValidationMessageForTransactionLineObject() throws Exception {
-			
-		nameDataSource="Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
-		
+
+		nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
 		sfdcAcolyte.click(btnCloseToastMessage);
 		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, nameDataSource)
 				.click(btnSave);
@@ -81,7 +80,8 @@ public class DataSourcePage extends GenericPage {
 	public void verifyValidationMessageForCalculationDate() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
 		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder)
-				.waitTillElementIsClickable(ddlOrder).jsScroll(ddlOrder).click(ddlOrder).click(btnSave);
+				.waitTillElementIsClickable(ddlOrder).jsScroll(ddlOrder).click(ddlOrder).click(ddlOrder).click(ddlOrder)
+				.click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 

@@ -51,7 +51,6 @@ public class IncentivePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(btnActivate).waitTillElementIsClickable(btnActivate).jsClick(btnActivate)
 				.waitTillElementIsVisible(txtToastMessage);
 		return PageFactory.initElements(driver, IncentivePage.class);
-
 	}
 
 	public void addQualificationBenefit() throws Exception {
@@ -62,10 +61,8 @@ public class IncentivePage extends GenericPage {
 	}
 
 	public IncentivePage moveToParticipantTab() throws Exception {
-
 		sfdcAcolyte.waitTillElementIsVisible(btnParticipant).waitTillElementIsClickable(btnParticipant)
 				.jsClick(btnParticipant).waitTillElementIsVisible(btnNew);
 		return PageFactory.initElements(driver, IncentivePage.class);
 	}
-
 }

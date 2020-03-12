@@ -28,9 +28,6 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//*[text()='Data Source']//..//input")
 	public WebElement ddlDataSource;
 
-	@FindBy(css = "span[class='slds-checkbox_faux']")
-	public List<WebElement> chkQualification;
-
 	@FindBy(css = "input[name='Qualification Formulas']")
 	public WebElement lblQualification;
 
@@ -41,20 +38,33 @@ public class TemplatePage extends GenericPage {
 	public List<WebElement> txtNoDataDisplay;
 
 	@FindBy(xpath = "//*[text()='Benefit Product']")
-	public WebElement lbBenefitProductDetails;
+	public WebElement lblBenefitProductDetails;
 
 	@FindBy(xpath = "//*[contains(text(),'Rebates_Auto_DataSource_')]")
-	public WebElement lbDataSourceDetails;
+	public WebElement lb1DataSourceDetails;
 
 	@FindBy(xpath = "//div[contains(text(),'Automation')]")
-	public WebElement lbDescriptionDetails;
+	public WebElement lblDescriptionDetails;
 
 	@FindBy(xpath = "//*[text()='Formulas']")
-	public WebElement lbFormulaTab;
+	public WebElement lblFormulaTab;
 
 	@FindBy(xpath = "//div[contains(text(),'Tiered')]")
-	public WebElement lbTierDetails;
-	
+	public WebElement lblTierDetails;
+
+	@FindBy(xpath = "//*[@name='Qualification Formulas'][@id]")
+	public List<WebElement> chkQualificationValue;
+
+	@FindBy(xpath = "//*[@name='Benefit Formulas'][@id]")
+	public List<WebElement> chkBenefitFormulaValue;
+
+	@FindBy(css = "//*[text()='Edit']")
+	public WebElement btnEdit;
+
+	public String lblStepQualificationFormulaPath;
+	public String lblStepBenefitFormulaIdPath;
+	public String lblNonStepQualificationFormulaPath;
+	public String lblNonStepBenefitFormulaIdPath;
 	String benefitProduct = "Benefit Product";
 	String discrete = "Discrete";
 	String tiered = "Tiered";
@@ -99,6 +109,7 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
 				.click(By.xpath(discretePath));
+		
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
@@ -107,21 +118,16 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
 				.click(ddlDataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
-
 	}
 
 	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
 
 		String tieredPath = cmbTxt.replace("OPTION", tiered);
-
 		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(tieredPath)).waitTillElementIsClickable(By.xpath(tieredPath))
 				.click(By.xpath(tieredPath));
 		sfdcAcolyte.click(ddlDataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
-		for (int i = 0; i < chkQualification.size(); i++) {
-			sfdcAcolyte.waitTillElementIsClickable(chkQualification.get(i)).jsClick(chkQualification.get(i));
-		}
 
 	}
 
@@ -130,20 +136,22 @@ public class TemplatePage extends GenericPage {
 		String lnkTemplateIdPath = lnkTemplateId.replace("OPTION", templateId);
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lnkTemplateIdPath));
 		sfdcAcolyte.jsClick(By.xpath(lnkTemplateIdPath));
-
-		sfdcAcolyte.waitTillElementIsVisible(lbDataSourceDetails).waitTillElementIsVisible(lbDataSourceDetails);
-
+		sfdcAcolyte.waitTillElementIsVisible(lb1DataSourceDetails).waitTillElementIsVisible(lb1DataSourceDetails);
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/view");
-		sfdcAcolyte.waitTillElementIsVisible(lbDescriptionDetails);
+		sfdcAcolyte.waitTillElementIsVisible(lblDescriptionDetails);
 	}
 
-	public void moveToFormulaTab(String calcFormulaIdQualification, String calcFormulaIdBenefit) throws Exception {
+	public void moveToFormulaTab(String stepQualificationFormula, String stepBenefitFormula) throws Exception {
 
-		sfdcAcolyte.waitTillElementIsClickable(lbFormulaTab).click(lbFormulaTab);
-		lblQualificationFormulaPath = lnkFormulaTab.replace("OPTION", calcFormulaIdQualification);
-		lblBenefitFormulaIdPath = lnkFormulaTab.replace("OPTION", calcFormulaIdBenefit);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblQualificationFormulaPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblBenefitFormulaIdPath));
-
+		sfdcAcolyte.waitTillElementIsClickable(lblFormulaTab).click(lblFormulaTab);
+		lblStepQualificationFormulaPath = lnkFormulaTab.replace("OPTION", stepQualificationFormula);
+		lblStepBenefitFormulaIdPath = lnkFormulaTab.replace("OPTION", stepBenefitFormula);
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblStepQualificationFormulaPath));
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblStepBenefitFormulaIdPath));
 	}
+
+	public void moveToEditTemplate(String templateId) throws Exception {
+		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/Edit");
+	}
+
 }

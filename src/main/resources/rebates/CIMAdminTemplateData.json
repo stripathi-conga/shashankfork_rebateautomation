@@ -5,13 +5,13 @@
 		"CalculationDateAttr__c": "Apttus_Config2__PricingDate__c",
 		"CalculationDateName__c": "Pricing Date",
 		"IncentiveAccountAttr__c": "Apttus_Config2__BillToAccountId__c",
-		"IncentiveAccountFieldName__c": "Bill To",		
+		"IncentiveAccountFieldName__c": "Bill To",
 		"ProductAttr__c": "Apttus_Config2__ProductId__c",
 		"FileExtension__c": "csv",
 		"FileSuffixToignore__c": "test",
 		"Delimiter__c": "\\u002c",
 		"ProductFieldName__c": "Product",
-  		"RecordDelimiterName__c": "commas"
+		"RecordDelimiterName__c": "commas"
 	},
 	"createNewDataSourceMultipleFileExtension": {
 		"FileExtension__c": "csv,tsv,txt,dat,log"
@@ -20,18 +20,36 @@
 		"FileExtension__c": "tsv,dat",
 		"Delimiter__c": "\\u002f"
 	},
+	"benefitOnlyDiscreteQnBLayoutAPI": {
+		"type__c": "Benefit Product",
+		"tier__c": "Discrete"
+	},
 	"createFieldExpressionId": {
 		"Apttus_Config2__Expression__c": "SUM(Rebate_Amount)",
 		"Name": "Auto SUM(Rebate_Amount)"
 	},
-	"createCalcFormulaIdBenefit": {
+	"createNonStepCalcFormulaIdBenefit": {
 		"FormulaType__c": "Benefit",
 		"Status__c": "Active",
+		"IsStepBased__c": "false",
 		"Name": "Auto_Benefit SUM(Rebate_Amount)"
 	},
-	"createCalcFormulaIdQualification": {
+	"createStepCalcFormulaIdBenefit": {
+		"FormulaType__c": "Benefit",
+		"Name": "Auto_Qualification SUM(Quantity)",
+		"IsStepBased__c": "true",
+		"Status__c": "Active"
+	},
+	"createNonStepCalcFormulaIdQualification": {
 		"FormulaType__c": "Qualification",
 		"Name": "Auto_Qualification SUM(Rebate_Amount)",
+		"IsStepBased__c": "false",
+		"Status__c": "Active"
+	},
+	"createStepCalcFormulaIdQualification": {
+		"FormulaType__c": "Qualification",
+		"Name": "Auto_Qualification SUM(Quantity)",
+		"IsStepBased__c": "true",
 		"Status__c": "Active"
 	},
 	"linkCalcFormulaToExpressionId": {
@@ -39,8 +57,7 @@
 		"Sequence__c": "1",
 		"Status__c": "Active",
 		"Type__c": "Line"
-	},
-	"createNewTemplateAPI": {
+	},"createNewTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "Automation"
@@ -48,12 +65,7 @@
 	"benefitOnlyTieredQnBLayoutAPI": {
 		"type__c": "Benefit Product",
 		"tier__c": "Tiered"
-	},
-	"benefitOnlyDiscreteQnBLayoutAPI": {
-		"type__c": "Benefit Product",
-		"tier__c": "Discrete"
-	},
-	"createNewLinkTemplateSubTypeTieredAPI": {
+	},"createNewLinkTemplateSubTypeTieredAPI": {
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Tiered",
 		"Status__c": "Draft"
@@ -62,8 +74,7 @@
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete",
 		"Status__c": "Draft"
-	},
-	"autoNewLinkTemplateSubTypeTieredAPI": {
+	},"autoNewLinkTemplateSubTypeTieredAPI": {
 		"IncentiveType__c": "Automation Rebate",
 		"IncentiveSubType__c": "Automation Benefit Product Tiered",
 		"Status__c": "Draft"
