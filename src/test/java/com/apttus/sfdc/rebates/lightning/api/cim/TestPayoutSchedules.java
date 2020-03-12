@@ -120,8 +120,10 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 1);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive2StartDate, incentive2EndDate, 12);
 
-		// -------- Scenario 3 Incentive date spanning 5 years, start date 1st March and
-		// end date 15 Dec---------
+		/*
+		 * -------- Scenario 3 Incentive date spanning 5 years, start date 1st March
+		 * andend date 15 Dec---------
+		 */
 		String incentive3StartDate = sfdcHelper
 				.addMonthsToDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), 2);
 		// Set end date to 15th December 4 years from now
@@ -135,8 +137,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		payoutScheduleValidator.validateSchedulesCount(response, 5);
 		payoutScheduleValidator.validatePayoutSchedules(response, incentive3StartDate, incentive3EndDate, 12);
 
-		// -------- Scenario 4 - Incentive date spanning just 1 year with start and end
-		// dates mid of month---------
+		/*------- Scenario 4 - Incentive date spanning just 1 year with start and end dates mid of month---------*/
 		String incentive4StartDate = sfdcHelper
 				.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
 		String incentive4EndDate = sfdcHelper.getPastorFutureDate(sfdcHelper.lastDayOfYearForDate(incentive4StartDate),
@@ -156,8 +157,8 @@ public class TestPayoutSchedules extends UnifiedFramework {
 		Map<String, String> createIncentiveJson = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
 
-		// -------- Scenario 1 - Incentive date spanning 1 year with start date 15-Jan
-		// and end 31-Dec---------
+		// Scenario 1 - Incentive date spanning 1 year with start date 15-Jan and end
+		// 31-Dec-
 		String incentiveStartDate = sfdcHelper
 				.getPastorFutureDate(sfdcHelper.firstDayOfYearForDate(sfdcHelper.getTodaysDate()), "14");
 		String incentiveEndDate = sfdcHelper.lastDayOfYearForDate(incentiveStartDate);

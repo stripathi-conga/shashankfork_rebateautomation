@@ -196,7 +196,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 
 	@Test(description = "TC-442 Verify deletion of the Product from the QnB layout", groups = { "Regression", "Medium",
 			"API" })
-	public void deleteQnBLayoutproduct() throws Exception {
+	public void deleteQnBLayoutProduct() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
@@ -233,7 +233,6 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
 		response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
-		// TODO - Mitu to update errorCode and message after the fix of REBATE-3358
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
 				RebatesConstants.messageBenefitDatesOutOfRange);
 	}

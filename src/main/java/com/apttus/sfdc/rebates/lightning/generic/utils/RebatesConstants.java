@@ -27,7 +27,7 @@ public class RebatesConstants {
 	public static final String messageCreateDataSourceWithoutFields = "Required fields are missing: [FileExtension__c, FileSuffixToignore__c, TransactionMetaData__c]";
 	public static final String messageChangeLinkTemplateStatusToDraft = "Cannot change Status from \"Active\" to \"Draft\"";
 	public static final String messageActiveMappingExists = "An active mapping already exists.";
-	public static final String messageBenefitDatesOutOfRange = "CustomException: Benefits with dates outside the range of Incentive dates found\n\nClass.QnBController: line 177, column 1";
+	public static final String messageBenefitDatesOutOfRange = "Benefits with dates outside the range of Incentive dates found";
 	public static final String messageParticipantsDateOutOfRange = "Participants Dates are outside the range of Incentive Dates.";
 	public static final String messageOverlappingParticipants = "Same participants with overlapping dates found.";
 	public static final String errorFieldsForDates = "[\"EffectiveDate__c\",\"ExpirationDate__c\"]";

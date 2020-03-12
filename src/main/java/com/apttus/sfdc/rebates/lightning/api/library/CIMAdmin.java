@@ -364,16 +364,16 @@ public class CIMAdmin {
 	public String getQnBLayoutId(Map<String, String> testData) throws ApplicationException {
 		String qnblayoutId = null;
 		int recordsize;
-		JsonObject responsebody;
+		JsonObject responseBody;
 		try {
 			response = sfdcRestUtils
 					.getData(urlGenerator.getqnblayoutURL.replace("{QnBLayoutType}", testData.get("type__c"))
 							.replace("{QnBLayoutTier}", testData.get("tier__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);
-			responsebody = parser.parse(response.getBody().asString()).getAsJsonObject();
-			recordsize = responsebody.get("totalSize").getAsInt();
+			responseBody = parser.parse(response.getBody().asString()).getAsJsonObject();
+			recordsize = responseBody.get("totalSize").getAsInt();
 			if (recordsize > 0) {
-				qnblayoutId = responsebody.getAsJsonArray("records").get(0).getAsJsonObject().get("Id").getAsString();
+				qnblayoutId = responseBody.getAsJsonArray("records").get(0).getAsJsonObject().get("Id").getAsString();
 			} else {
 				requestString = createQnBLayoutIdPojo.createQnBLayoutIdRequest(testData);
 				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.qnbLayoutIdURL, requestString);
