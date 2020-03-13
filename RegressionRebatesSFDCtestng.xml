@@ -43,6 +43,7 @@
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestParticipants" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestPayoutSchedules" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveUI" />
+			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveParticipantUI" />
 		</classes>
 	</test>
 </suite> 
