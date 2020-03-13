@@ -96,5 +96,13 @@
 	"qualificationAndBenefitDiscreteQnBLayoutAPI": {
 		"type__c": "Qualification \\u0026 Benefit Product",
 		"tier__c": "Discrete"
+	},
+	"multipleQualificationAndBenefitTieredQnBLayoutAPI": {
+		"type__c": "Multiple Qualification \\u0026 Benefit Products",
+		"tier__c": "Tiered"
+	},
+	"multipleQualificationAndBenefitDiscreteQnBLayoutAPI": {
+		"type__c": "Multiple Qualification \\u0026 Benefit Products",
+		"tier__c": "Discrete"
 	}
 }
