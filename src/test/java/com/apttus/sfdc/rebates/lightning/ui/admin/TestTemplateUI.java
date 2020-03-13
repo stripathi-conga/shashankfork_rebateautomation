@@ -162,6 +162,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		templatepage = homepage.navigateToTemplates();
 		templatepage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
 		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
+		softassert.assertAll();
 	}
 
 	@AfterClass(alwaysRun = true)
