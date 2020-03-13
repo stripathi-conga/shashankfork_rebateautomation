@@ -109,7 +109,7 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
 				.click(By.xpath(discretePath));
-		
+
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
