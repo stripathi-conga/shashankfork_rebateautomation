@@ -48,7 +48,6 @@ public class TestIncentiveUI extends UnifiedFramework {
 	SoftAssert softassert;
 
 	@BeforeClass(alwaysRun = true)
-
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
 		efficacies = new Efficacies();
@@ -94,6 +93,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageFailToActivateWithoutQnB,
 				incentivepage.txtToastMessage.getText());
 		softassert.assertAll();
+
 	}
 
 	@Test(description = "TC-490 Program will not be activated if Q&B is added but participants are empty", groups = {
@@ -157,6 +157,55 @@ public class TestIncentiveUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
+	
+	@Test(description = "TC 379 - Verify the participant data in the participants grid view", groups = {
+			"Regression1", "API", "Medium" })
+	public void verifyParticipantGridData() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
+		incentiveid=cim.createNewIncentive(jsonData);
+		response = cim.getIncentiveDetails();
+		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsForOverlappingDates");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+
+		response = cim.addParticipantsFailure(jsonData);
+		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
+				RebatesConstants.messageOverlappingParticipants);
+
+		jsonData.put("ExpirationDate__c", "incentiveenddate");
+		jsonData.put("EffectiveDate__c", "incentivestartdate=+5");
+		response = cim.addParticipantsFailure(jsonData);
+		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
+				RebatesConstants.messageOverlappingParticipants);
+
+		jsonData.put("ExpirationDate__c", "incentiveenddate");
+		jsonData.put("EffectiveDate__c", "incentivestartdate=+11");
+		cim.addParticipants(jsonData);
+		response = cim.getParticipantsDetails();
+		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+		
+		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage.moveToParticipantTab();
+		incentivepage.waitTillAllParticipantElementLoad();
+		softassert.assertEquals(true, incentivepage.colAccountName.isDisplayed());
+		softassert.assertEquals(true, incentivepage.colAccountNumber.isDisplayed());
+		softassert.assertEquals(true, incentivepage.colAccountType.isDisplayed());
+		softassert.assertEquals(true, incentivepage.colEffectiveEndDate.isDisplayed());
+		softassert.assertEquals(true, incentivepage.colEffectiveStartDate.isDisplayed());
+		
+		softassert.assertEquals("enable", incentivepage.lnkAccountName.get(0).getAttribute("data-navigation"));
+		softassert.assertEquals(true, incentivepage.lnkAccount.get(0).isEnabled());
+		softassert.assertEquals(true, incentivepage.lnkAccount.get(1).isEnabled());
+		softassert.assertEquals("enable", incentivepage.effectiveDate.get(0).getAttribute("data-navigation"));
+		softassert.assertEquals("enable", incentivepage.effectiveDate.get(1).getAttribute("data-navigation"));
+		
+		softassert.assertAll();
+	}
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
