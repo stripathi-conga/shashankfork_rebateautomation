@@ -15,6 +15,7 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -41,6 +42,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	SoftAssert softassert;
 	private ResponseValidatorBase responseValidator;
 	private Response response;
+	public GenericPage genericPage;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -68,6 +70,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
 		responseValidator = new ResponseValidatorBase();
+		genericPage = new GenericPage(driver);
 	}
 
 	@Test(description = "TC-463 Verify  Qualification formulas on the Benefit only templates", groups = { "Regression",
@@ -162,6 +165,102 @@ public class TestTemplateUI extends UnifiedFramework {
 		templatepage = homepage.navigateToTemplates();
 		templatepage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
 		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
+		softassert.assertAll();
+	}
+
+	@Test(description = "TC-565 Verify creation and Activation of Multiple Qualification & Benefit and Tier", groups = {
+			"Regression", "Medium", "UI" })
+	public void verifyTemplateTierMultipleQualification() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
+		String stepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdBenefit");
+		String nonStepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
+		String stepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdQualification");
+		String nonStepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdQualification, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
+		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"multipleQualificationAndBenefitTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getTemplate();
+		templatepage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
+		templatepage.addDataSource(cimAdmin);
+		templatepage.addQualificationOnTiered(cimAdmin);
+		templatepage.selectQualificationAndBenefitFormula();
+		genericPage.clickButtonAndWait(templatepage.btnSave, genericPage.txtToastMessage);
+		softassert.assertEquals(RebatesConstants.messageSavedSuccessfully, genericPage.txtToastMessage.getText());
+		genericPage.clickButton(genericPage.btnCloseToastMessage);
+		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
+		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
+		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
+		softassert.assertAll();
+	}
+
+	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = { "Regression",
+			"Medium", "UI" })
+	public void verifyTemplateTierMultipleQualificationActivationViaDetailView() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
+		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
+		String stepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdBenefit");
+		String nonStepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
+		String stepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdQualification");
+		String nonStepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdBenefit, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdQualification, fieldExpressionId);
+		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdQualification, fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		cimAdmin.createDataSource(jsonData);
+		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdBenefit);
+		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
+		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
+				"multipleQualificationAndBenefitTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
+		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
+		responseValidator.validateCreateSuccess(response);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateGetTemplate(response, cimAdmin);
+		jsonData.put("FormulaId__c", stepCalcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", stepCalcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", nonStepCalcFormulaIdBenefit);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		cimAdmin.mapProgramTemplateDataSource(jsonData);
+		jsonData.put("FormulaId__c", nonStepCalcFormulaIdQualification);
+		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
+		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
+		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
+		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
 
