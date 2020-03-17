@@ -37,6 +37,12 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//b[text()='No data to display']")
 	public List<WebElement> txtNoDataDisplay;
 
+	@FindBy(xpath = "//*[text()='Save'][@id]")
+	public WebElement btnSave;
+
+	@FindBy(xpath = "//*[text()='Edit']")
+	public WebElement btnEdit;
+
 	@FindBy(xpath = "//*[text()='Benefit Product']")
 	public WebElement lblBenefitProductDetails;
 
@@ -58,32 +64,34 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//*[@name='Benefit Formulas'][@id]")
 	public List<WebElement> chkBenefitFormulaValue;
 
-	@FindBy(css = "//*[text()='Edit']")
-	public WebElement btnEdit;
+	@FindBy(xpath = "//button[text()='Activate']")
+	public WebElement btnActive;
+
+	@FindBy(xpath = "//a[contains(@href,'/IncentiveProgramTemplate__c')]")
+	public WebElement lnkTemplates;
+
+	@FindBy(xpath = "//label[@class='slds-checkbox__label']/span[2]")
+	public List<WebElement> formula;
 
 	public String lblStepQualificationFormulaPath;
 	public String lblStepBenefitFormulaIdPath;
-	public String lblNonStepQualificationFormulaPath;
-	public String lblNonStepBenefitFormulaIdPath;
 	String benefitProduct = "Benefit Product";
 	String discrete = "Discrete";
 	String tiered = "Tiered";
-
 	String cmbTxt = "//*[@data-value='OPTION']";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@value='OPTION']";
 
-	GenericPage genericPage;
 	WebDriverWait wait;
 	NGHelper nghelper;
 	public boolean templateEditURL;
-	public String lblQualificationFormulaPath;
-	public String lblBenefitFormulaIdPath;
 
 	public TemplatePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 120);
+
 		PageFactory.initElements(driver, this);
+
 	}
 
 	public TemplatePage moveToNewtemplatepage(WebElement newbutton, WebElement Labelnewtemplate) throws Exception {
@@ -113,7 +121,7 @@ public class TemplatePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public void addQualificationOnDiscrete(CIMAdmin cimAdmin) throws Exception {
+	public void addDataSource(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
 				.click(ddlDataSource);
@@ -152,6 +160,15 @@ public class TemplatePage extends GenericPage {
 
 	public void moveToEditTemplate(String templateId) throws Exception {
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/Edit");
+	}
+
+	public void selectQualificationAndBenefitFormula() throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(formula.get(0));
+		for (int i = 0; i < formula.size(); i++) {
+			sfdcAcolyte.jsScrollAndClick(formula.get(i));
+		}
+
 	}
 
 }

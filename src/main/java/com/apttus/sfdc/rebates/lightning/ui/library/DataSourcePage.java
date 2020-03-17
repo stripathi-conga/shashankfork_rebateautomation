@@ -2,6 +2,7 @@ package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.Map;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,6 +57,8 @@ public class DataSourcePage extends GenericPage {
 	public WebElement fileExtension;
 	WebDriverWait wait;
 	String nameDataSource;
+	String txtTransactionLineObject = "//*[text()='OPTION']";
+	String txtOrderLineItem="Order Line Item";
 
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
@@ -78,11 +81,17 @@ public class DataSourcePage extends GenericPage {
 	}
 
 	public void verifyValidationMessageForCalculationDate() throws Exception {
-		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.click(ddlSelectTransMetaData).waitTillElementIsVisible(ddlOrder)
-				.waitTillElementIsClickable(ddlOrder).jsScroll(ddlOrder).click(ddlOrder).click(ddlOrder).click(ddlOrder)
-				.click(btnSave);
-		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
+		
+		
+		String valueTransactionLineObject = txtTransactionLineObject.replace("OPTION", txtOrderLineItem);
+		sfdcAcolyte.waitTillElementIsVisible(ddlSelectTransMetaData).waitTillElementIsClickable(ddlSelectTransMetaData)
+		.click(ddlSelectTransMetaData);
+	
+		sfdcAcolyte.waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder);
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(valueTransactionLineObject)).jsScrollAndClick(By.xpath(valueTransactionLineObject));
+		sfdcAcolyte.jsClick(btnSave);
+		  sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
+		 	
 	}
 
 	public void verifyValidationMessageForProduct() throws Exception {
