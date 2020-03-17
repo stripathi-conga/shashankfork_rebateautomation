@@ -71,7 +71,7 @@ public class TemplatePage extends GenericPage {
 	public WebElement lnkTemplates;
 
 	@FindBy(xpath = "//label[@class='slds-checkbox__label']/span[2]")
-	public List<WebElement> Formula;
+	public List<WebElement> formula;
 
 	public String lblStepQualificationFormulaPath;
 	public String lblStepBenefitFormulaIdPath;
@@ -164,9 +164,9 @@ public class TemplatePage extends GenericPage {
 
 	public void selectQualificationAndBenefitFormula() throws Exception {
 
-		sfdcAcolyte.waitTillElementIsVisible(Formula.get(0));
-		for (int i = 0; i < Formula.size(); i++) {
-			sfdcAcolyte.jsScrollAndClick(Formula.get(i));
+		sfdcAcolyte.waitTillElementIsVisible(formula.get(0));
+		for (int i = 0; i < formula.size(); i++) {
+			sfdcAcolyte.jsScrollAndClick(formula.get(i));
 		}
 
 	}
