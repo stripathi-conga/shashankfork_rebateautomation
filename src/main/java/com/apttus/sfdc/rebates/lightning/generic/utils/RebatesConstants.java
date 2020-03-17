@@ -49,14 +49,16 @@ public class RebatesConstants {
 	public static final String viewPath = "view";
 	public static final String homePath = "home";
 	public static final String newParticipant = "New";
-	public static final String messageMandatoryDataSource = "Please enter Data Source Name";
-	public static final String messageMandatoryTransactionLineObject = "Please enter Transaction Line Object";
-	public static final String messageMandatoryCalculationDate = "Please enter Calculation Date Field";
-	public static final String messageMandatoryIncentiveAccount = "Please enter Incentive Account Field";
-	public static final String messageMandatoryFileSuffix = "Please enter File Suffix To ignore";
-	public static final String messageMandatoryFileExtension = "Please enter File Extension";
-	public static final String messageMandatoryRecordDelimter = "Please enter Record Delimiter";
-	public static final String messageMandatoryProduct = "Please enter Product Field";
+	public static final String messageMandatoryDataSource = "Please enter Data Source Name to save";
+	public static final String messageMandatoryTransactionLineObject = "Please select Transaction Line Object to save";
+	public static final String messageMandatoryCalculationDate = "Please select Calculation Date Field to save";
+	public static final String messageMandatoryIncentiveAccount = "Please select Incentive Account Field to save";
+	public static final String messageMandatoryFileSuffix = "Please enter File Suffix To ignore to save";
+	public static final String messageMandatoryFileExtension = "Please select File Extension to save";
+	public static final String messageMandatoryRecordDelimter = "Please select Record Delimiter to save";
+	public static final String messageMandatoryProduct = "Please select Product Field to save";
+	public static final String messageActivateSuccessfully = "Template activated successfully";
+	public static final String messageSavedSuccessfully = "Template saved successfully";
 	public static final String newPath = "new";
 	public static final String editPath = "edit";
 
