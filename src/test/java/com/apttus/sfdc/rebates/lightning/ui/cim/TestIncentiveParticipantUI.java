@@ -34,7 +34,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 	public CIM cim;
 	private Map<String, String> jsonData;
 	private Response response;
-	private BenefitProductQnB benefitProductQnB;
+	public BenefitProductQnB benefitProductQnB;
 	public String calcFormulaIdBenefitTiered, calcFormulaIdQualificationTiered;
 	public IncentivePage incentivepage;
 	private String incentiveid;

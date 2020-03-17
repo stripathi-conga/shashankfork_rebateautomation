@@ -424,7 +424,7 @@ public class CIMAdmin {
 		return response;
 	}
 
-	public Response draftLinkTemplateNegative() throws ApplicationException {
+	public Response draftLinkTemplateFailure() throws ApplicationException {
 		String currentLinkTemplateId = linkTemplatesData.getLinkTemplateId();
 		try {
 			requestString = "{\"Status__c\": \"" + RebatesConstants.draft + "\"}";
@@ -439,7 +439,7 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createLinkTemplatesNegative(Map<String, String> testData) throws ApplicationException {
+	public Response createLinkTemplatesFailure(Map<String, String> testData) throws ApplicationException {
 		String currentLinkTemplateId = linkTemplatesData.getLinkTemplateId();
 		try {
 			requestString = linkTemplatesData.createLinkTemplateRequest(testData, this);
