@@ -63,16 +63,17 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//*[@class='slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small']")
 	public List<WebElement> effectiveDate;
 	
+	// This locator will identify the Name ,Code and Type 
 	@FindBy(xpath = "//lightning-formatted-text")
 	public List<WebElement> colValueNameCodeType;
-	// This locator will identify the Name ,Code and Type 
+	
 	@FindBy(xpath = "//*[text()='B1']")
 	public WebElement colValueAliasName;
 	
+	//This Locator will identify Start and EndDate
 	@FindBy(xpath = "//span/div/lightning-formatted-date-time")
 	public List <WebElement> colValueDate;
-	//This Locator will identify Start and EndDate
-	
+		
 	@FindBy(xpath = "//c-core-data-table-formula")
 	public List<WebElement> colValueFormula;
 	
