@@ -62,23 +62,18 @@ public class IncentivePage extends GenericPage {
 
 	@FindBy(xpath = "//*[@class='slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small']")
 	public List<WebElement> effectiveDate;
-	@FindBy(xpath = "//*[text()='B1']")
-	public WebElement colValueType;
 	
-	@FindBy(xpath = "//*[text()='B1']")
-	public WebElement colValueName;
-	
-	@FindBy(xpath = "//*[text()='B1']")
-	public WebElement colValueCode;
+	@FindBy(xpath = "//lightning-formatted-text")
+	public List<WebElement> colValueNameCodeType;
 	
 	@FindBy(xpath = "//*[text()='B1']")
 	public WebElement colValueAliasName;
 	
-	@FindBy(xpath = "//span/div/ightning-formatted-date-time")
-	public WebElement colValueDate;
+	@FindBy(xpath = "//span/div/lightning-formatted-date-time")
+	public List <WebElement> colValueDate;
 	
-	@FindBy(xpath = "//c-coredatatableformula_coredatatableformula-host")
-	public WebElement colValueFormula;
+	@FindBy(xpath = "//c-core-data-table-formula")
+	public List<WebElement> colValueFormula;
 	
 	GenericPage genericPage;
 	WebDriverWait wait;
@@ -115,5 +110,13 @@ public class IncentivePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(colAccountType);
 		sfdcAcolyte.waitTillElementIsVisible(colEffectiveEndDate);
 		sfdcAcolyte.waitTillElementIsVisible(colEffectiveStartDate);
+	}
+	
+	public void waitTillAllQnBElementLoad() throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(colValueAliasName);
+		sfdcAcolyte.waitTillElementIsVisible(colValueDate.get(0));
+		sfdcAcolyte.waitTillElementIsVisible(colValueNameCodeType.get(1));
+		sfdcAcolyte.waitTillElementIsVisible(colValueFormula.get(0));
+		
 	}
 }

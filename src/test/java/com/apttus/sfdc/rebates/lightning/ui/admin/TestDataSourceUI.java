@@ -47,12 +47,13 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert = new SoftAssert();
 	}
 
-	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
+	@Test(description = "TC216-Verify the Data Source Validation",invocationCount=10, groups = { "Regression", "Low", "UI" })
 	public void verifyDataSourceValidations() throws Exception {
 
 		dataSourcePage = homepage.navigateToNewDataSource();
 		dataSourcePage.clickSave();
 		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
+		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
 		dataSourcePage.verifyValidationMessageForTransactionLineObject();
 
