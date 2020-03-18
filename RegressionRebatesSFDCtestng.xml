@@ -44,7 +44,7 @@
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestPayoutSchedules" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveParticipantUI" />
-			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestQnBIncentiveUI" />
+			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveQnBUI" />
 		</classes> 
 	</test>
 </suite> 

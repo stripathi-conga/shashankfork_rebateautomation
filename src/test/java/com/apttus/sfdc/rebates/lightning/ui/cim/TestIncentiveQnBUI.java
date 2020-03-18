@@ -26,7 +26,7 @@ import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 import com.jayway.restassured.response.Response;
 
-public class TestQnBIncentiveUI extends UnifiedFramework {
+public class TestIncentiveQnBUI extends UnifiedFramework {
 	private Properties configProperties;
 	private Efficacies efficacies;
 	private SFDCRestUtils sfdcRestUtils;
@@ -94,7 +94,7 @@ public class TestQnBIncentiveUI extends UnifiedFramework {
 		softassert.assertEquals(true, incentivepage.colValueAliasName.isDisplayed());
 		softassert.assertEquals(true, incentivepage.colValueDate.get(0).isDisplayed());
 		softassert.assertEquals(true, incentivepage.colValueDate.get(1).isDisplayed());
-		softassert.assertEquals(true, incentivepage.colValueNameCodeType.get(1).isDisplayed());
+		softassert.assertEquals(true, incentivepage.colValueNameCodeType.get(0).isDisplayed());
 		softassert.assertEquals(true, incentivepage.colValueNameCodeType.get(1).isDisplayed());
 		softassert.assertAll();
 	}
