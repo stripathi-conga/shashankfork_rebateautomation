@@ -114,7 +114,7 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
 				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(benefitProductPath))
 				.waitTillElementIsClickable(By.xpath(benefitProductPath)).click(By.xpath(benefitProductPath));
-		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
 				.click(By.xpath(discretePath));
 

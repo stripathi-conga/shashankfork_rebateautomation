@@ -2,15 +2,14 @@ package com.apttus.sfdc.rebates.lightning.api.admin;
 
 import java.util.Map;
 import java.util.Properties;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -28,6 +27,7 @@ public class TestDatasource extends UnifiedFramework {
 	private Map<String, String> jsonData;
 	private Map<String, String> jsonDataTemp;
 	private Response response;
+	private CIMAdminHelper cimAdminHelper;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -38,6 +38,7 @@ public class TestDatasource extends UnifiedFramework {
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
+		cimAdminHelper = new CIMAdminHelper();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -60,19 +61,7 @@ public class TestDatasource extends UnifiedFramework {
 	@Test(description = "TC436-Verify creation of formula and link to data source", groups = { "Regression", "High",
 			"API" })
 	public void createCalculationFormula() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
-		String fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
-		String stepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
-		String stepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
-		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdBenefit, fieldExpressionId);
-		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdQualification, fieldExpressionId);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		cimAdmin.createDataSource(jsonData);
-		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdBenefit);
-		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
+		cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
 		cimAdmin.deleteDataSource();
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
@@ -110,5 +99,4 @@ public class TestDatasource extends UnifiedFramework {
 		response = cimAdmin.getDataSource();
 		responseValidator.validateDeleteSuccess(response);
 	}
-
 }

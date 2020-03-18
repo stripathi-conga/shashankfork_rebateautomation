@@ -98,7 +98,6 @@ public class TestQnBIncentiveUI extends UnifiedFramework {
 		softassert.assertEquals(true, incentivepage.colValueNameCodeType.get(1).isDisplayed());
 		softassert.assertAll();
 	}
-
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();

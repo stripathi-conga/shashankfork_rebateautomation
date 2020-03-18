@@ -37,7 +37,4 @@ public class GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(button).click(button);
 		sfdcAcolyte.waitTillElementIsVisible(waitElement);
 	}
-	public void waitTillElementIsVisible(WebElement element) throws Exception {
-		sfdcAcolyte.waitTillElementIsVisible(element);
-	}
 }
