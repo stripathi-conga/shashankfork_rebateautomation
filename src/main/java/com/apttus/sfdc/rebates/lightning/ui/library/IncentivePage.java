@@ -65,12 +65,13 @@ public class IncentivePage extends GenericPage {
 	
 	@FindBy(xpath = "//lightning-formatted-text")
 	public List<WebElement> colValueNameCodeType;
-	
+	// This locator will identify the Name ,Code and Type 
 	@FindBy(xpath = "//*[text()='B1']")
 	public WebElement colValueAliasName;
 	
 	@FindBy(xpath = "//span/div/lightning-formatted-date-time")
 	public List <WebElement> colValueDate;
+	//This Locator will identify Start and EndDate
 	
 	@FindBy(xpath = "//c-core-data-table-formula")
 	public List<WebElement> colValueFormula;
@@ -115,8 +116,9 @@ public class IncentivePage extends GenericPage {
 	public void waitTillAllQnBElementLoad() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(colValueAliasName);
 		sfdcAcolyte.waitTillElementIsVisible(colValueDate.get(0));
-		sfdcAcolyte.waitTillElementIsVisible(colValueNameCodeType.get(1));
+		sfdcAcolyte.waitTillElementIsVisible(colValueNameCodeType.get(0));
 		sfdcAcolyte.waitTillElementIsVisible(colValueFormula.get(0));
+		
 		
 	}
 }
