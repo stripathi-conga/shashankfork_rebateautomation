@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -31,6 +32,7 @@ public class TestParticipants extends UnifiedFramework {
 	private Map<String, String> jsonData;
 	private List<Map<String, String>> jsonArrayData;
 	private Response response;
+	private CIMHelper cimHelper;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -42,8 +44,7 @@ public class TestParticipants extends UnifiedFramework {
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
-
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
+		cimHelper = new CIMHelper();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -53,28 +54,19 @@ public class TestParticipants extends UnifiedFramework {
 	}
 
 	@Test(description = "TC 377 Verify adding a participant to a Incentive", groups = { "Regression", "API", "High" })
-	public void addParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
-		cim.addParticipants(jsonData);
-		response = cim.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+	public void addParticipant() throws Exception {		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);	
+		cimHelper.addAndValidateParticipant(cim, "addParticipants");
 	}
 
 	@Test(description = "TC-384 Verify that the user is able to delete a participant added from the grid", groups = {
 			"Regression", "API", "Medium" })
 	public void deleteParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
 		cim.addParticipants(jsonData);
@@ -97,13 +89,10 @@ public class TestParticipants extends UnifiedFramework {
 
 	@Test(description = "TC-381 Check validations on the effective start date and end date of the Participants", groups = {
 			"Regression", "API", "Medium" })
-	public void addParticipantDatevalidation() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+	public void addParticipantDatevalidation() throws Exception {		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json","createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, cim);
 
 		// ----------- Add Participants with dates outside Incentive dates ------------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsOutsideIncentiveDates");
@@ -126,13 +115,10 @@ public class TestParticipants extends UnifiedFramework {
 
 	@Test(description = "TC-388 Verify for the error message displayed when the same participant is added multiple times with an overlapping time period", groups = {
 			"Regression", "API", "Medium" })
-	public void addOverlappingParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+	public void addOverlappingParticipant() throws Exception {		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
 
 		// -------- Add Participant 1-----------------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsForOverlappingDates");
@@ -161,13 +147,10 @@ public class TestParticipants extends UnifiedFramework {
 	}
 
 	@Test(description = "TC-554 Verify Editing a participant to a program", groups = { "Regression", "API", "Medium" })
-	public void updateEditParticipant() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+	public void updateEditParticipant() throws Exception {		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
 
 		// -------- Add Participant 1-----------------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");

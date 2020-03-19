@@ -1,9 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.ui.cim;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -11,12 +9,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
-import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -24,22 +21,18 @@ import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.IncentivePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
-import com.jayway.restassured.response.Response;
 
 public class TestIncentiveQnBUI extends UnifiedFramework {
 	private Properties configProperties;
 	private Efficacies efficacies;
 	private SFDCRestUtils sfdcRestUtils;
 	private String instanceURL;
-	private BenefitProductValidator responseValidator;
+	private CIMHelper cimHelper;
 	public CIM cim;
 	private Map<String, String> jsonData;
-	private List<Map<String, String>> jsonArrayData;
-	private Response response;
 	private BenefitProductQnB benefitProductQnB;
 	public String calcFormulaIdBenefitTiered, calcFormulaIdQualificationTiered;
 	public IncentivePage incentivepage;
-	private String incentiveid;
 	WebDriver driver;
 	LoginPage loginPage;
 	public String baseUIURL;
@@ -65,7 +58,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
-		responseValidator = new BenefitProductValidator();
+		cimHelper = new CIMHelper();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -79,16 +72,12 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public void VerifyQnBFields() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		incentiveid = benefitProductQnB.createNewIncentive(jsonData);
-		response = benefitProductQnB.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
-		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
-		benefitProductQnB.addIncentiveQnB(jsonArrayData);
-		response = benefitProductQnB.getIncentiveQnB();
-		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+				benefitProductQnB);
 
-		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
+
+		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
 		incentivepage.waitTillAllQnBElementLoad();
 
 		softassert.assertEquals(true, incentivepage.colValueAliasName.isDisplayed());
@@ -98,8 +87,10 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		softassert.assertEquals(true, incentivepage.colValueNameCodeType.get(1).isDisplayed());
 		softassert.assertAll();
 	}
+	
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
 	}
+	 
 }

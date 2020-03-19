@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -32,6 +31,7 @@ public class TestIncentives extends UnifiedFramework {
 	private Response response;
 	private BenefitProductQnB benefitProductQnB;
 	private List<Map<String, String>> jsonArrayData;
+	private CIMHelper cimHelper;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -43,6 +43,7 @@ public class TestIncentives extends UnifiedFramework {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
+		cimHelper = new CIMHelper();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -54,37 +55,31 @@ public class TestIncentives extends UnifiedFramework {
 	@Test(description = "TC-419 Verify Incentive creation for different Payee values", groups = { "Regression",
 			"Medium", "API" })
 	public void addIncentiveWithDifferentPayeeValues() throws Exception {
+		// ---- Create new Benefit Product Tiered Incentive ---------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
 
+		// ---- Create new Benefit Product Discrete Incentive ---------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, cim);
 	}
 
 	@Test(description = "TC-345 Verify the creation of new Incentive", groups = { "Smoke", "API" })
 	public void createNewBenefitProductTieredIncentive() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json","createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
 	}
 
-	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
+	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API1" })
 	public void updateIncentivePayeeToAgreementAccount() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		cim.createNewIncentive(jsonData);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json","createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
+		
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentivePayeeToAgreementAccount");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		cim.updateIncentive(jsonData);
@@ -95,30 +90,18 @@ public class TestIncentives extends UnifiedFramework {
 	@Test(description = "TC-536 Verify for the Program Activation Using the Activate button", groups = { "Smoke",
 			"API" })
 	public void activateIncentive() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		benefitProductQnB.createNewIncentive(jsonData);
-		response = benefitProductQnB.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
-		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProduct");
-		benefitProductQnB.addIncentiveQnB(jsonArrayData);
-		response = benefitProductQnB.getIncentiveQnB();
-		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
 
-		// ------------ Add Incentive Participants -------------------
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipants");
-		benefitProductQnB.addParticipants(jsonData);
-		response = benefitProductQnB.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
+		// ------------ Add Incentive Participants -------------------		
+		cimHelper.addAndValidateParticipant(benefitProductQnB, "addParticipants");
 
 		// ------------ Activate Incentive -------------------
-		benefitProductQnB.activateIncentive();
-		response = benefitProductQnB.getIncentiveDetails();
-		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
-				benefitProductQnB.getIncentiveData().incentiveId);
+		cimHelper.activateAndValidateIncentive(benefitProductQnB);
 	}
 
 	@Test(description = "TC-536 Verify for the Program Activation Using the Activate button", groups = { "Regression",
@@ -129,17 +112,11 @@ public class TestIncentives extends UnifiedFramework {
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscreteTwoMonths");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, benefitProductQnB);
 
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductDiscrete);
-		benefitProductQnB.createNewIncentive(jsonData);
-		response = benefitProductQnB.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, benefitProductQnB);
-
-		// ------------ Add QnB Benefit Lines -------------------
-		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXDBenefitProductFourBenefits");
-		benefitProductQnB.addIncentiveQnB(jsonArrayData);
-		response = benefitProductQnB.getIncentiveQnB();
-		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
+		// ------------ Add QnB Benefit Lines -------------------		
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProductFourBenefits");
 
 		// ------------ Add Incentive Participants -------------------
 		jsonArrayData.clear();
@@ -167,10 +144,7 @@ public class TestIncentives extends UnifiedFramework {
 		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
 
 		// ------------ Activate Incentive -------------------
-		benefitProductQnB.activateIncentive();
-		response = benefitProductQnB.getIncentiveDetails();
-		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
-				benefitProductQnB.getIncentiveData().incentiveId);
+		cimHelper.activateAndValidateIncentive(benefitProductQnB);
 	}
 
 }

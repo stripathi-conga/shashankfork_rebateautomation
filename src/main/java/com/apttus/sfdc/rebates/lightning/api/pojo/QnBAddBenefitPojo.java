@@ -74,10 +74,10 @@ public class QnBAddBenefitPojo {
 			startDate = SFDCHelper.getCIMDateValue(row.get("StartDate"),cim);
 			endDate = SFDCHelper.getCIMDateValue(row.get("EndDate"),cim);
 
-			// ------------- Set Qualification Data ------------------------
+			// ------------- Set Qualification Data ----------------
 			qualification.setStartDate(startDate);
-			qualification.setEndDate(endDate);			
-			qualification.setFormulaId(RebatesConstants.qualificationFormulaId);
+			qualification.setEndDate(endDate);
+			qualification.setFormulaId(RebatesConstants.formulaDataMap.get(row.get("QualificationFormula")));
 			qualification.setAliasName(row.get("QualificationAliasName"));
 			Map<String, String> qualificationIdMap;
 			qualificationIdMap = setProductId(qualification, row.get("QualificationProductType"),
@@ -88,10 +88,10 @@ public class QnBAddBenefitPojo {
 			qualification.setProductId(qualificationIdMap.get("productId"));
 			qualification.setTiers(setTierValue(row.get("QualificationQuantity"), row.get("QualificationProduct"), true, cim));
 
-			// ------------- Set benefit Data ------------------------
+			// ------------- Set benefit Data ------------------
 			benefit.setStartDate(startDate);
 			benefit.setEndDate(endDate);
-			benefit.setFormulaId(RebatesConstants.benefitFormulaId);
+			benefit.setFormulaId((RebatesConstants.formulaDataMap.get(row.get("BenefitFormula"))));
 			benefit.setAliasName(row.get("BenefitAliasName"));
 			Map<String, String> benefitIdMap;
 			benefitIdMap = setProductId(benefit, row.get("BenefitProductType"), row.get("BenefitProductCode"),
