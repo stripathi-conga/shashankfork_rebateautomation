@@ -2,7 +2,6 @@ package com.apttus.sfdc.rebates.lightning.ui.cim;
 
 import java.util.Map;
 import java.util.Properties;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,12 +9,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -37,13 +36,13 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 	public BenefitProductQnB benefitProductQnB;
 	public String calcFormulaIdBenefitTiered, calcFormulaIdQualificationTiered;
 	public IncentivePage incentivepage;
-	private String incentiveid;
 	WebDriver driver;
 	LoginPage loginPage;
 	public String baseUIURL;
 	public Map<String, String> testData;
 	public HomePage homepage;
-	SoftAssert softassert;
+	private SoftAssert softassert;
+	private CIMHelper cimHelper;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -64,6 +63,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		responseValidator = new BenefitProductValidator();
+		cimHelper = new CIMHelper();
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -78,16 +78,11 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		incentiveid = cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsSameAsIncentiveDates");
-		cim.addParticipants(jsonData);
-		response = cim.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, cim);
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);		
+		cimHelper.addAndValidateParticipant(cim, "addParticipantsSameAsIncentiveDates");
 
-		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage = homepage.navigateToIncentiveEdit(cim.getIncentiveData().incentiveId);
 		incentivepage.moveToParticipantTab();
 		softassert.assertEquals(RebatesConstants.newParticipant, incentivepage.btnNew.getText());
 		softassert.assertAll();
@@ -97,17 +92,12 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 			"API", "Medium" })
 	public void verifyParticipantGridData() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-		jsonData.put("ProgramTemplateId__c", RebatesConstants.incentiveTemplateIdBenefitProductTiered);
-		incentiveid = cim.createNewIncentive(jsonData);
-		response = cim.getIncentiveDetails();
-		responseValidator.validateIncentiveDetails(jsonData, response, cim);
+				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");		
+		cimHelper.addAndValidateIncentive(jsonData,
+				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);		
+		cimHelper.addAndValidateParticipant(cim, "addParticipantsForOverlappingDates");
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsForOverlappingDates");
-		cim.addParticipants(jsonData);
-		response = cim.getParticipantsDetails();
-		responseValidator.validateParticipantsDetails(jsonData, response, cim);
-
 		response = cim.addParticipantsFailure(jsonData);
 		responseValidator.validateParticipantFailureResponse(response, RebatesConstants.errorFieldsForDates,
 				RebatesConstants.messageOverlappingParticipants);
@@ -122,7 +112,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 		response = cim.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, cim);
 
-		incentivepage = homepage.navigateToIncentiveEdit(incentiveid);
+		incentivepage = homepage.navigateToIncentiveEdit(cim.getIncentiveData().incentiveId);
 		incentivepage.moveToParticipantTab();
 		incentivepage.waitTillAllParticipantElementLoad();
 		softassert.assertEquals(true, incentivepage.colAccountName.isDisplayed());
