@@ -30,8 +30,7 @@ public class CIMHelper {
 		jsonArrayData = new ArrayList<Map<String, String>>();
 	}
 
-	public void createDataSourceAndFormulasForIncentives(CIMAdmin cimAdmin) throws Exception {
-		
+	public void createDataSourceAndFormulasForIncentives(CIMAdmin cimAdmin) throws Exception {		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
@@ -130,5 +129,4 @@ public class CIMHelper {
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateDeleteQnBBenefitLine(response, jsonData.get("SectionId"));
 	}
-
 }

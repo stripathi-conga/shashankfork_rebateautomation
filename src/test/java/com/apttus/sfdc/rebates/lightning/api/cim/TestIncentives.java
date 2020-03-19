@@ -73,7 +73,7 @@ public class TestIncentives extends UnifiedFramework {
 				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
 	}
 
-	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API1" })
+	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
 	public void updateIncentivePayeeToAgreementAccount() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json","createIncentiveIndividualParticipantBenefitProductTiered");
 		cimHelper.addAndValidateIncentive(jsonData,
