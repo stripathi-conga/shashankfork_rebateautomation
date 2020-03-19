@@ -114,7 +114,7 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
 				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(benefitProductPath))
 				.waitTillElementIsClickable(By.xpath(benefitProductPath)).click(By.xpath(benefitProductPath));
-		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
 				.click(By.xpath(discretePath));
 
@@ -124,7 +124,7 @@ public class TemplatePage extends GenericPage {
 	public void addDataSource(CIMAdmin cimAdmin) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
-				.click(ddlDataSource);
+				.jsClick(ddlDataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
 	}
 
@@ -134,7 +134,8 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
 				.waitTillElementIsVisible(By.xpath(tieredPath)).waitTillElementIsClickable(By.xpath(tieredPath))
 				.click(By.xpath(tieredPath));
-		sfdcAcolyte.click(ddlDataSource);
+		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
+				.jsClick(ddlDataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
 
 	}
@@ -160,15 +161,6 @@ public class TemplatePage extends GenericPage {
 
 	public void moveToEditTemplate(String templateId) throws Exception {
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/Edit");
-	}
-
-	public void selectQualificationAndBenefitFormula() throws Exception {
-
-		sfdcAcolyte.waitTillElementIsVisible(formula.get(0));
-		for (int i = 0; i < formula.size(); i++) {
-			sfdcAcolyte.jsScrollAndClick(formula.get(i));
-		}
-
 	}
 
 }

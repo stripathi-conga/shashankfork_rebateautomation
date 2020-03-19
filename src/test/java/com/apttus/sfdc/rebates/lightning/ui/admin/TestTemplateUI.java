@@ -105,28 +105,22 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
 		softassert.assertAll();
 	}
-
-	@Test(description = "TC-565 Verify creation and Activation of Multiple Qualification & Benefit and Tier", groups = {
+	@Test(description = "TC-562 Verify creation and Activation of QnBt and Tier template Via Details View page",groups = {
 			"Regression", "Medium", "UI" })
-	public void verifyTemplateTierMultipleQualification() throws Exception {
+	public void verifyTemplateTierQualificationBenefit() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"multipleQualificationAndBenefitTieredQnBLayoutAPI");
+				"qualificationAndBenefitTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);		
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		
-		templatepage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
-		templatepage.addDataSource(cimAdmin);
-		templatepage.addQualificationOnTiered(cimAdmin);
-		templatepage.selectQualificationAndBenefitFormula();
-		genericPage.clickButtonAndWait(templatepage.btnSave, genericPage.txtToastMessage);
-		softassert.assertEquals(RebatesConstants.messageSavedSuccessfully, genericPage.txtToastMessage.getText());
-		genericPage.clickButton(genericPage.btnCloseToastMessage);
 		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
 		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
+
 	}
 
 	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = { "Regression",

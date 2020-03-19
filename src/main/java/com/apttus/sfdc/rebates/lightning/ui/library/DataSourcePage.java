@@ -2,7 +2,6 @@ package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.Map;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -83,14 +82,13 @@ public class DataSourcePage extends GenericPage {
 	public void verifyValidationMessageForCalculationDate() throws Exception {
 		
 		
-		String valueTransactionLineObject = txtTransactionLineObject.replace("OPTION", txtOrderLineItem);
-		sfdcAcolyte.waitTillElementIsVisible(ddlSelectTransMetaData).waitTillElementIsClickable(ddlSelectTransMetaData)
-		.click(ddlSelectTransMetaData);
-	
-		sfdcAcolyte.waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(valueTransactionLineObject)).jsScrollAndClick(By.xpath(valueTransactionLineObject));
-		sfdcAcolyte.jsClick(btnSave);
-		  sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
+		sfdcAcolyte.click(btnCloseToastMessage);
+		nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();  
+		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, nameDataSource);
+				sfdcAcolyte.click(ddlSelectTransMetaData).click(ddlSelectTransMetaData).click(ddlSelectTransMetaData).
+				waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder)
+						.jsScrollAndClick(ddlOrder).click(btnSave);	
+				sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 		 	
 	}
 
@@ -117,13 +115,13 @@ public class DataSourcePage extends GenericPage {
 
 	public void verifyValidationMessageForFileExtension(Map<String, String> testData) throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.clickAndSendkeys(txtFileSuffix, testData.get("FileSuffixToignore__c")).click(btnSave);
+		sfdcAcolyte.clickAndSendkeys(txtFileSuffix, testData.get("FileSuffixToignore__c")).click(btnSave).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 
 	public void verifyValidationMessageForRecordDelimter() throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.click(fileExtension).click(btnSave);
+		sfdcAcolyte.click(fileExtension).click(btnSave).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 }
