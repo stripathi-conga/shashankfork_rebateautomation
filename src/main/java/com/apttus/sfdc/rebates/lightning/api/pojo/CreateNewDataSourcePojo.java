@@ -147,9 +147,11 @@ public class CreateNewDataSourcePojo {
 		createDataSource.setProductAttr__c(testData.get("ProductAttr__c"));
 		createDataSource.setIncentiveAccountAttr__c(testData.get("IncentiveAccountAttr__c"));
 		createDataSource.setTransactionMetaData__c(testData.get("TransactionMetaData__c"));
+		createDataSource.setTransactionLineObjectName__c(testData.get("TransactionLineObjectName__c"));
 		createDataSource.setCalculationDateName__c(testData.get("CalculationDateName__c"));
 		createDataSource.setIncentiveAccountFieldName__c(testData.get("IncentiveAccountFieldName__c"));
 		createDataSource.setDelimiter__c(testData.get("Delimiter__c"));
+		createDataSource.setRecordDelimiterName__c(testData.get("RecordDelimiterName__c"));
 		createDataSource.setProductFieldName__c(testData.get("ProductFieldName__c"));
 		cimAdmin.setDataSourceData(createDataSource);
 		return new Gson().toJson(createDataSource);

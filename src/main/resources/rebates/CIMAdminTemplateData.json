@@ -2,6 +2,7 @@
 	"createNewDataSourceAPI": {
 		"Name": "{Random}",
 		"TransactionMetaData__c": "Apttus_Config2__OrderLineItem__c",
+		"TransactionLineObjectName__c": "Order Line Item",
 		"CalculationDateAttr__c": "Apttus_Config2__PricingDate__c",
 		"CalculationDateName__c": "Pricing Date",
 		"IncentiveAccountAttr__c": "Apttus_Config2__BillToAccountId__c",
