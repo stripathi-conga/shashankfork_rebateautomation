@@ -104,12 +104,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
-		
-		System.out.println(cimAdminHelper.stepCalcFormulaIdBenefit);			
-		System.out.println(cimAdminHelper.nonStepCalcFormulaIdBenefit);
-		System.out.println(cimAdminHelper.stepCalcFormulaIdQualification);			
-		System.out.println(cimAdminHelper.nonStepCalcFormulaIdQualification);
-		cimAdmin.dataSourceData.getDataSourceId();
+	
 		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
 		genericPage.moveToFormulaTab(cimAdminHelper.stepCalcFormulaIdQualification,cimAdminHelper.stepCalcFormulaIdBenefit,dataSourcePage.lblRelatedTab);
 		genericPage.moveToFormulaTab(cimAdminHelper.nonStepCalcFormulaIdBenefit,cimAdminHelper.nonStepCalcFormulaIdQualification,dataSourcePage.lblRelatedTab);
