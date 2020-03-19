@@ -120,7 +120,6 @@ public class TestTemplateUI extends UnifiedFramework {
 		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
-
 	}
 
 	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = { "Regression",
