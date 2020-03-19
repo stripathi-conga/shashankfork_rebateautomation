@@ -1,53 +1,84 @@
 package com.apttus.sfdc.rebates.lightning.main;
 
+import java.util.Map;
+import java.util.Properties;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
-
 import com.apttus.extent.report.ExtentTestNGIReporterListener;
+import com.apttus.helpers.Efficacies;
+import com.apttus.sfdc.rebates.lightning.api.library.CIM;
+import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
+import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
 public class UnifiedFramework {
-	// Properties properties;
-	// public JavaHelpers javaHelpers = new JavaHelpers();
+	private Properties configProperties;
+	private Efficacies efficacies;
+	private SFDCRestUtils sfdcRestUtils;
+	private String instanceURL;
+	public CIM cim;
+	private Map<String, String> jsonData;
+	public String calcFormulaIdBenefitTiered, calcFormulaIdQualificationTiered;
+	public CIMAdmin cimAdmin;
+	public CIMHelper cimHelper;
+	public CIMAdminHelper cimAdminHelper;
 
 	@BeforeSuite(alwaysRun = true)
-	@Parameters({ "buildName", "qTestPropertyFile" })
-	public void beforeSuite(String buildName, String qTestPropertyFile) {
+	@Parameters({ "buildName", "qTestPropertyFile", "runParallel", "environment", "browser", "hubURL" })
+	public void beforeSuite(String buildName, String qTestPropertyFile, String runParallel, String environment,
+			String browser, String hubURL) throws Exception {
 		ExtentTestNGIReporterListener.setBuildName(buildName);
-		// QTestUtils qTestUtils = new QTestUtils();
-		// qTest Integration:
-		/*
-		 * try { properties = javaHelpers.loadPropertiesFromResources("cim/" +
-		 * qTestPropertyFile); if
-		 * (Boolean.valueOf(properties.getProperty("updateQTestFlag")) == true) {
-		 * QTestListener.setNeedQTestIntegration(Boolean.valueOf(properties.getProperty(
-		 * "updateQTestFlag"))); qTestUtils.setAccessToken();
-		 * qTestUtils.setCycleName(properties.getProperty("cycleName") +
-		 * APIHelper.getCurrentDate("dd-MM-yyyy")); String testSuiteName =
-		 * properties.getProperty("testSuiteName") +
-		 * APIHelper.getCurrentDate("dd-MM-yyyy HH:mm:ss");
-		 * qTestUtils.setTestSuiteName(testSuiteName.trim());
-		 * qTestUtils.setModule(properties.getProperty("moduleQuery"));
-		 * qTestUtils.setTestCaseCategory(properties.getProperty("testCaseCategory"));
-		 * qTestUtils.setParentCycleID(properties.getProperty("parentCycleID"));
-		 * qTestUtils.setProjectID(properties.getProperty("qTestProjectID")); // Create
-		 * Suite in qTest Integer testCycleId =
-		 * qTestUtils.fetchSingleCycleByName(qTestUtils.getAllTestCyclesUnderTestCycle()
-		 * ); if (testCycleId == null) { qTestUtils.createTestCycleUnderTestCycle();
-		 * testCycleId =
-		 * qTestUtils.fetchSingleCycleByName(qTestUtils.getAllTestCyclesUnderTestCycle()
-		 * ); } qTestUtils.createTestSuiteUnderTestCycle(testCycleId);
-		 * 
-		 * // Get All Test Suite Map<String, Integer> testSuiteNameAndID =
-		 * qTestUtils.getAllTestSuitesUnderTestCycle(testCycleId); Integer suiteID =
-		 * testSuiteNameAndID.get(testSuiteName.trim());
-		 * 
-		 * qTestUtils.setTestSuiteID(suiteID); Map<Integer, String> testCaseNameAndID =
-		 * qTestUtils.getAllTestCaseDetailsByDataQuery();
-		 * qTestUtils.addTestRunUnderTestSuite(suiteID, testCaseNameAndID); }
-		 * 
-		 * } catch (Exception e) { e.printStackTrace(); }
-		 */
 
+		efficacies = new Efficacies();
+		sfdcRestUtils = new SFDCRestUtils();
+		configProperties = efficacies.loadPropertyFile(environment);
+		SFDCHelper.setMasterProperty(configProperties);
+		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
+		cim = new CIM(instanceURL, sfdcRestUtils);
+		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
+		cimHelper = new CIMHelper();
+		cimAdminHelper = new CIMAdminHelper();
+
+		// ---- Deactivate the Active Link Template for LinkTemplate with SubType as Benefit Only Tiered ----
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
+		cim.deactivateLinkTemplateForIncentives(jsonData);
+
+		// ----- Create Step and NonStep Formula Id's -----
+		cimHelper.createDataSourceAndFormulasForIncentives(cimAdmin);
+
+		// ----- Create and activate Template for Benefit Only Tiered -----
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
+		String benefitOnlyTieredQnBLayoutId = cim.getQnBLayoutId(jsonData);
+		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyTieredQnBLayoutId);
+		cimHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
+		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cimAdmin.getTemplateData().getTemplateId();
+
+		// ---- Create and activate Link Template for SubType as Benefit Only Tiered ----
+		String linkTemplateDataFromJson = "createNewLinkTemplateSubTypeTieredAPI";
+		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
+		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
+
+		// ---- Deactivate the Active Link Template for LinkTemplate with SubType as Benefit Only Discrete ----
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateDiscrete");
+		cim.deactivateLinkTemplateForIncentives(jsonData);
+
+		// ---- Create and activate Template for Benefit Only Discrete -----
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
+		String benefitOnlyDiscreteQnBLayoutId = cim.getQnBLayoutId(jsonData);
+
+		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyDiscreteQnBLayoutId);
+		cimHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
+		RebatesConstants.incentiveTemplateIdBenefitProductDiscrete = cimAdmin.getTemplateData().getTemplateId();
+
+		// ----- Create and activate Link Template for SubType as Benefit Only Tiered ----
+		linkTemplateDataFromJson = "createNewLinkTemplateSubTypeDiscreteAPI";
+		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
+		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
 	}
 
 	public void afterSuite() {
