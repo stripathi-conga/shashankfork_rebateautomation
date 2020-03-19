@@ -22,8 +22,8 @@ public class GenericPage {
 	public String fieldLabel = ".labelCol";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
-	public String lblStepQualificationFormulaPath;
-	public String lblStepBenefitFormulaIdPath;
+	public String lblQualificationFormulaPath;
+	public String lblBenefitFormulaIdPath;
 	public GenericPage(WebDriver driver) {
 
 		this.driver = driver;
@@ -40,12 +40,12 @@ public class GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(button).click(button);
 		sfdcAcolyte.waitTillElementIsVisible(waitElement);
 	}
-	public void moveToFormulaTab(String stepQualificationFormula, String stepBenefitFormula,WebElement element) throws Exception {
+	public void moveToFormulaTab(String qualificationFormula, String benefitFormula,WebElement element) throws Exception {
 
 		sfdcAcolyte.waitTillElementIsClickable(element).click(element);
-		lblStepQualificationFormulaPath = lnkFormulaTab.replace("OPTION", stepQualificationFormula);
-		lblStepBenefitFormulaIdPath = lnkFormulaTab.replace("OPTION", stepBenefitFormula);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblStepQualificationFormulaPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblStepBenefitFormulaIdPath));
+		lblQualificationFormulaPath = lnkFormulaTab.replace("OPTION", qualificationFormula);
+		lblBenefitFormulaIdPath = lnkFormulaTab.replace("OPTION", benefitFormula);
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblQualificationFormulaPath));
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblBenefitFormulaIdPath));
 	}
 }
