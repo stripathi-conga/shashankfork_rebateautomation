@@ -91,7 +91,7 @@ public class QnBAddBenefitPojo {
 			// ------------- Set benefit Data ------------------
 			benefit.setStartDate(startDate);
 			benefit.setEndDate(endDate);
-			benefit.setFormulaId((RebatesConstants.formulaDataMap.get(row.get("BenefitFormula"))));
+			benefit.setFormulaId(RebatesConstants.formulaDataMap.get(row.get("BenefitFormula")));
 			benefit.setAliasName(row.get("BenefitAliasName"));
 			Map<String, String> benefitIdMap;
 			benefitIdMap = setProductId(benefit, row.get("BenefitProductType"), row.get("BenefitProductCode"),

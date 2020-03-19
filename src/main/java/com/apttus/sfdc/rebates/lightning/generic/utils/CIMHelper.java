@@ -30,7 +30,7 @@ public class CIMHelper {
 		jsonArrayData = new ArrayList<Map<String, String>>();
 	}
 
-	public void createDataSourceAndFormulasForIncentives(CIMAdmin cimAdmin) throws Exception {		
+	public void createDataSourceAndFormulasForIncentives(CIMAdmin cimAdmin) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
@@ -92,38 +92,41 @@ public class CIMHelper {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
 	}
-	
-	public void addAndValidateIncentive(Map<String, String> jsonDataMap, String incentiveTemplateId, CIM cim) throws Exception {
+
+	public void addAndValidateIncentive(Map<String, String> jsonDataMap, String incentiveTemplateId, CIM cim)
+			throws Exception {
 		jsonData = jsonDataMap;
 		jsonData.put("ProgramTemplateId__c", incentiveTemplateId);
 		cim.createNewIncentive(jsonData);
 		response = cim.getIncentiveDetails();
 		responseValidator.validateIncentiveDetails(jsonData, response, cim);
 	}
-	
-	public Response addAndValidateQnBOnIncentive (BenefitProductQnB benefitProductQnB, String addQnBJsonArray) throws Exception {
+
+	public Response addAndValidateQnBOnIncentive(BenefitProductQnB benefitProductQnB, String addQnBJsonArray)
+			throws Exception {
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", addQnBJsonArray);
 		benefitProductQnB.addIncentiveQnB(jsonArrayData);
 		response = benefitProductQnB.getIncentiveQnB();
 		responseValidator.validateIncentiveQnB(benefitProductQnB.getRequestValue("addQnBRequest"), response);
 		return response;
 	}
-	
+
 	public void addAndValidateParticipant(CIM benefitProductQnB, String addParticipantsJson) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", addParticipantsJson);
 		benefitProductQnB.addParticipants(jsonData);
 		response = benefitProductQnB.getParticipantsDetails();
 		responseValidator.validateParticipantsDetails(jsonData, response, benefitProductQnB);
 	}
-	
+
 	public void activateAndValidateIncentive(BenefitProductQnB benefitProductQnB) throws ApplicationException {
 		benefitProductQnB.activateIncentive();
 		response = benefitProductQnB.getIncentiveDetails();
 		responseValidator.validateIncentiveStatus(RebatesConstants.statusActivated, response,
 				benefitProductQnB.getIncentiveData().incentiveId);
 	}
-	
-	public void deleteQnBAndValidateOnIncenive(BenefitProductQnB benefitProductQnB, String addQnBJsonArray) throws Exception {
+
+	public void deleteQnBAndValidateOnIncenive(BenefitProductQnB benefitProductQnB, String addQnBJsonArray)
+			throws Exception {
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "deleteBenefitLine");
 		benefitProductQnB.deleteQnBBenefitLine(jsonData.get("SectionId"));
 		response = benefitProductQnB.getIncentiveQnB();

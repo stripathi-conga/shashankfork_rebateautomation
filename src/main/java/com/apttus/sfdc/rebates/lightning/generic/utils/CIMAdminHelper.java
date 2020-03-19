@@ -47,7 +47,7 @@ public class CIMAdminHelper {
 		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
 	}
-	
+
 	public void createDataSourceAndFormulasForDiscrete(CIMAdmin cimAdmin) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
@@ -88,7 +88,7 @@ public class CIMAdminHelper {
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}
-	
+
 	public void mapDataSourceAndFormulaToTemplateDiscrete(CIMAdmin cimAdmin) throws ApplicationException {
 		jsonData.put("FormulaId__c", nonStepCalcFormulaIdBenefit);
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
@@ -97,8 +97,8 @@ public class CIMAdminHelper {
 		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}
-	
-	public void templateActivationForLinkTemplateTiered(CIMAdmin cimAdmin,  String qnbLayoutId)  throws Exception {
+
+	public void templateActivationForLinkTemplateTiered(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
 		createDataSourceAndFormulasForTiered(cimAdmin);
 		createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
@@ -106,8 +106,8 @@ public class CIMAdminHelper {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
 	}
-	
-	public void templateActivationForLinkTemplateDiscrete(CIMAdmin cimAdmin,  String qnbLayoutId)  throws Exception {
+
+	public void templateActivationForLinkTemplateDiscrete(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
 		createDataSourceAndFormulasForDiscrete(cimAdmin);
 		createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		mapDataSourceAndFormulaToTemplateDiscrete(cimAdmin);
@@ -115,21 +115,21 @@ public class CIMAdminHelper {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
 	}
-	
+
 	public void createAndValidateLinkTemplate(CIMAdmin cimAdmin, String linkTemplateDataFromJson) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", linkTemplateDataFromJson);
 		cimAdmin.createLinkTemplates(jsonData);
 		response = cimAdmin.getLinkTemplatesViaId();
 		responseValidator.validateGetLinkTemplates(jsonData, response, cimAdmin);
-		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);	
+		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.draft);
 	}
-	
+
 	public void activateAndVerifyLinkTemplate(CIMAdmin cimAdmin) throws ApplicationException {
 		cimAdmin.activateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();
 		responseValidator.validateLinkTemplatesStatus(response, cimAdmin, RebatesConstants.activate);
 	}
-	
+
 	public void deactivateAndVerifyLinkTemplate(CIMAdmin cimAdmin) throws ApplicationException {
 		cimAdmin.deactivateLinkTemplate();
 		response = cimAdmin.getLinkTemplatesViaId();

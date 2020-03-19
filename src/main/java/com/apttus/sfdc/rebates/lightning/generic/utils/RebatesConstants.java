@@ -7,8 +7,8 @@ public class RebatesConstants {
 
 	// These values will be set in @BeforeSuite and used in all Incentive classes
 	public static String incentiveTemplateIdBenefitProductTiered;
-	public static String incentiveTemplateIdBenefitProductDiscrete;	
-	public static Map<String, String> formulaDataMap = new HashMap<String, String>();;
+	public static String incentiveTemplateIdBenefitProductDiscrete;
+	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
 
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
