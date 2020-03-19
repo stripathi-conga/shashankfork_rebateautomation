@@ -12,27 +12,38 @@ import org.testng.asserts.SoftAssert;
 
 import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
+import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
+import com.apttus.sfdc.rebates.lightning.common.GenericPage;
+import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rebates.lightning.ui.library.DataSourcePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
+import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
 public class TestDataSourceUI extends UnifiedFramework {
-
+	
 	WebDriver driver;
 	LoginPage loginPage;
-	public DataSourcePage dataSourcePage;
+	public Map<String, String> testData;
 	public HomePage homepage;
 	public Properties configProperty;
 	Efficacies efficacies;
+	private CIMAdmin cimAdmin;
 	private Map<String, String> jsonData;
+	private SFDCRestUtils sfdcRestUtils;
+	private String instanceURL;
+	public String baseURL;
 	SoftAssert softassert;
-
+	public GenericPage genericPage;
+	private CIMAdminHelper cimAdminHelper;
+	public DataSourcePage dataSourcePage;
+	
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void setUp(String runParallel, String environment, String browser, String hubURL) throws Exception {
-
 		WebDriverUtils utils = new WebDriverUtils();
 		utils.initializeDriver(browser, hubURL);
 		driver = utils.getDriver();
@@ -44,7 +55,13 @@ public class TestDataSourceUI extends UnifiedFramework {
 				configProperty.getProperty("LoginPassword"));
 		homepage = new HomePage(driver, configProperty);
 		homepage.navigateToCIMAdmin();
+		sfdcRestUtils = new SFDCRestUtils();
+		SFDCHelper.setMasterProperty(configProperty);
+		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
+		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
+		cimAdminHelper = new CIMAdminHelper();
+		genericPage=new GenericPage(driver);
 	}
 
 	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
@@ -76,6 +93,21 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageMandatoryRecordDelimter,
 				dataSourcePage.txtToastMessage.getText());
 
+		softassert.assertAll();
+	}
+	@Test(description = "TC-584 Verify data on the Related sub-tab on the data source details page", groups = { "Regression",
+			"Medium", "UI" })
+	public void verifyDataSourceMappedFormula() throws Exception {
+
+		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+	
+		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
+		genericPage.moveToFormulaTab(cimAdminHelper.stepCalcFormulaIdQualification,cimAdminHelper.stepCalcFormulaIdBenefit,dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(cimAdminHelper.nonStepCalcFormulaIdBenefit,cimAdminHelper.nonStepCalcFormulaIdQualification,dataSourcePage.lblRelatedTab);
 		softassert.assertAll();
 	}
 

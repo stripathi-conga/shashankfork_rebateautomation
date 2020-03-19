@@ -105,7 +105,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
 		softassert.assertAll();
 	}
-	@Test(description = "TC-562 Verify creation and Activation of QnBt and Tier template Via Details View page",groups = {
+	@Test(description = "TC-562 Verify creation and Activation of QnB and Tier template Via Details View page",groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyTemplateTierQualificationBenefit() throws Exception {
 
@@ -120,7 +120,6 @@ public class TestTemplateUI extends UnifiedFramework {
 		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
-
 	}
 
 	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = { "Regression",

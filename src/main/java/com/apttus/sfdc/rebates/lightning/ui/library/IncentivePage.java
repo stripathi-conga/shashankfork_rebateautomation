@@ -119,7 +119,5 @@ public class IncentivePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(colValueDate.get(0));
 		sfdcAcolyte.waitTillElementIsVisible(colValueNameCodeType.get(0));
 		sfdcAcolyte.waitTillElementIsVisible(colValueFormula.get(0));
-		
-		
 	}
 }

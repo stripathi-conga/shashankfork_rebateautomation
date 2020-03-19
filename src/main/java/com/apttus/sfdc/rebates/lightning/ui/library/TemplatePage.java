@@ -10,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.apttus.selenium.NGHelper;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
@@ -55,6 +54,9 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//*[text()='Formulas']")
 	public WebElement lblFormulaTab;
 
+	@FindBy(xpath = "//*[text()='Edit Template']")
+	public WebElement lblEdit;
+
 	@FindBy(xpath = "//div[contains(text(),'Tiered')]")
 	public WebElement lblTierDetails;
 
@@ -70,28 +72,19 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//a[contains(@href,'/IncentiveProgramTemplate__c')]")
 	public WebElement lnkTemplates;
 
-	@FindBy(xpath = "//label[@class='slds-checkbox__label']/span[2]")
-	public List<WebElement> formula;
-
-	public String lblStepQualificationFormulaPath;
-	public String lblStepBenefitFormulaIdPath;
 	String benefitProduct = "Benefit Product";
 	String discrete = "Discrete";
 	String tiered = "Tiered";
 	String cmbTxt = "//*[@data-value='OPTION']";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
-	String lnkFormulaTab = "//*[@value='OPTION']";
 
 	WebDriverWait wait;
-	NGHelper nghelper;
 	public boolean templateEditURL;
 
 	public TemplatePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 120);
-
 		PageFactory.initElements(driver, this);
-
 	}
 
 	public TemplatePage moveToNewtemplatepage(WebElement newbutton, WebElement Labelnewtemplate) throws Exception {
@@ -111,11 +104,12 @@ public class TemplatePage extends GenericPage {
 		String benefitProductPath = cmbTxt.replace("OPTION", benefitProduct);
 		String discretePath = cmbTxt.replace("OPTION", discrete);
 
-		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).jsScroll(ddlQBselect)
-				.click(ddlQBselect).waitTillElementIsVisible(By.xpath(benefitProductPath))
-				.waitTillElementIsClickable(By.xpath(benefitProductPath)).click(By.xpath(benefitProductPath));
-		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect)
-				.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
+		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).click(ddlQBselect);
+		sfdcAcolyte.waitTillElementIsVisible(lblEdit);
+		sfdcAcolyte.jsScrollAndClick(By.xpath(benefitProductPath));
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect);
+		sfdcAcolyte.waitTillElementIsVisible(lblEdit);
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
 				.click(By.xpath(discretePath));
 
 		return PageFactory.initElements(driver, TemplatePage.class);
@@ -131,13 +125,14 @@ public class TemplatePage extends GenericPage {
 	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
 
 		String tieredPath = cmbTxt.replace("OPTION", tiered);
-		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect)
-				.waitTillElementIsVisible(By.xpath(tieredPath)).waitTillElementIsClickable(By.xpath(tieredPath))
-				.click(By.xpath(tieredPath));
+		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect);
+		sfdcAcolyte.waitTillElementIsVisible(lblEdit);
+		Thread.sleep(1000);
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(tieredPath)).waitTillElementIsClickable(By.xpath(tieredPath));
+		sfdcAcolyte.jsClick(By.xpath(tieredPath));
 		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
 				.jsClick(ddlDataSource);
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
-
 	}
 
 	public void moveToTemplateViaIdClick(String templateId) throws Exception {
@@ -148,15 +143,6 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(lblDataSourceDetails).waitTillElementIsVisible(lblDataSourceDetails);
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/view");
 		sfdcAcolyte.waitTillElementIsVisible(lblDescriptionDetails);
-	}
-
-	public void moveToFormulaTab(String stepQualificationFormula, String stepBenefitFormula) throws Exception {
-
-		sfdcAcolyte.waitTillElementIsClickable(lblFormulaTab).click(lblFormulaTab);
-		lblStepQualificationFormulaPath = lnkFormulaTab.replace("OPTION", stepQualificationFormula);
-		lblStepBenefitFormulaIdPath = lnkFormulaTab.replace("OPTION", stepBenefitFormula);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblStepQualificationFormulaPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lblStepBenefitFormulaIdPath));
 	}
 
 	public void moveToEditTemplate(String templateId) throws Exception {

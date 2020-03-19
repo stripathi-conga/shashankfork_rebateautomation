@@ -112,4 +112,10 @@ public class HomePage extends GenericPage {
 		
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
+
+	public DataSourcePage navigateToEditDataSource(String dataSourceId) throws Exception {
+		sfdcAcolyte.navigateTo(urlGeneratorUI.templateEditURL.replace("{templateId}", dataSourceId).replace("{view}",
+				RebatesConstants.viewPath));
+		return PageFactory.initElements(driver, DataSourcePage.class);
+	}
 }
