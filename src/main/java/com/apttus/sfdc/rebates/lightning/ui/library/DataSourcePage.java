@@ -54,10 +54,17 @@ public class DataSourcePage extends GenericPage {
 
 	@FindBy(xpath = "//option[text()='txt']")
 	public WebElement fileExtension;
+	
+	@FindBy(xpath = "//*[text()='Related']")
+	public WebElement lblRelatedTab;
 	WebDriverWait wait;
 	String nameDataSource;
 	String txtTransactionLineObject = "//*[text()='OPTION']";
 	String txtOrderLineItem="Order Line Item";
+	String lnkTemplateId = "//*[@data-recordid='OPTION']";
+	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
+	public String lblStepQualificationFormulaPath;
+	public String lblStepBenefitFormulaIdPath;
 
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
