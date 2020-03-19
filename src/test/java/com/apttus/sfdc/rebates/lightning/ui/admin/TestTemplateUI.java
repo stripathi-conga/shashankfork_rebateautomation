@@ -105,7 +105,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
 		softassert.assertAll();
 	}
-	@Test(description = "TC-562 Verify creation and Activation of QnBt and Tier template Via Details View page",groups = {
+	@Test(description = "TC-562 Verify creation and Activation of QnB and Tier template Via Details View page",groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyTemplateTierQualificationBenefit() throws Exception {
 

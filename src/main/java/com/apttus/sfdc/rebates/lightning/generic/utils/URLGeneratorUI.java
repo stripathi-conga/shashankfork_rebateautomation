@@ -14,6 +14,7 @@ public class URLGeneratorUI {
 	public String templateHomeURL;
 	public String templateEditURL;
 	public String dataSourceNewURL;
+	public String dataSourceEditURL;
 
 	public URLGeneratorUI(Properties configProperties) {
 
@@ -22,5 +23,6 @@ public class URLGeneratorUI {
 		templateHomeURL = configProperties.getProperty("baseURLUI").replace("{path}", homePath) + templatesURL;
 		dataSourceNewURL = configProperties.getProperty("baseURLUI").replace("{path}", homePath) + dataSourceURL;
 		templateEditURL = configProperties.getProperty("baseURLUI").replace("{path}", editPath) + templatesURL;
+		dataSourceEditURL=configProperties.getProperty("baseURLUI").replace("{path}", editPath) + dataSourceURL;
 	}
 }
