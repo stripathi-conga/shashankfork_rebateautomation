@@ -114,15 +114,11 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
-	@Test(description = "TC-572 Data Source Details records should display as Name", groups = { "Regression", "Low", "UI" })
+	@Test(description = "TC-572 Data Source Details records should display as Name", groups = { "Regression0", "Low",
+			"UI" })
 	public void verifyDataSourceFieldsNameInDetails() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
-		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
-
 		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
 		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getTransactionLineObjectName__c());
 
@@ -134,13 +130,20 @@ public class TestDataSourceUI extends UnifiedFramework {
 		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getRecordDelimiterName__c());
 
 		softassert.assertEquals(false, dataSourcePage.transactionLineObjectPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.transactionLineObjectPath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.fileExtensionPath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.calculationDatePath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.incentiveAccountPath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.productFieldPath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.fileSuffixtoIgnoretPath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.recordDelimitertPath.isEmpty());
+		
+		softassert.assertEquals(RebatesConstants.lblTransactionLineObject, dataSourcePage.lblTransactionLineObject.getText());
+		softassert.assertEquals(RebatesConstants.lblFileExtension, dataSourcePage.lblFileExtension.getText());
+		softassert.assertEquals(RebatesConstants.lblFileSuffixToIgnore, dataSourcePage.lblFileSuffixToIgnore.getText());
+		softassert.assertEquals(RebatesConstants.lblCalculationDate, dataSourcePage.lblCalculationDate.getText());
+		softassert.assertEquals(RebatesConstants.lblRecordDelimiter, dataSourcePage.lblRecordDelimiter.getText());
+		softassert.assertEquals(RebatesConstants.lblProductField, dataSourcePage.lblProductField.getText());
+		softassert.assertEquals(RebatesConstants.lblIncentiveAccountField, dataSourcePage.lblIncentiveAccountField.getText());
 		softassert.assertAll();
 	}
 

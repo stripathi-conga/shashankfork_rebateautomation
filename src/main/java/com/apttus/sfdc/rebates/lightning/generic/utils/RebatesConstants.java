@@ -9,7 +9,7 @@ public class RebatesConstants {
 	public static String incentiveTemplateIdBenefitProductTiered;
 	public static String incentiveTemplateIdBenefitProductDiscrete;
 	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
-
+	
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
 	public static final int responseNocontent = 204;
@@ -63,5 +63,11 @@ public class RebatesConstants {
 	public static final String messageSavedSuccessfully = "Template saved successfully";
 	public static final String newPath = "new";
 	public static final String editPath = "edit";
-
+	public static final String lblTransactionLineObject="Transaction Line Object";
+	public static final String lblFileExtension="File Extension";
+	public static final String lblFileSuffixToIgnore="File Suffix To ignore";
+	public static final String lblCalculationDate="Calculation Date Field";
+	public static final String lblRecordDelimiter="Record Delimiter";
+	public static final String lblProductField="Product Field";
+	public static final String lblIncentiveAccountField="Incentive Account Field";
 }
