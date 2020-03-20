@@ -114,14 +114,13 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
-	@Test(description = "TC-572 Data Source Details records should display as Name", groups = { "Regression0", "Low",
+	@Test(description = "TC-572 Data Source Details records should display as Name", groups = { "Regression", "Low",
 			"UI" })
 	public void verifyDataSourceFieldsNameInDetails() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
 		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getTransactionLineObjectName__c());
-
 		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getFileExtension__c());
 		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getCalculationDateName__c());
 		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getIncentiveAccountFieldName__c());
