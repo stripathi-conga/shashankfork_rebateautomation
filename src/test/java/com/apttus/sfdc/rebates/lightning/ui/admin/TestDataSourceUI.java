@@ -24,7 +24,7 @@ import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
 public class TestDataSourceUI extends UnifiedFramework {
-	
+
 	WebDriver driver;
 	LoginPage loginPage;
 	public Map<String, String> testData;
@@ -40,7 +40,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 	public GenericPage genericPage;
 	private CIMAdminHelper cimAdminHelper;
 	public DataSourcePage dataSourcePage;
-	
+
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void setUp(String runParallel, String environment, String browser, String hubURL) throws Exception {
@@ -61,7 +61,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
 		cimAdminHelper = new CIMAdminHelper();
-		genericPage=new GenericPage(driver);
+		genericPage = new GenericPage(driver);
 	}
 
 	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
@@ -70,7 +70,7 @@ public class TestDataSourceUI extends UnifiedFramework {
 		dataSourcePage = homepage.navigateToNewDataSource();
 		dataSourcePage.clickSave();
 		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
-		
+
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
 		dataSourcePage.verifyValidationMessageForTransactionLineObject();
 
@@ -95,8 +95,9 @@ public class TestDataSourceUI extends UnifiedFramework {
 
 		softassert.assertAll();
 	}
-	@Test(description = "TC-584 Verify data on the Related sub-tab on the data source details page", groups = { "Regression",
-			"Medium", "UI" })
+
+	@Test(description = "TC-584 Verify data on the Related sub-tab on the data source details page", groups = {
+			"Regression", "Medium", "UI" })
 	public void verifyDataSourceMappedFormula() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
@@ -104,10 +105,42 @@ public class TestDataSourceUI extends UnifiedFramework {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
-	
+
 		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
-		genericPage.moveToFormulaTab(cimAdminHelper.stepCalcFormulaIdQualification,cimAdminHelper.stepCalcFormulaIdBenefit,dataSourcePage.lblRelatedTab);
-		genericPage.moveToFormulaTab(cimAdminHelper.nonStepCalcFormulaIdBenefit,cimAdminHelper.nonStepCalcFormulaIdQualification,dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(cimAdminHelper.stepCalcFormulaIdQualification,
+				cimAdminHelper.stepCalcFormulaIdBenefit, dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(cimAdminHelper.nonStepCalcFormulaIdBenefit,
+				cimAdminHelper.nonStepCalcFormulaIdQualification, dataSourcePage.lblRelatedTab);
+		softassert.assertAll();
+	}
+
+	@Test(description = "TC-572 Records shown as a 'Name'", groups = { "Regression", "Low", "UI" })
+	public void verifyFieldsNameInDetails() throws Exception {
+
+		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+
+		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getTransactionLineObjectName__c());
+
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getFileExtension__c());
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getCalculationDateName__c());
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getIncentiveAccountFieldName__c());
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getProductFieldName__c());
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getFileSuffixToignore__c());
+		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getRecordDelimiterName__c());
+
+		softassert.assertEquals(false, dataSourcePage.transactionLineObjectPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.transactionLineObjectPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.fileExtensionPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.calculationDatePath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.incentiveAccountPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.productFieldPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.fileSuffixtoIgnoretPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.recordDelimitertPath.isEmpty());
 		softassert.assertAll();
 	}
 
