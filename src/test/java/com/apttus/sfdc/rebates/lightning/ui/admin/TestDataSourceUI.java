@@ -114,8 +114,8 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
-	@Test(description = "TC-572 Records shown as a 'Name'", groups = { "Regression", "Low", "UI" })
-	public void verifyFieldsNameInDetails() throws Exception {
+	@Test(description = "TC-572 Data Source Details records should display as Name", groups = { "Regression", "Low", "UI" })
+	public void verifyDataSourceFieldsNameInDetails() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
