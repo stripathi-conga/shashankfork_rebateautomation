@@ -81,7 +81,6 @@ public class DataSourcePage extends GenericPage {
 	public WebElement lblRelatedTab;
 	WebDriverWait wait;
 	String cmbTxt = "//span[@class='uiOutputText'][text()='OPTION']";
-	String txtOrderLineItem = "Order Line Item";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
 	public String transactionLineObjectPath;
