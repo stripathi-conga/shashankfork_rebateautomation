@@ -124,11 +124,11 @@ public class TestTemplateUI extends UnifiedFramework {
 
 	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = { "Regression",
 			"Medium", "UI" })
-	public void verifyTemplateTierMultipleQualificationActivationViaDetailView() throws Exception {
+	public void verifyTemplateMultipleQualificationDiscreteActivationViaDetailView() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"multipleQualificationAndBenefitTieredQnBLayoutAPI");
+				"multipleQualificationAndBenefitDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);		
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);

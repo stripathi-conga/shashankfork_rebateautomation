@@ -126,8 +126,7 @@ public class CIMAdmin {
 			requestString = createNewFieldExpressionId.getExpressionIdRequest(testData);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.fieldExpressionIdURL, requestString);
 			validateResponseCode(response, RebatesConstants.responseCreated);
-			fieldExpressionId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			
+			fieldExpressionId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();			
 			return fieldExpressionId;
 		} catch (Exception e) {
 			throw new ApplicationException("Create FieldExpressionId API call failed with exception trace : " + e);
@@ -449,6 +448,18 @@ public class CIMAdmin {
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Create New Link Templates API call did not fail for Negative Scenario with exception trace : " + e);
+		}
+	}
+	
+	public Response activateLinkTemplateViaId(String linkTemplateId, int responseCode) throws ApplicationException {
+		try {
+			requestString = "{\"Status__c\": \"" + RebatesConstants.activate + "\"}";
+			response = sfdcRestUtils.patchWithoutAppUrl(urlGenerator.linkTemplatesURL + linkTemplateId, requestString);
+			validateResponseCode(response, responseCode);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException(
+					"Activate Link Template API call failed with exception trace : " + e);
 		}
 	}
 }
