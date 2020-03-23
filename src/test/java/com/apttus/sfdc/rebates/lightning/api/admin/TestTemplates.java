@@ -295,4 +295,22 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.getTemplate();
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
 	}
+	
+	@Test(description = "TC-565 Verify Creation and Activation of Multiple Qualification and Benefit Product Tiered", groups = {
+			"Regression", "API", "Medium" })
+	public void verifyActivationOfMQMBTiered() throws Exception {
+		
+		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "multipleQualificationAndBenefitTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+
+		// ------------ Create New Template and map formulas --------------------
+		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+
+		// ---- Activate Template  -----
+		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
+		response = cimAdmin.getTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.activate);
+	}
 }
