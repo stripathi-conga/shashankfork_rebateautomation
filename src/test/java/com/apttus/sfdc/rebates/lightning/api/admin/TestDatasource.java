@@ -83,7 +83,7 @@ public class TestDatasource extends UnifiedFramework {
 		responseValidator.validateDeleteSuccess(response);
 	}
 
-	@Test(description = "TC-225 Verify mandatory fields in Data Source", groups = { "Regression", "Medium", "API" })
+	@Test(description = "TC225-Verify different delimiters for the record delimiter field", groups = { "Regression", "Medium", "API" })
 	public void verifyDataSourceMandatoryFields() throws Exception {
 		response = cimAdmin.createDataSourceWithoutAnyFields();
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeMissingFields,
