@@ -9,7 +9,7 @@ public class RebatesConstants {
 	public static String incentiveTemplateIdBenefitProductTiered;
 	public static String incentiveTemplateIdBenefitProductDiscrete;
 	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
-
+	
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
 	public static final int responseNocontent = 204;
@@ -65,4 +65,5 @@ public class RebatesConstants {
 	public static final String newPath = "new";
 	public static final String editPath = "edit";
 
+	public static final String messageChangesSuccessfull = "Your changes are saved.";
 }

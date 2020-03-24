@@ -49,9 +49,7 @@ public class GetCalculationFormulaIdPojo {
 		getCalcFormulaId.setName(testData.get("Name"));
 		getCalcFormulaId.setStatus__c(testData.get("Status__c"));
 		return new Gson().toJson(getCalcFormulaId);
-	}
-
-	
+	}	
 }
 
 /*------------------ GetCalculationFormulaId Request ----------------------
