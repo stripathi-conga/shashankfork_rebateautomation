@@ -70,4 +70,5 @@ public class RebatesConstants {
 	public static final String lblRecordDelimiter="Record Delimiter";
 	public static final String lblProductField="Product Field";
 	public static final String lblIncentiveAccountField="Incentive Account Field";
+	public static final String messageChangesSuccessfull = "Your changes are saved.";
 }

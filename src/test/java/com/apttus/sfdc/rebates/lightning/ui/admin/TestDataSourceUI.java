@@ -133,8 +133,8 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertEquals(false, dataSourcePage.calculationDatePath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.incentiveAccountPath.isEmpty());
 		softassert.assertEquals(false, dataSourcePage.productFieldPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.fileSuffixtoIgnoretPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.recordDelimitertPath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.fileSuffixtoIgnorePath.isEmpty());
+		softassert.assertEquals(false, dataSourcePage.recordDelimiterPath.isEmpty());
 		
 		softassert.assertEquals(RebatesConstants.lblTransactionLineObject, dataSourcePage.lblTransactionLineObject.getText());
 		softassert.assertEquals(RebatesConstants.lblFileExtension, dataSourcePage.lblFileExtension.getText());

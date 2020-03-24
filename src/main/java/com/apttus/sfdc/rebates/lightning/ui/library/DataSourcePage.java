@@ -87,9 +87,9 @@ public class DataSourcePage extends GenericPage {
 	public String calculationDatePath;
 	public String productFieldPath;
 	public String incentiveAccountPath;
-	public String recordDelimitertPath;
+	public String recordDelimiterPath;
 	public String fileExtensionPath;
-	public String fileSuffixtoIgnoretPath;
+	public String fileSuffixtoIgnorePath;
 	public String nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
@@ -162,15 +162,15 @@ public class DataSourcePage extends GenericPage {
 		calculationDatePath = cmbTxt.replace("OPTION", element);
 		productFieldPath = cmbTxt.replace("OPTION", element);
 		incentiveAccountPath = cmbTxt.replace("OPTION", element);
-		recordDelimitertPath = cmbTxt.replace("OPTION", element);
+		recordDelimiterPath = cmbTxt.replace("OPTION", element);
 		fileExtensionPath = cmbTxt.replace("OPTION", element);
-		fileSuffixtoIgnoretPath = cmbTxt.replace("OPTION", element);
+		fileSuffixtoIgnorePath = cmbTxt.replace("OPTION", element);
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(transactionLineObjectPath));
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(calculationDatePath));
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(productFieldPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(fileSuffixtoIgnoretPath));
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(fileSuffixtoIgnorePath));
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(fileExtensionPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(recordDelimitertPath));
+		sfdcAcolyte.waitTillElementIsVisible(By.xpath(recordDelimiterPath));
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(incentiveAccountPath));
 	}
 }
