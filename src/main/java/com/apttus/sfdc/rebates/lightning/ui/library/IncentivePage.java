@@ -30,6 +30,9 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//footer/button[text()='Add']")
 	public WebElement btnAdd;
 
+	@FindBy(xpath = "//button[text()='Add']")
+	public WebElement btnAddproduct;
+
 	@FindBy(xpath = "//*[text()='Save']")
 	public WebElement btnSave;
 
@@ -62,27 +65,83 @@ public class IncentivePage extends GenericPage {
 
 	@FindBy(xpath = "//*[@class='slds-button slds-button_icon slds-cell-edit__button slds-m-left_x-small']")
 	public List<WebElement> effectiveDate;
-	
-	// This locator will identify the Name ,Code and Type 
+
+	@FindBy(xpath = "//input[@type='number']")
+	public WebElement txtEditNoOfTiers;
+	// This locator will identify the Name ,Code and Type
 	@FindBy(xpath = "//lightning-formatted-text")
 	public List<WebElement> colValueNameCodeType;
-	
+
 	@FindBy(xpath = "//*[text()='B1']")
 	public WebElement colValueAliasName;
-	
-	//This Locator will identify Start and EndDate
+
+	// This Locator will identify Start and EndDate
 	@FindBy(xpath = "//span/div/lightning-formatted-date-time")
-	public List <WebElement> colValueDate;
-		
+	public List<WebElement> colValueDate;
+
 	@FindBy(xpath = "//c-core-data-table-formula")
 	public List<WebElement> colValueFormula;
+
+	@FindBy(xpath = "//*[@class='slds-grid slds-grid_align-spread cell-height slds-border_bottom']/button")
+	public WebElement ddlQualificationFormulaEdit;
+
+	@FindBy(xpath = "//*[@class='slds-grid slds-grid_align-spread cell-height']/button")
+	public WebElement ddlBenefitFormulaEdit;
+
+	@FindBy(xpath = "//*[@placeholder='Select Qualification Formula']")
+	public WebElement ddlQualificationFormula;
+
+	@FindBy(xpath = "//*[@placeholder='Select Benefit Formula']")
+	public WebElement ddlBenefitFormula;
+
+	@FindBy(xpath = "//*[@class='slds-media slds-listbox__option slds-media_center slds-media_small slds-listbox__option_plain']")
+	public WebElement ddlFormulaValue;
+
+	@FindBy(xpath = "//*[text()='Product']")
+	public WebElement ddldefaultProduct;
+
+	@FindBy(xpath = "//*[@placeholder='Select an Option']")
+	public WebElement ddlSelectOption;
+
+	@FindBy(xpath = "//div[@class='slds-grid slds-grid_align-spread cell-height slds-border_bottom']")
+	public WebElement gridFormula;
+
+	@FindBy(xpath = "//*[@class='col slds-grid slds-grid_align-spread cell-height slds-border_bottom']/button/lightning-icon")
+	public List<WebElement> pencilEditTierT1T2T3;
+	@FindBy(xpath = "//*[@class='col slds-grid slds-grid_align-spread cell-height']/div/button")
+	public List<WebElement> pencilEditBenefitT1T2T3;
+
+	@FindBy(xpath = "//td[@data-label='T1']")
+	public WebElement gridT1;
+	@FindBy(xpath = "//td[@data-label='T2']")
+	public WebElement gridT2;
+	@FindBy(xpath = "//td[@data-label='T3']")
+	public WebElement gridT3;
+
+	@FindBy(xpath = "//*[@class='slds-form-element__control slds-grow']")
+	public WebElement txtT1;
+	@FindBy(xpath = "//*[text()='Rebate']")
+	public WebElement txtRebate;
+	@FindBy(xpath = "//*[@class='slds-button slds-button_icon slds-button_icon-error']")
+	public List<WebElement> gridErrorMessage;
+	@FindBy(xpath = "//*[text()='Tier value should be incremental']")
+	public WebElement txtErrorMessage;
 	
+	@FindBy(xpath = "//lightning-base-combobox-item/span[2]/span")
+	public List<WebElement> comboboxvalue;
+
+	@FindBy(xpath = "//button[contains(text(),'Selected')]")
+	public WebElement btnSelected;
+	@FindBy(xpath = "//lightning-primitive-cell-checkbox")
+	public List<WebElement> checkbox;
+
 	GenericPage genericPage;
 	WebDriverWait wait;
 
 	public IncentivePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 60);
+		genericPage = new GenericPage(driver);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -113,11 +172,44 @@ public class IncentivePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(colEffectiveEndDate);
 		sfdcAcolyte.waitTillElementIsVisible(colEffectiveStartDate);
 	}
-	
+
 	public void waitTillAllQnBElementLoad() throws Exception {
 		sfdcAcolyte.waitTillElementIsVisible(colValueAliasName);
 		sfdcAcolyte.waitTillElementIsVisible(colValueDate.get(0));
 		sfdcAcolyte.waitTillElementIsVisible(colValueNameCodeType.get(0));
 		sfdcAcolyte.waitTillElementIsVisible(colValueFormula.get(0));
+	}
+
+	public void addProductWithMultipleTiers(String product, String tiercount) throws Exception {
+		genericPage.clickWhenElementIsVisibleAndClickable(btnAddproduct)
+				.WaitClickAndSendKey(txtbxSearchProduct, product).clearAndSendKeys(txtEditNoOfTiers, tiercount);
+		genericPage.waitTillPageContentLoad();
+		sfdcAcolyte.click(ddlSelectOption).click(ddldefaultProduct);
+		genericPage.clickWhenElementIsVisibleAndClickable(chkProduct).clickWhenElementIsVisibleAndClickable(btnAdd);
+
+	}
+
+	public void addFormula(WebElement gridFormula, WebElement formulaEditButton, WebElement formulaDropdown,
+			WebElement formulaValue) throws Exception {
+		genericPage.moveToElementAndClick(gridFormula, formulaEditButton);
+		sfdcAcolyte.click(formulaDropdown).click(formulaValue);
+	}
+
+	public void addTiers(WebElement gridTier, WebElement tierEditButton, WebElement tierDropdown, String tierValue)
+			throws Exception {
+
+		genericPage.moveToElementAndClick(gridTier, tierEditButton);
+		sfdcAcolyte.clickAndSendkeys(tierDropdown, tierValue);
+		genericPage.doubleClick(txtRebate);
+	}
+
+	public void save(WebElement save) throws Exception {
+		genericPage.doubleClick(save);
+	}
+
+	public void getErrorMessage(WebElement errorGrid, WebElement validationMessage) throws Exception {
+
+		sfdcAcolyte.jsScrollAndClick(errorGrid);
+		sfdcAcolyte.waitTillElementIsVisible(validationMessage);
 	}
 }

@@ -1,7 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +8,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
@@ -72,18 +70,42 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//a[contains(@href,'/IncentiveProgramTemplate__c')]")
 	public WebElement lnkTemplates;
 
-	String benefitProduct = "Benefit Product";
-	String discrete = "Discrete";
-	String tiered = "Tiered";
-	String cmbTxt = "//*[@data-value='OPTION']";
-	String lnkTemplateId = "//*[@data-recordid='OPTION']";
+	@FindBy(xpath = "//span[text()='Draft']")
+	public WebElement lnkInlineEdit;
 
+	@FindBy(xpath = "//a[text()='Draft']")
+	public WebElement lnkInlineDraft;
+
+	@FindBy(xpath = "//a[text()='Active']")
+	public WebElement lnkInlineActive;
+
+	@FindBy(xpath = "//*[text()='Save']")
+	public WebElement btnInLineSave;
+
+	@FindBy(xpath = "//input[@placeholder='Search this list...']")
+	public WebElement txtSearchBox;
+
+	@FindBy(xpath = "//div/span[text()='Recently Viewed']")
+	public WebElement btnRecentlyViewed;
+
+	@FindBy(xpath = "	//*[@class='forceInlineEditButton']")
+	public WebElement btnInLineEdit;
+
+	@FindBy(xpath = "//div[@title='List View Controls']")
+	public WebElement btnsetting;
+
+	@FindBy(xpath = "//lightning-combobox/div/lightning-base-combobox/div/div/lightning-base-combobox-item[1]")
+	public WebElement dpDiscreteValue;
+
+	String lnkTemplateId = "//*[@data-recordid='OPTION']";
+	GenericPage genericPage;
 	WebDriverWait wait;
 	public boolean templateEditURL;
 
 	public TemplatePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 120);
+		genericPage = new GenericPage(driver);
 		PageFactory.initElements(driver, this);
 	}
 
@@ -99,43 +121,7 @@ public class TemplatePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public TemplatePage qnbLayoutDefinition(WebElement ddlQBselect, WebElement ddlTierSelect) throws Exception {
-
-		String benefitProductPath = cmbTxt.replace("OPTION", benefitProduct);
-		String discretePath = cmbTxt.replace("OPTION", discrete);
-
-		sfdcAcolyte.waitTillElementIsVisible(ddlQBselect).waitTillElementIsClickable(ddlQBselect).click(ddlQBselect);
-		sfdcAcolyte.waitTillElementIsVisible(lblEdit);
-		sfdcAcolyte.jsScrollAndClick(By.xpath(benefitProductPath));
-		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect);
-		sfdcAcolyte.waitTillElementIsVisible(lblEdit);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(discretePath)).waitTillElementIsClickable(By.xpath(discretePath))
-				.click(By.xpath(discretePath));
-
-		return PageFactory.initElements(driver, TemplatePage.class);
-	}
-
-	public void addDataSource(CIMAdmin cimAdmin) throws Exception {
-
-		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
-				.jsClick(ddlDataSource);
-		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
-	}
-
-	public void addQualificationOnTiered(CIMAdmin cimAdmin) throws Exception {
-
-		String tieredPath = cmbTxt.replace("OPTION", tiered);
-		sfdcAcolyte.waitTillElementIsClickable(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect).click(ddlTierSelect);
-		sfdcAcolyte.waitTillElementIsVisible(lblEdit);
-		Thread.sleep(1000);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(tieredPath)).waitTillElementIsClickable(By.xpath(tieredPath));
-		sfdcAcolyte.jsClick(By.xpath(tieredPath));
-		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
-				.jsClick(ddlDataSource);
-		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
-	}
-
-	public void moveToTemplateViaIdClick(String templateId) throws Exception {
+	public TemplatePage moveToTemplateViaIdClick(String templateId) throws Exception {
 
 		String lnkTemplateIdPath = lnkTemplateId.replace("OPTION", templateId);
 		sfdcAcolyte.waitTillElementIsVisible(By.xpath(lnkTemplateIdPath));
@@ -143,10 +129,32 @@ public class TemplatePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(lblDataSourceDetails).waitTillElementIsVisible(lblDataSourceDetails);
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/view");
 		sfdcAcolyte.waitTillElementIsVisible(lblDescriptionDetails);
+		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
 	public void moveToEditTemplate(String templateId) throws Exception {
 		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/Edit");
 	}
 
+	public void searchTemplateName(String templateName) throws Exception {
+		sfdcAcolyte.waitTillElementIsVisible(txtSearchBox).click(txtSearchBox);
+		sfdcAcolyte.sendTextKeys(templateName).sendBoardKeys(Keys.ENTER);
+		genericPage.clickElement(btnsetting).clickElement(btnRecentlyViewed);
+	}
+
+	public TemplatePage changeInLineStatus() throws Exception {
+		genericPage.waitTillPageContentLoad();
+		genericPage.doubleClick(lnkInlineEdit);
+		genericPage.clickElement(lnkInlineDraft).clickWhenElementIsVisibleAndClickable(lnkInlineActive)
+				.clickWhenElementIsVisibleAndClickable(btnInLineSave);
+		sfdcAcolyte.waitTillElementIsVisible(genericPage.txtToastMessage);
+		return PageFactory.initElements(driver, TemplatePage.class);
+	}
+
+	public TemplatePage selectTier(CIMAdmin cimAdmin, WebElement element) throws Exception {
+		genericPage.moveToElementAndClick(ddlTierSelect, ddlTierSelect);
+		genericPage.doubleClick(dpDiscreteValue);
+		return PageFactory.initElements(driver, TemplatePage.class);
+
+	}
 }

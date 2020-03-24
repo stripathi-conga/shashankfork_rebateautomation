@@ -259,5 +259,20 @@
 			"StartDate": "incentivestartdate",
 			"EndDate": "incentiveenddate"
 		}
-	]
+	],
+	"tiersIncrementalOrder": {
+		"tier1": "40",
+		"tier2": "10",
+		"tier3": "60",
+		"Binefit1": "10",
+		"Binefit2": "40",
+		"Binefit3": "10",
+		"productValue": "Product",
+		"categoryValue": "Category",
+		"tierCount": "3",
+		"Selected(1)":"Selected(1)",
+		"Selected(2)":"Selected(2)",
+		"Selected(3)":"Selected(3)",
+		"productName":"Installation: Industrial - High"	
+	}
 }

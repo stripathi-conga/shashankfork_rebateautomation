@@ -54,17 +54,15 @@ public class DataSourcePage extends GenericPage {
 
 	@FindBy(xpath = "//option[text()='txt']")
 	public WebElement fileExtension;
-	
+
 	@FindBy(xpath = "//*[text()='Related']")
 	public WebElement lblRelatedTab;
 	WebDriverWait wait;
-	String nameDataSource;
-	String txtTransactionLineObject = "//*[text()='OPTION']";
-	String txtOrderLineItem="Order Line Item";
+	String cmbTxt = "//span[@class='uiOutputText'][text()='OPTION']";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
-	public String lblStepQualificationFormulaPath;
-	public String lblStepBenefitFormulaIdPath;
+
+	public String nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
 
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
@@ -87,16 +85,15 @@ public class DataSourcePage extends GenericPage {
 	}
 
 	public void verifyValidationMessageForCalculationDate() throws Exception {
-		
-		
+
 		sfdcAcolyte.click(btnCloseToastMessage);
-		nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();  
+		nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
 		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, nameDataSource);
-				sfdcAcolyte.click(ddlSelectTransMetaData).click(ddlSelectTransMetaData).click(ddlSelectTransMetaData).
-				waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder)
-						.jsScrollAndClick(ddlOrder).click(btnSave);	
-				sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-		 	
+		sfdcAcolyte.click(ddlSelectTransMetaData).click(ddlSelectTransMetaData).click(ddlSelectTransMetaData)
+				.waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder).jsScrollAndClick(ddlOrder)
+				.click(btnSave);
+		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
+
 	}
 
 	public void verifyValidationMessageForProduct() throws Exception {
@@ -122,7 +119,8 @@ public class DataSourcePage extends GenericPage {
 
 	public void verifyValidationMessageForFileExtension(Map<String, String> testData) throws Exception {
 		sfdcAcolyte.click(btnCloseToastMessage);
-		sfdcAcolyte.clickAndSendkeys(txtFileSuffix, testData.get("FileSuffixToignore__c")).click(btnSave).click(btnSave);
+		sfdcAcolyte.clickAndSendkeys(txtFileSuffix, testData.get("FileSuffixToignore__c")).click(btnSave)
+				.click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
 	}
 
