@@ -103,11 +103,6 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//*[@placeholder='Select an Option']")
 	public WebElement ddlSelectOption;
 
-	/*
-	 * @FindBy(xpath = "//span[@class='slds-assistive-text'][text()='Edit']") public
-	 * List<WebElement> penciledit;
-	 */
-
 	@FindBy(xpath = "//div[@class='slds-grid slds-grid_align-spread cell-height slds-border_bottom']")
 	public WebElement gridFormula;
 
