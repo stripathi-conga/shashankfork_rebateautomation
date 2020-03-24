@@ -44,7 +44,7 @@ public class GetCalculationFormulaIdPojo {
 
 	public String getCalculationFormulaIdRequest(Map<String, String> testData) {
 		GetCalculationFormulaIdPojo getCalcFormulaId = new GetCalculationFormulaIdPojo();
-		getCalcFormulaId.setIsStepBased__c("true");
+		getCalcFormulaId.setIsStepBased__c(testData.get("IsStepBased__c"));
 		getCalcFormulaId.setFormulaType__c(testData.get("FormulaType__c"));
 		getCalcFormulaId.setName(testData.get("Name"));
 		getCalcFormulaId.setStatus__c(testData.get("Status__c"));
