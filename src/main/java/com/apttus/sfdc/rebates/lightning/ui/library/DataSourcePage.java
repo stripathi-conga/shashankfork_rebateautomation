@@ -83,13 +83,7 @@ public class DataSourcePage extends GenericPage {
 	String cmbTxt = "//span[@class='uiOutputText'][text()='OPTION']";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
-	public String transactionLineObjectPath;
-	public String calculationDatePath;
-	public String productFieldPath;
-	public String incentiveAccountPath;
-	public String recordDelimiterPath;
-	public String fileExtensionPath;
-	public String fileSuffixtoIgnorePath;
+	
 	public String nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
@@ -155,22 +149,5 @@ public class DataSourcePage extends GenericPage {
 		sfdcAcolyte.click(btnCloseToastMessage);
 		sfdcAcolyte.click(fileExtension).click(btnSave).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-	}
-
-	public void VerifyTillAllElementLoaded(String element) throws Exception {
-		transactionLineObjectPath = cmbTxt.replace("OPTION", element);
-		calculationDatePath = cmbTxt.replace("OPTION", element);
-		productFieldPath = cmbTxt.replace("OPTION", element);
-		incentiveAccountPath = cmbTxt.replace("OPTION", element);
-		recordDelimiterPath = cmbTxt.replace("OPTION", element);
-		fileExtensionPath = cmbTxt.replace("OPTION", element);
-		fileSuffixtoIgnorePath = cmbTxt.replace("OPTION", element);
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(transactionLineObjectPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(calculationDatePath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(productFieldPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(fileSuffixtoIgnorePath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(fileExtensionPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(recordDelimiterPath));
-		sfdcAcolyte.waitTillElementIsVisible(By.xpath(incentiveAccountPath));
 	}
 }
