@@ -138,12 +138,12 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
-	@Test(description = "TC557-Verify Benefit Product and Discrete  Template Activateion via list view", groups = {
+	@Test(description = "TC557-Verify Benefit Product and Discrete  Template Activation via list view", groups = {
 			"Regression", "UI", "High" })
 	public void verifyBenefitProductTemplateActivationViaListViewPage() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "qualificationAndBenefitDiscreteQnBLayoutAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);	
