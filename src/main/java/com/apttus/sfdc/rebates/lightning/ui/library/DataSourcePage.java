@@ -2,7 +2,6 @@ package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.Map;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,36 +54,37 @@ public class DataSourcePage extends GenericPage {
 
 	@FindBy(xpath = "//option[text()='txt']")
 	public WebElement fileExtension;
-	
+
 	@FindBy(xpath = "//div/span[text()='Transaction Line Object']")
 	public WebElement lblTransactionLineObject;
-	
+
 	@FindBy(xpath = "//div/span[text()='Calculation Date Field']")
 	public WebElement lblCalculationDate;
-	
+
 	@FindBy(xpath = "//div/span[text()='Product Field']")
 	public WebElement lblProductField;
-	
+
 	@FindBy(xpath = "//div/span[text()='Incentive Account Field']")
 	public WebElement lblIncentiveAccountField;
-	
+
 	@FindBy(xpath = "//div/span[text()='Record Delimiter']")
 	public WebElement lblRecordDelimiter;
-	
+
 	@FindBy(xpath = "//div/span[text()='File Extension']")
 	public WebElement lblFileExtension;
-	
+
 	@FindBy(xpath = "//div/span[text()='File Suffix To ignore']")
 	public WebElement lblFileSuffixToIgnore;
-	  
+
 	@FindBy(xpath = "//*[text()='Related']")
 	public WebElement lblRelatedTab;
 	WebDriverWait wait;
 	String cmbTxt = "//span[@class='uiOutputText'][text()='OPTION']";
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
-	
+
 	public String nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
+
 	public DataSourcePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 120);
