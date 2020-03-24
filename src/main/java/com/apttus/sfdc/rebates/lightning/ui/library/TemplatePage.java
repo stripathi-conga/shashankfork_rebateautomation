@@ -143,7 +143,7 @@ public class TemplatePage extends GenericPage {
 	}
 
 	public TemplatePage changeInLineStatus() throws Exception {
-		Thread.sleep(1000);
+		genericPage.waitTillPageContentLoad();
 		genericPage.doubleClick(lnkInlineEdit);
 		genericPage.clickElement(lnkInlineDraft).clickWhenElementIsVisibleAndClickable(lnkInlineActive)
 				.clickWhenElementIsVisibleAndClickable(btnInLineSave);
