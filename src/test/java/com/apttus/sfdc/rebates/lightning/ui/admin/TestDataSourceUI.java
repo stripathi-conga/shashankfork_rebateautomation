@@ -114,38 +114,6 @@ public class TestDataSourceUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 
-	@Test(description = "TC-572 Data Source Details records should display as Name", groups = { "Regression", "Low",
-			"UI" })
-	public void verifyDataSourceFieldsNameInDetails() throws Exception {
-
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
-		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getTransactionLineObjectName__c());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getFileExtension__c());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getCalculationDateName__c());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getIncentiveAccountFieldName__c());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getProductFieldName__c());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getFileSuffixToignore__c());
-		dataSourcePage.VerifyTillAllElementLoaded(cimAdmin.getDataSourceData().getRecordDelimiterName__c());
-
-		softassert.assertEquals(false, dataSourcePage.transactionLineObjectPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.fileExtensionPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.calculationDatePath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.incentiveAccountPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.productFieldPath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.fileSuffixtoIgnorePath.isEmpty());
-		softassert.assertEquals(false, dataSourcePage.recordDelimiterPath.isEmpty());
-		
-		softassert.assertEquals(RebatesConstants.lblTransactionLineObject, dataSourcePage.lblTransactionLineObject.getText());
-		softassert.assertEquals(RebatesConstants.lblFileExtension, dataSourcePage.lblFileExtension.getText());
-		softassert.assertEquals(RebatesConstants.lblFileSuffixToIgnore, dataSourcePage.lblFileSuffixToIgnore.getText());
-		softassert.assertEquals(RebatesConstants.lblCalculationDate, dataSourcePage.lblCalculationDate.getText());
-		softassert.assertEquals(RebatesConstants.lblRecordDelimiter, dataSourcePage.lblRecordDelimiter.getText());
-		softassert.assertEquals(RebatesConstants.lblProductField, dataSourcePage.lblProductField.getText());
-		softassert.assertEquals(RebatesConstants.lblIncentiveAccountField, dataSourcePage.lblIncentiveAccountField.getText());
-		softassert.assertAll();
-	}
-
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.manage().deleteAllCookies();

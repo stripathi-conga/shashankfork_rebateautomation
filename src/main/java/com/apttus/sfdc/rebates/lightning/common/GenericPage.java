@@ -93,4 +93,9 @@ public class GenericPage {
 		action.moveToElement(element).moveToElement(ele).click().build().perform();
 	}
 
+	public void waitTillPageContentLoad() throws InterruptedException {
+		Thread.sleep(2000);
+		
+	}
+
 }

@@ -37,7 +37,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	private String instanceURL;
 	public String baseURL;
 	SoftAssert softassert;
-	public GenericPage genericPage;
+	GenericPage genericPage;
 	private CIMAdminHelper cimAdminHelper;
 
 	@BeforeClass(alwaysRun = true)
@@ -58,11 +58,12 @@ public class TestTemplateUI extends UnifiedFramework {
 		SFDCHelper.setMasterProperty(configProperty);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
+		genericPage = new GenericPage(driver);
 	}
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
-		genericPage = new GenericPage(driver);
+		
 		softassert = new SoftAssert();
 		cimAdminHelper = new CIMAdminHelper();
 	}
@@ -87,7 +88,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			softassert.assertEquals(false, templatepage.chkBenefitFormulaValue.isEmpty());
 			softassert.assertAll();
 		}
-	
 
 	@Test(description = "TC 555-Validate activation of new Benefit formula Discrete template and its navigation via Template Name", groups = {
 			"Regression", "UI", "High" })
@@ -138,7 +138,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
-	@Test(description = "TC557-Benefit Product and Discrete _Activate_list view", groups = {
+	@Test(description = "TC557-Verify Benefit Product and Discrete  Template Activateion via list view", groups = {
 			"Regression", "UI", "High" })
 	public void verifyBenefitProductTemplateActivationViaListViewPage() throws Exception {
 

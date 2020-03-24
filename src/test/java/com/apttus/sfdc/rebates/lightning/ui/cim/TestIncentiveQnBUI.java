@@ -145,6 +145,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		softassert.assertEquals(jsonData.get("categoryValue"), incentivepage.comboboxvalue.get(1).getAttribute("title"));
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.dpSelectOption);
+		genericPage.waitTillPageContentLoad();
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 	    softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
