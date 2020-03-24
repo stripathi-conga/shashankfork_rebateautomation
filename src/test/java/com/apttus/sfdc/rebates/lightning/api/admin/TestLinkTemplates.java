@@ -169,4 +169,27 @@ public class TestLinkTemplates extends UnifiedFramework {
 				RebatesConstants.messageActiveMappingExists);
 		cimAdminHelper.deactivateAndVerifyLinkTemplate(cimAdmin);
 	}
+	
+	@Test(description = "TC-446 Verify Link Template behavior in different Status", groups = { "Regression", "Low",
+			"API" })
+	public void deactivateTemplateWillNotAllowLinkTemplateActivation() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);
+
+		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeDiscreteAPI";
+		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
+
+		// ---- Deactivate Template of LinkTemplate -----
+		cimAdmin.deactivateTemplate();
+		response = cimAdmin.getTemplate();
+		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.deactivate);
+
+		// ---- LinkTemplate activation fails when template is inactive -----
+		response = cimAdmin.activateLinkTemplateViaId(cimAdmin.getLinkTemplatesData().linkTemplateId,
+				RebatesConstants.responseBadRequest);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageActivateLinkTemplateForInactiveTemplate);
+	}
 }

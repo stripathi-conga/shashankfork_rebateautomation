@@ -89,7 +89,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 	}
 
 	@Test(description = "TC 379 - Verify the participant data in the participants grid view", groups = { "Regression",
-			"API", "Medium" })
+			"UI", "Medium" })
 	public void verifyParticipantGridData() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");		

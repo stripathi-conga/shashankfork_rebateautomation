@@ -33,6 +33,7 @@ public class RebatesConstants {
 	public static final String messageParticipantsDateOutOfRange = "Participants Dates are outside the range of Incentive Dates.";
 	public static final String messageOverlappingParticipants = "Same participants with overlapping dates found.";
 	public static final String errorFieldsForDates = "[\"EffectiveDate__c\",\"ExpirationDate__c\"]";
+	public static final String messageActivateLinkTemplateForInactiveTemplate = "Only active templates can be mapped";
 
 	public static final String scheduleStatusOpen = "Open";
 	public static final String scheduleStatusPending = "Pending";
