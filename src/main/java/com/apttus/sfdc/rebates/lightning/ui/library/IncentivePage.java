@@ -32,7 +32,6 @@ public class IncentivePage extends GenericPage {
 
 	@FindBy(xpath = "//button[text()='Add']")
 	public WebElement btnAddproduct;
-	// button[text()='Add']
 
 	@FindBy(xpath = "//*[text()='Save']")
 	public WebElement btnSave;
@@ -84,38 +83,38 @@ public class IncentivePage extends GenericPage {
 	public List<WebElement> colValueFormula;
 
 	@FindBy(xpath = "//*[@class='slds-grid slds-grid_align-spread cell-height slds-border_bottom']/button")
-	public WebElement dpQualificationFormulaEdit;
+	public WebElement ddlQualificationFormulaEdit;
 
 	@FindBy(xpath = "//*[@class='slds-grid slds-grid_align-spread cell-height']/button")
-	public WebElement dpBenefitFormulaEdit;
+	public WebElement ddlBenefitFormulaEdit;
 
 	@FindBy(xpath = "//*[@placeholder='Select Qualification Formula']")
-	public WebElement dpQualificationFormula;
+	public WebElement ddlQualificationFormula;
 
 	@FindBy(xpath = "//*[@placeholder='Select Benefit Formula']")
-	public WebElement dpBenefitFormula;
+	public WebElement ddlBenefitFormula;
 
 	@FindBy(xpath = "//*[@class='slds-media slds-listbox__option slds-media_center slds-media_small slds-listbox__option_plain']")
-	public WebElement dpFormulaValue;
+	public WebElement ddlFormulaValue;
 
 	@FindBy(xpath = "//*[text()='Product']")
-	public WebElement dpdefaultProduct;
-	@FindBy(xpath = "//lightning-base-combobox-item/span[2]/span")
-	public List<WebElement> comboboxvalue;
+	public WebElement ddldefaultProduct;
 
 	@FindBy(xpath = "//*[@placeholder='Select an Option']")
-	public WebElement dpSelectOption;
+	public WebElement ddlSelectOption;
 
-	@FindBy(xpath = "//span[@class='slds-assistive-text'][text()='Edit']")
-	public List<WebElement> penciledit;
+	/*
+	 * @FindBy(xpath = "//span[@class='slds-assistive-text'][text()='Edit']") public
+	 * List<WebElement> penciledit;
+	 */
 
 	@FindBy(xpath = "//div[@class='slds-grid slds-grid_align-spread cell-height slds-border_bottom']")
-	public WebElement gridformula;
+	public WebElement gridFormula;
 
 	@FindBy(xpath = "//*[@class='col slds-grid slds-grid_align-spread cell-height slds-border_bottom']/button/lightning-icon")
 	public List<WebElement> pencilEditTierT1T2T3;
 	@FindBy(xpath = "//*[@class='col slds-grid slds-grid_align-spread cell-height']/div/button")
-	public List<WebElement> pencilEditbenefitT1T2T3;
+	public List<WebElement> pencilEditBenefitT1T2T3;
 
 	@FindBy(xpath = "//td[@data-label='T1']")
 	public WebElement gridT1;
@@ -133,15 +132,17 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//*[text()='Tier value should be incremental']")
 	public WebElement txtErrorMessage;
 	
-	@FindBy(xpath = "//lightning-primitive-cell-checkbox")
-	public List<WebElement> checkbox;
-	
+	@FindBy(xpath = "//lightning-base-combobox-item/span[2]/span")
+	public List<WebElement> comboboxvalue;
+
 	@FindBy(xpath = "//button[contains(text(),'Selected')]")
 	public WebElement btnSelected;
-	
+	@FindBy(xpath = "//lightning-primitive-cell-checkbox")
+	public List<WebElement> checkbox;
+
 	GenericPage genericPage;
 	WebDriverWait wait;
-	
+
 	public IncentivePage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 60);
@@ -184,11 +185,11 @@ public class IncentivePage extends GenericPage {
 		sfdcAcolyte.waitTillElementIsVisible(colValueFormula.get(0));
 	}
 
-	public void addProductWithMultipleTiers(String product,String tiercount) throws Exception {
+	public void addProductWithMultipleTiers(String product, String tiercount) throws Exception {
 		genericPage.clickWhenElementIsVisibleAndClickable(btnAddproduct)
 				.WaitClickAndSendKey(txtbxSearchProduct, product).clearAndSendKeys(txtEditNoOfTiers, tiercount);
 		genericPage.waitTillPageContentLoad();
-		sfdcAcolyte.click(dpSelectOption).click(dpdefaultProduct);
+		sfdcAcolyte.click(ddlSelectOption).click(ddldefaultProduct);
 		genericPage.clickWhenElementIsVisibleAndClickable(chkProduct).clickWhenElementIsVisibleAndClickable(btnAdd);
 
 	}

@@ -106,8 +106,8 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		incentivepage.waitTillAllQnBElementLoad();
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
 		incentivepage.addProductWithMultipleTiers(jsonData.get("productName"),jsonData.get("tierCount"));
-		incentivepage.addFormula(incentivepage.gridformula, incentivepage.dpQualificationFormulaEdit,
-				incentivepage.dpQualificationFormula, incentivepage.dpFormulaValue);
+		incentivepage.addFormula(incentivepage.gridFormula, incentivepage.ddlQualificationFormulaEdit,
+				incentivepage.ddlQualificationFormula, incentivepage.ddlFormulaValue);
 		incentivepage.addTiers(incentivepage.gridT1, incentivepage.pencilEditTierT1T2T3.get(0), incentivepage.txtT1,
 				jsonData.get("tier1"));
 		incentivepage.addTiers(incentivepage.gridT2, incentivepage.pencilEditTierT1T2T3.get(1), incentivepage.txtT1,
@@ -115,13 +115,13 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		incentivepage.addTiers(incentivepage.gridT3, incentivepage.pencilEditTierT1T2T3.get(2), incentivepage.txtT1,
 				jsonData.get("tier3"));
 		
-		incentivepage.addFormula(incentivepage.gridformula, incentivepage.dpBenefitFormulaEdit,
-				incentivepage.dpBenefitFormula, incentivepage.dpFormulaValue);
-		incentivepage.addTiers(incentivepage.gridT1, incentivepage.pencilEditbenefitT1T2T3.get(0), incentivepage.txtT1,
+		incentivepage.addFormula(incentivepage.gridFormula, incentivepage.ddlBenefitFormulaEdit,
+				incentivepage.ddlBenefitFormula, incentivepage.ddlFormulaValue);
+		incentivepage.addTiers(incentivepage.gridT1, incentivepage.pencilEditBenefitT1T2T3.get(0), incentivepage.txtT1,
 				jsonData.get("Binefit1"));
-		incentivepage.addTiers(incentivepage.gridT2, incentivepage.pencilEditbenefitT1T2T3.get(1), incentivepage.txtT1,
+		incentivepage.addTiers(incentivepage.gridT2, incentivepage.pencilEditBenefitT1T2T3.get(1), incentivepage.txtT1,
 				jsonData.get("Binefit2"));
-		incentivepage.addTiers(incentivepage.gridT3, incentivepage.pencilEditbenefitT1T2T3.get(2), incentivepage.txtT1,
+		incentivepage.addTiers(incentivepage.gridT3, incentivepage.pencilEditBenefitT1T2T3.get(2), incentivepage.txtT1,
 				jsonData.get("Binefit3"));
 		
 		incentivepage.save(incentivepage.btnSave);
@@ -139,12 +139,12 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
-		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.dpSelectOption);
-		softassert.assertEquals(true, incentivepage.dpdefaultProduct.isDisplayed());
+		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
+		softassert.assertEquals(true, incentivepage.ddldefaultProduct.isDisplayed());
 		softassert.assertEquals(jsonData.get("productValue"), incentivepage.comboboxvalue.get(0).getAttribute("title"));
 		softassert.assertEquals(jsonData.get("categoryValue"), incentivepage.comboboxvalue.get(1).getAttribute("title"));
 
-		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.dpSelectOption);
+		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
 		genericPage.waitTillPageContentLoad();
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 	    softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
