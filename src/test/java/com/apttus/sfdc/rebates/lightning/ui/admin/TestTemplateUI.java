@@ -27,7 +27,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	WebDriver driver;
 	LoginPage loginPage;
 	public Map<String, String> testData;
-	public TemplatePage templatepage;
+	public TemplatePage templatePage;
 	public HomePage homepage;
 	public Properties configProperty;
 	Efficacies efficacies;
@@ -63,7 +63,7 @@ public class TestTemplateUI extends UnifiedFramework {
 
 	@BeforeMethod(alwaysRun = true)
 	public void beforeMethod() throws Exception {
-		
+
 		softassert = new SoftAssert();
 		cimAdminHelper = new CIMAdminHelper();
 	}
@@ -72,22 +72,24 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Medium", "UI" })
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
 
-			cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
-			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
-			String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-			cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-			cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);				
-			
-			templatepage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
-			templatepage.moveToEditTemplate(cimAdmin.getTemplateData().getTemplateId());
+		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
+		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		templatePage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
+		genericPage.waitTillPageContentLoad();
+	    genericPage.clickButton(templatePage.ddlQBselect);
+	    genericPage.clickButton(templatePage.ddlBenefitProductDetails);
+	    templatePage.addDataSource(cimAdmin);
+	  
+		softassert.assertEquals(false, templatePage.chkQualificationValue.isEmpty());
+		softassert.assertEquals(false, templatePage.chkBenefitFormulaValue.isEmpty());
 
-			softassert.assertEquals(false, templatepage.chkQualificationValue.isEmpty());
-			softassert.assertEquals(false, templatepage.chkBenefitFormulaValue.isEmpty());
-
-			templatepage.selectTier(cimAdmin,templatepage.dpDiscreteValue);
-			softassert.assertEquals(false, templatepage.chkBenefitFormulaValue.isEmpty());
-			softassert.assertAll();
-		}
+		templatePage.selectTier( templatePage.ddlDiscreteValue);
+		softassert.assertEquals(false, templatePage.chkBenefitFormulaValue.isEmpty());
+		softassert.assertAll();
+	}
 
 	@Test(description = "TC 555-Validate activation of new Benefit formula Discrete template and its navigation via Template Name", groups = {
 			"Regression", "UI", "High" })
@@ -97,47 +99,48 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);		
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
-		templatepage = homepage.navigateToTemplates();
-		templatepage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
-		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
+		templatePage = homepage.navigateToTemplates();
+		templatePage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
+		softassert.assertTrue(templatePage.templateEditURL, "Verify the URL of Template Edit page");
 		softassert.assertAll();
 	}
-	@Test(description = "TC-562 Verify creation and Activation of QnB and Tier template Via Details View page",groups = {
+
+	@Test(description = "TC-562 Verify creation and Activation of QnB and Tier template Via Details View page", groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyTemplateTierQualificationBenefit() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
-				"qualificationAndBenefitTieredQnBLayoutAPI");
-		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);		
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "qualificationAndBenefitTieredQnBLayoutAPI");
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
-		
-		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
-		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
+
+		templatePage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
+		genericPage.clickButtonAndWait(templatePage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
 
-	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = { "Regression",
-			"Medium", "UI" })
+	@Test(description = "TC 566 Verify Activation of Multiple Benefit Product and Discrete Template via Detail View Page", groups = {
+			"Regression", "Medium", "UI" })
 	public void verifyTemplateMultipleQualificationDiscreteActivationViaDetailView() throws Exception {
 
 		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 				"multipleQualificationAndBenefitDiscreteQnBLayoutAPI");
-		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);		
+		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
-		
-		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
-		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
+
+		templatePage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
+		genericPage.clickButtonAndWait(templatePage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
+
 	@Test(description = "TC557-Verify Benefit Product and Discrete  Template Activation via list view", groups = {
 			"Regression", "UI", "High" })
 	public void verifyBenefitProductTemplateActivationViaListViewPage() throws Exception {
@@ -146,11 +149,11 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);	
-	
-		templatepage = homepage.navigateToTemplates();
-		templatepage.searchTemplateName(cimAdmin.getTemplateData().getName());
-		templatepage.changeInLineStatus();
+		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+
+		templatePage = homepage.navigateToTemplates();
+		templatePage.searchTemplateName(cimAdmin.getTemplateData().getName());
+		templatePage.changeInLineStatus();
 		softassert.assertEquals(RebatesConstants.messageChangesSuccessfull, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
