@@ -1,6 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 
@@ -41,7 +43,7 @@ public class TemplatePage extends GenericPage {
 	public WebElement btnEdit;
 
 	@FindBy(xpath = "//*[text()='Benefit Product']")
-	public WebElement lblBenefitProductDetails;
+	public WebElement ddlBenefitProductDetails;
 
 	@FindBy(xpath = "//*[contains(text(),'Rebates_Auto_DataSource_')]")
 	public WebElement lblDataSourceDetails;
@@ -58,10 +60,10 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//div[contains(text(),'Tiered')]")
 	public WebElement lblTierDetails;
 
-	@FindBy(xpath = "//*[@name='Qualification Formulas'][@id]")
+	@FindBy(xpath = "//legend[text()='Qualification Formulas']//..//div//*[@class='slds-checkbox_faux']")
 	public List<WebElement> chkQualificationValue;
 
-	@FindBy(xpath = "//*[@name='Benefit Formulas'][@id]")
+	@FindBy(xpath = "//legend[text()='Benefit Formulas']//..//div//*[@class='slds-checkbox_faux']")
 	public List<WebElement> chkBenefitFormulaValue;
 
 	@FindBy(xpath = "//button[text()='Activate']")
@@ -95,7 +97,10 @@ public class TemplatePage extends GenericPage {
 	public WebElement btnsetting;
 
 	@FindBy(xpath = "//lightning-combobox/div/lightning-base-combobox/div/div/lightning-base-combobox-item[1]")
-	public WebElement dpDiscreteValue;
+	public WebElement ddlDiscreteValue;
+
+	@FindBy(xpath = "//lightning-base-combobox-item/span/span[@title='Tiered']")
+	public WebElement ddlTiredValue;
 
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	GenericPage genericPage;
@@ -133,7 +138,7 @@ public class TemplatePage extends GenericPage {
 	}
 
 	public void moveToEditTemplate(String templateId) throws Exception {
-		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/Edit");
+		templateEditURL = sfdcAcolyte.getCurrentURL().contains(templateId + "/edit");
 	}
 
 	public void searchTemplateName(String templateName) throws Exception {
@@ -151,10 +156,22 @@ public class TemplatePage extends GenericPage {
 		return PageFactory.initElements(driver, TemplatePage.class);
 	}
 
-	public TemplatePage selectTier(CIMAdmin cimAdmin, WebElement element) throws Exception {
+	public TemplatePage selectTier(WebElement element) throws Exception {
 		genericPage.moveToElementAndClick(ddlTierSelect, ddlTierSelect);
-		genericPage.doubleClick(dpDiscreteValue);
+		sfdcAcolyte.jsClick(ddlDiscreteValue);
 		return PageFactory.initElements(driver, TemplatePage.class);
+	}
 
+	public void selectFormula() throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(ddlDiscreteValue);
+		sfdcAcolyte.waitTillElementIsVisible(ddlTiredValue);
+	}
+
+	public void addDataSource(CIMAdmin cimAdmin) throws Exception {
+
+		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
+				.click(ddlDataSource);
+		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
 	}
 }
