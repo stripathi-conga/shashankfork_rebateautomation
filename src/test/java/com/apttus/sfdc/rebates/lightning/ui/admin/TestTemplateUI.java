@@ -158,7 +158,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 	
-	@Test(description = "TC557-Verify Benefit Product and Tier Template Activation via list view", groups = {
+	@Test(description = "TC563-Verify Benefit Product and Tier Template Activation via list view", groups = {
 			"Regression", "UI", "High" })
 	public void verifyBenefitProductTierTemplateActivationViaListViewPage() throws Exception {
 
