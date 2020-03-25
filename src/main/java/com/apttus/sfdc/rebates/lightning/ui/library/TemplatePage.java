@@ -99,9 +99,6 @@ public class TemplatePage extends GenericPage {
 	@FindBy(xpath = "//lightning-combobox/div/lightning-base-combobox/div/div/lightning-base-combobox-item[1]")
 	public WebElement ddlDiscreteValue;
 
-	@FindBy(xpath = "//lightning-base-combobox-item/span/span[@title='Tiered']")
-	public WebElement ddlTiredValue;
-
 	String lnkTemplateId = "//*[@data-recordid='OPTION']";
 	GenericPage genericPage;
 	WebDriverWait wait;
@@ -160,12 +157,6 @@ public class TemplatePage extends GenericPage {
 		genericPage.moveToElementAndClick(ddlTierSelect, ddlTierSelect);
 		sfdcAcolyte.jsClick(ddlDiscreteValue);
 		return PageFactory.initElements(driver, TemplatePage.class);
-	}
-
-	public void selectFormula() throws Exception {
-
-		sfdcAcolyte.waitTillElementIsVisible(ddlDiscreteValue);
-		sfdcAcolyte.waitTillElementIsVisible(ddlTiredValue);
 	}
 
 	public void addDataSource(CIMAdmin cimAdmin) throws Exception {

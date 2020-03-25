@@ -27,7 +27,7 @@ public class TestTemplateUI extends UnifiedFramework {
 	WebDriver driver;
 	LoginPage loginPage;
 	public Map<String, String> testData;
-	public TemplatePage templatepage;
+	public TemplatePage templatePage;
 	public HomePage homepage;
 	public Properties configProperty;
 	Efficacies efficacies;
@@ -77,17 +77,17 @@ public class TestTemplateUI extends UnifiedFramework {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
-		templatepage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
+		templatePage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
 		genericPage.waitTillPageContentLoad();
-	    genericPage.clickButton(templatepage.ddlQBselect);
-	    genericPage.clickButton(templatepage.ddlBenefitProductDetails);
-	    templatepage.addDataSource(cimAdmin);
+	    genericPage.clickButton(templatePage.ddlQBselect);
+	    genericPage.clickButton(templatePage.ddlBenefitProductDetails);
+	    templatePage.addDataSource(cimAdmin);
 	  
-		softassert.assertEquals(false, templatepage.chkQualificationValue.isEmpty());
-		softassert.assertEquals(false, templatepage.chkBenefitFormulaValue.isEmpty());
+		softassert.assertEquals(false, templatePage.chkQualificationValue.isEmpty());
+		softassert.assertEquals(false, templatePage.chkBenefitFormulaValue.isEmpty());
 
-		templatepage.selectTier( templatepage.ddlDiscreteValue);
-		softassert.assertEquals(false, templatepage.chkBenefitFormulaValue.isEmpty());
+		templatePage.selectTier( templatePage.ddlDiscreteValue);
+		softassert.assertEquals(false, templatePage.chkBenefitFormulaValue.isEmpty());
 		softassert.assertAll();
 	}
 
@@ -102,9 +102,9 @@ public class TestTemplateUI extends UnifiedFramework {
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
-		templatepage = homepage.navigateToTemplates();
-		templatepage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
-		softassert.assertTrue(templatepage.templateEditURL, "Verify the URL of Template Edit page");
+		templatePage = homepage.navigateToTemplates();
+		templatePage.moveToTemplateViaIdClick(cimAdmin.getTemplateData().getTemplateId());
+		softassert.assertTrue(templatePage.templateEditURL, "Verify the URL of Template Edit page");
 		softassert.assertAll();
 	}
 
@@ -118,8 +118,8 @@ public class TestTemplateUI extends UnifiedFramework {
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 
-		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
-		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
+		templatePage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
+		genericPage.clickButtonAndWait(templatePage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
@@ -135,8 +135,8 @@ public class TestTemplateUI extends UnifiedFramework {
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 
-		templatepage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
-		genericPage.clickButtonAndWait(templatepage.btnActive, genericPage.txtToastMessage);
+		templatePage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
+		genericPage.clickButtonAndWait(templatePage.btnActive, genericPage.txtToastMessage);
 		softassert.assertEquals(RebatesConstants.messageActivateSuccessfully, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
@@ -151,9 +151,9 @@ public class TestTemplateUI extends UnifiedFramework {
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 
-		templatepage = homepage.navigateToTemplates();
-		templatepage.searchTemplateName(cimAdmin.getTemplateData().getName());
-		templatepage.changeInLineStatus();
+		templatePage = homepage.navigateToTemplates();
+		templatePage.searchTemplateName(cimAdmin.getTemplateData().getName());
+		templatePage.changeInLineStatus();
 		softassert.assertEquals(RebatesConstants.messageChangesSuccessfull, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
