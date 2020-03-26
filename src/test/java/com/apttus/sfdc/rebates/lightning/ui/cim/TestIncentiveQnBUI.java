@@ -69,7 +69,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public void beforeClass() throws Exception {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
-		genericPage=new GenericPage(driver);
+		genericPage = new GenericPage(driver);
 	}
 
 	@Test(description = "TC-525 Validation fields available for Qualification And Benefits-Add Product", groups = {
@@ -105,7 +105,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
 		incentivepage.waitTillAllQnBElementLoad();
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
-		incentivepage.addProductWithMultipleTiers(jsonData.get("productName"),jsonData.get("tierCount"));
+		incentivepage.addProductWithMultipleTiers(jsonData.get("productName"), jsonData.get("tierCount"));
 		incentivepage.addFormula(incentivepage.gridFormula, incentivepage.ddlQualificationFormulaEdit,
 				incentivepage.ddlQualificationFormula, incentivepage.ddlFormulaValue);
 		incentivepage.addTiers(incentivepage.gridT1, incentivepage.pencilEditTierT1T2T3.get(0), incentivepage.txtT1,
@@ -114,7 +114,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 				jsonData.get("tier2"));
 		incentivepage.addTiers(incentivepage.gridT3, incentivepage.pencilEditTierT1T2T3.get(2), incentivepage.txtT1,
 				jsonData.get("tier3"));
-		
+
 		incentivepage.addFormula(incentivepage.gridFormula, incentivepage.ddlBenefitFormulaEdit,
 				incentivepage.ddlBenefitFormula, incentivepage.ddlFormulaValue);
 		incentivepage.addTiers(incentivepage.gridT1, incentivepage.pencilEditBenefitT1T2T3.get(0), incentivepage.txtT1,
@@ -123,12 +123,13 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 				jsonData.get("Benefit2"));
 		incentivepage.addTiers(incentivepage.gridT3, incentivepage.pencilEditBenefitT1T2T3.get(2), incentivepage.txtT1,
 				jsonData.get("Benefit3"));
-		
+
 		incentivepage.save(incentivepage.btnSave);
 		incentivepage.getErrorMessage(incentivepage.gridErrorMessage.get(0), incentivepage.txtErrorMessage);
 		softassert.assertEquals("Tier value should be incremental", incentivepage.txtErrorMessage.getText());
 		softassert.assertAll();
 	}
+
 	@Test(description = "TC 574 Adding multiple products with multiple searches on Benefit only and Tiered incentive", groups = {
 			"Regression", "UI", "Medium" })
 	public void VerifyMultipleSearchTieredIncentive() throws Exception {
@@ -142,12 +143,13 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
 		softassert.assertEquals(true, incentivepage.ddldefaultProduct.isDisplayed());
 		softassert.assertEquals(jsonData.get("productValue"), incentivepage.comboboxvalue.get(0).getAttribute("title"));
-		softassert.assertEquals(jsonData.get("categoryValue"), incentivepage.comboboxvalue.get(1).getAttribute("title"));
+		softassert.assertEquals(jsonData.get("categoryValue"),
+				incentivepage.comboboxvalue.get(1).getAttribute("title"));
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
 		genericPage.waitTillPageContentLoad();
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
-	    softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
+		softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		softassert.assertEquals(jsonData.get("Selected(2)"), incentivepage.btnSelected.getText());
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
@@ -162,6 +164,38 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		softassert.assertEquals(true, incentivepage.gridT3.isDisplayed());
 		softassert.assertAll();
 	}
+
+	@Test(description = "TC-522 Verify for the Alias names and the Section IDs provided for the QnB Line Items", groups = {
+			"Regression", "UI", "Low" })
+	public void VerifyAliasNameAndSectionId() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
+				benefitProductQnB);
+
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProduct");
+		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		incentivepage.waitTillAllQnBElementLoad();
+
+		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
+		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
+		genericPage.waitTillPageContentLoad();
+		genericPage.doubleClick(incentivepage.checkbox.get(0));
+		genericPage.doubleClick(incentivepage.checkbox.get(0));
+		genericPage.doubleClick(incentivepage.checkbox.get(0));
+		genericPage.clickButton(incentivepage.btnSelected).clickButton(incentivepage.btnAdd)
+				.clickButton(incentivepage.btnShowAction)
+				.moveToElementAndClick(incentivepage.btnDelete, incentivepage.btnDelete);
+		incentivepage.btnConfirmDelete.click();
+		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
+		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption)
+				.doubleClick(incentivepage.checkbox.get(0)).clickButton(incentivepage.btnSelected)
+				.clickButton(incentivepage.btnAdd);
+		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
+		softassert.assertEquals(jsonData.get("sectionId"), incentivepage.txtSectionID.getText());
+		softassert.assertAll();
+	}
+
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();

@@ -65,10 +65,11 @@ public class GenericPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public void doubleClick(WebElement element) throws Exception {
+	public GenericPage doubleClick(WebElement element) throws Exception {
 		Actions builder = new Actions(driver);
 		sfdcAcolyte.waitTillElementIsVisible(element);
 		builder.doubleClick(element).build().perform();
+		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
 	public GenericPage clickWhenElementIsVisibleAndClickable(WebElement element) throws Exception {
@@ -87,10 +88,11 @@ public class GenericPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public void moveToElementAndClick(WebElement element, WebElement ele) throws Exception {
+	public GenericPage moveToElementAndClick(WebElement element, WebElement ele) throws Exception {
 		Actions action = new Actions(driver);
 		sfdcAcolyte.waitTillElementIsVisible(element);
 		action.moveToElement(element).moveToElement(ele).click().build().perform();
+		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
 	public void waitTillPageContentLoad() throws InterruptedException {
