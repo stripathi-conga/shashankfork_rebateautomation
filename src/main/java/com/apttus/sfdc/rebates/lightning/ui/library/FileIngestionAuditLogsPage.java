@@ -29,7 +29,6 @@ public class FileIngestionAuditLogsPage extends GenericPage {
 	}
 
 	public boolean verifyHeaders(List<String> headerData) throws Exception {
-		//Thread.sleep(10000);
 		waitTillPageContentLoad();
 		List<String> headerValues = new ArrayList<String>();
 		int i = 2;
@@ -41,8 +40,6 @@ public class FileIngestionAuditLogsPage extends GenericPage {
 		}
 		Collections.sort(headerData);
         Collections.sort(headerValues);
-        System.out.println("headerData : "+headerData);
-        System.out.println("headerValues : "+headerValues);
 		boolean verifyHeader = headerData.equals(headerValues);		
 		return verifyHeader;
 	}
