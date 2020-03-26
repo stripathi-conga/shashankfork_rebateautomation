@@ -154,7 +154,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		templatePage = homepage.navigateToTemplates();
 		templatePage.searchTemplateName(cimAdmin.getTemplateData().getName());
 		templatePage.changeInLineStatus();
-		softassert.assertEquals(RebatesConstants.messageChangesSuccessfull, genericPage.txtToastMessage.getText());
+		softassert.assertEquals(RebatesConstants.messageChangesSuccessful, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
 	
@@ -171,10 +171,9 @@ public class TestTemplateUI extends UnifiedFramework {
 		templatePage = homepage.navigateToTemplates();
 		templatePage.searchTemplateName(cimAdmin.getTemplateData().getName());
 		templatePage.changeInLineStatus();
-		softassert.assertEquals(RebatesConstants.messageChangesSuccessfull, genericPage.txtToastMessage.getText());
+		softassert.assertEquals(RebatesConstants.messageChangesSuccessful, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
-
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
