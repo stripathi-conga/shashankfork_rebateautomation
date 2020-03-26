@@ -191,7 +191,8 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption)
 				.doubleClick(incentivepage.checkbox.get(0)).clickButton(incentivepage.btnSelected)
 				.clickButton(incentivepage.btnAdd);
-		softassert.assertEquals(RebatesConstants.sectionId, incentivepage.txtSectionID6.getText());
+		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
+		softassert.assertEquals(jsonData.get("sectionId"), incentivepage.txtSectionID6.getText());
 		softassert.assertAll();
 	}
 
