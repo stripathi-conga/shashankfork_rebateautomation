@@ -57,7 +57,7 @@ public class TestAuditLogsUI {
 
 		fileIngestionAuditLogsPage = homepage.navigatetoFileIngestionAuditLogsListView(RebatesConstants.listViewAll);
 		jsonData = efficacies.readJsonElement("CIMAdminUIData.json", "fileAuditLogsHeaders");
-		List<String> headerValues = SFDCHelper.getListOfString(jsonData.get("Headers"));
+		List<String> headerValues = SFDCHelper.convertStringToList(jsonData.get("Headers"));
 		softassert.assertEquals(fileIngestionAuditLogsPage.verifyHeaders(headerValues), true,
 				"Verify File Audit Logs Page Header");
 		softassert.assertEquals(fileIngestionAuditLogsPage.getGridViewData(), true,

@@ -260,7 +260,7 @@ public class SFDCHelper {
 		}
 	}
 
-	public static List<String> getListOfString(String inputData) {
+	public static List<String> convertStringToList(String inputData) {
 		List<String> data = new ArrayList<String>();
 		String[] arrData = inputData.split(";");
 		for (String value : arrData) {
