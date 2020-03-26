@@ -39,7 +39,7 @@ public class FileIngestionAuditLogsPage extends GenericPage {
 			i++;
 		}
 		Collections.sort(headerData);
-        Collections.sort(headerValues);
+		Collections.sort(headerValues);
 		boolean verifyHeader = headerData.equals(headerValues);		
 		return verifyHeader;
 	}
