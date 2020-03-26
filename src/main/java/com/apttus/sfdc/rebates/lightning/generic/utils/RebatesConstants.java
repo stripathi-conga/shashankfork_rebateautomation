@@ -65,4 +65,5 @@ public class RebatesConstants {
 	public static final String newPath = "new";
 	public static final String editPath = "edit";
 	public static final String messageChangesSuccessful = "Your changes are saved.";
+	public static final String sectionId="SEC-00000006";
 }

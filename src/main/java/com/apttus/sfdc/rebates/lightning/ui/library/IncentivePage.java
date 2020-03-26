@@ -142,7 +142,7 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//*[text()='Delete']")
 	public WebElement btnDelete;
 	
-	@FindBy(xpath = "//*[text()='SEC-00000006']")
+	@FindBy(xpath = "//tr[1]/th[@data-label='Section Id']//*[text()]")
 	public WebElement txtSectionID6;
 	
 	@FindBy(xpath = "//*[@class='slds-button slds-button_brand slds-button_destructive']")
