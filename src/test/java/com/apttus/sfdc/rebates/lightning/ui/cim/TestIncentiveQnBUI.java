@@ -118,11 +118,11 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		incentivepage.addFormula(incentivepage.gridFormula, incentivepage.ddlBenefitFormulaEdit,
 				incentivepage.ddlBenefitFormula, incentivepage.ddlFormulaValue);
 		incentivepage.addTiers(incentivepage.gridT1, incentivepage.pencilEditBenefitT1T2T3.get(0), incentivepage.txtT1,
-				jsonData.get("Binefit1"));
+				jsonData.get("Benefit1"));
 		incentivepage.addTiers(incentivepage.gridT2, incentivepage.pencilEditBenefitT1T2T3.get(1), incentivepage.txtT1,
-				jsonData.get("Binefit2"));
+				jsonData.get("Benefit2"));
 		incentivepage.addTiers(incentivepage.gridT3, incentivepage.pencilEditBenefitT1T2T3.get(2), incentivepage.txtT1,
-				jsonData.get("Binefit3"));
+				jsonData.get("Benefit3"));
 		
 		incentivepage.save(incentivepage.btnSave);
 		incentivepage.getErrorMessage(incentivepage.gridErrorMessage.get(0), incentivepage.txtErrorMessage);
