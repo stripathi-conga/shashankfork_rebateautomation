@@ -7,6 +7,7 @@ public class URLGeneratorUI {
 	public String incentiveURL = "Apttus_Config2__Incentive__c/{incentiveId}/{view}";
 	public String templatesURL = "IncentiveProgramTemplate__c/{templateId}/{view}";
 	public String dataSourceURL = "DataSource__c/{dataSourceId}/{view}";
+	public String fileIngestionAuditLogsURL = "FileIngestionLogSummary__x/{runId}/{view}";
 	public String editPath = "r";
 	public String homePath = "o";
 	public String incentiveEditURL;
@@ -15,6 +16,7 @@ public class URLGeneratorUI {
 	public String templateEditURL;
 	public String dataSourceNewURL;
 	public String dataSourceEditURL;
+	public String fileIngestionAuditLogsListURL;
 
 	public URLGeneratorUI(Properties configProperties) {
 
@@ -24,5 +26,6 @@ public class URLGeneratorUI {
 		dataSourceNewURL = configProperties.getProperty("baseURLUI").replace("{path}", homePath) + dataSourceURL;
 		templateEditURL = configProperties.getProperty("baseURLUI").replace("{path}", editPath) + templatesURL;
 		dataSourceEditURL=configProperties.getProperty("baseURLUI").replace("{path}", editPath) + dataSourceURL;
+		fileIngestionAuditLogsListURL = configProperties.getProperty("baseURLUI").replace("{path}", homePath) + fileIngestionAuditLogsURL;
 	}
 }

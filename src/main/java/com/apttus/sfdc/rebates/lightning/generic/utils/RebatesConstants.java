@@ -43,7 +43,7 @@ public class RebatesConstants {
 	public static final String paymentFrequencyQuarterly = "Quarterly";
 	public static final String paymentFrequencyHalfYearly = "Half Yearly";
 
-	/* UI Constants ------------------------------------------ */
+	/*----------------- UI Constants --------------------- */
 	public static final String messagequalificationformulavalidation = "No data to display";
 	public static final String mandatoryMessageBenefitFormula = "Benefit formula is required";
 	public static final String mandatoryMessageUnsavedChanges = "Please save the unsaved changes to activate the Incentive";
@@ -65,4 +65,7 @@ public class RebatesConstants {
 	public static final String newPath = "new";
 	public static final String editPath = "edit";
 	public static final String messageChangesSuccessful = "Your changes are saved.";
+	public static final String viewAll = "All";
+	public static final String recentlyViewed = "Recently Viewed";
+	public static final String listViewAll= "list?filterName=All";
 }
