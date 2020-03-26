@@ -134,7 +134,20 @@ public class IncentivePage extends GenericPage {
 	public WebElement btnSelected;
 	@FindBy(xpath = "//lightning-primitive-cell-checkbox")
 	public List<WebElement> checkbox;
-
+	
+	//div 10 is show Action button for Benefit Only. 
+	@FindBy(xpath = "//tr[1]/td[10]//button")
+	public WebElement btnShowAction;
+	
+	@FindBy(xpath = "//*[text()='Delete']")
+	public WebElement btnDelete;
+	
+	@FindBy(xpath = "//*[text()='SEC-00000006']")
+	public WebElement txtSectionID6;
+	
+	@FindBy(xpath = "//*[@class='slds-button slds-button_brand slds-button_destructive']")
+	public WebElement btnConfirmDelete;
+	
 	GenericPage genericPage;
 	WebDriverWait wait;
 
