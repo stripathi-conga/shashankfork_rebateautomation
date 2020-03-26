@@ -118,4 +118,10 @@ public class HomePage extends GenericPage {
 				RebatesConstants.viewPath));
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
+	
+	public FileIngestionAuditLogsPage navigatetoFileIngestionAuditLogsListView(String listView) throws Exception {
+		sfdcAcolyte.navigateTo(urlGeneratorUI.fileIngestionAuditLogsListURL.replace("{runId}", "").
+				replace("/{view}", listView));		
+		return PageFactory.initElements(driver, FileIngestionAuditLogsPage.class);		
+	}
 }

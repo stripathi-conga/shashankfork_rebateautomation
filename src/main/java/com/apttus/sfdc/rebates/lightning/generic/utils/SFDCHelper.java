@@ -259,4 +259,13 @@ public class SFDCHelper {
 			throw new ApplicationException("Getting run time error while using getCIMDateValue : " + e);
 		}
 	}
+
+	public static List<String> getListOfString(String inputData) {
+		List<String> data = new ArrayList<String>();
+		String[] arrData = inputData.split(";");
+		for (String value : arrData) {
+			data.add(value);
+		}
+		return data;
+	}
 }

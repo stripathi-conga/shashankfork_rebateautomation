@@ -17,17 +17,21 @@ public class GenericPage {
 	@FindBy(xpath = "//div/button[@title='Close']")
 	public WebElement btnCloseToastMessage;
 
+	@FindBy(xpath = "//span[text()='Select List View']")
+	public WebElement ddlView;
+
 	public WebDriver driver;
 	public Acolyte sfdcAcolyte;
 	public int waitTime = 40;
 	public String fieldLabel = ".labelCol";
-	String lnkTemplateId = "//*[@data-recordid='OPTION']";
-	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
+	public String lnkTemplateId = "//*[@data-recordid='OPTION']";
+	public String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
 	public String lblQualificationFormulaPath;
 	public String lblBenefitFormulaIdPath;
-
+	public String ddlSelectView = "//ul[@class = 'slds-dropdown__list slds-show']//span[text()='OPTION']";
+	public String selectViewType;
+	
 	public GenericPage(WebDriver driver) {
-
 		this.driver = driver;
 		sfdcAcolyte = new Acolyte(driver);
 		sfdcAcolyte.setWaitTime(60);
@@ -96,8 +100,12 @@ public class GenericPage {
 	}
 
 	public void waitTillPageContentLoad() throws InterruptedException {
-		Thread.sleep(2000);
-		
+		Thread.sleep(5000);		
 	}
-
+	
+	public void switchViews(String viewType) throws Exception {
+		sfdcAcolyte.waitTillElementIsClickable(ddlView).click(ddlView);
+		selectViewType = ddlSelectView.replace("OPTION", viewType);
+		sfdcAcolyte.waitTillElementIsClickable(By.xpath(selectViewType)).click(By.xpath(selectViewType));
+	}
 }
