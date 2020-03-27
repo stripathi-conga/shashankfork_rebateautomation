@@ -1,0 +1,5 @@
+{
+	"fileAuditLogsHeaders": {
+		"Headers": "Run Id;Start Date/Time;End Date/Time;Duration;Status;Summary Log"
+	}
+}
