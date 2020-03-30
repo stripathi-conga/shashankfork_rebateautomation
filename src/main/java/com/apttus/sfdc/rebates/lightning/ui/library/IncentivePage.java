@@ -196,7 +196,7 @@ public class IncentivePage extends GenericPage {
 	public void addProductWithMultipleTiers(String product, String tiercount) throws Exception {
 		genericPage.clickWhenElementIsVisibleAndClickable(btnAddproduct)
 				.WaitClickAndSendKey(txtbxSearchProduct, product).clearAndSendKeys(txtEditNoOfTiers, tiercount);
-		genericPage.waitTillPageContentLoad();
+		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
 		sfdcAcolyte.click(ddlSelectOption).click(ddldefaultProduct);
 		genericPage.clickWhenElementIsVisibleAndClickable(chkProduct).clickWhenElementIsVisibleAndClickable(btnAdd);
 

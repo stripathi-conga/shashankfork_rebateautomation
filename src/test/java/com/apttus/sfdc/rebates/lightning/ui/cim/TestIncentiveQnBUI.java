@@ -147,7 +147,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 				incentivepage.comboboxvalue.get(1).getAttribute("title"));
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
-		genericPage.waitTillPageContentLoad();
+		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
@@ -179,7 +179,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
-		genericPage.waitTillPageContentLoad();
+		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
