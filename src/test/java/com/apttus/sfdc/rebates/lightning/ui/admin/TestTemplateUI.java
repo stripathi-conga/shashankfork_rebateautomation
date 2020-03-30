@@ -78,7 +78,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		templatePage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
-		genericPage.waitTillPageContentLoad();
+		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
 	    genericPage.clickButton(templatePage.ddlQBselect);
 	    genericPage.clickButton(templatePage.ddlBenefitProductDetails);
 	    templatePage.addDataSource(cimAdmin);

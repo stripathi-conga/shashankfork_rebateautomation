@@ -145,7 +145,7 @@ public class TemplatePage extends GenericPage {
 	}
 
 	public TemplatePage changeInLineStatus() throws Exception {
-		genericPage.waitTillPageContentLoad();
+		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
 		genericPage.doubleClick(lnkInlineEdit);
 		genericPage.clickElement(lnkInlineDraft).clickWhenElementIsVisibleAndClickable(lnkInlineActive)
 				.clickWhenElementIsVisibleAndClickable(btnInLineSave);

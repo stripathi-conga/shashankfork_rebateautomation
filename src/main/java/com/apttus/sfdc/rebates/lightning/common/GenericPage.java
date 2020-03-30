@@ -94,7 +94,7 @@ public class GenericPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public void waitTillPageContentLoad() throws InterruptedException {		
-		Thread.sleep(5000);	// Wait for 5 seconds
+	public void waitTillPageContentLoad(int waitTimeMilliseconds) throws InterruptedException {		
+		Thread.sleep(waitTimeMilliseconds);
 	}
 }
