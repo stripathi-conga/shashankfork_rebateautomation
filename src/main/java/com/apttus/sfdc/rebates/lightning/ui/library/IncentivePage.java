@@ -148,6 +148,12 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//*[@class='slds-button slds-button_brand slds-button_destructive']")
 	public WebElement btnConfirmDelete;
 	
+	
+	//*[@placeholder='Enter name to search']
+	//label[text()='Result based on search "3853"']
+	//span[text()='Select Item 1']
+	//lightning-primitive-cell-button
+	
 	GenericPage genericPage;
 	WebDriverWait wait;
 
