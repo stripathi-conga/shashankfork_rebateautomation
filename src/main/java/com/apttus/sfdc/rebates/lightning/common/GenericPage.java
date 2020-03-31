@@ -21,13 +21,12 @@ public class GenericPage {
 	public Acolyte sfdcAcolyte;
 	public int waitTime = 40;
 	public String fieldLabel = ".labelCol";
-	String lnkTemplateId = "//*[@data-recordid='OPTION']";
-	String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
+	public String lnkTemplateId = "//*[@data-recordid='OPTION']";
+	public String lnkFormulaTab = "//*[@data-row-key-value='OPTION']";
 	public String lblQualificationFormulaPath;
 	public String lblBenefitFormulaIdPath;
 
 	public GenericPage(WebDriver driver) {
-
 		this.driver = driver;
 		sfdcAcolyte = new Acolyte(driver);
 		sfdcAcolyte.setWaitTime(60);
@@ -95,9 +94,7 @@ public class GenericPage {
 		return PageFactory.initElements(driver, GenericPage.class);
 	}
 
-	public void waitTillPageContentLoad() throws InterruptedException {
-		Thread.sleep(2000);
-		
+	public void waitTillPageContentLoad(int waitTimeMilliseconds) throws InterruptedException {		
+		Thread.sleep(waitTimeMilliseconds);
 	}
-
 }
