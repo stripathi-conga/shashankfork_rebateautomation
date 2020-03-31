@@ -10,6 +10,7 @@ public class RebatesConstants {
 	public static String incentiveTemplateIdBenefitProductDiscrete;
 	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
 	
+	
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;
 	public static final int responseNocontent = 204;
@@ -68,4 +69,7 @@ public class RebatesConstants {
 	public static final String viewAll = "All";
 	public static final String recentlyViewed = "Recently Viewed";
 	public static final String listViewAll= "list?filterName=All";
+	public static final int waitFor2Sec=2000;
+	public static final int waitFor3Sec=3000;
+	public static final int waitFor1min=60000;
 }
