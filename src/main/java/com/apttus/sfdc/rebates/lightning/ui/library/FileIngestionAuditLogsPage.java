@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 
 public class FileIngestionAuditLogsPage extends GenericPage {
 
@@ -29,7 +30,7 @@ public class FileIngestionAuditLogsPage extends GenericPage {
 	}
 
 	public boolean verifyHeaders(List<String> headerData) throws Exception {
-		waitTillPageContentLoad(9000); // Wait for 9 seconds
+		waitTillPageContentLoad(RebatesConstants.waitFor1min); // Wait for 9 seconds
 		List<String> headerValues = new ArrayList<String>();
 		int i = 2;
 		for (WebElement e : tblNonSortableHeader) {
