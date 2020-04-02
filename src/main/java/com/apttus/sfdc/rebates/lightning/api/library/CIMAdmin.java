@@ -78,7 +78,7 @@ public class CIMAdmin {
 	public String createDataSource(Map<String, String> testData) throws ApplicationException {
 		String dataSourceId;
 		try {
-			dataSourceId = getDataSourceViaTransactionLineObjectName(testData);
+			dataSourceId = getDataSourceForTransactionLineObjectName(testData);
 			if (dataSourceId == null) {
 				requestString = dataSourceData.createDataSourceRequest(testData, this);
 				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
@@ -94,10 +94,10 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response getDataSourceViaId(String dataSourceId) throws ApplicationException {
+	public Response getDataSourceForId(String dataSourceId) throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.getData(urlGenerator.getDataSourceViaIdURL.replace("{DataSourceId}", dataSourceId));
+					.getData(urlGenerator.getDataSourceForIdURL.replace("{DataSourceId}", dataSourceId));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
@@ -105,11 +105,11 @@ public class CIMAdmin {
 		}
 	}
 	
-	public String getDataSourceViaTransactionLineObjectName(Map<String, String> testData)
+	public String getDataSourceForTransactionLineObjectName(Map<String, String> testData)
 			throws ApplicationException {
 		String incentiveDataSourceId=null;
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getDataSourceViaLineObjectNameURL
+			response = sfdcRestUtils.getData(urlGenerator.getDataSourceForLineObjectNameURL
 					.replace("{TransactionLineObjectName}", testData.get("TransactionLineObjectName__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);		
 			int size = parser.parse(response.getBody().asString()).getAsJsonObject()
@@ -287,7 +287,7 @@ public class CIMAdmin {
 	public Response getLinkTemplatesViaId() throws ApplicationException {
 		String linkTemplateName;
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIDURL.replace("{LinkTemplateId}",
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesForIDURL.replace("{LinkTemplateId}",
 					linkTemplatesData.getLinkTemplateId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			linkTemplateName = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records")
@@ -301,7 +301,7 @@ public class CIMAdmin {
 
 	public Response getLinkTemplatesViaIncentiveTypeAndSubtype(Map<String, String> testData) throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIncentiveTypeAndSubtypeURL
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesForIncentiveTypeAndSubtypeURL
 					.replace("{IncentiveType}", testData.get("IncentiveType__c")).replace("{IncentiveSubType}", testData.get("IncentiveSubType__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;

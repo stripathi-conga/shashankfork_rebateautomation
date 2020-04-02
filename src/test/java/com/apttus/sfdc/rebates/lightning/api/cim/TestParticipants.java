@@ -81,7 +81,7 @@ public class TestParticipants extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantThree");
 		cim.addParticipants(jsonData);
 		cim.deleteParticipants();
-		response = cim.getParticipantIdViaIncentiveId();
+		response = cim.getParticipantIdForIncentiveId();
 		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
 	}
 

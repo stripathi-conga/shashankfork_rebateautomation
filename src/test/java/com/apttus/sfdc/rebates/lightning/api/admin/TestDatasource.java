@@ -50,10 +50,10 @@ public class TestDatasource extends UnifiedFramework {
 	public void createNewDataSource() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
 		String dataSourceId = cimAdmin.createDataSource(jsonData);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateGetDataSource(response, dataSourceId);
 		cimAdmin.deleteDataSource(dataSourceId);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 
@@ -62,7 +62,7 @@ public class TestDatasource extends UnifiedFramework {
 	public void createCalculationFormula() throws Exception {
 		String dataSourceId = cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
 		cimAdmin.deleteDataSource(dataSourceId);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 
@@ -74,10 +74,10 @@ public class TestDatasource extends UnifiedFramework {
 				"createNewDataSourceMultipleFileExtension");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		String dataSourceId = cimAdmin.createDataSource(jsonData);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateGetDataSource(response, dataSourceId);
 		cimAdmin.deleteDataSource(dataSourceId);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 
@@ -91,10 +91,10 @@ public class TestDatasource extends UnifiedFramework {
 		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceTwoFileExtension");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		String dataSourceId = cimAdmin.createDataSource(jsonData);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateGetDataSource(response, dataSourceId);
 		cimAdmin.deleteDataSource(dataSourceId);
-		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 }

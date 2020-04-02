@@ -32,10 +32,10 @@ public class CIMHelper {
 	
 	public void deleteDataSourceForIncentive(CIMAdmin cimAdmin) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceOrderLineItem");
-		String id = cimAdmin.getDataSourceViaTransactionLineObjectName(jsonData);
+		String id = cimAdmin.getDataSourceForTransactionLineObjectName(jsonData);
 		if (id != null) {
 			cimAdmin.deleteDataSource(id);
-			response = cimAdmin.getDataSourceViaId(id);
+			response = cimAdmin.getDataSourceForId(id);
 			responseValidator.validateDeleteSuccess(response);
 		}
 	}

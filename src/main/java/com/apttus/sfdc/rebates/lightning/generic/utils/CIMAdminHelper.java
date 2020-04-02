@@ -18,7 +18,6 @@ public class CIMAdminHelper {
 	public Response response;
 	public ResponseValidatorBase responseValidator;
 	public String fieldExpressionId;
-	public String dataSourceIdCIMAdmin;
 
 	public CIMAdminHelper() throws Exception {
 		efficacies = new Efficacies();
@@ -42,12 +41,12 @@ public class CIMAdminHelper {
 		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdQualification, fieldExpressionId);
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdQualification, fieldExpressionId);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
-		dataSourceIdCIMAdmin = cimAdmin.createDataSource(jsonData);
+		String dataSourceId = cimAdmin.createDataSource(jsonData);
 		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
-		return dataSourceIdCIMAdmin;
+		return dataSourceId;
 	}
 
 	public String createDataSourceAndFormulasForDiscrete(CIMAdmin cimAdmin) throws Exception {
@@ -61,10 +60,10 @@ public class CIMAdminHelper {
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdBenefit, fieldExpressionId);
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdQualification, fieldExpressionId);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
-		dataSourceIdCIMAdmin = cimAdmin.createDataSource(jsonData);
+		String dataSourceId = cimAdmin.createDataSource(jsonData);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
-		return dataSourceIdCIMAdmin;
+		return dataSourceId;
 	}
 
 	public Response createAndValidateTemplate(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
