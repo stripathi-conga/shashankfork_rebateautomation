@@ -43,13 +43,13 @@ public class CreateNewAccountPojo {
 
 	public String createNewAccountRequest(String accountName) {
 		CreateNewAccountPojo createAccount = new CreateNewAccountPojo();
-		String account = "Rebates_Auto_Account_" + SFDCHelper.randomNumberGenerator();
-		createAccount.setAccountNumber(account);
-		createAccount.setType("Customer");
 		createAccount.setName(accountName);
-		if (accountName.equalsIgnoreCase("{RANDOM}")) {
-			createAccount.setName(account);
-		}		
+		if (accountName != null) {
+			if (accountName.equalsIgnoreCase("{RANDOM}")) {
+				createAccount.setName("Rebates_Auto_Account_" + SFDCHelper.randomNumberGenerator());
+			}
+		}
+		createAccount.setType("Customer - Direct");
 		createAccount.setActive__c("Yes");
 		return new Gson().toJson(createAccount);
 	}

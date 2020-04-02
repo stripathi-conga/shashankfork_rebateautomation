@@ -23,7 +23,7 @@ import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
-public class TestDataSourceUI extends UnifiedFramework {
+public class TestDataSourceUI extends UnifiedFramework{
 
 	WebDriver driver;
 	LoginPage loginPage;
@@ -71,28 +71,33 @@ public class TestDataSourceUI extends UnifiedFramework {
 		dataSourcePage.clickSave();
 		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountLocation");
+		
 		dataSourcePage.verifyValidationMessageForTransactionLineObject();
-
 		softassert.assertEquals(RebatesConstants.messageMandatoryTransactionLineObject,
 				dataSourcePage.txtToastMessage.getText());
+		
 		dataSourcePage.verifyValidationMessageForCalculationDate();
 		softassert.assertEquals(RebatesConstants.messageMandatoryCalculationDate,
 				dataSourcePage.txtToastMessage.getText());
+		
 		dataSourcePage.verifyValidationMessageForProduct();
 		softassert.assertEquals(RebatesConstants.messageMandatoryProduct, dataSourcePage.txtToastMessage.getText());
+		
 		dataSourcePage.verifyValidationMessageForIncentiveAccount();
 		softassert.assertEquals(RebatesConstants.messageMandatoryIncentiveAccount,
 				dataSourcePage.txtToastMessage.getText());
+		
 		dataSourcePage.verifyValidationMessageForFileSuffixToIgnore();
 		softassert.assertEquals(RebatesConstants.messageMandatoryFileSuffix, dataSourcePage.txtToastMessage.getText());
+		
 		dataSourcePage.verifyValidationMessageForFileExtension(jsonData);
 		softassert.assertEquals(RebatesConstants.messageMandatoryFileExtension,
 				dataSourcePage.txtToastMessage.getText());
+		
 		dataSourcePage.verifyValidationMessageForRecordDelimter();
 		softassert.assertEquals(RebatesConstants.messageMandatoryRecordDelimter,
 				dataSourcePage.txtToastMessage.getText());
-
 		softassert.assertAll();
 	}
 
@@ -100,17 +105,16 @@ public class TestDataSourceUI extends UnifiedFramework {
 			"Regression", "Medium", "UI" })
 	public void verifyDataSourceMappedFormula() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 
-		dataSourcePage = homepage.navigateToEditDataSource(cimAdmin.dataSourceData.getDataSourceId());
-		genericPage.moveToFormulaTab(cimAdminHelper.stepCalcFormulaIdQualification,
-				cimAdminHelper.stepCalcFormulaIdBenefit, dataSourcePage.lblRelatedTab);
-		genericPage.moveToFormulaTab(cimAdminHelper.nonStepCalcFormulaIdBenefit,
-				cimAdminHelper.nonStepCalcFormulaIdQualification, dataSourcePage.lblRelatedTab);
+		dataSourcePage = homepage.navigateToEditDataSource(RebatesConstants.incentiveDataSourceId);
+		genericPage.moveToFormulaTab(RebatesConstants.formulaDataMap.get("stepCalcFormulaIdQualification"),
+				RebatesConstants.formulaDataMap.get("stepCalcFormulaIdBenefit"), dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdBenefit"),
+				RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdQualification"), dataSourcePage.lblRelatedTab);
 		softassert.assertAll();
 	}
 
@@ -118,5 +122,5 @@ public class TestDataSourceUI extends UnifiedFramework {
 	public void tearDown() {
 		driver.manage().deleteAllCookies();
 		driver.quit();
-	}
+	}	 
 }

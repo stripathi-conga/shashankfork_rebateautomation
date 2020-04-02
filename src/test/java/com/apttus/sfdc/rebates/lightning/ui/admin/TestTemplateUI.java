@@ -72,7 +72,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Medium", "UI" })
 	public void verifyTemplateQualificationOnDiscrete() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -96,7 +95,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Regression", "UI", "High" })
 	public void verifyTemplateActivationAndNavigationViaTemplateName() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -113,7 +111,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Regression", "Medium", "UI" })
 	public void verifyTemplateTierQualificationBenefit() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "qualificationAndBenefitTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -129,7 +126,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Regression", "Medium", "UI" })
 	public void verifyTemplateMultipleQualificationDiscreteActivationViaDetailView() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 				"multipleQualificationAndBenefitDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
@@ -146,7 +142,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Regression", "UI", "High" })
 	public void verifyBenefitProductTemplateActivationViaListViewPage() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -163,7 +158,6 @@ public class TestTemplateUI extends UnifiedFramework {
 			"Regression", "UI", "High" })
 	public void verifyBenefitProductTierTemplateActivationViaListViewPage() throws Exception {
 
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -175,6 +169,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		softassert.assertEquals(RebatesConstants.messageChangesSuccessful, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
+	
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();

@@ -45,6 +45,9 @@ public class UnifiedFramework {
 		// ---- Deactivate the Active Link Template for LinkTemplate with SubType as Benefit Only Tiered ----
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
 		cim.deactivateLinkTemplateForIncentives(jsonData);
+		
+		//----- Delete Existing DataSource ------
+		cimHelper.deleteDataSourceForIncentive(cimAdmin);
 
 		// ----- Create Step and NonStep Formula Id's -----
 		cimHelper.createDataSourceAndFormulasForIncentives(cimAdmin);
@@ -55,7 +58,7 @@ public class UnifiedFramework {
 		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyTieredQnBLayoutId);
 		cimHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
-		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cimAdmin.getTemplateData().getTemplateId();
+		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cimAdmin.getTemplateData().getTemplateId();		
 
 		// ---- Create and activate Link Template for SubType as Benefit Only Tiered ----
 		String linkTemplateDataFromJson = "createNewLinkTemplateSubTypeTieredAPI";
@@ -71,7 +74,7 @@ public class UnifiedFramework {
 		String benefitOnlyDiscreteQnBLayoutId = cim.getQnBLayoutId(jsonData);
 
 		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyDiscreteQnBLayoutId);
-		cimHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimHelper.mapDataSourceAndFormulaToTemplateDiscrete(cimAdmin);
 		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
 		RebatesConstants.incentiveTemplateIdBenefitProductDiscrete = cimAdmin.getTemplateData().getTemplateId();
 
@@ -82,7 +85,7 @@ public class UnifiedFramework {
 	}
 
 	public void afterSuite() {
-
+		
 	}
 
 }

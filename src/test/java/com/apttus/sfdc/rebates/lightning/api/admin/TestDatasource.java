@@ -48,55 +48,53 @@ public class TestDatasource extends UnifiedFramework {
 
 	@Test(description = "TC215-Verify Create New Data Source", groups = { "Smoke", "API" })
 	public void createNewDataSource() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		response = cimAdmin.createDataSource(jsonData);
-		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getDataSource();
-		responseValidator.validateGetDataSource(response, cimAdmin);
-		cimAdmin.deleteDataSource();
-		response = cimAdmin.getDataSource();
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
+		String dataSourceId = cimAdmin.createDataSource(jsonData);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		responseValidator.validateGetDataSource(response, dataSourceId);
+		cimAdmin.deleteDataSource(dataSourceId);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 
 	@Test(description = "TC436-Verify creation of formula and link to data source", groups = { "Regression", "High",
 			"API" })
 	public void createCalculationFormula() throws Exception {
-		cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
-		cimAdmin.deleteDataSource();
-		response = cimAdmin.getDataSource();
+		String dataSourceId = cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
+		cimAdmin.deleteDataSource(dataSourceId);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 
 	@Test(description = "TC371- Verify the Data Source with multiple combination", groups = { "Regression", "Medium",
 			"API" })
 	public void createDataSourceMultipleFileExtension() throws Exception {
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
 		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json",
 				"createNewDataSourceMultipleFileExtension");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
-		response = cimAdmin.createDataSource(jsonData);
-		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getDataSource();
-		responseValidator.validateGetDataSource(response, cimAdmin);
-		cimAdmin.deleteDataSource();
-		response = cimAdmin.getDataSource();
+		String dataSourceId = cimAdmin.createDataSource(jsonData);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		responseValidator.validateGetDataSource(response, dataSourceId);
+		cimAdmin.deleteDataSource(dataSourceId);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 
-	@Test(description = "TC225-Verify different delimiters for the record delimiter field", groups = { "Regression", "Medium", "API" })
+	@Test(description = "TC225-Verify different delimiters for the record delimiter field", groups = { "Regression",
+			"Medium", "API" })
 	public void verifyDataSourceMandatoryFields() throws Exception {
-		response = cimAdmin.createDataSourceWithoutAnyFields();
+		response = cimAdmin.createDataSourceWithMissingFields();
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeMissingFields,
-				RebatesConstants.messageCreateDataSourceWithoutFields);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
+				RebatesConstants.messageCreateDataSourceWithMissingFields);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
 		jsonDataTemp = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceTwoFileExtension");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
-		response = cimAdmin.createDataSource(jsonData);
-		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getDataSource();
-		responseValidator.validateGetDataSource(response, cimAdmin);
-		cimAdmin.deleteDataSource();
-		response = cimAdmin.getDataSource();
+		String dataSourceId = cimAdmin.createDataSource(jsonData);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
+		responseValidator.validateGetDataSource(response, dataSourceId);
+		cimAdmin.deleteDataSource(dataSourceId);
+		response = cimAdmin.getDataSourceViaId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
 	}
 }

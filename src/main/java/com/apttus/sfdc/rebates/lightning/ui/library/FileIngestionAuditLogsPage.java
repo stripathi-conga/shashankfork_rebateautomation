@@ -30,7 +30,7 @@ public class FileIngestionAuditLogsPage extends GenericPage {
 	}
 
 	public boolean verifyHeaders(List<String> headerData) throws Exception {
-		waitTillPageContentLoad(RebatesConstants.waitFor1min); 
+		waitTillPageContentLoad(RebatesConstants.waitFor20Sec); 
 		List<String> headerValues = new ArrayList<String>();
 		int i = 2;
 		for (WebElement e : tblNonSortableHeader) {

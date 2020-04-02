@@ -1,5 +1,5 @@
 {
-	"createNewDataSourceAPI": {
+	"createNewDataSourceOrderLineItem": {
 		"Name": "{Random}",
 		"TransactionMetaData__c": "Apttus_Config2__OrderLineItem__c",
 		"TransactionLineObjectName__c": "Order Line Item",
@@ -13,6 +13,36 @@
 		"Delimiter__c": "\\u002c",
 		"ProductFieldName__c": "Product",
 		"RecordDelimiterName__c": "commas"
+	},
+	"createNewDataSourceAccountBillingSummary": {
+		"Name": "{Random}",
+		"TransactionMetaData__c": "Apttus_Config2__AccountBillingSummary__c",
+		"TransactionLineObjectName__c": "Account Billing Summary",
+		"CalculationDateAttr__c": "Apttus_Config2__LastCalculated__c",
+		"CalculationDateName__c": "Last Calculated",
+		"IncentiveAccountAttr__c": "Apttus_Config2__AccountId__c",
+		"IncentiveAccountFieldName__c": "Account",
+		"ProductAttr__c": "Benefit_Product__c",
+		"ProductFieldName__c": "Benefit Product",
+		"FileSuffixToignore__c": "test",
+		"Delimiter__c": "\\u002c",
+		"RecordDelimiterName__c": "commas",
+		"FileExtension__c": "csv"
+	},
+	"createNewDataSourceAccountLocation": {
+		"Name": "{Random}",
+		"TransactionMetaData__c": "Apttus_Config2__AccountLocation__c",
+		"TransactionLineObjectName__c": "Account Location",
+		"CalculationDateAttr__c": "Creation_Date__c",
+		"CalculationDateName__c": "Creation Date",
+		"IncentiveAccountAttr__c": "Apttus_Config2__AccountId__c",
+		"IncentiveAccountFieldName__c": "Account",
+		"ProductAttr__c": "Base_Product__c",
+		"ProductFieldName__c": "Base Product",
+		"FileSuffixToignore__c": "test",
+		"Delimiter__c": "\\u002c",
+		"RecordDelimiterName__c": "commas",
+		"FileExtension__c": "txt"
 	},
 	"createNewDataSourceMultipleFileExtension": {
 		"FileExtension__c": "csv,tsv,txt,dat,log"
@@ -54,7 +84,8 @@
 		"Sequence__c": "1",
 		"Status__c": "Active",
 		"Type__c": "Line"
-	},"createNewTemplateAPI": {
+	},
+	"createNewTemplateAPI": {
 		"Name": "{Random}",
 		"Status__c": "Draft",
 		"Description__c": "Automation"
@@ -66,7 +97,8 @@
 	"benefitOnlyTieredQnBLayoutAPI": {
 		"type__c": "Benefit Product",
 		"tier__c": "Tiered"
-	},"createNewLinkTemplateSubTypeTieredAPI": {
+	},
+	"createNewLinkTemplateSubTypeTieredAPI": {
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Tiered",
 		"Status__c": "Draft"

@@ -40,16 +40,16 @@ public class DataSourcePage extends GenericPage {
 	@FindBy(xpath = "//input[@name='Calculation Date Field']")
 	public WebElement ddlCalculationDate;
 
-	@FindBy(xpath = "//*[text()='Order Line Item']")
-	public WebElement ddlOrder;
+	@FindBy(xpath = "//*[text()='Account Location']")
+	public WebElement ddlAccountLocation;
 
-	@FindBy(xpath = "//*[text()='Start Date']")
+	@FindBy(xpath = "//*[text()='Creation Date']")
 	public WebElement ddlCalculationDateValue;
 
-	@FindBy(xpath = "//*[text()='Option']")
+	@FindBy(xpath = "//*[text()='Base Product']")
 	public WebElement ddlProductValue;
 
-	@FindBy(xpath = "//*[text()='Bill To']")
+	@FindBy(xpath = "//*[text()='Account']")
 	public WebElement ddlIncentiveAccountValue;
 
 	@FindBy(xpath = "//option[text()='txt']")
@@ -90,10 +90,9 @@ public class DataSourcePage extends GenericPage {
 		nameDataSource = "Rebates_Auto_DataSource_" + SFDCHelper.randomNumberGenerator();
 		sfdcAcolyte.waitTillElementIsVisible(txtDataSource).clickAndSendkeys(txtDataSource, nameDataSource);
 		sfdcAcolyte.click(ddlSelectTransMetaData).click(ddlSelectTransMetaData).click(ddlSelectTransMetaData)
-				.waitTillElementIsVisible(ddlOrder).waitTillElementIsClickable(ddlOrder).jsScrollAndClick(ddlOrder)
-				.click(btnSave);
+				.waitTillElementIsVisible(ddlAccountLocation).waitTillElementIsClickable(ddlAccountLocation)
+				.jsScrollAndClick(ddlAccountLocation).click(btnSave);
 		sfdcAcolyte.waitTillElementIsVisible(txtToastMessage);
-
 	}
 
 	public void verifyValidationMessageForProduct() throws Exception {
