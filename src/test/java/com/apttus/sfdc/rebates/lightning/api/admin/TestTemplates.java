@@ -222,7 +222,6 @@ public class TestTemplates extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		System.out.println("Admin Template ID Tiered : "+cimAdmin.getTemplateData().templateId);
 
 		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
