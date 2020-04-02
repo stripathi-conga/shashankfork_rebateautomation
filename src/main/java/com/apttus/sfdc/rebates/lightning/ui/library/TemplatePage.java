@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
+import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 
 public class TemplatePage extends GenericPage {
 
@@ -145,7 +146,7 @@ public class TemplatePage extends GenericPage {
 	}
 
 	public TemplatePage changeInLineStatus() throws Exception {
-		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
 		genericPage.doubleClick(lnkInlineEdit);
 		genericPage.clickElement(lnkInlineDraft).clickWhenElementIsVisibleAndClickable(lnkInlineActive)
 				.clickWhenElementIsVisibleAndClickable(btnInLineSave);

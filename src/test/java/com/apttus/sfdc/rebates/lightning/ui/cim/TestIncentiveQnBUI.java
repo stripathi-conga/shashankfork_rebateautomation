@@ -147,7 +147,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 				incentivepage.comboboxvalue.get(1).getAttribute("title"));
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
-		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
@@ -179,12 +179,13 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
-		genericPage.waitTillPageContentLoad(2000); // Wait for 2 seconds
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
-		genericPage.clickButton(incentivepage.btnSelected).clickButton(incentivepage.btnAdd)
-				.clickButton(incentivepage.btnShowAction)
+		genericPage.clickButton(incentivepage.btnSelected).clickButton(incentivepage.btnAdd);
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec);
+		genericPage.clickButton(incentivepage.btnShowAction)
 				.moveToElementAndClick(incentivepage.btnDelete, incentivepage.btnDelete);
 		incentivepage.btnConfirmDelete.click();
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
