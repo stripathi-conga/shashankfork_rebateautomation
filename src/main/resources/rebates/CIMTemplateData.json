@@ -10,7 +10,7 @@
 		"PayoutFrequency__c": "Monthly",
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Agreement Account",
-		"MeasurementFrequency__c": "Monthly",
+		"Apttus_Config2__RecurrenceFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Tiered"
@@ -27,7 +27,7 @@
 		"PayoutFrequency__c": "Monthly",
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Individual Participants",
-		"MeasurementFrequency__c": "Monthly",
+		"Apttus_Config2__RecurrenceFrequency__c": "Monthly",
 		"GracePeriod__c":0,
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",
@@ -44,7 +44,7 @@
 		"PayoutFrequency__c": "Monthly",
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Individual Participants",
-		"MeasurementFrequency__c": "Monthly",
+		"Apttus_Config2__RecurrenceFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Tiered"
@@ -61,7 +61,7 @@
 		"PayoutFrequency__c": "Monthly",
 		"PaymentMethod__c": "Credit Memo",
 		"MeasurementLevel__c": "Agreement Account",
-		"MeasurementFrequency__c": "Monthly",
+		"Apttus_Config2__RecurrenceFrequency__c": "Monthly",
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete"

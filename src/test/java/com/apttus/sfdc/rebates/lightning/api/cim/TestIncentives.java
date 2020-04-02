@@ -140,7 +140,7 @@ public class TestIncentives extends UnifiedFramework {
 		jsonData.put("ExpirationDate__c",
 				benefitProductQnB.getParticipantData().getIncentiveParticipant().getExpirationDate__c());
 		jsonArrayData.add(jsonData);
-		response = benefitProductQnB.getParticipantIdViaIncentiveId();
+		response = benefitProductQnB.getParticipantIdForIncentiveId();
 		responseValidator.validateAvailableParticipant(jsonArrayData, response, cim);
 
 		// ------------ Activate Incentive -------------------

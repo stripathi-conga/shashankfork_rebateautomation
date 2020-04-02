@@ -6,6 +6,7 @@ import java.util.Map;
 public class RebatesConstants {
 
 	// These values will be set in @BeforeSuite and used in all Incentive classes
+	public static String incentiveDataSourceId;
 	public static String incentiveTemplateIdBenefitProductTiered;
 	public static String incentiveTemplateIdBenefitProductDiscrete;
 	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
@@ -27,7 +28,7 @@ public class RebatesConstants {
 	public static final String messageMandatoryTemplatefields = "Mandatory fields missing to activate the template";
 	public static final String messageUpdateActiveInactiveTemplate = "Cannot change status from Active/Inactive to Draft";
 	public static final String messageDeleteActiveInactiveLinkTemplate = "Cannot delete Active or Inactive link.";
-	public static final String messageCreateDataSourceWithoutFields = "Required fields are missing: [FileExtension__c, FileSuffixToignore__c, TransactionMetaData__c]";
+	public static final String messageCreateDataSourceWithMissingFields = "Required fields are missing: [FileExtension__c, FileSuffixToignore__c, TransactionMetaData__c]";
 	public static final String messageChangeLinkTemplateStatusToDraft = "Cannot change Status from \"Active\" to \"Draft\"";
 	public static final String messageActiveMappingExists = "An active mapping already exists.";
 	public static final String messageBenefitDatesOutOfRange = "Benefits with dates outside the range of Incentive dates found";
@@ -71,5 +72,5 @@ public class RebatesConstants {
 	public static final String listViewAll= "list?filterName=All";
 	public static final int waitFor2Sec=2000;
 	public static final int waitFor3Sec=3000;
-	public static final int waitFor1min=60000;
+	public static final int waitFor20Sec=20000;
 }

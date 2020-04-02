@@ -24,16 +24,13 @@ public class ResponseValidatorBase {
 		softassert.assertAll();
 	}
 
-	public void validateGetDataSource(Response response, CIMAdmin cimAdmin) {
+	public void validateGetDataSource(Response response, String dataSourceId) {
 		softassert = new SoftAssert();
 		JsonObject resp = parser.parse(response.getBody().asString()).getAsJsonObject();
 		softassert.assertEquals(resp.get("totalSize").getAsInt(), 1, "Validate response size");
 		softassert.assertAll();
 		JsonObject records = resp.getAsJsonArray("records").get(0).getAsJsonObject();
-		softassert.assertEquals(records.get("Id").getAsString(), cimAdmin.getDataSourceData().getDataSourceId(),
-				"Validate datasource id");
-		softassert.assertEquals(records.get("Name").getAsString(), cimAdmin.getDataSourceData().getName(),
-				"Validate datasource name");		
+		softassert.assertEquals(records.get("Id").getAsString(), dataSourceId, "Validate datasource id");
 		softassert.assertAll();
 	}
 
@@ -97,18 +94,18 @@ public class ResponseValidatorBase {
 				"Validate Incentive BenefitLevel");
 		softassert.assertEquals(records.get("MeasurementLevel__c").getAsString(), testData.get("MeasurementLevel__c"),
 				"Validate Incentive MeasurementLevel");
-		softassert.assertEquals(records.get("Currency__c").getAsString(), testData.get("Currency__c"),
-				"Validate Incentive Currency");
+		softassert.assertEquals(records.get("Apttus_Config2__RecurrenceFrequency__c").getAsString(),
+				testData.get("Apttus_Config2__RecurrenceFrequency__c"), "Validate Incentive MeasurementFrequency");
 		softassert.assertEquals(records.get("Id").getAsString(), cim.incentiveData.getIncentiveId(),
 				"Validate Incentive Id");
 		softassert.assertEquals(records.get("Name").getAsString(), cim.incentiveData.getName(),
 				"Validate Incentive Name");
 		softassert.assertEquals(records.get("Apttus_Config2__UseType__c").getAsString(),
 				testData.get("Apttus_Config2__UseType__c"), "Validate Program UseType");
-		softassert.assertEquals(records.get("IncentiveType__c").getAsString(),
-				testData.get("IncentiveType__c"), "Validate Incentive Type");
-		softassert.assertEquals(records.get("IncentiveSubType__c").getAsString(),
-				testData.get("IncentiveSubType__c"), "Validate Incentive SubType");	 
+		softassert.assertEquals(records.get("IncentiveType__c").getAsString(), testData.get("IncentiveType__c"),
+				"Validate Incentive Type");
+		softassert.assertEquals(records.get("IncentiveSubType__c").getAsString(), testData.get("IncentiveSubType__c"),
+				"Validate Incentive SubType");
 		softassert.assertAll();
 	}
 

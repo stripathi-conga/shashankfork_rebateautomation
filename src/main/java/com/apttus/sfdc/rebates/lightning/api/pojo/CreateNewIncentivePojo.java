@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 public class CreateNewIncentivePojo {
 	
 	private String Apttus_Config2__Description__c;
-	private String MeasurementFrequency__c;
+	private String Apttus_Config2__RecurrenceFrequency__c;
 	private String ProgramTemplateId__c;	
 	private String Apttus_Config2__Status__c;
 	private String Apttus_Config2__ExpirationDate__c;
@@ -19,7 +19,6 @@ public class CreateNewIncentivePojo {
 	private String Apttus_Config2__UseType__c;
 	private String Name;
 	private String PayoutFrequency__c;
-	private String Currency__c;
 	private String MeasurementLevel__c;
 	private String BenefitLevel__c;
 	private String AccountId__c;
@@ -60,12 +59,12 @@ public class CreateNewIncentivePojo {
 		this.Apttus_Config2__Description__c = apttus_Config2__Description__c;
 	}
 
-	public String getMeasurementFrequency__c() {
-		return MeasurementFrequency__c;
+	public String getApttus_Config2__RecurrenceFrequency__c() {
+		return Apttus_Config2__RecurrenceFrequency__c;
 	}
 
-	public void setMeasurementFrequency__c(String measurementFrequency__c) {
-		this.MeasurementFrequency__c = measurementFrequency__c;
+	public void setApttus_Config2__RecurrenceFrequency__c(String apttus_Config2__RecurrenceFrequency__c) {
+		this.Apttus_Config2__RecurrenceFrequency__c = apttus_Config2__RecurrenceFrequency__c;
 	}
 
 	public String getProgramTemplateId__c() {
@@ -140,14 +139,6 @@ public class CreateNewIncentivePojo {
 		this.PayoutFrequency__c = payoutFrequency__c;
 	}
 
-	public String getCurrency__c() {
-		return Currency__c;
-	}
-
-	public void setCurrency__c(String currency__c) {
-		this.Currency__c = currency__c;
-	}
-
 	public String getMeasurementLevel__c() {
 		return MeasurementLevel__c;
 	}
@@ -204,8 +195,7 @@ public class CreateNewIncentivePojo {
 		if (testData.get("Apttus_Config2__ExpirationDate__c") != null) {
 			endDate = SFDCHelper.getCIMDateValue(testData.get("Apttus_Config2__ExpirationDate__c"),cim);
 			createNewIncentive.setApttus_Config2__ExpirationDate__c(endDate);
-		}		
-		createNewIncentive.setCurrency__c(testData.get("Currency__c"));
+		}
 		createNewIncentive.setApttus_Config2__Description__c("Automation Program");
 		createNewIncentive.setApttus_Config2__Status__c("New");
 		createNewIncentive.setApttus_Config2__UseType__c(testData.get("Apttus_Config2__UseType__c"));
@@ -213,7 +203,7 @@ public class CreateNewIncentivePojo {
 		createNewIncentive.setCalendar__c(testData.get("Calendar__c"));
 		createNewIncentive.setPaymentMethod__c(testData.get("PaymentMethod__c"));
 		createNewIncentive.setPayoutFrequency__c(testData.get("PayoutFrequency__c"));
-		createNewIncentive.setMeasurementFrequency__c(testData.get("MeasurementFrequency__c"));
+		createNewIncentive.setApttus_Config2__RecurrenceFrequency__c(testData.get("Apttus_Config2__RecurrenceFrequency__c"));
 		createNewIncentive.setMeasurementLevel__c(testData.get("MeasurementLevel__c"));
 		createNewIncentive.setProgramTemplateId__c(testData.get("ProgramTemplateId__c"));
 		createNewIncentive.setBenefitLevel__c(testData.get("BenefitLevel__c"));
@@ -246,7 +236,7 @@ public class CreateNewIncentivePojo {
     "MeasurementFrequency__c": "Monthly",
     "Program_Template_Id__c": "a593i000000LC4lAAG",
     "Apttus_Config2__Sequence__c": 1,
-    "Apttus_Config2__UseType__c": "Rebates 2.0",
+    "Apttus_Config2__UseType__c": "Rebates 2.0"
    
 }
 
@@ -266,7 +256,7 @@ public class CreateNewIncentivePojo {
     "AccountId__c": "0013i00000DDWZ0AAP",
     "Program_Template_Id__c": "a593i000000LC4lAAG",
     "Apttus_Config2__Sequence__c": 1,
-    "Apttus_Config2__UseType__c": "Rebates 2.0",
+    "Apttus_Config2__UseType__c": "Rebates 2.0"
   
 }
 */

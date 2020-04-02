@@ -48,7 +48,6 @@ public class TestTemplates extends UnifiedFramework {
 	@Test(description = "TC428-Verify for the creation of the Template and List page", groups = { "Smoke", "API" })
 	public void createNewTemplate() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -61,7 +60,6 @@ public class TestTemplates extends UnifiedFramework {
 	@Test(description = "TC409-Unable to Delete  Active Template", groups = { "Regression", "API", "High" })
 	public void verifyActiveTemplateDelete() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -70,12 +68,12 @@ public class TestTemplates extends UnifiedFramework {
 		response = cimAdmin.deleteActiveInactiveTemplate();
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
 				RebatesConstants.messageDeleteActiveInactiveTemplate);
+		
 	}
 
 	@Test(description = "TC411-Verify the Delete for Draft Template", groups = { "Regression", "API", "Medium" })
 	public void verifyDraftTemplateDelete() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -88,7 +86,6 @@ public class TestTemplates extends UnifiedFramework {
 			"Regression", "API", "Medium" })
 	public void verifyActiveTemplateDeactivation() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		response = cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -109,7 +106,6 @@ public class TestTemplates extends UnifiedFramework {
 			"Medium" })
 	public void verifyEditTemplate() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		response = cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -130,7 +126,6 @@ public class TestTemplates extends UnifiedFramework {
 			"High" })
 	public void verifyMandatoryFieldsforActivateTemplate() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -142,7 +137,6 @@ public class TestTemplates extends UnifiedFramework {
 	@Test(description = "TC413-Unable to Delete Inactivated Template", groups = { "Regression", "API", "Medium" })
 	public void verifyInactiveTemplateDelete() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
@@ -158,7 +152,6 @@ public class TestTemplates extends UnifiedFramework {
 			"Medium" })
 	public void verifyEditTemplateActivation() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String discreteQnBLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, discreteQnBLayoutId);
@@ -183,7 +176,6 @@ public class TestTemplates extends UnifiedFramework {
 			"Regression", "API", "Medium" })
 	public void verifyNewTemplateActivationForQnBTiered() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "qualificationAndBenefitTieredQnBLayoutAPI");
 		String tieredQnBLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
@@ -201,14 +193,13 @@ public class TestTemplates extends UnifiedFramework {
 			"Regression", "API", "Medium" })
 	public void verifyNewTemplateActivationForQnBDiscrete() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json",
 				"qualificationAndBenefitDiscreteQnBLayoutAPI");
 		String discreteQnBLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		// ------------ Create New Template --------------------
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, discreteQnBLayoutId);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		// ----- Activate Template failed without Qualification and Benefit Formula -----
@@ -228,12 +219,11 @@ public class TestTemplates extends UnifiedFramework {
 			"Regression", "API", "High" })
 	public void editBenefitTemplateChangeToQnBProductAndActivate() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForDiscrete(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		// ---- Activate Template failed without Qualification and Benefit Formula ----
@@ -274,13 +264,12 @@ public class TestTemplates extends UnifiedFramework {
 			"Regression", "API", "Medium" })
 	public void benefitProductActivationFailedWithoutFormulas() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 
 		// ------------ Create New Template --------------------
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		// ---- Activate Template failed without Qualification and Benefit Formula -----
@@ -300,7 +289,6 @@ public class TestTemplates extends UnifiedFramework {
 			"Regression", "API", "Medium" })
 	public void verifyActivationOfMQMBTiered() throws Exception {
 		
-		cimAdminHelper.createDataSourceAndFormulasForTiered(cimAdmin);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "multipleQualificationAndBenefitTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 

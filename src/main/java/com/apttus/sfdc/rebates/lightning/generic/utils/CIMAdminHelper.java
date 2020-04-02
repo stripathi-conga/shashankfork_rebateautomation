@@ -18,13 +18,14 @@ public class CIMAdminHelper {
 	public Response response;
 	public ResponseValidatorBase responseValidator;
 	public String fieldExpressionId;
+	public String dataSourceId;
 
 	public CIMAdminHelper() throws Exception {
 		efficacies = new Efficacies();
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	public void createDataSourceAndFormulasForTiered(CIMAdmin cimAdmin) throws Exception {
+	public String createDataSourceAndFormulasForTiered(CIMAdmin cimAdmin) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
@@ -40,15 +41,16 @@ public class CIMAdminHelper {
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdBenefit, fieldExpressionId);
 		cimAdmin.linkCalcFormulaToExpression(jsonData, stepCalcFormulaIdQualification, fieldExpressionId);
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdQualification, fieldExpressionId);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		cimAdmin.createDataSource(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
+		dataSourceId = cimAdmin.createDataSource(jsonData);
 		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(stepCalcFormulaIdQualification);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
+		return dataSourceId;
 	}
 
-	public void createDataSourceAndFormulasForDiscrete(CIMAdmin cimAdmin) throws Exception {
+	public String createDataSourceAndFormulasForDiscrete(CIMAdmin cimAdmin) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
 		fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdBenefit");
@@ -58,48 +60,48 @@ public class CIMAdminHelper {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdBenefit, fieldExpressionId);
 		cimAdmin.linkCalcFormulaToExpression(jsonData, nonStepCalcFormulaIdQualification, fieldExpressionId);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAPI");
-		cimAdmin.createDataSource(jsonData);
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountBillingSummary");
+		dataSourceId = cimAdmin.createDataSource(jsonData);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdBenefit);
 		cimAdmin.linkDatasourceToCalcFormula(nonStepCalcFormulaIdQualification);
+		return dataSourceId;
 	}
 
 	public Response createAndValidateTemplate(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewTemplateAPI");
 		response = cimAdmin.createTemplate(jsonData, qnbLayoutId);
-		responseValidator.validateCreateSuccess(response);
-		response = cimAdmin.getTemplate();
-		responseValidator.validateGetTemplate(response, cimAdmin);
+		responseValidator.validateCreateSuccess(response);		
+		response = cimAdmin.getTemplate();		
+		responseValidator.validateGetTemplate(response, cimAdmin);		
 		responseValidator.validateTemplateStatus(response, cimAdmin, RebatesConstants.draft);
 		return response;
 	}
 
 	public void mapDataSourceAndFormulaToTemplateTiered(CIMAdmin cimAdmin) throws ApplicationException {
-		jsonData.put("FormulaId__c", stepCalcFormulaIdBenefit);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("stepCalcFormulaIdBenefit"));
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", stepCalcFormulaIdQualification);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("stepCalcFormulaIdQualification"));
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", nonStepCalcFormulaIdBenefit);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdBenefit"));
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", nonStepCalcFormulaIdQualification);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdQualification"));
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}
 
 	public void mapDataSourceAndFormulaToTemplateDiscrete(CIMAdmin cimAdmin) throws ApplicationException {
-		jsonData.put("FormulaId__c", nonStepCalcFormulaIdBenefit);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdBenefit"));
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", nonStepCalcFormulaIdQualification);
-		jsonData.put("DataSourceId__c", cimAdmin.getDataSourceData().getDataSourceId());
+		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdQualification"));
+		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}
 
 	public void templateActivationForLinkTemplateTiered(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
-		createDataSourceAndFormulasForTiered(cimAdmin);
 		createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
@@ -108,7 +110,6 @@ public class CIMAdminHelper {
 	}
 
 	public void templateActivationForLinkTemplateDiscrete(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
-		createDataSourceAndFormulasForDiscrete(cimAdmin);
 		createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		mapDataSourceAndFormulaToTemplateDiscrete(cimAdmin);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);

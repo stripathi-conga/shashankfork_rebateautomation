@@ -75,44 +75,70 @@ public class CIMAdmin {
 		}
 	}
 
-	public Response createDataSource(Map<String, String> testData) throws ApplicationException {
+	public String createDataSource(Map<String, String> testData) throws ApplicationException {
 		String dataSourceId;
 		try {
-			requestString = dataSourceData.createDataSourceRequest(testData, this);
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
-			validateResponseCode(response, RebatesConstants.responseCreated);
-			dataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
-			dataSourceData.setDataSourceId(dataSourceId);
-			return response;
+			dataSourceId = getDataSourceForTransactionLineObjectName(testData);
+			if (dataSourceId == null) {
+				requestString = dataSourceData.createDataSourceRequest(testData, this);
+				response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
+				validateResponseCode(response, RebatesConstants.responseCreated);
+				dataSourceId = (parser.parse(response.getBody().asString())).getAsJsonObject().get("id").getAsString();
+				return dataSourceId;
+			}
+			else 
+				return dataSourceId;
+
 		} catch (Exception e) {
 			throw new ApplicationException("Create New DataSource API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response getDataSource() throws ApplicationException {
+	public Response getDataSourceForId(String dataSourceId) throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.getData(urlGenerator.getDataSourceURL.replace("{DataSourceId}", dataSourceData.getDataSourceId()));
+					.getData(urlGenerator.getDataSourceForIdURL.replace("{DataSourceId}", dataSourceId));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;
 		} catch (Exception e) {
 			throw new ApplicationException("Get DataSource API call failed with exception trace : " + e);
 		}
 	}
+	
+	public String getDataSourceForTransactionLineObjectName(Map<String, String> testData)
+			throws ApplicationException {
+		String incentiveDataSourceId=null;
+		try {
+			response = sfdcRestUtils.getData(urlGenerator.getDataSourceForLineObjectNameURL
+					.replace("{TransactionLineObjectName}", testData.get("TransactionLineObjectName__c")));
+			validateResponseCode(response, RebatesConstants.responseOk);		
+			int size = parser.parse(response.getBody().asString()).getAsJsonObject()
+					.get("totalSize").getAsInt();
+			if(size>0) {
+			JsonObject dataSourceObject = parser.parse(response.getBody().asString()).getAsJsonObject()
+					.getAsJsonArray("records").get(0).getAsJsonObject();
+			incentiveDataSourceId = dataSourceObject.get("Id").getAsString();
+			}
+			return incentiveDataSourceId;
+		} catch (Exception e) {
+			throw new ApplicationException("Get DataSource API call failed with exception trace : " + e);
+		}
+	}
 
-	public void deleteDataSource() throws ApplicationException {
+	public void deleteDataSource(String dataSourceId) throws ApplicationException {
 		try {
 			response = sfdcRestUtils
-					.deleteWithoutPayload(urlGenerator.dataSourceURL + dataSourceData.getDataSourceId());
+					.deleteWithoutPayload(urlGenerator.dataSourceURL + dataSourceId);
 			validateResponseCode(response, RebatesConstants.responseNocontent);
 		} catch (Exception e) {
 			throw new ApplicationException("Delete DataSource API call failed with exception trace : " + e);
 		}
 	}
 
-	public Response createDataSourceWithoutAnyFields() throws ApplicationException {
+	public Response createDataSourceWithMissingFields() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, "{}");
+			requestString = "{\"Name\": \"Automation Test DataSource\"}";
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
 			validateResponseCode(response, RebatesConstants.responseBadRequest);
 			return response;
 		} catch (Exception e) {
@@ -217,7 +243,7 @@ public class CIMAdmin {
 
 	public Response mapProgramTemplateDataSource(Map<String, String> testData) throws ApplicationException {
 		try {
-			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);
+			requestString = mapTemplateAndDataSourcePojo.createTemplateDataSourceRequest(testData, this);			
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.mapTemplateToDatasourceURL, requestString);
 			validateResponseCode(response, RebatesConstants.responseCreated);
 			return response;
@@ -261,7 +287,7 @@ public class CIMAdmin {
 	public Response getLinkTemplatesViaId() throws ApplicationException {
 		String linkTemplateName;
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIDURL.replace("{LinkTemplateId}",
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesForIDURL.replace("{LinkTemplateId}",
 					linkTemplatesData.getLinkTemplateId()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			linkTemplateName = parser.parse(response.getBody().asString()).getAsJsonObject().getAsJsonArray("records")
@@ -275,7 +301,7 @@ public class CIMAdmin {
 
 	public Response getLinkTemplatesViaIncentiveTypeAndSubtype(Map<String, String> testData) throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesViaIncentiveTypeAndSubtypeURL
+			response = sfdcRestUtils.getData(urlGenerator.getLinkTemplatesForIncentiveTypeAndSubtypeURL
 					.replace("{IncentiveType}", testData.get("IncentiveType__c")).replace("{IncentiveSubType}", testData.get("IncentiveSubType__c")));
 			validateResponseCode(response, RebatesConstants.responseOk);
 			return response;

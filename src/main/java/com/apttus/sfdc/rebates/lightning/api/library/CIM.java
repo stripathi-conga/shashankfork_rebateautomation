@@ -230,9 +230,9 @@ public class CIM extends CIMAdmin {
 		return response;
 	}
 
-	public Response getParticipantIdViaIncentiveId() throws ApplicationException {
+	public Response getParticipantIdForIncentiveId() throws ApplicationException {
 		try {
-			response = sfdcRestUtils.getData(urlGenerator.getParticipantsViaIncentiveIdURL.replace("{IncentiveId}",
+			response = sfdcRestUtils.getData(urlGenerator.getParticipantsForIncentiveIdURL.replace("{IncentiveId}",
 					participantsData.getIncentiveParticipant().getIncentive__c()));
 			validateResponseCode(response, RebatesConstants.responseOk);
 		} catch (Exception e) {
