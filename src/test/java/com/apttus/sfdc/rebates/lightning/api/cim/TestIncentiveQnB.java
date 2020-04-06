@@ -11,6 +11,7 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -52,7 +53,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void addQnBBenefitOnlyXXT() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered() ,
 				benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
@@ -64,7 +65,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void addQnBBenefitOnlyXXD() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(),
 				benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
@@ -76,7 +77,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void deleteQnBBenefitLine() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
@@ -92,7 +93,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void deleteQnBLayoutProduct() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
@@ -111,7 +112,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void addQnBBenefitOnlyXXDOutsideIncentiveDates() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
@@ -125,7 +126,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void updateQnBBenefitLineXXT() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
@@ -142,7 +143,7 @@ public class TestIncentiveQnB extends UnifiedFramework {
 	public void updateQnBBenefitLineXXD() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(),
 				benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------

@@ -10,6 +10,7 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -199,7 +200,7 @@ public class TestTemplates extends UnifiedFramework {
 
 		// ------------ Create New Template --------------------
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, discreteQnBLayoutId);
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		// ----- Activate Template failed without Qualification and Benefit Formula -----
@@ -223,7 +224,7 @@ public class TestTemplates extends UnifiedFramework {
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		// ---- Activate Template failed without Qualification and Benefit Formula ----
@@ -269,7 +270,7 @@ public class TestTemplates extends UnifiedFramework {
 
 		// ------------ Create New Template --------------------
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 
 		// ---- Activate Template failed without Qualification and Benefit Formula -----
