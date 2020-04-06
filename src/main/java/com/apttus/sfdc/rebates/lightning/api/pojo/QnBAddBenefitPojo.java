@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
-import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.google.gson.Gson;
 
@@ -77,7 +77,7 @@ public class QnBAddBenefitPojo {
 			// ------------- Set Qualification Data ----------------
 			qualification.setStartDate(startDate);
 			qualification.setEndDate(endDate);
-			qualification.setFormulaId(RebatesConstants.formulaDataMap.get(row.get("QualificationFormula")));
+			qualification.setFormulaId(DataHelper.getFormulaDataMap().get(row.get("QualificationFormula")));
 			qualification.setAliasName(row.get("QualificationAliasName"));
 			Map<String, String> qualificationIdMap;
 			qualificationIdMap = setProductId(qualification, row.get("QualificationProductType"),
@@ -91,7 +91,7 @@ public class QnBAddBenefitPojo {
 			// ------------- Set benefit Data ------------------
 			benefit.setStartDate(startDate);
 			benefit.setEndDate(endDate);
-			benefit.setFormulaId(RebatesConstants.formulaDataMap.get(row.get("BenefitFormula")));
+			benefit.setFormulaId(DataHelper.getFormulaDataMap().get(row.get("BenefitFormula")));
 			benefit.setAliasName(row.get("BenefitAliasName"));
 			Map<String, String> benefitIdMap;
 			benefitIdMap = setProductId(benefit, row.get("BenefitProductType"), row.get("BenefitProductCode"),

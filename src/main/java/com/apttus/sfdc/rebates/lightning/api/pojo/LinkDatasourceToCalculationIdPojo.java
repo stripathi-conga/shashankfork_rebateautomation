@@ -1,7 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.api.pojo;
 
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
-import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.google.gson.Gson;
 
 public class LinkDatasourceToCalculationIdPojo {
@@ -28,7 +28,7 @@ public class LinkDatasourceToCalculationIdPojo {
 	public String linkDatasourceIdRequest(String calculationFormulaId, CIMAdmin cimAdmin) {
 		LinkDatasourceToCalculationIdPojo linkDatasourceId = new LinkDatasourceToCalculationIdPojo();
 		linkDatasourceId.setCalculationFormula__c(calculationFormulaId);
-		linkDatasourceId.setDataSource__c(RebatesConstants.incentiveDataSourceId);
+		linkDatasourceId.setDataSource__c(DataHelper.getIncentiveDataSourceId());
 		return new Gson().toJson(linkDatasourceId);
 	}
 }

@@ -10,7 +10,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
-import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
@@ -58,8 +58,8 @@ public class UnifiedFramework {
 		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyTieredQnBLayoutId);
 		cimHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
-		RebatesConstants.incentiveTemplateIdBenefitProductTiered = cimAdmin.getTemplateData().getTemplateId();		
-
+		DataHelper.setIncentiveTemplateIdBenefitProductTiered(cimAdmin.getTemplateData().getTemplateId());	
+		
 		// ---- Create and activate Link Template for SubType as Benefit Only Tiered ----
 		String linkTemplateDataFromJson = "createNewLinkTemplateSubTypeTieredAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
@@ -76,12 +76,17 @@ public class UnifiedFramework {
 		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyDiscreteQnBLayoutId);
 		cimHelper.mapDataSourceAndFormulaToTemplateDiscrete(cimAdmin);
 		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
-		RebatesConstants.incentiveTemplateIdBenefitProductDiscrete = cimAdmin.getTemplateData().getTemplateId();
+		DataHelper.setIncentiveTemplateIdBenefitProductDiscrete(cimAdmin.getTemplateData().getTemplateId());
 
 		// ----- Create and activate Link Template for SubType as Benefit Only Tiered ----
 		linkTemplateDataFromJson = "createNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
+		
+		System.out.println("getIncentiveTemplateIdBenefitProductDiscrete : "+DataHelper.getIncentiveTemplateIdBenefitProductDiscrete());
+		System.out.println("getIncentiveTemplateIdBenefitProductTiered : "+DataHelper.getIncentiveTemplateIdBenefitProductTiered());
+		System.out.println("DataSource Id : "+DataHelper.getIncentiveDataSourceId());		
+		System.out.println("Formula Map : "+DataHelper.getFormulaDataMap());
 	}
 
 	public void afterSuite() {

@@ -78,26 +78,26 @@ public class CIMAdminHelper {
 	}
 
 	public void mapDataSourceAndFormulaToTemplateTiered(CIMAdmin cimAdmin) throws ApplicationException {
-		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("stepCalcFormulaIdBenefit"));
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("stepCalcFormulaIdBenefit"));
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("stepCalcFormulaIdQualification"));
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("stepCalcFormulaIdQualification"));
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdBenefit"));
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"));
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdQualification"));
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"));
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}
 
 	public void mapDataSourceAndFormulaToTemplateDiscrete(CIMAdmin cimAdmin) throws ApplicationException {
-		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdBenefit"));
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"));
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdQualification"));
-		jsonData.put("DataSourceId__c", RebatesConstants.incentiveDataSourceId);
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"));
+		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}
 
