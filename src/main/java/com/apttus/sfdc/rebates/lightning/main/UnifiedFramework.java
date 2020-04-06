@@ -82,11 +82,6 @@ public class UnifiedFramework {
 		linkTemplateDataFromJson = "createNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
-		
-		System.out.println("getIncentiveTemplateIdBenefitProductDiscrete : "+DataHelper.getIncentiveTemplateIdBenefitProductDiscrete());
-		System.out.println("getIncentiveTemplateIdBenefitProductTiered : "+DataHelper.getIncentiveTemplateIdBenefitProductTiered());
-		System.out.println("DataSource Id : "+DataHelper.getIncentiveDataSourceId());		
-		System.out.println("Formula Map : "+DataHelper.getFormulaDataMap());
 	}
 
 	public void afterSuite() {
