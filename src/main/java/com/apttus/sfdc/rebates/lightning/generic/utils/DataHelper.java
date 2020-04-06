@@ -5,10 +5,10 @@ import java.util.Map;
 
 public class DataHelper {
 	// These values will be set in @BeforeSuite and used in all Incentive classes
-	public static String incentiveDataSourceId;
-	public static String incentiveTemplateIdBenefitProductTiered;
-	public static String incentiveTemplateIdBenefitProductDiscrete;
-	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
+	private static String incentiveDataSourceId;
+	private static String incentiveTemplateIdBenefitProductTiered;
+	private static String incentiveTemplateIdBenefitProductDiscrete;
+	private static Map<String, String> formulaDataMap = new HashMap<String, String>();
 	
 	
 	public static String getIncentiveDataSourceId() {
