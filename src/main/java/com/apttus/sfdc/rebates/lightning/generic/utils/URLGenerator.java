@@ -31,14 +31,14 @@ public class URLGenerator {
 	public String payoutSchedulesURL = "/sobjects/IncentivePayoutSchedule__c/";
 	
 	// ----------------- URL Exposed for apex rest Custom API ------------------
-	public String addIncentiveQnBURL = "/services/apexrest/api/QnB";
-	public String getIncentiveQnBURL = "/services/apexrest/api/QnB?incentiveId={incentiveId}";
-	public String deleteQnBBenefitLineURL = "/services/apexrest/api/QnB?id={sectionId}";
-	public String activateIncentiveURL = "/services/apexrest/api/IncentiveProgramDetail";
-	public String getPayoutScheduleURL = "/services/apexrest/api/PayoutSchedule?incentiveId={incentiveId}";
-	public String payoutScheduleStatusModifierURL = "/services/apexrest/api/PayoutSchedule?statusModifier={statusModifier}";
-	public String addParticipantsURL = "/services/apexrest/api/Participant/";
-	public String getParticipantsForIncentiveIdURL = "/services/apexrest/api/Participant?incentiveId={IncentiveId}";
+	public String addIncentiveQnBURL = "/services/apexrest/apttus/v1/qualificationandbenefit/";
+	public String getIncentiveQnBURL = "/services/apexrest/apttus/v1/qualificationandbenefit?incentiveId={incentiveId}";
+	public String deleteQnBBenefitLineURL = "/services/apexrest/apttus/v1/qualificationandbenefit?id={sectionId}";
+	public String activateIncentiveURL = "/services/apexrest/apttus/v1/incentiveprogramdetail/";
+	public String getPayoutScheduleURL = "/services/apexrest/apttus/v1/payoutschedule?incentiveId={incentiveId}";
+	public String payoutScheduleStatusModifierURL = "/services/apexrest/apttus/v1/payoutschedule?statusModifier={statusModifier}";
+	public String addParticipantsURL = "/services/apexrest/apttus/v1/participant/";
+	public String getParticipantsForIncentiveIdURL = "/services/apexrest/apttus/v1/participant?incentiveId={IncentiveId}";
 	
 	public URLGenerator(String instanceURL) {
 		// ----------------- URL for SObjects as API ---------------------
