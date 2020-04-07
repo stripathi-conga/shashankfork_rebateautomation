@@ -182,7 +182,7 @@ public class CIM extends CIMAdmin {
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.addParticipantsURL, addParticipantRequest);
 			validateResponseCode(response, RebatesConstants.responseOk);
 			participantId = (parser.parse(response.getBody().asString())).getAsJsonArray().get(0).getAsJsonObject()
-					.get("incentiveParticipant").getAsJsonObject().get("Id").getAsString();
+					.get("IncentiveParticipant").getAsJsonObject().get("Id").getAsString();
 			participantsData.getIncentiveParticipant().setId(participantId);
 			return response;
 		} catch (Exception e) {
