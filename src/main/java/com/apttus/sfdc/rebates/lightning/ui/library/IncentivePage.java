@@ -165,6 +165,9 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//input[@name='0']")
 	public WebElement txtBenefitEditModel;
 	
+	@FindBy(xpath = "//input[@name='progress']")
+	public WebElement txtFormulaEditModel;
+	
 	@FindBy(xpath = "//*[@name='Incentive Type']")
 	public WebElement ddlIncentiveType;
 	
@@ -185,10 +188,6 @@ public class IncentivePage extends GenericPage {
 	
 	@FindBy(xpath = "//*[@name='Measurement Level']")
 	public WebElement ddlMeasurementLevel;
-	
-	
-	
-	
 	
 	GenericPage genericPage;
 	WebDriverWait wait;

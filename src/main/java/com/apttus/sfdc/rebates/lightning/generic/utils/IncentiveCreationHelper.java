@@ -77,7 +77,7 @@ public class IncentiveCreationHelper {
 	public void createIncentiveAndUpdateSchedules(Map<String, String> createIncentiveJson,String templateId,String startDate, String endDate, String paymentFrequency)
 			throws Exception {
 		
-		Response scheduleResponse = createIncentiveAndFetchSchedules(createIncentiveJson, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,startDate,endDate, RebatesConstants.paymentFrequencyMonthly);
+		Response scheduleResponse = createIncentiveAndFetchSchedules(createIncentiveJson,DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(),startDate,endDate, RebatesConstants.paymentFrequencyMonthly);
 		String responseBody = scheduleResponse.getBody().asString();
 		JsonArray schedulesResponse = parser.parse(responseBody).getAsJsonArray();
 		int responseSize = schedulesResponse.size();

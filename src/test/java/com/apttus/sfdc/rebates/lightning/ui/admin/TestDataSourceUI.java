@@ -15,6 +15,7 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -64,7 +65,7 @@ public class TestDataSourceUI extends UnifiedFramework{
 		genericPage = new GenericPage(driver);
 	}
 
-	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
+	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression1", "Low", "UI" })
 	public void verifyDataSourceValidations() throws Exception {
 
 		dataSourcePage = homepage.navigateToNewDataSource();
@@ -110,11 +111,11 @@ public class TestDataSourceUI extends UnifiedFramework{
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
 		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
 
-		dataSourcePage = homepage.navigateToEditDataSource(RebatesConstants.incentiveDataSourceId);
-		genericPage.moveToFormulaTab(RebatesConstants.formulaDataMap.get("stepCalcFormulaIdQualification"),
-				RebatesConstants.formulaDataMap.get("stepCalcFormulaIdBenefit"), dataSourcePage.lblRelatedTab);
-		genericPage.moveToFormulaTab(RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdBenefit"),
-				RebatesConstants.formulaDataMap.get("nonStepCalcFormulaIdQualification"), dataSourcePage.lblRelatedTab);
+		dataSourcePage = homepage.navigateToEditDataSource(DataHelper.getIncentiveDataSourceId());
+		genericPage.moveToFormulaTab(DataHelper.getFormulaDataMap().get("stepCalcFormulaIdQualification"),
+				DataHelper.getFormulaDataMap().get("stepCalcFormulaIdBenefit"), dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"),
+				DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"), dataSourcePage.lblRelatedTab);
 		softassert.assertAll();
 	}
 

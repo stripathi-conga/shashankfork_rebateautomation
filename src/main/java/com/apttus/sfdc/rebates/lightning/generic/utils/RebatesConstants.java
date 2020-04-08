@@ -1,16 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.generic.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class RebatesConstants {
-
-	// These values will be set in @BeforeSuite and used in all Incentive classes
-	public static String incentiveDataSourceId;
-	public static String incentiveTemplateIdBenefitProductTiered;
-	public static String incentiveTemplateIdBenefitProductDiscrete;
-	public static Map<String, String> formulaDataMap = new HashMap<String, String>();
-	
+public class RebatesConstants {	
 	
 	public static final int responseOk = 200;
 	public static final int responseCreated = 201;

@@ -221,9 +221,9 @@ public class ResponseValidatorBase {
 	public void validateParticipantFailureResponse(Response response, String errorFields, String errorMessage) {
 		softassert = new SoftAssert();
 		JsonObject responsebody = parser.parse(response.getBody().asString()).getAsJsonArray().get(0).getAsJsonObject();
-		softassert.assertEquals(responsebody.get("errorMessages").getAsString(), errorMessage,
+		softassert.assertEquals(responsebody.get("ErrorMessages").getAsString(), errorMessage,
 				"Verify failure Error Message");
-		softassert.assertEquals(responsebody.get("errorFields").toString(), errorFields, "Verify failure Error Fields");
+		softassert.assertEquals(responsebody.get("ErrorFields").toString(), errorFields, "Verify failure Error Fields");
 		softassert.assertAll();
 	}
 }

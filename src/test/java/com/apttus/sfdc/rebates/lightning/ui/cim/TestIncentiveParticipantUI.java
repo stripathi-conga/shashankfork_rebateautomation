@@ -15,6 +15,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -79,7 +80,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
 		cimHelper.addAndValidateIncentive(jsonData,
-				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);		
+				DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);		
 		cimHelper.addAndValidateParticipant(cim, "addParticipantsSameAsIncentiveDates");
 
 		incentivepage = homepage.navigateToIncentiveEdit(cim.getIncentiveData().incentiveId);
@@ -94,7 +95,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");		
 		cimHelper.addAndValidateIncentive(jsonData,
-				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);		
+				DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);		
 		cimHelper.addAndValidateParticipant(cim, "addParticipantsForOverlappingDates");
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "addParticipantsForOverlappingDates");

@@ -13,7 +13,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
-import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
@@ -58,26 +58,26 @@ public class TestIncentives extends UnifiedFramework {
 		// ---- Create new Benefit Product Tiered Incentive ---------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(), cim);
 
 		// ---- Create new Benefit Product Discrete Incentive ---------
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, cim);
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);
 	}
 
 	@Test(description = "TC-345 Verify the creation of new Incentive", groups = { "Smoke", "API" })
 	public void createNewBenefitProductTieredIncentive() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json","createIncentiveIndividualParticipantBenefitProductTiered");
 		cimHelper.addAndValidateIncentive(jsonData,
-				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
+				DataHelper.getIncentiveTemplateIdBenefitProductTiered(), cim);
 	}
 
 	@Test(description = "TC- 420 Update Incentive Payee field on Edit page", groups = { "Regression", "High", "API" })
 	public void updateIncentivePayeeToAgreementAccount() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json","createIncentiveIndividualParticipantBenefitProductTiered");
 		cimHelper.addAndValidateIncentive(jsonData,
-				RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
+				DataHelper.getIncentiveTemplateIdBenefitProductTiered(), cim);
 		
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
 		jsonDataTemp = efficacies.readJsonElement("CIMTemplateData.json", "updateIncentivePayeeToAgreementAccount");
@@ -92,7 +92,7 @@ public class TestIncentives extends UnifiedFramework {
 	public void activateIncentive() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json", "createIncentiveIndividualParticipantBenefitProductTiered");
 		cimHelper.addAndValidateIncentive(jsonData,
-				RebatesConstants.incentiveTemplateIdBenefitProductTiered, benefitProductQnB);
+				DataHelper.getIncentiveTemplateIdBenefitProductTiered(), benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------
 		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
@@ -113,7 +113,7 @@ public class TestIncentives extends UnifiedFramework {
 				"createNewIncentiveAgreementAccountBenefitProductDiscreteTwoMonths");
 		jsonData = SFDCHelper.overrideJSON(jsonData, jsonDataTemp);
 		cimHelper.addAndValidateIncentive(jsonData,
-				RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, benefitProductQnB);
+				DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), benefitProductQnB);
 
 		// ------------ Add QnB Benefit Lines -------------------		
 		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProductFourBenefits");

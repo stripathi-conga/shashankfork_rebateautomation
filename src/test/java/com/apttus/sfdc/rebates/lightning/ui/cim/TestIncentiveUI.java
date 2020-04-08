@@ -16,6 +16,7 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -75,7 +76,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered, cim);
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);
 		cimHelper.addAndValidateParticipant(cim, "addParticipantsSameAsIncentiveDates");
 
 		incentivepage = homepage.navigateToIncentiveEdit(cim.getIncentiveData().incentiveId);
@@ -92,7 +93,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(),
 				benefitProductQnB);
 
 		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProduct");
@@ -110,7 +111,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, cim);
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);
 
 		incentivepage = homepage.navigateToIncentiveEdit(cim.getIncentiveData().incentiveId);
 		incentivepage.addQualificationBenefit();
@@ -126,10 +127,10 @@ public class TestIncentiveUI extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete, cim);
+		cimHelper.addAndValidateIncentive(jsonData,  DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);
 
 		incentivepage = homepage.navigateToIncentiveNew();
-		Thread.sleep(13000);
+		Thread.sleep(10000);
 		incentivepage.ddlIncentiveType.click();
 		incentivepage.ddlIncentiveTypeRebate.click();
 		Thread.sleep(3000);

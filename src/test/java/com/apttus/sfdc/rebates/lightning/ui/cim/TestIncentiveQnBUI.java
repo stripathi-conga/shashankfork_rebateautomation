@@ -19,6 +19,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -60,7 +61,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		loginPage.waitForLoginPageLoad().loginToApp(configProperties.getProperty("LoginUser"),
 				configProperties.getProperty("LoginPassword"));
 		homepage = new HomePage(driver, configProperties);
-		//homepage.navigateToCIM();
+		 homepage.navigateToCIM();
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
@@ -79,7 +80,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public void VerifyQnBFields() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
 		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
@@ -100,7 +101,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public void VerifyBenefitTieredIncentiveQnBMandatoryFieldValidation() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
 
@@ -137,7 +138,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public void VerifyMultipleSearchTieredIncentive() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createIncentiveIndividualParticipantBenefitProductTiered");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductTiered,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
@@ -172,7 +173,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public void VerifyAliasNameAndSectionId() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData, RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
 		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProduct");
@@ -202,52 +203,44 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	@Test(description = "TC-552 Verify for fields on  QnB Edit pop up for Benefit only and Discrete Incentive", groups = {
 			"Regression1", "UI", "Low" })
 	public void Verify552() throws Exception {
-		/*
-		 * jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-		 * "createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		 * cimHelper.addAndValidateIncentive(jsonData,
-		 * RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
-		 * benefitProductQnB);
-		 * 
-		 * cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB,
-		 * "XXDBenefitProduct");
-		 */
-		incentivepage=homepage.navigateToIncentive();
-		Thread.sleep(10000);
-		//incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
-		//incentivepage.waitTillAllQnBElementLoad();
 
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(),
+				benefitProductQnB);
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProduct");
+		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		incentivepage.waitTillAllQnBElementLoad();
 		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
 				incentivepage.btnEditSpillover);
 
 		softassert.assertEquals("Cancel", incentivepage.btnCancel.getText());
 		softassert.assertEquals("Update", incentivepage.btnUpdate.getText());
+		
 		incentivepage.btnCancel.click();
-		//softassert.assertEquals("Auto_Benefit SUM(Rebate_Amount)", incentivepage.txtformula.get(0).getText());
-		softassert.assertEquals("120", incentivepage.txtBenefit.get(1).getText());
-		//update inlineformula nad benefit
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdBenefit");
+		softassert.assertEquals(jsonData.get("Name"),incentivepage.txtformula.get(0).getText());
+			
 		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
 				incentivepage.btnEditSpillover);
-		// assertion for Benefit formula-Edit Model
-		//softassert.assertEquals("120", incentivepage.txtBenefitEditModel.getText());
+		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
 		incentivepage.txtBenefitEditModel.clear();
-		incentivepage.txtBenefitEditModel.sendKeys("2");
+		incentivepage.txtBenefitEditModel.sendKeys(jsonData.get("Benefit1"));
 		incentivepage.btnUpdate.click();
-		softassert.assertEquals("2", incentivepage.txtBenefit.get(1).getText());
-		
+		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtBenefit.get(1).getText());
+
 		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
 				incentivepage.btnEditSpillover);
-		
-		// update Benefit in Edit Model
+		Thread.sleep(7000);
+		System.out.println(incentivepage.txtFormulaEditModel.getAttribute("value"));
+		System.out.println(incentivepage.txtBenefitEditModel.getAttribute("value"));
 		incentivepage.txtBenefitEditModel.clear();
-		incentivepage.txtBenefitEditModel.sendKeys("12");
+		
+		incentivepage.txtBenefitEditModel.sendKeys(jsonData.get("Benefit2"));
 		incentivepage.btnCancel.click();
-		// assertion for Benefit formula-Edit Model
-		softassert.assertEquals("2", incentivepage.txtBenefit.get(1).getText());
+		
+		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtBenefit.get(1).getText());
 		incentivepage.btnSave.click();
-		
-		
-		
 
 		softassert.assertAll();
 	}
