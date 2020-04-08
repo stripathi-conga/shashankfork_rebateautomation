@@ -22,7 +22,7 @@ public class DataSourcePage extends GenericPage {
 	@FindBy(xpath = "//div/button[@title='Close']")
 	public WebElement btnCloseToastMessage;
 
-	@FindBy(xpath = "//*[@data-field='DataSourceName']/div[1]")
+	@FindBy(xpath = "//label[text()='Name']/following-sibling::div/input")
 	public WebElement txtDataSource;
 
 	@FindBy(xpath = "//*[@data-field='fileSuffix']/div[1]")

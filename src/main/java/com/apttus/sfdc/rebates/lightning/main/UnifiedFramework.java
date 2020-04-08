@@ -56,7 +56,7 @@ public class UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String benefitOnlyTieredQnBLayoutId = cim.getQnBLayoutId(jsonData);
 		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyTieredQnBLayoutId);
-		cimHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
 		DataHelper.setIncentiveTemplateIdBenefitProductTiered(cimAdmin.getTemplateData().getTemplateId());	
 		
@@ -72,9 +72,8 @@ public class UnifiedFramework {
 		// ---- Create and activate Template for Benefit Only Discrete -----
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String benefitOnlyDiscreteQnBLayoutId = cim.getQnBLayoutId(jsonData);
-
 		cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyDiscreteQnBLayoutId);
-		cimHelper.mapDataSourceAndFormulaToTemplateDiscrete(cimAdmin);
+		cimHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 		cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
 		DataHelper.setIncentiveTemplateIdBenefitProductDiscrete(cimAdmin.getTemplateData().getTemplateId());
 

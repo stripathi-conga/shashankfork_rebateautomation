@@ -1,0 +1,112 @@
+{
+	"volQtyExpressionId": {
+		"Apttus_Config2__Expression__c": "Quantity",
+		"Name": "Volume based"
+	},
+	"volSumExpressionId": {
+		"Apttus_Config2__Expression__c": "SUM( Total_Line_Volume )",
+		"Name": "Volume based"
+	},
+	"volumeCalcFormulaIdQualificationNonStep": {
+		"FormulaType__c": "Qualification",
+		"Name": "Volume based",
+		"IsStepBased__c": "false",
+		"Status__c": "Active"
+	},
+	"linkVolumeCalcFormulaToVolQtyExpressionId": {
+		"ReferenceName__c": "Total_Line_Volume",
+		"Sequence__c": "1",
+		"Status__c": "Active",
+		"Type__c": "Line"
+	},
+	"linkVolumeCalcFormulaToVolSumExpressionId": {
+		"ReferenceName__c": "Total_Volume",
+		"Sequence__c": "2",
+		"Status__c": "Active",
+		"Type__c": "Aggregate"
+	},
+	
+	
+	"revBasedQtyExpressionId": {
+		"Apttus_Config2__Expression__c": "Quantity * BasePrice",
+		"Name": "Revenue based"
+	},
+	"revBasedSumExpressionId": {
+		"Apttus_Config2__Expression__c": "SUM ( Rebate_Amount )",
+		"Name": "Revenue based"
+	},
+	"revBasedCalcFormulaIdQualificationNonStep": {
+		"FormulaType__c": "Qualification",
+		"Name": "Revenue based",
+		"IsStepBased__c": "false",
+		"Status__c": "Active"
+	},
+	"linkRevBasedCalcFormulaToRevBasedQtyExpressionId": {
+		"ReferenceName__c": "Rebate_Amount",
+		"Sequence__c": "1",
+		"Status__c": "Active",
+		"Type__c": "Line"
+	},
+	"linkRevBasedCalcFormulaToRevBasedSumExpressionId": {
+		"ReferenceName__c": "Total_Revenue",
+		"Sequence__c": "2",
+		"Status__c": "Active",
+		"Type__c": "Aggregate"
+	},
+	
+	
+	"revPerctAdjustmentAmtExpressionId": {
+		"Apttus_Config2__Expression__c": "Quantity * BasePrice * $cpq_PriceRuleEntry.adjustmentAmount$ * 0.01",
+		"Name": "% of Revenue"
+	},
+	"revPerctSumExpressionId": {
+		"Apttus_Config2__Expression__c": "SUM ( Rebate_Amount )",
+		"Name": "% of Revenue"
+	},
+	"revPerctCalcFormulaIdBenefitNonStep": {
+		"FormulaType__c": "Benefit",
+		"Name": "% of Revenue",
+		"IsStepBased__c": "false",
+		"Status__c": "Active"
+	},
+	"linkRevPercentCalcFormulaToRevPerctAdjustmentAmtExpressionId": {
+		"ReferenceName__c": "Rebate_Amount",
+		"Sequence__c": "1",
+		"Status__c": "Active",
+		"Type__c": "Line"
+	},
+	"linkRevPercentCalcFormulaToRevPerctSumExpressionId": {
+		"ReferenceName__c": "Total_Rebate_Amount",
+		"Sequence__c": "2",
+		"Status__c": "Active",
+		"Type__c": "Aggregate"
+	},	
+	
+	
+	"amtPerUnitQtyExpressionId": {
+		"Apttus_Config2__Expression__c": "Quantity * $cpq_PriceRuleEntry.adjustmentAmount$",
+		"Name": "Amount per unit"
+	},
+	"amtPerUnitSumExpressionId": {
+		"Apttus_Config2__Expression__c": "SUM ( Rebate_Amount )",
+		"Name": "Amount per unit"
+	},
+	"amtPerUnitCalcFormulaIdBenefitNonStep": {
+		"FormulaType__c": "Benefit",
+		"Name": "Amount per unit",
+		"IsStepBased__c": "false",
+		"Status__c": "Active"
+	},
+	"linkAmtPerUnitCalcFormulaToAmtPerUnitQtyExpressionId": {
+		"ReferenceName__c": "Rebate_Amount",
+		"Sequence__c": "1",
+		"Status__c": "Active",
+		"Type__c": "Line"
+	},
+	"linkAmtPerUnitCalcFormulaToAmtPerUnitSumExpressionId": {
+		"ReferenceName__c": "Total_Rebate_Amount",
+		"Sequence__c": "2",
+		"Status__c": "Active",
+		"Type__c": "Aggregate"
+	}
+}

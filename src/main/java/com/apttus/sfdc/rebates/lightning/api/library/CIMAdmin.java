@@ -185,9 +185,9 @@ public class CIMAdmin {
 		}
 	}
 
-	public void linkDatasourceToCalcFormula(String calculationFormulaId) throws ApplicationException {
+	public void linkDatasourceToCalcFormula(String datasourceId, String calculationFormulaId) throws ApplicationException {
 		try {
-			requestString = linkDatasource.linkDatasourceIdRequest(calculationFormulaId, this);
+			requestString = linkDatasource.linkDatasourceIdRequest(datasourceId, calculationFormulaId, this);
 			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.linkDatasourceIdURL, requestString);
 			validateResponseCode(response, RebatesConstants.responseCreated);
 		} catch (Exception e) {

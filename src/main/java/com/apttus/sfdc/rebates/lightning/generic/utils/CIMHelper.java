@@ -22,7 +22,10 @@ public class CIMHelper {
 	public String nonStepCalcFormulaIdQualification;
 	public Response response;
 	public BenefitProductValidator responseValidator;
-	public String fieldExpressionId;
+    public String volQtyExpressionId, volSumExpressionId, volumeCalcFormulaIdQualificationNonStep;
+    public String revBasedQtyExpressionId, revBasedSumExpressionId, revBasedCalcFormulaIdQualificationNonStep; 
+    public String revPerctAdjustmentAmtExpressionId, revPerctSumExpressionId, revPerctCalcFormulaIdBenefitNonStep;
+    public String amtPerUnitQtyExpressionId, amtPerUnitSumExpressionId, amtPerUnitCalcFormulaIdBenefitNonStep;
 	public List<Map<String, String>> jsonArrayData;
 	public Map<String, String> formulaMap;
 
@@ -44,39 +47,117 @@ public class CIMHelper {
 	}
 
 	public void createDataSourceAndFormulasForIncentives(CIMAdmin cimAdmin) throws Exception {
+		// ----- Create New DataSource -------------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceOrderLineItem");
 		DataHelper.setIncentiveDataSourceId(cimAdmin.createDataSource(jsonData));
-		
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createFieldExpressionId");
-		fieldExpressionId = cimAdmin.getFieldExpressionId(jsonData);
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdBenefit");
-		stepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
-		formulaMap.put("stepCalcFormulaIdBenefit", stepCalcFormulaIdBenefit);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdBenefit");
-		nonStepCalcFormulaIdBenefit = cimAdmin.getCalcFormulaId(jsonData);
-		formulaMap.put("nonStepCalcFormulaIdBenefit", nonStepCalcFormulaIdBenefit);
+		// Create Formula Expression, Calculation Formula and Link Formula for Volume Based
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "volQtyExpressionId");
+		volQtyExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createStepCalcFormulaIdQualification");
-		stepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
-		formulaMap.put("stepCalcFormulaIdQualification", stepCalcFormulaIdQualification);
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "volSumExpressionId");
+		volSumExpressionId = cimAdmin.getFieldExpressionId(jsonData);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdQualification");
-		nonStepCalcFormulaIdQualification = cimAdmin.getCalcFormulaId(jsonData);
-		formulaMap.put("nonStepCalcFormulaIdQualification", nonStepCalcFormulaIdQualification);
-		
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "volumeCalcFormulaIdQualificationNonStep");
+		volumeCalcFormulaIdQualificationNonStep = cimAdmin.getCalcFormulaId(jsonData);
+		formulaMap.put("volumeCalcFormulaIdQualificationNonStep", volumeCalcFormulaIdQualificationNonStep);
 		DataHelper.setFormulaDataMap(formulaMap);
 
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "linkCalcFormulaToExpressionId");
-		cimAdmin.linkCalcFormulaToExpression(jsonData, DataHelper.getFormulaDataMap().get("stepCalcFormulaIdBenefit"), fieldExpressionId);
-		cimAdmin.linkCalcFormulaToExpression(jsonData, DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"), fieldExpressionId);
-		cimAdmin.linkCalcFormulaToExpression(jsonData, DataHelper.getFormulaDataMap().get("stepCalcFormulaIdQualification"), fieldExpressionId);
-		cimAdmin.linkCalcFormulaToExpression(jsonData, DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"), fieldExpressionId);
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "linkVolumeCalcFormulaToVolQtyExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("volumeCalcFormulaIdQualificationNonStep"), volQtyExpressionId);
 
-		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getFormulaDataMap().get("stepCalcFormulaIdBenefit"));
-		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"));
-		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getFormulaDataMap().get("stepCalcFormulaIdQualification"));
-		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"));
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "linkVolumeCalcFormulaToVolSumExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("volumeCalcFormulaIdQualificationNonStep"), volSumExpressionId);
+
+		// Link DataSource to Calculation Formula
+		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getIncentiveDataSourceId(),
+				DataHelper.getFormulaDataMap().get("volumeCalcFormulaIdQualificationNonStep"));
+
+		// Create Formula Expression, Calculation Formula and Link Formula for Revenue Based
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revBasedQtyExpressionId");
+		revBasedQtyExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revBasedSumExpressionId");
+		revBasedSumExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revBasedCalcFormulaIdQualificationNonStep");
+		revBasedCalcFormulaIdQualificationNonStep = cimAdmin.getCalcFormulaId(jsonData);
+		formulaMap.put("revBasedCalcFormulaIdQualificationNonStep", revBasedCalcFormulaIdQualificationNonStep);
+
+		DataHelper.setFormulaDataMap(formulaMap);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json",
+				"linkRevBasedCalcFormulaToRevBasedQtyExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("revBasedCalcFormulaIdQualificationNonStep"),
+				revBasedQtyExpressionId);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json",
+				"linkRevBasedCalcFormulaToRevBasedSumExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("revBasedCalcFormulaIdQualificationNonStep"),
+				revBasedSumExpressionId);
+
+		// Link DataSource to Calculation Formula
+		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getIncentiveDataSourceId(),
+				DataHelper.getFormulaDataMap().get("revBasedCalcFormulaIdQualificationNonStep"));
+
+		// Create Formula Expression, Calculation Formula and Link Formula for % of Revenue
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revPerctAdjustmentAmtExpressionId");
+		revPerctAdjustmentAmtExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revPerctSumExpressionId");
+		revPerctSumExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revPerctCalcFormulaIdBenefitNonStep");
+		revPerctCalcFormulaIdBenefitNonStep = cimAdmin.getCalcFormulaId(jsonData);
+		formulaMap.put("revPerctCalcFormulaIdBenefitNonStep", revPerctCalcFormulaIdBenefitNonStep);
+
+		DataHelper.setFormulaDataMap(formulaMap);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json",
+				"linkRevPercentCalcFormulaToRevPerctAdjustmentAmtExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("revPerctCalcFormulaIdBenefitNonStep"),
+				revPerctAdjustmentAmtExpressionId);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json",
+				"linkRevPercentCalcFormulaToRevPerctSumExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("revPerctCalcFormulaIdBenefitNonStep"), revPerctSumExpressionId);
+
+		// Link DataSource to Calculation Formula
+		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getIncentiveDataSourceId(),
+				DataHelper.getFormulaDataMap().get("revPerctCalcFormulaIdBenefitNonStep"));
+
+		// Create Formula Expression, Calculation Formula and Link Formula for Amount per unit
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "amtPerUnitQtyExpressionId");
+		amtPerUnitQtyExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "amtPerUnitSumExpressionId");
+		amtPerUnitSumExpressionId = cimAdmin.getFieldExpressionId(jsonData);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "amtPerUnitCalcFormulaIdBenefitNonStep");
+		amtPerUnitCalcFormulaIdBenefitNonStep = cimAdmin.getCalcFormulaId(jsonData);
+		formulaMap.put("amtPerUnitCalcFormulaIdBenefitNonStep", amtPerUnitCalcFormulaIdBenefitNonStep);
+
+		DataHelper.setFormulaDataMap(formulaMap);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json",
+				"linkAmtPerUnitCalcFormulaToAmtPerUnitQtyExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("amtPerUnitCalcFormulaIdBenefitNonStep"), amtPerUnitQtyExpressionId);
+
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json",
+				"linkAmtPerUnitCalcFormulaToAmtPerUnitSumExpressionId");
+		cimAdmin.linkCalcFormulaToExpression(jsonData,
+				DataHelper.getFormulaDataMap().get("amtPerUnitCalcFormulaIdBenefitNonStep"), amtPerUnitSumExpressionId);
+
+		// Link DataSource to Calculation Formula
+		cimAdmin.linkDatasourceToCalcFormula(DataHelper.getIncentiveDataSourceId(),
+				DataHelper.getFormulaDataMap().get("amtPerUnitCalcFormulaIdBenefitNonStep"));
 	}
 
 	public Response createAndValidateTemplate(CIMAdmin cimAdmin, String qnbLayoutId) throws Exception {
@@ -89,26 +170,17 @@ public class CIMHelper {
 		return response;
 	}
 
-	public void mapDataSourceAndFormulaToTemplateTiered(CIMAdmin cimAdmin) throws ApplicationException {
-		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("stepCalcFormulaIdBenefit"));
+	public void mapDataSourceAndFormulaToTemplate(CIMAdmin cimAdmin) throws ApplicationException {
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("volumeCalcFormulaIdQualificationNonStep"));
 		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("stepCalcFormulaIdQualification"));
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("revBasedCalcFormulaIdQualificationNonStep"));
 		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"));
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("revPerctCalcFormulaIdBenefitNonStep"));
 		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"));
-		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
-		cimAdmin.mapProgramTemplateDataSource(jsonData);
-	}
-	
-	public void mapDataSourceAndFormulaToTemplateDiscrete(CIMAdmin cimAdmin) throws ApplicationException {
-		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"));
-		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
-		cimAdmin.mapProgramTemplateDataSource(jsonData);
-		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"));
+		jsonData.put("FormulaId__c", DataHelper.getFormulaDataMap().get("amtPerUnitCalcFormulaIdBenefitNonStep"));
 		jsonData.put("DataSourceId__c", DataHelper.getIncentiveDataSourceId());
 		cimAdmin.mapProgramTemplateDataSource(jsonData);
 	}

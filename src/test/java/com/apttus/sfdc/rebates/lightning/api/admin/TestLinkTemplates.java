@@ -51,7 +51,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);		
-		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);		
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);		
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeTieredAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 	}
@@ -61,7 +61,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeTieredAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
@@ -72,7 +72,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 	public void deleteLinkTemplateDraft() throws Exception {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.templateActivationForLinkTemplateDiscrete(cimAdmin, qnbLayoutId);
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);	
 		cimAdmin.deleteLinkTemplate(RebatesConstants.responseNocontent);		
@@ -84,7 +84,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);
 		
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
@@ -97,7 +97,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		response = cimAdmin.deleteLinkTemplate(RebatesConstants.responseNocontent);	
 		
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);		
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);		
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 		
 		// ---- Create and Activate link template -----
@@ -121,7 +121,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);		
 		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
@@ -140,7 +140,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);
 		
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeTieredAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);	
@@ -152,7 +152,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 		cimAdminHelper.deactivateAndVerifyLinkTemplate(cimAdmin);		
 		
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 		linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeTieredAPI";
@@ -176,7 +176,7 @@ public class TestLinkTemplates extends UnifiedFramework {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
-		cimAdminHelper.templateActivationForLinkTemplateTiered(cimAdmin, qnbLayoutId);
+		cimAdminHelper.templateActivationForLinkTemplate(cimAdmin, qnbLayoutId);
 
 		String linkTemplateDataFromJson = "autoNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
