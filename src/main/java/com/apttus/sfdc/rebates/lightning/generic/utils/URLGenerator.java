@@ -31,6 +31,7 @@ public class URLGenerator {
 	public String payoutSchedulesURL = "/sobjects/IncentivePayoutSchedule__c/";
 	
 	// ----------------- URL Exposed for apex rest Custom API ------------------
+
 	public String addIncentiveQnBURL = "/services/apexrest/apttus/v1/qualificationandbenefit/";
 	public String getIncentiveQnBURL = "/services/apexrest/apttus/v1/qualificationandbenefit?incentiveId={incentiveId}";
 	public String deleteQnBBenefitLineURL = "/services/apexrest/apttus/v1/qualificationandbenefit?id={sectionId}";
@@ -39,7 +40,7 @@ public class URLGenerator {
 	public String payoutScheduleStatusModifierURL = "/services/apexrest/apttus/v1/payoutschedule?statusModifier={statusModifier}";
 	public String addParticipantsURL = "/services/apexrest/apttus/v1/participant/";
 	public String getParticipantsForIncentiveIdURL = "/services/apexrest/apttus/v1/participant?incentiveId={IncentiveId}";
-	
+
 	public URLGenerator(String instanceURL) {
 		// ----------------- URL for SObjects as API ---------------------
 		this.baseURL = instanceURL + this.REST_ENDPOINT + this.API_VERSION;

@@ -23,7 +23,7 @@ public class LinkCalculationFormulaPojo {
 		return CalculationFormula__c;
 	}
 
-	public void setCalculation_Formula__c(String calculationFormula__c) {
+	public void setCalculationFormula__c(String calculationFormula__c) {
 		this.CalculationFormula__c = calculationFormula__c;
 	}
 
@@ -62,7 +62,7 @@ public class LinkCalculationFormulaPojo {
 	public String linkCalculationFormulaPojoRequest(Map<String, String> testData, String calculationFormulaId,
 			String expressionId) {
 		LinkCalculationFormulaPojo linkCalcFormulaId = new LinkCalculationFormulaPojo();
-		linkCalcFormulaId.setCalculation_Formula__c(calculationFormulaId);
+		linkCalcFormulaId.setCalculationFormula__c(calculationFormulaId);
 		linkCalcFormulaId.setExpression_Id__c(expressionId);
 		linkCalcFormulaId.setReferenceName__c(testData.get("ReferenceName__c"));
 		linkCalcFormulaId.setSequence__c(testData.get("Sequence__c"));
