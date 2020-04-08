@@ -1,5 +1,7 @@
 package com.apttus.sfdc.rebates.lightning.ui.cim;
 
+import static org.testng.Assert.assertEquals;
+
 import java.util.Map;
 import java.util.Properties;
 
@@ -58,7 +60,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		loginPage.waitForLoginPageLoad().loginToApp(configProperties.getProperty("LoginUser"),
 				configProperties.getProperty("LoginPassword"));
 		homepage = new HomePage(driver, configProperties);
-		homepage.navigateToCIM();
+		//homepage.navigateToCIM();
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
@@ -147,7 +149,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 				incentivepage.comboboxvalue.get(1).getAttribute("title"));
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
-		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec);
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		softassert.assertEquals(jsonData.get("Selected(1)"), incentivepage.btnSelected.getText());
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
@@ -179,14 +181,14 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption);
-		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec);
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.clickButton(incentivepage.btnSelected).clickButton(incentivepage.btnAdd);
 		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec);
-		genericPage.clickButton(incentivepage.btnShowAction)
-				.moveToElementAndClick(incentivepage.btnDelete, incentivepage.btnDelete);
+		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnDelete,
+				incentivepage.btnDelete);
 		incentivepage.btnConfirmDelete.click();
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.ddlSelectOption)
@@ -194,6 +196,59 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 				.clickButton(incentivepage.btnAdd);
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
 		softassert.assertEquals(jsonData.get("sectionId"), incentivepage.txtSectionID.getText());
+		softassert.assertAll();
+	}
+
+	@Test(description = "TC-552 Verify for fields on  QnB Edit pop up for Benefit only and Discrete Incentive", groups = {
+			"Regression1", "UI", "Low" })
+	public void Verify552() throws Exception {
+		/*
+		 * jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+		 * "createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		 * cimHelper.addAndValidateIncentive(jsonData,
+		 * RebatesConstants.incentiveTemplateIdBenefitProductDiscrete,
+		 * benefitProductQnB);
+		 * 
+		 * cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB,
+		 * "XXDBenefitProduct");
+		 */
+		incentivepage=homepage.navigateToIncentive();
+		Thread.sleep(10000);
+		//incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		//incentivepage.waitTillAllQnBElementLoad();
+
+		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
+				incentivepage.btnEditSpillover);
+
+		softassert.assertEquals("Cancel", incentivepage.btnCancel.getText());
+		softassert.assertEquals("Update", incentivepage.btnUpdate.getText());
+		incentivepage.btnCancel.click();
+		//softassert.assertEquals("Auto_Benefit SUM(Rebate_Amount)", incentivepage.txtformula.get(0).getText());
+		softassert.assertEquals("120", incentivepage.txtBenefit.get(1).getText());
+		//update inlineformula nad benefit
+		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
+				incentivepage.btnEditSpillover);
+		// assertion for Benefit formula-Edit Model
+		//softassert.assertEquals("120", incentivepage.txtBenefitEditModel.getText());
+		incentivepage.txtBenefitEditModel.clear();
+		incentivepage.txtBenefitEditModel.sendKeys("2");
+		incentivepage.btnUpdate.click();
+		softassert.assertEquals("2", incentivepage.txtBenefit.get(1).getText());
+		
+		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
+				incentivepage.btnEditSpillover);
+		
+		// update Benefit in Edit Model
+		incentivepage.txtBenefitEditModel.clear();
+		incentivepage.txtBenefitEditModel.sendKeys("12");
+		incentivepage.btnCancel.click();
+		// assertion for Benefit formula-Edit Model
+		softassert.assertEquals("2", incentivepage.txtBenefit.get(1).getText());
+		incentivepage.btnSave.click();
+		
+		
+		
+
 		softassert.assertAll();
 	}
 
