@@ -81,7 +81,6 @@ public class UnifiedFramework {
 		linkTemplateDataFromJson = "createNewLinkTemplateSubTypeDiscreteAPI";
 		cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 		cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
-		System.out.println("------------------------ Before Suite Completed ---------------------------------");
 	}
 
 	public void afterSuite() {

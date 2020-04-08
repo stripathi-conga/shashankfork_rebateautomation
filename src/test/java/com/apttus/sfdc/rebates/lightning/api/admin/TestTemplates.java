@@ -48,7 +48,7 @@ public class TestTemplates extends UnifiedFramework {
 		responseValidator = new ResponseValidatorBase();
 	}
 
-	@Test(description = "TC428-Verify for the creation of the Template and List page", groups = { "Smoke", "API1" })
+	@Test(description = "TC428-Verify for the creation of the Template and List page", groups = { "Smoke", "API" })
 	public void createNewTemplate() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
