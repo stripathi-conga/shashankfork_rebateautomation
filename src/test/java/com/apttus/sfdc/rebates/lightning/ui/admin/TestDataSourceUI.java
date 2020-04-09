@@ -65,40 +65,43 @@ public class TestDataSourceUI extends UnifiedFramework{
 		genericPage = new GenericPage(driver);
 	}
 
-	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression1", "Low", "UI" })
+	@Test(description = "TC216-Verify the Data Source Validation", groups = { "Regression", "Low", "UI" })
 	public void verifyDataSourceValidations() throws Exception {
 
 		dataSourcePage = homepage.navigateToNewDataSource();
 		dataSourcePage.clickSave();
-		softassert.assertEquals(RebatesConstants.messageMandatoryDataSource, dataSourcePage.txtToastMessage.getText());
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(), RebatesConstants.messageMandatoryDataSource,
+				"Verify DataSource Name");
 
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceAccountLocation");
-		
+
 		dataSourcePage.verifyValidationMessageForTransactionLineObject();
-		softassert.assertEquals(RebatesConstants.messageMandatoryTransactionLineObject,
-				dataSourcePage.txtToastMessage.getText());
-		
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(),
+				RebatesConstants.messageMandatoryTransactionLineObject, "Verify Transaction Line Object");
+
 		dataSourcePage.verifyValidationMessageForCalculationDate();
-		softassert.assertEquals(RebatesConstants.messageMandatoryCalculationDate,
-				dataSourcePage.txtToastMessage.getText());
-		
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(),
+				RebatesConstants.messageMandatoryCalculationDate, "Verify Calculation Date Field");
+
 		dataSourcePage.verifyValidationMessageForProduct();
-		softassert.assertEquals(RebatesConstants.messageMandatoryProduct, dataSourcePage.txtToastMessage.getText());
-		
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(), RebatesConstants.messageMandatoryProduct,
+				"Verify Product Field");
+
 		dataSourcePage.verifyValidationMessageForIncentiveAccount();
-		softassert.assertEquals(RebatesConstants.messageMandatoryIncentiveAccount,
-				dataSourcePage.txtToastMessage.getText());
-		
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(),
+				RebatesConstants.messageMandatoryIncentiveAccount, "Verify Incentive Account Field");
+
 		dataSourcePage.verifyValidationMessageForFileSuffixToIgnore();
-		softassert.assertEquals(RebatesConstants.messageMandatoryFileSuffix, dataSourcePage.txtToastMessage.getText());
-		
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(), RebatesConstants.messageMandatoryFileSuffix,
+				"Verify File Suffix To Ignore");
+
 		dataSourcePage.verifyValidationMessageForFileExtension(jsonData);
-		softassert.assertEquals(RebatesConstants.messageMandatoryFileExtension,
-				dataSourcePage.txtToastMessage.getText());
-		
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(),
+				RebatesConstants.messageMandatoryFileExtension, "Verify File Extension");
+
 		dataSourcePage.verifyValidationMessageForRecordDelimter();
-		softassert.assertEquals(RebatesConstants.messageMandatoryRecordDelimter,
-				dataSourcePage.txtToastMessage.getText());
+		softassert.assertEquals(dataSourcePage.txtToastMessage.getText(),
+				RebatesConstants.messageMandatoryRecordDelimter, "Verify Record Delimter");
 		softassert.assertAll();
 	}
 
@@ -109,13 +112,15 @@ public class TestDataSourceUI extends UnifiedFramework{
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 
 		dataSourcePage = homepage.navigateToEditDataSource(DataHelper.getIncentiveDataSourceId());
-		genericPage.moveToFormulaTab(DataHelper.getFormulaDataMap().get("stepCalcFormulaIdQualification"),
-				DataHelper.getFormulaDataMap().get("stepCalcFormulaIdBenefit"), dataSourcePage.lblRelatedTab);
-		genericPage.moveToFormulaTab(DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdBenefit"),
-				DataHelper.getFormulaDataMap().get("nonStepCalcFormulaIdQualification"), dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(DataHelper.getFormulaDataMap().get("volumeCalcFormulaIdQualificationNonStep"),
+				DataHelper.getFormulaDataMap().get("amtPerUnitCalcFormulaIdBenefitNonStep"),
+				dataSourcePage.lblRelatedTab);
+		genericPage.moveToFormulaTab(DataHelper.getFormulaDataMap().get("revBasedCalcFormulaIdQualificationNonStep"),
+				DataHelper.getFormulaDataMap().get("revPerctCalcFormulaIdBenefitNonStep"),
+				dataSourcePage.lblRelatedTab);
 		softassert.assertAll();
 	}
 
@@ -123,5 +128,6 @@ public class TestDataSourceUI extends UnifiedFramework{
 	public void tearDown() {
 		driver.manage().deleteAllCookies();
 		driver.quit();
-	}	 
+	}
+	  
 }

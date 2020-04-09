@@ -1,7 +1,5 @@
 package com.apttus.sfdc.rebates.lightning.ui.cim;
 
-import static org.testng.Assert.assertEquals;
-
 import java.util.Map;
 import java.util.Properties;
 
@@ -61,7 +59,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		loginPage.waitForLoginPageLoad().loginToApp(configProperties.getProperty("LoginUser"),
 				configProperties.getProperty("LoginPassword"));
 		homepage = new HomePage(driver, configProperties);
-		 homepage.navigateToCIM();
+		homepage.navigateToCIM();
 		SFDCHelper.setMasterProperty(configProperties);
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cim = new CIM(instanceURL, sfdcRestUtils);
@@ -188,7 +186,8 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		genericPage.doubleClick(incentivepage.checkbox.get(0));
 		genericPage.clickButton(incentivepage.btnSelected).clickButton(incentivepage.btnAdd);
 		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec);
-		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnDelete,
+		Thread.sleep(2000);
+		genericPage.clickButton(incentivepage.btnInLineEdit).moveToElementAndClick(incentivepage.btnDelete,
 				incentivepage.btnDelete);
 		incentivepage.btnConfirmDelete.click();
 		genericPage.clickWhenElementIsVisibleAndClickable(incentivepage.btnAddproduct);
@@ -201,8 +200,8 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	}
 
 	@Test(description = "TC-552 Verify for fields on  QnB Edit pop up for Benefit only and Discrete Incentive", groups = {
-			"Regression1", "UI", "Low" })
-	public void Verify552() throws Exception {
+			"Regression", "UI", "Low" })
+	public void VerifyEditModelPopUpForDiscrete() throws Exception {
 
 		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
 				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
@@ -216,32 +215,78 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 
 		softassert.assertEquals("Cancel", incentivepage.btnCancel.getText());
 		softassert.assertEquals("Update", incentivepage.btnUpdate.getText());
-		
+
 		incentivepage.btnCancel.click();
-		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNonStepCalcFormulaIdBenefit");
-		softassert.assertEquals(jsonData.get("Name"),incentivepage.txtformula.get(0).getText());
-			
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revPerctCalcFormulaIdBenefitNonStep");
+		softassert.assertEquals(jsonData.get("Name"), incentivepage.txtformula.get(0).getText());
+
 		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
 				incentivepage.btnEditSpillover);
+
+		softassert.assertEquals(jsonData.get("Name"), incentivepage.txtFormulaEditModel.getAttribute("value"));
+
 		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
+		softassert.assertEquals(jsonData.get("Benefit3"), incentivepage.txtBenefitEditModel.getAttribute("value"));
 		incentivepage.txtBenefitEditModel.clear();
 		incentivepage.txtBenefitEditModel.sendKeys(jsonData.get("Benefit1"));
 		incentivepage.btnUpdate.click();
-		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtBenefit.get(1).getText());
 
+		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtBenefit.get(1).getText());
 		genericPage.clickButton(incentivepage.btnShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
 				incentivepage.btnEditSpillover);
-		Thread.sleep(7000);
-		System.out.println(incentivepage.txtFormulaEditModel.getAttribute("value"));
-		System.out.println(incentivepage.txtBenefitEditModel.getAttribute("value"));
 		incentivepage.txtBenefitEditModel.clear();
-		
-		incentivepage.txtBenefitEditModel.sendKeys(jsonData.get("Benefit2"));
+		incentivepage.txtBenefitEditModel.sendKeys(jsonData.get("Benefit3"));
 		incentivepage.btnCancel.click();
-		
 		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtBenefit.get(1).getText());
 		incentivepage.btnSave.click();
+		softassert.assertAll();
+	}
 
+	@Test(description = "TC 553 Verify QnB Edit pop up for Benefit only and Tiered Incentive", groups = { "Regression",
+			"UI", "Low" })
+	public void VerifyEditModelPopUpForTiered() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
+				benefitProductQnB);
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXDBenefitProduct");
+		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		incentivepage.waitTillAllQnBElementLoad();
+
+		genericPage.clickButton(incentivepage.btnTierShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
+				incentivepage.btnEditSpillover);
+
+		softassert.assertEquals("Cancel", incentivepage.btnCancel.getText());
+		softassert.assertEquals("Update", incentivepage.btnUpdate.getText());
+
+		incentivepage.btnCancel.click();
+		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "revPerctCalcFormulaIdBenefitNonStep");
+		softassert.assertEquals(RebatesConstants.RevenueBased, incentivepage.txtformula.get(0).getText());
+
+		genericPage.clickButton(incentivepage.btnTierShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
+				incentivepage.btnEditSpillover);
+		softassert.assertEquals(RebatesConstants.RevenueBased,
+				incentivepage.ddlQualificationBenefitFormula.get(0).getAttribute("value"));
+		softassert.assertEquals(jsonData.get("Name"),
+				incentivepage.ddlQualificationBenefitFormula.get(1).getAttribute("value"));
+
+		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "tiersIncrementalOrder");
+		softassert.assertEquals(jsonData.get("Benefit3"),
+				incentivepage.txtTierBenefitEditModel.get(1).getAttribute("value"));
+
+		incentivepage.txtTierBenefitEditModel.get(1).clear();
+		incentivepage.txtTierBenefitEditModel.get(1).sendKeys(jsonData.get("Benefit1"));
+		incentivepage.btnUpdate.click();
+		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtTierBenefit.getText());
+
+		genericPage.clickButton(incentivepage.btnTierShowAction).moveToElementAndClick(incentivepage.btnEditSpillover,
+				incentivepage.btnEditSpillover);
+		incentivepage.txtTierBenefitEditModel.get(1).clear();
+		incentivepage.txtTierBenefitEditModel.get(1).sendKeys(jsonData.get("Benefit3"));
+		incentivepage.btnCancel.click();
+		softassert.assertEquals(jsonData.get("Benefit1"), incentivepage.txtTierBenefit.getText());
+		incentivepage.btnSave.click();
 		softassert.assertAll();
 	}
 

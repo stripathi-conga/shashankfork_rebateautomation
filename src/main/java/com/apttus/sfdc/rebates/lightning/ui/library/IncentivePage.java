@@ -168,26 +168,21 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//input[@name='progress']")
 	public WebElement txtFormulaEditModel;
 	
-	@FindBy(xpath = "//*[@name='Incentive Type']")
-	public WebElement ddlIncentiveType;
+	//Need to find better locator - To do
+	@FindBy(xpath = "//tr[1]/td[12]//button")
+	public WebElement btnTierShowAction;
 	
-	@FindBy(xpath = "//span[@title='Rebate']")
-	public WebElement ddlIncentiveTypeRebate;
+	@FindBy(xpath = "//*[@name='progress']")
+	public List<WebElement> ddlQualificationBenefitFormula;
 	
-	@FindBy(xpath = "//*[@name='Incentive Sub-Type']")
-	public WebElement ddlIncentiveSubType;
+	@FindBy(xpath = "//tr[1]/td[11]//div[2]/div[1]")
+	public WebElement txtTierBenefit;
 	
-	@FindBy(xpath = "//span[@title='Benefit Product Discrete']")
-	public WebElement ddlIncentiveSubTypeRebate;
+	@FindBy(xpath = "//input[@name='0']")
+	public List<WebElement> txtTierBenefitEditModel;
 	
-	@FindBy(xpath = "//button[text()='Next']")
-	public WebElement btnNext;
-	
-	@FindBy(xpath = "//*[@name='Payment Frequency']")
-	public WebElement ddlPaymentFrequency;
-	
-	@FindBy(xpath = "//*[@name='Measurement Level']")
-	public WebElement ddlMeasurementLevel;
+	@FindBy(xpath = "//tr[1]/td[12]//button")
+	public WebElement btnInLineEdit;
 	
 	GenericPage genericPage;
 	WebDriverWait wait;

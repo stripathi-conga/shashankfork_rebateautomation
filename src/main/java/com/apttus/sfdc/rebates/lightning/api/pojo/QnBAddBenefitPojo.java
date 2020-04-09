@@ -82,7 +82,7 @@ public class QnBAddBenefitPojo {
 			Map<String, String> qualificationIdMap;
 			qualificationIdMap = setProductId(qualification, row.get("QualificationProductType"),
 					row.get("QualificationProductCode"), row.get("QualificationProduct"), "Qualification",
-					row.get("QualificationFormulaId"), true, cim);
+					row.get("QualificationFormula"), true, cim);
 
 			qualification.setId(cim.qualificationIdMap.get(row.get("QualificationProduct")));
 			qualification.setProductId(qualificationIdMap.get("productId"));
@@ -95,7 +95,7 @@ public class QnBAddBenefitPojo {
 			benefit.setAliasName(row.get("BenefitAliasName"));
 			Map<String, String> benefitIdMap;
 			benefitIdMap = setProductId(benefit, row.get("BenefitProductType"), row.get("BenefitProductCode"),
-					row.get("BenefitProduct"), "Benefit", row.get("BenefitFormulaId"), false, cim);
+					row.get("BenefitProduct"), "Benefit", row.get("BenefitFormula"), false, cim);
 
 			benefit.setId(cim.benefitIdMap.get(row.get("BenefitProduct")));
 			benefit.setProductId(benefitIdMap.get("productId"));

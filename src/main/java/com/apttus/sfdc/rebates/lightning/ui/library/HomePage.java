@@ -74,13 +74,7 @@ public class HomePage extends GenericPage {
 				RebatesConstants.viewPath));
 		return PageFactory.initElements(driver, IncentivePage.class);
 	}
-	public IncentivePage navigateToIncentiveNew() throws Exception {
-
-		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveHomeURL.replace("{incentiveId}",
-				RebatesConstants.newPath).replace("{view}", ""));
-		return PageFactory.initElements(driver, IncentivePage.class);
-	}
-
+	
 	public void navigateToCIM() throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(btnAppLauncher).waitTillElementIsClickable(btnAppLauncher)
@@ -130,9 +124,5 @@ public class HomePage extends GenericPage {
 				replace("/{view}", listView));		
 		return PageFactory.initElements(driver, FileIngestionAuditLogsPage.class);		
 	}
-	public IncentivePage navigateToIncentive() throws Exception {
-
-		sfdcAcolyte.navigateTo("https://rebatesautomationqa-dev-ed.lightning.force.com/lightning/r/Apttus_Config2__Incentive__c/a1k3i0000015b4WAAQ/view");
-		return PageFactory.initElements(driver, IncentivePage.class);
-	}
+	
 }

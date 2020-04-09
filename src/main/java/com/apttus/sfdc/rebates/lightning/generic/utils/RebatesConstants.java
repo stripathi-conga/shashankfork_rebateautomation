@@ -44,7 +44,7 @@ public class RebatesConstants {
 	public static final String viewPath = "view";
 	public static final String homePath = "home";
 	public static final String newParticipant = "New";
-	public static final String messageMandatoryDataSource = "Please enter Data Source Name to save";
+	public static final String messageMandatoryDataSource = "Please enter Name to save";
 	public static final String messageMandatoryTransactionLineObject = "Please select Transaction Line Object to save";
 	public static final String messageMandatoryCalculationDate = "Please select Calculation Date Field to save";
 	public static final String messageMandatoryIncentiveAccount = "Please select Incentive Account Field to save";
@@ -63,4 +63,5 @@ public class RebatesConstants {
 	public static final int waitFor2Sec=2000;
 	public static final int waitFor3Sec=3000;
 	public static final int waitFor20Sec=20000;
+	public static final String RevenueBased = "Revenue based";
 }

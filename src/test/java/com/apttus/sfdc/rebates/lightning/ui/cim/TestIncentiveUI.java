@@ -121,30 +121,6 @@ public class TestIncentiveUI extends UnifiedFramework {
 		softassert.assertAll();
 	}
 	
-	@Test(description = "TC- 585 Select and Activate measurement level", groups = {
-			"Regression1", "Medium", "UI" })
-	public void verify585() throws Exception {
-
-		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
-				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
-		cimHelper.addAndValidateIncentive(jsonData,  DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);
-
-		incentivepage = homepage.navigateToIncentiveNew();
-		Thread.sleep(10000);
-		incentivepage.ddlIncentiveType.click();
-		incentivepage.ddlIncentiveTypeRebate.click();
-		Thread.sleep(3000);
-		incentivepage.ddlIncentiveSubType.click();
-		incentivepage.ddlIncentiveSubTypeRebate.click();
-		Thread.sleep(3000);
-		incentivepage.btnNext.click();
-		
-		
-		System.out.println(incentivepage.ddlMeasurementLevel.getAttribute("placeholder"));
-		System.out.println(incentivepage.ddlPaymentFrequency.getAttribute("placeholder"));
-		softassert.assertAll();
-	}
-
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();

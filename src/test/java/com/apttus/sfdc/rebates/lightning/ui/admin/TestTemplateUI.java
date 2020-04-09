@@ -75,14 +75,12 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 		templatePage = homepage.navigateToEditTemplate(cimAdmin.templateData.getTemplateId());
 		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
 	    genericPage.clickButton(templatePage.ddlQBselect);
 	    genericPage.clickButton(templatePage.ddlBenefitProductDetails);
-		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec); 
-	    templatePage.addDataSource(cimAdmin);
-	  
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec); 	  
 		softassert.assertEquals(false, templatePage.chkQualificationValue.isEmpty());
 		softassert.assertEquals(false, templatePage.chkBenefitFormulaValue.isEmpty());
 
@@ -98,7 +96,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 		cimAdmin.activateTemplate(RebatesConstants.responseNocontent);
 
 		templatePage = homepage.navigateToTemplates();
@@ -114,7 +112,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "qualificationAndBenefitTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 
 		templatePage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
 		genericPage.clickButtonAndWait(templatePage.btnActive, genericPage.txtToastMessage);
@@ -130,7 +128,7 @@ public class TestTemplateUI extends UnifiedFramework {
 				"multipleQualificationAndBenefitDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 
 		templatePage = homepage.navigateToEditTemplateView(cimAdmin.templateData.getTemplateId());
 		genericPage.clickButtonAndWait(templatePage.btnActive, genericPage.txtToastMessage);
@@ -145,7 +143,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 
 		templatePage = homepage.navigateToTemplates();
 		templatePage.searchTemplateName(cimAdmin.getTemplateData().getName());
@@ -161,17 +159,17 @@ public class TestTemplateUI extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);
-		cimAdminHelper.mapDataSourceAndFormulaToTemplateTiered(cimAdmin);
+		cimAdminHelper.mapDataSourceAndFormulaToTemplate(cimAdmin);
 
 		templatePage = homepage.navigateToTemplates();
 		templatePage.searchTemplateName(cimAdmin.getTemplateData().getName());
 		templatePage.changeInLineStatus();
 		softassert.assertEquals(RebatesConstants.messageChangesSuccessful, genericPage.txtToastMessage.getText());
 		softassert.assertAll();
-	}
+	}	
 	
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
-	}
+	}	 
 }
