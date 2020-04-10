@@ -119,10 +119,15 @@ public class HomePage extends GenericPage {
 		return PageFactory.initElements(driver, DataSourcePage.class);
 	}
 	
-	public FileIngestionAuditLogsPage navigatetoFileIngestionAuditLogsListView(String listView) throws Exception {
+	public AuditLogsPage navigatetoFileIngestionAuditLogsListView(String listView) throws Exception {
 		sfdcAcolyte.navigateTo(urlGeneratorUI.fileIngestionAuditLogsListURL.replace("{runId}", "").
 				replace("/{view}", listView));		
-		return PageFactory.initElements(driver, FileIngestionAuditLogsPage.class);		
+		return PageFactory.initElements(driver, AuditLogsPage.class);		
 	}
 	
+	public AuditLogsPage navigatetoCalculationEngineAuditLogsListView(String listView) throws Exception {
+		sfdcAcolyte.navigateTo(urlGeneratorUI.calculationEngineAuditLogsListURL.replace("{runId}", "").
+				replace("/{view}", listView));		
+		return PageFactory.initElements(driver, AuditLogsPage.class);		
+	}	
 }
