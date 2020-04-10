@@ -105,7 +105,8 @@ public class TestDatasource extends UnifiedFramework {
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceOrderLineItem");
 		response = cimAdmin.createDataSourceFailure(jsonData);
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
-				RebatesConstants.messageCreateDataSourceDuplicateTransactionLineObject.replace("{DataSourceName}",
-						DataHelper.getIncentiveDataSourceName()));
+				(RebatesConstants.messageCreateDataSourceDuplicateTransactionLineObject
+						.replace("{TransactionLineObjectName}", jsonData.get("TransactionLineObjectName__c")))
+						.replace("{DataSourceName}", DataHelper.getIncentiveDataSourceName()));
 	}
 }
