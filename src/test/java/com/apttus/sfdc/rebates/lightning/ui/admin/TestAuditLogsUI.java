@@ -65,7 +65,7 @@ public class TestAuditLogsUI {
 		softassert.assertAll();
 	}
 	
-	@Test(description = "TC-600 Verify the Calculation Engine Audit Logs Grid View", groups = {
+	@Test(description = "TC-600 Verify the calculation engine audit logs in grid view", groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyCalculationEngineAuditLogGridView() throws Exception {
 
