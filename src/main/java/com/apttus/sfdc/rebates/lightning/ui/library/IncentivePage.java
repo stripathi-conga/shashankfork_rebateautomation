@@ -143,11 +143,46 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//*[text()='Delete']")
 	public WebElement btnDelete;
 	
+	@FindBy(xpath = "//*[@class='slds-dropdown__item']//span[text()='Edit']")
+	public WebElement btnEditSpillover;
+	
 	@FindBy(xpath = "//tr[1]/th[@data-label='Section Id']//*[text()]")
 	public WebElement txtSectionID;
 	
 	@FindBy(xpath = "//*[@class='slds-button slds-button_brand slds-button_destructive']")
 	public WebElement btnConfirmDelete;
+	@FindBy(xpath = "//*[text()='Cancel']")
+	public WebElement btnCancel;
+	@FindBy(xpath = "//*[text()='Update']")
+	public WebElement btnUpdate;
+	
+	@FindBy(xpath = "//c-core-data-table-formula//div[@class='slds-truncate slds-m-left_x-small']/span")
+	public List<WebElement> txtformula;
+	
+	@FindBy(xpath = "//*[@class='col slds-grid slds-grid_align-spread cell-height']//div[text()]")
+	public List<WebElement> txtBenefit;
+	
+	@FindBy(xpath = "//input[@name='0']")
+	public WebElement txtBenefitEditModel;
+	
+	@FindBy(xpath = "//input[@name='progress']")
+	public WebElement txtFormulaEditModel;
+	
+	//Need to find better locator - To do
+	@FindBy(xpath = "//tr[1]/td[12]//button")
+	public WebElement btnTierShowAction;
+	
+	@FindBy(xpath = "//*[@name='progress']")
+	public List<WebElement> ddlQualificationBenefitFormula;
+	
+	@FindBy(xpath = "//tr[1]/td[11]//div[2]/div[1]")
+	public WebElement txtTierBenefit;
+	
+	@FindBy(xpath = "//input[@name='0']")
+	public List<WebElement> txtTierBenefitEditModel;
+	
+	@FindBy(xpath = "//tr[1]/td[12]//button")
+	public WebElement btnInLineEdit;
 	
 	GenericPage genericPage;
 	WebDriverWait wait;

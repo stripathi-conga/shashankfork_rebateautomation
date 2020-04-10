@@ -120,7 +120,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 				incentivepage.txtToastMessage.getText());
 		softassert.assertAll();
 	}
-
+	
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();

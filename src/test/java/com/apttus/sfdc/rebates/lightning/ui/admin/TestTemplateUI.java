@@ -80,9 +80,7 @@ public class TestTemplateUI extends UnifiedFramework {
 		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor2Sec); 
 	    genericPage.clickButton(templatePage.ddlQBselect);
 	    genericPage.clickButton(templatePage.ddlBenefitProductDetails);
-		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec); 
-	    templatePage.addDataSource(cimAdmin);
-	  
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec); 	  
 		softassert.assertEquals(false, templatePage.chkQualificationValue.isEmpty());
 		softassert.assertEquals(false, templatePage.chkBenefitFormulaValue.isEmpty());
 
