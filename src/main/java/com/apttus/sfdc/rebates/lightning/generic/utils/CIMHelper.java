@@ -50,6 +50,7 @@ public class CIMHelper {
 		// ----- Create New DataSource -------------------
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceOrderLineItem");
 		DataHelper.setIncentiveDataSourceId(cimAdmin.createDataSource(jsonData));
+		DataHelper.setIncentiveDataSourceName(cimAdmin.getDataSourceData().getName());
 
 		// Create Formula Expression, Calculation Formula and Link Formula for Volume Based
 		jsonData = efficacies.readJsonElement("CIMFormulaData.json", "volQtyExpressionId");

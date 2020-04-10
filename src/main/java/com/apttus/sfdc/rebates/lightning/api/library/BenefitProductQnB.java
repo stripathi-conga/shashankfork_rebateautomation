@@ -157,7 +157,7 @@ public class BenefitProductQnB extends CIM {
 		}
 	}
 	
-	public Response addIncentiveQnBNegative(List<Map<String, String>> testData) throws ApplicationException {
+	public Response addIncentiveQnBFailure(List<Map<String, String>> testData) throws ApplicationException {
 		try {
 			requestString = qnbData.addBenefitRequest(testData, this);
 			setRequestValue("addQnBRequest", requestString);
