@@ -64,4 +64,6 @@ public class RebatesConstants {
 	public static final int waitFor3Sec=3000;
 	public static final int waitFor20Sec=20000;
 	public static final String RevenueBased = "Revenue based";
+	public static final String cancel="Cancel";
+	public static final String update="Update";
 }
