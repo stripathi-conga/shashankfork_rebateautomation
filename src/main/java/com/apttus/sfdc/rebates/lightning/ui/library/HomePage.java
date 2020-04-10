@@ -74,7 +74,7 @@ public class HomePage extends GenericPage {
 				RebatesConstants.viewPath));
 		return PageFactory.initElements(driver, IncentivePage.class);
 	}
-
+	
 	public void navigateToCIM() throws Exception {
 
 		sfdcAcolyte.waitTillElementIsVisible(btnAppLauncher).waitTillElementIsClickable(btnAppLauncher)
@@ -124,4 +124,5 @@ public class HomePage extends GenericPage {
 				replace("/{view}", listView));		
 		return PageFactory.initElements(driver, FileIngestionAuditLogsPage.class);		
 	}
+	
 }

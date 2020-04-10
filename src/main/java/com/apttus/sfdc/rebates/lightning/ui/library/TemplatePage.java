@@ -164,6 +164,8 @@ public class TemplatePage extends GenericPage {
 
 		sfdcAcolyte.waitTillElementIsVisible(ddlDataSource).waitTillElementIsClickable(ddlDataSource)
 				.click(ddlDataSource);
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec);
+		
 		sfdcAcolyte.sendTextKeys(cimAdmin.getDataSourceData().getName()).sendBoardKeys(Keys.ENTER);
 	}
 }
