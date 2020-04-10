@@ -8,6 +8,7 @@ public class URLGeneratorUI {
 	public String templatesURL = "IncentiveProgramTemplate__c/{templateId}/{view}";
 	public String dataSourceURL = "DataSource__c/{dataSourceId}/{view}";
 	public String fileIngestionAuditLogsURL = "FileIngestionLogSummary__x/{runId}/{view}";
+	public String calculationEngineAuditLogsURL = "CalcEngineLogSummary__x/{runId}/{view}";
 	public String editPath = "r";
 	public String homePath = "o";
 	public String incentiveEditURL;
@@ -17,6 +18,7 @@ public class URLGeneratorUI {
 	public String dataSourceNewURL;
 	public String dataSourceEditURL;
 	public String fileIngestionAuditLogsListURL;
+	public String calculationEngineAuditLogsListURL;
 
 	public URLGeneratorUI(Properties configProperties) {
 
@@ -27,5 +29,6 @@ public class URLGeneratorUI {
 		templateEditURL = configProperties.getProperty("baseURLUI").replace("{path}", editPath) + templatesURL;
 		dataSourceEditURL=configProperties.getProperty("baseURLUI").replace("{path}", editPath) + dataSourceURL;
 		fileIngestionAuditLogsListURL = configProperties.getProperty("baseURLUI").replace("{path}", homePath) + fileIngestionAuditLogsURL;
+		calculationEngineAuditLogsListURL = configProperties.getProperty("baseURLUI").replace("{path}", homePath) + calculationEngineAuditLogsURL;
 	}
 }

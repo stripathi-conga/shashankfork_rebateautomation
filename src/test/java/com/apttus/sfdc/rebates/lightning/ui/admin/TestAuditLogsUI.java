@@ -14,7 +14,7 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
-import com.apttus.sfdc.rebates.lightning.ui.library.FileIngestionAuditLogsPage;
+import com.apttus.sfdc.rebates.lightning.ui.library.AuditLogsPage;
 import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 
@@ -29,7 +29,7 @@ public class TestAuditLogsUI {
 	private SoftAssert softassert;
 	private Map<String, String> jsonData;
 	public GenericPage genericPage;
-	public FileIngestionAuditLogsPage fileIngestionAuditLogsPage;
+	public AuditLogsPage auditLogsPage;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -48,27 +48,40 @@ public class TestAuditLogsUI {
 		SFDCHelper.setMasterProperty(configProperty);
 		softassert = new SoftAssert();
 		genericPage = new GenericPage(driver);
-		fileIngestionAuditLogsPage = new FileIngestionAuditLogsPage(driver);
+		auditLogsPage = new AuditLogsPage(driver);
 	}
 
 	@Test(description = "TC529 - Verify file audit log data shows up in file audit log grid view", groups = {
 			"Regression", "Medium", "UI" })
-	public void verifyAuditLogGridView() throws Exception {
+	public void verifyFileIngestionAuditLogGridView() throws Exception {
 
-		fileIngestionAuditLogsPage = homepage.navigatetoFileIngestionAuditLogsListView(RebatesConstants.listViewAll);
+		auditLogsPage = homepage.navigatetoFileIngestionAuditLogsListView(RebatesConstants.listViewAll);
 		jsonData = efficacies.readJsonElement("CIMAdminUIData.json", "fileAuditLogsHeaders");
 		List<String> headerValues = SFDCHelper.convertStringToList(jsonData.get("Headers"));
-		softassert.assertEquals(fileIngestionAuditLogsPage.verifyHeaders(headerValues), true,
+		softassert.assertEquals(auditLogsPage.verifyHeaders(headerValues), true,
 				"Verify File Audit Logs Page Header");
-		softassert.assertEquals(fileIngestionAuditLogsPage.getGridViewData(), true,
+		softassert.assertEquals(auditLogsPage.getGridViewData(), true,
 				"Verify the data is availabe on Audit Logs Page");
 		softassert.assertAll();
 	}
+	
+	@Test(description = "TC-600 Verify For the Calculation Engine Audit Logs Grid View", groups = {
+			"Regression", "Medium", "UI" })
+	public void verifyCalculationEngineAuditLogGridView() throws Exception {
 
+		auditLogsPage = homepage.navigatetocalculationEngineAuditLogsListView(RebatesConstants.listViewAll);
+		jsonData = efficacies.readJsonElement("CIMAdminUIData.json", "fileAuditLogsHeaders");
+		List<String> headerValues = SFDCHelper.convertStringToList(jsonData.get("Headers"));
+		softassert.assertEquals(auditLogsPage.verifyHeaders(headerValues), true,
+				"Verify Calculation Engine Audit Logs Page Header");
+		softassert.assertEquals(auditLogsPage.getGridViewData(), true,
+				"Verify the data is availabe on Calculation Engine Audit Logs Page");
+		softassert.assertAll();
+	}
+	
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.manage().deleteAllCookies();
 		driver.quit();
 	}
-
 }

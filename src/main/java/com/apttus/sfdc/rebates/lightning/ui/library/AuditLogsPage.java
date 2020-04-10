@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 
-public class FileIngestionAuditLogsPage extends GenericPage {
+public class AuditLogsPage extends GenericPage {
 
 	@CacheLookup
 	@FindBy(xpath = "//table//th/div[@class='slds-cell-fixed']/a/span[@class='slds-truncate']")
@@ -23,7 +23,7 @@ public class FileIngestionAuditLogsPage extends GenericPage {
 	public String tblAuditLogData = "//table[contains(@class,'slds-table')]/tbody/tr[ROW]/td[COLUMN]";
 	public WebDriverWait wait;
 	
-	public FileIngestionAuditLogsPage(WebDriver driver) {
+	public AuditLogsPage(WebDriver driver) {
 		super(driver);
 		wait = new WebDriverWait(driver, 120);
 		PageFactory.initElements(driver, this);
