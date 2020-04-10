@@ -65,11 +65,11 @@ public class TestAuditLogsUI {
 		softassert.assertAll();
 	}
 	
-	@Test(description = "TC-600 Verify For the Calculation Engine Audit Logs Grid View", groups = {
+	@Test(description = "TC-600 Verify the Calculation Engine Audit Logs Grid View", groups = {
 			"Regression", "Medium", "UI" })
 	public void verifyCalculationEngineAuditLogGridView() throws Exception {
 
-		auditLogsPage = homepage.navigatetocalculationEngineAuditLogsListView(RebatesConstants.listViewAll);
+		auditLogsPage = homepage.navigatetoCalculationEngineAuditLogsListView(RebatesConstants.listViewAll);
 		jsonData = efficacies.readJsonElement("CIMAdminUIData.json", "fileAuditLogsHeaders");
 		List<String> headerValues = SFDCHelper.convertStringToList(jsonData.get("Headers"));
 		softassert.assertEquals(auditLogsPage.verifyHeaders(headerValues), true,

@@ -125,7 +125,7 @@ public class HomePage extends GenericPage {
 		return PageFactory.initElements(driver, AuditLogsPage.class);		
 	}
 	
-	public AuditLogsPage navigatetocalculationEngineAuditLogsListView(String listView) throws Exception {
+	public AuditLogsPage navigatetoCalculationEngineAuditLogsListView(String listView) throws Exception {
 		sfdcAcolyte.navigateTo(urlGeneratorUI.calculationEngineAuditLogsListURL.replace("{runId}", "").
 				replace("/{view}", listView));		
 		return PageFactory.initElements(driver, AuditLogsPage.class);		
