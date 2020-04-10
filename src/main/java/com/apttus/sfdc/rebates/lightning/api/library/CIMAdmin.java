@@ -488,4 +488,15 @@ public class CIMAdmin {
 					"Activate Link Template API call failed with exception trace : " + e);
 		}
 	}
+	
+	public Response createDataSourceFailure(Map<String, String> testData) throws ApplicationException {
+		try {
+			requestString = dataSourceData.createDataSourceRequest(testData, this);
+			response = sfdcRestUtils.postWithoutAppUrl(urlGenerator.dataSourceURL, requestString);
+			validateResponseCode(response, RebatesConstants.responseBadRequest);
+			return response;
+		} catch (Exception e) {
+			throw new ApplicationException("Create New DataSource API call did not fail for Negative Scenario with exception trace : " + e);
+		}
+	}
 }

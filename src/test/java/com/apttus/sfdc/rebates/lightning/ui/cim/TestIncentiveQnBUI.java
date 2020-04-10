@@ -1,5 +1,6 @@
 package com.apttus.sfdc.rebates.lightning.ui.cim;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,6 +16,7 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
+import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
@@ -25,6 +27,7 @@ import com.apttus.sfdc.rebates.lightning.ui.library.HomePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.IncentivePage;
 import com.apttus.sfdc.rebates.lightning.ui.library.LoginPage;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
+import com.jayway.restassured.response.Response;
 
 public class TestIncentiveQnBUI extends UnifiedFramework {
 	private Properties configProperties;
@@ -44,6 +47,9 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 	public HomePage homepage;
 	SoftAssert softassert;
 	GenericPage genericPage;
+	private List<Map<String, String>> jsonArrayData;
+	private Response response;
+	private BenefitProductValidator responseValidator;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -71,6 +77,7 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
 		genericPage = new GenericPage(driver);
+		responseValidator = new BenefitProductValidator();
 	}
 
 	@Test(description = "TC-525 Validation fields available for Qualification And Benefits-Add Product", groups = {
@@ -292,10 +299,58 @@ public class TestIncentiveQnBUI extends UnifiedFramework {
 		incentivePage.btnSave.click();
 		softassert.assertAll();
 	}
+	
+	@Test(description = "TC-437 Verify for the QnB grid View", groups = { "Regression", "High", "UI" })
+	public void verifyQnBValidationForDatesAndNegativeTier() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createIncentiveIndividualParticipantBenefitProductTiered");
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
+				benefitProductQnB);
 
+		// ------ Add QnB Benefit Lines ---------
+		response = cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
+		benefitProductQnB.setQnBSectionId(response);
+		benefitProductQnB.setQualificationBenefitAndTierIds(response);
+
+		// -------- Update QnB Benefit Line ------
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTUpdateBenefitProduct");
+
+		// -------- Update QnB Benefit Line without Start Date ------
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTUpdateBenefitWithoutStartDate");
+		response = benefitProductQnB.addIncentiveQnBFailure(jsonArrayData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
+				RebatesConstants.messageBenefitStartDateIsRequired);
+
+		// -------- Update QnB Benefit Line without End Date -------
+		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTUpdateBenefitWithoutEndDate");
+		response = benefitProductQnB.addIncentiveQnBFailure(jsonArrayData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
+				RebatesConstants.messageBenefitEndDateIsRequired);		
+		
+		// -------- Update QnB Benefit Line Negative Tier Values --------
+		incentivePage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		incentivePage.waitTillAllQnBElementLoad();
+		jsonData = efficacies.readJsonElement("CIMIncentiveQnBData.json", "negativeTiersQuantity");
+		incentivePage.updateTiers(incentivePage.gridT1, incentivePage.pencilEditTierT1T2T3.get(0), incentivePage.txtT1,
+				jsonData.get("tier1"));
+		incentivePage.save(incentivePage.btnSave);
+		incentivePage.getErrorMessage(incentivePage.gridErrorMessage.get(0), incentivePage.txtErrorMessageTierValueNegative);
+		softassert.assertEquals(incentivePage.txtErrorMessageTierValueNegative.getText(), "Tier boundary values should be positive",
+				"Verify error message when tier quantity is negative");
+		
+		// ------- Update QnB Benefit Line with Tier Value as null -------
+		incentivePage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		incentivePage.waitTillAllQnBElementLoad();
+		incentivePage.deleteTierValue(incentivePage.gridT1, incentivePage.pencilEditTierT1T2T3.get(0), incentivePage.txtT1);
+		incentivePage.save(incentivePage.btnSave);
+		incentivePage.getErrorMessage(incentivePage.gridErrorMessage.get(0), incentivePage.txtErrorMessageTierValueRequired);
+		softassert.assertEquals(incentivePage.txtErrorMessageTierValueRequired.getText(), "Tier value is required",
+				"Verify error message when tier quantity is null");
+		softassert.assertAll();
+	}
+	
 	@AfterClass(alwaysRun = true)
 	public void tearDown() {
 		driver.quit();
-	}
-
+	}	 
 }

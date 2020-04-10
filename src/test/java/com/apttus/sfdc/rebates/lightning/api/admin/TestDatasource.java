@@ -10,6 +10,7 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.api.validator.ResponseValidatorBase;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -96,5 +97,15 @@ public class TestDatasource extends UnifiedFramework {
 		cimAdmin.deleteDataSource(dataSourceId);
 		response = cimAdmin.getDataSourceForId(dataSourceId);
 		responseValidator.validateDeleteSuccess(response);
+	}
+	
+	@Test(description = "TC-615 Verify the uniqueness of Transaction line object value when creating a data source", groups = {
+			"Regression", "Medium", "API" })
+	public void verifyUniquenessOfTransactionLineObject() throws Exception {
+		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "createNewDataSourceOrderLineItem");
+		response = cimAdmin.createDataSourceFailure(jsonData);
+		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeCustomValidation,
+				RebatesConstants.messageCreateDataSourceDuplicateTransactionLineObject.replace("{DataSourceName}",
+						DataHelper.getIncentiveDataSourceName()));
 	}
 }

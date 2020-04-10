@@ -26,7 +26,10 @@ public class RebatesConstants {
 	public static final String messageOverlappingParticipants = "Same participants with overlapping dates found.";
 	public static final String errorFieldsForDates = "[\"EffectiveDate__c\",\"ExpirationDate__c\"]";
 	public static final String messageActivateLinkTemplateForInactiveTemplate = "Only active templates can be mapped";
-
+	public static final String messageCreateDataSourceDuplicateTransactionLineObject = "Order Line Item is used in {DataSourceName}. Kindly select different transaction line object to create new data source";
+	public static final String messageBenefitStartDateIsRequired = "Start Date is required";
+	public static final String messageBenefitEndDateIsRequired = "End Date is required";
+	
 	public static final String scheduleStatusOpen = "Open";
 	public static final String scheduleStatusPending = "Pending";
 	public static final String scheduleStatusReady = "Ready";

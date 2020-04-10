@@ -2,6 +2,7 @@ package com.apttus.sfdc.rebates.lightning.ui.library;
 
 import java.util.List;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -184,6 +185,12 @@ public class IncentivePage extends GenericPage {
 	@FindBy(xpath = "//tr[1]/td[12]//button")
 	public WebElement btnInLineEdit;
 	
+	@FindBy(xpath = "//*[text()='Tier value is required']")
+	public WebElement txtErrorMessageTierValueRequired;
+	
+	@FindBy(xpath = "//*[text()='Tier boundary values should be positive']")
+	public WebElement txtErrorMessageTierValueNegative;
+	
 	GenericPage genericPage;
 	WebDriverWait wait;
 
@@ -260,5 +267,19 @@ public class IncentivePage extends GenericPage {
 
 		sfdcAcolyte.jsScrollAndClick(errorGrid);
 		sfdcAcolyte.waitTillElementIsVisible(validationMessage);
+	}
+	
+	public void deleteTierValue(WebElement gridTier, WebElement tierEditButton, WebElement tierDropdown)
+			throws Exception {
+		genericPage.moveToElementAndClick(gridTier, tierEditButton);
+		sfdcAcolyte.click(tierDropdown).sendBoardKeys(Keys.BACK_SPACE);
+		genericPage.doubleClick(txtRebate);
+	}
+
+	public void updateTiers(WebElement gridTier, WebElement tierEditButton, WebElement tierDropdown, String tierValue)
+			throws Exception {
+		genericPage.moveToElementAndClick(gridTier, tierEditButton);
+		sfdcAcolyte.click(tierDropdown).sendBoardKeys(Keys.BACK_SPACE).sendKeysTo(tierDropdown, tierValue);
+		genericPage.doubleClick(txtRebate);
 	}
 }

@@ -115,8 +115,9 @@ public class TestIncentiveQnB extends UnifiedFramework {
 		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
 				benefitProductQnB);
 
+		// Add QnB Benefit line with dates outside incentive dates
 		jsonArrayData = SFDCHelper.readJsonArray("CIMIncentiveQnBData.json", "XXTBenefitProductOutsideIncentiveDates");
-		response = benefitProductQnB.addIncentiveQnBNegative(jsonArrayData);
+		response = benefitProductQnB.addIncentiveQnBFailure(jsonArrayData);
 		responseValidator.validateFailureResponse(response, RebatesConstants.errorCodeApexError,
 				RebatesConstants.messageBenefitDatesOutOfRange);
 	}
