@@ -34,6 +34,9 @@ public class TestTemplates extends UnifiedFramework {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
+		DataHelper obj= DataHelper.getInstanceOfDataHelper();
+		obj.getData(environment);
+		
 		efficacies = new Efficacies();
 		sfdcRestUtils = new SFDCRestUtils();
 		configProperties = efficacies.loadPropertyFile(environment);
@@ -50,7 +53,6 @@ public class TestTemplates extends UnifiedFramework {
 
 	@Test(description = "TC428-Verify for the creation of the Template and List page", groups = { "Smoke", "API" })
 	public void createNewTemplate() throws Exception {
-
 		jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 		String qnbLayoutId = cimAdmin.getQnBLayoutId(jsonData);
 		cimAdminHelper.createAndValidateTemplate(cimAdmin, qnbLayoutId);

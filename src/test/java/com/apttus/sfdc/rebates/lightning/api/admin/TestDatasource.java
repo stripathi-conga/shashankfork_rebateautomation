@@ -33,6 +33,9 @@ public class TestDatasource extends UnifiedFramework {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
+		DataHelper obj= DataHelper.getInstanceOfDataHelper();
+		obj.getData(environment);
+		
 		efficacies = new Efficacies();
 		sfdcRestUtils = new SFDCRestUtils();
 		configProperties = efficacies.loadPropertyFile(environment);
@@ -40,6 +43,7 @@ public class TestDatasource extends UnifiedFramework {
 		instanceURL = SFDCHelper.setAccessToken(sfdcRestUtils);
 		cimAdmin = new CIMAdmin(instanceURL, sfdcRestUtils);
 		cimAdminHelper = new CIMAdminHelper();
+		
 	}
 
 	@BeforeMethod(alwaysRun = true)

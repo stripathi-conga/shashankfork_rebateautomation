@@ -45,6 +45,9 @@ public class TestDataSourceUI extends UnifiedFramework{
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void setUp(String runParallel, String environment, String browser, String hubURL) throws Exception {
+		DataHelper obj= DataHelper.getInstanceOfDataHelper();
+		obj.getData(environment);
+		
 		WebDriverUtils utils = new WebDriverUtils();
 		utils.initializeDriver(browser, hubURL);
 		driver = utils.getDriver();
