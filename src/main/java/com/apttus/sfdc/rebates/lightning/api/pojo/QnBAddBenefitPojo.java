@@ -80,13 +80,13 @@ public class QnBAddBenefitPojo {
 			qualification.setFormulaId(DataHelper.getFormulaDataMap().get(row.get("QualificationFormula")));
 			qualification.setAliasName(row.get("QualificationAliasName"));
 			Map<String, String> qualificationIdMap;
-			qualificationIdMap = setProductId(qualification, row.get("QualificationProductType"),
-					row.get("QualificationProductCode"), row.get("QualificationProduct"), "Qualification",
+			qualificationIdMap = setItemId(qualification, row.get("QualificationType"),
+					row.get("QualificationCode"), row.get("QualificationName"), "Qualification",
 					row.get("QualificationFormula"), true, cim);
 
-			qualification.setId(cim.qualificationIdMap.get(row.get("QualificationProduct")));
-			qualification.setProductId(qualificationIdMap.get("productId"));
-			qualification.setTiers(setTierValue(row.get("QualificationQuantity"), row.get("QualificationProduct"), true, cim));
+			qualification.setId(cim.qualificationIdMap.get(row.get("QualificationName")));
+			qualification.setItemId(qualificationIdMap.get("itemId"));
+			qualification.setTiers(setTierValue(row.get("QualificationQuantity"), row.get("QualificationName"), true, cim));
 
 			// ------------- Set benefit Data ------------------
 			benefit.setStartDate(startDate);
@@ -94,12 +94,12 @@ public class QnBAddBenefitPojo {
 			benefit.setFormulaId(DataHelper.getFormulaDataMap().get(row.get("BenefitFormula")));
 			benefit.setAliasName(row.get("BenefitAliasName"));
 			Map<String, String> benefitIdMap;
-			benefitIdMap = setProductId(benefit, row.get("BenefitProductType"), row.get("BenefitProductCode"),
-					row.get("BenefitProduct"), "Benefit", row.get("BenefitFormula"), false, cim);
+			benefitIdMap = setItemId(benefit, row.get("BenefitType"), row.get("BenefitCode"),
+					row.get("BenefitName"), "Benefit", row.get("BenefitFormula"), false, cim);
 
-			benefit.setId(cim.benefitIdMap.get(row.get("BenefitProduct")));
-			benefit.setProductId(benefitIdMap.get("productId"));
-			benefit.setTiers(setTierValue(row.get("BenefitAmount"), row.get("BenefitProduct"), false, cim));
+			benefit.setId(cim.benefitIdMap.get(row.get("BenefitName")));
+			benefit.setItemId(benefitIdMap.get("itemId"));
+			benefit.setTiers(setTierValue(row.get("BenefitAmount"), row.get("BenefitName"), false, cim));
 
 			listQnBLines.add(qualification);
 			listQnBLines.add(benefit);
@@ -111,27 +111,27 @@ public class QnBAddBenefitPojo {
 		return new Gson().toJson(addQnB);
 	}
 
-	public Map<String, String> setProductId(QnBLinesPojo object, String productType, String productCode,
-			String productName, String lineType, String formulaId, boolean isQualification, CIM cim) throws Exception {
+	public Map<String, String> setItemId(QnBLinesPojo object, String itemType, String itemCode,
+			String itemName, String lineType, String formulaId, boolean isQualification, CIM cim) throws Exception {
 
 		QnBLinesPojo benefitLineData = object;
 		Map<String, String> ids = new HashMap<>();
-		switch (productType.trim().toLowerCase()) {
+		switch (itemType.trim().toLowerCase()) {
 		case "product":
-			benefitLineData.setProductType(productType);
-			benefitLineData.setProductCode(productCode);
-			benefitLineData.setName(productName);
+			benefitLineData.setItemType(itemType);
+			benefitLineData.setItemCode(itemCode);
+			benefitLineData.setName(itemName);
 			break;
 		default:
 			break;
 		}
 		benefitLineData.setLineType(lineType);
 		benefitLineData.setIsQualification(isQualification);
-		ids.put("productId", cim.getProductId(productName));
+		ids.put("itemId", cim.getItemId(itemName));
 		return ids;
 	}
 
-	public List<TiersPojo> setTierValue(String value, String productName, boolean isQualification, CIM cim) {
+	public List<TiersPojo> setTierValue(String value, String itemName, boolean isQualification, CIM cim) {
 		String splitter = ";";
 		TiersPojo tiervalues;
 		List<TiersPojo> tierList = new ArrayList<TiersPojo>();
@@ -139,9 +139,9 @@ public class QnBAddBenefitPojo {
 		String valueArr[] = value.split(splitter);
 		List<String> tierId = new ArrayList<String>();
 		if(isQualification) 
-			tierId = cim.qualificationTierIdMap.get(productName);
+			tierId = cim.qualificationTierIdMap.get(itemName);
 		else
-			tierId = cim.benefitTierIdMap.get(productName);
+			tierId = cim.benefitTierIdMap.get(itemName);
 		
 		for (String val : valueArr) {
 			tiervalues = new TiersPojo();
@@ -156,145 +156,76 @@ public class QnBAddBenefitPojo {
 	}
 }
 
-/*----------------------- Add QnB XXT Benefit Product Request -----------------------------
+/*----------------------- Add QnB XXT Benefit Line Request -----------------------------
  
 {
-  "incentiveId": "a1k3i0000015Q0jAAE",
   "qnbData": [
     {
+      "Id": "a3m3i0000001GkyAAE",
+      "TierCount": 2,
+      "IsNew": false,
+      "Sequence": 1,
+      "SectionId": "SEC-00000001",
       "QnBLines": [
         {
-          "StartDate": "2020-02-06",
+          "StartDate": "2020-04-06",
+          "EndDate": "2020-12-26",
+          "ItemId": "01t3i000001GOeoAAG",
+          "ItemCode": "IN7080",
+          "Name": "Installation: Industrial - High",
+          "ItemType": "Product",
+          "FormulaId": "a4q3i0000000gNpAAI",
           "Tiers": [
             {
-              "Value": "1",
-              "Id": "a2U3i000000DfR7EAK",
-              "Sequence": "1"
+              "Id": "a3k3i0000000u4zAAA",
+              "Sequence": 1,
+              "Value": 1
             },
             {
-              "Value": "20",
-              "Id": "a2U3i000000DfR8EAK",
-              "Sequence": "2"
+              "Id": "a3k3i0000000u50AAA",
+              "Sequence": 2,
+              "Value": 30
             }
           ],
-          "FormulaId": "a5C3i000000Dm61EAC",
-          "ProductCode": "IN7080",
+          "LineType": "Qualification",
           "IsQualification": true,
           "AliasName": "Q1",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf7AAG",
-          "Id": "a2V3i000000Dh2iEAC",
-          "EndDate": "2020-12-26",
-          "LineType": "Qualification",
-          "Name": "Installation: Industrial - High"
+          "Id": "a3l3i0000001MvOAAU"
         },
         {
-          "StartDate": "2020-02-06",
+          "StartDate": "2020-04-06",
+          "EndDate": "2020-12-26",
+          "ItemId": "01t3i000001GOeoAAG",
+          "ItemCode": "IN7080",
+          "Name": "Installation: Industrial - High",
+          "ItemType": "Product",
+          "FormulaId": "a4q3i0000000gO4AAI",
           "Tiers": [
             {
-              "Value": "220",
-              "Id": "a2U3i000000DfR9EAK",
-              "Sequence": "1"
+              "Id": "a3k3i0000000u51AAA",
+              "Sequence": 1,
+              "Value": 120
             },
             {
-              "Value": "200",
-              "Id": "a2U3i000000DfRAEA0",
-              "Sequence": "2"
+              "Id": "a3k3i0000000u52AAA",
+              "Sequence": 2,
+              "Value": 100
             }
           ],
-          "FormulaId": "a5C3i000000Dm5wEAC",
-          "ProductCode": "IN7080",
+          "LineType": "Benefit",
           "IsQualification": false,
           "AliasName": "B1",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf7AAG",
-          "Id": "a2V3i000000Dh2jEAC",
-          "EndDate": "2020-12-26",
-          "LineType": "Benefit",
-          "Name": "Installation: Industrial - High"
+          "Id": "a3l3i0000001MvPAAU"
         }
-      ],
-      "Id": "a2W3i000000DltMEAS",
-      "Sequence": "1",
-      "IsNew": false,
-      "SectionId": "SEC-00000001",
-      "TierCount": "2"
+      ]
     },
-    {
-      "QnBLines": [
-        {
-          "StartDate": "2020-02-03",
-          "Tiers": [
-            {
-              "Value": "1",
-              "Id": "a2U3i000000DfRBEA0",
-              "Sequence": "1"
-            },
-            {
-              "Value": "15",
-              "Id": "a2U3i000000DfRCEA0",
-              "Sequence": "2"
-            },
-            {
-              "Value": "40",
-              "Id": "a2U3i000000DfRDEA0",
-              "Sequence": "3"
-            }
-          ],
-          "FormulaId": "a5C3i000000Dm61EAC",
-          "ProductCode": "GC1040",
-          "IsQualification": true,
-          "AliasName": "Q2",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf5AAG",
-          "Id": "a2V3i000000Dh2kEAC",
-          "EndDate": "2020-12-29",
-          "LineType": "Qualification",
-          "Name": "GenWatt Diesel 200kW"
-        },
-        {
-          "StartDate": "2020-02-03",
-          "Tiers": [
-            {
-              "Value": "200",
-              "Id": "a2U3i000000DfREEA0",
-              "Sequence": "1"
-            },
-            {
-              "Value": "190",
-              "Id": "a2U3i000000DfRFEA0",
-              "Sequence": "2"
-            },
-            {
-              "Value": "180",
-              "Id": "a2U3i000000DfRGEA0",
-              "Sequence": "3"
-            }
-          ],
-          "FormulaId": "a5C3i000000Dm5wEAC",
-          "ProductCode": "GC1040",
-          "IsQualification": false,
-          "AliasName": "B2",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf5AAG",
-          "Id": "a2V3i000000Dh2lEAC",
-          "EndDate": "2020-12-29",
-          "LineType": "Benefit",
-          "Name": "GenWatt Diesel 200kW"
-        }
-      ],
-      "Id": "a2W3i000000DltNEAS",
-      "Sequence": "1",
-      "IsNew": false,
-      "SectionId": "SEC-00000002",
-      "TierCount": "3"
-    }
-  ],
-  "totalSections": 2
+    ],
+  "incentiveId": "a303i0000002j4OAAQ",
+  "totalSections": 1
 }
 
 
------------------------- Add QnB XXD Benefit Product Request -------------------------------------------
+------------------------ Add QnB XXD Benefit Line Request -------------------------------------------
 {
   "incentiveId": "a1k3i0000015MkvAAE",
   "qnbData": [
@@ -309,11 +240,11 @@ public class QnBAddBenefitPojo {
             }
           ],
           "FormulaId": "a5C3i000000DhmHEAS",
-          "ProductCode": "IN7080",
+          "ItemCode": "IN7080",
           "IsQualification": true,
           "AliasName": "Q1",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf7AAG",
+          "ItemType": "Product",
+          "ItemId": "01t3i000001GOf7AAG",
           "EndDate": "2020-01-31",
           "LineType": "Qualification",
           "Name": "Installation: Industrial - High"
@@ -327,11 +258,11 @@ public class QnBAddBenefitPojo {
             }
           ],
           "FormulaId": "a5C3i000000DhmCEAS",
-          "ProductCode": "IN7080",
+          "ItemCode": "IN7080",
           "IsQualification": false,
           "AliasName": "B1",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf7AAG",
+          "ItemType": "Product",
+          "ItemId": "01t3i000001GOf7AAG",
           "EndDate": "2020-01-31",
           "LineType": "Benefit",
           "Name": "Installation: Industrial - High"
@@ -354,11 +285,11 @@ public class QnBAddBenefitPojo {
             }
           ],
           "FormulaId": "a5C3i000000DhmHEAS",
-          "ProductCode": "GC1040",
+          "ItemCode": "GC1040",
           "IsQualification": true,
           "AliasName": "Q2",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf5AAG",
+          "ItemType": "Product",
+          "ItemId": "01t3i000001GOf5AAG",
           "EndDate": "2020-01-31",
           "LineType": "Qualification",
           "Name": "GenWatt Diesel 200kW"
@@ -372,11 +303,11 @@ public class QnBAddBenefitPojo {
             }
           ],
           "FormulaId": "a5C3i000000DhmCEAS",
-          "ProductCode": "GC1040",
+          "ItemCode": "GC1040",
           "IsQualification": false,
           "AliasName": "B2",
-          "ProductType": "Product",
-          "ProductId": "01t3i000001GOf5AAG",
+          "ItemType": "Product",
+          "ItemId": "01t3i000001GOf5AAG",
           "EndDate": "2020-01-31",
           "LineType": "Benefit",
           "Name": "GenWatt Diesel 200kW"

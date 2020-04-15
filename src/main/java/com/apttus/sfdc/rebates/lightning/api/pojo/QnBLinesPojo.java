@@ -7,11 +7,11 @@ public class QnBLinesPojo {
 	private String StartDate;
 	private List<TiersPojo> Tiers;
 	private String FormulaId;
-	private String ProductCode;
+	private String ItemCode;
 	private boolean IsQualification;
 	private String AliasName;
-	private String ProductType;
-	private String ProductId;
+	private String ItemType;
+	private String ItemId;
 	private String Id;
 	private String EndDate;
 	private String LineType;
@@ -41,12 +41,12 @@ public class QnBLinesPojo {
 		this.FormulaId = formulaId;
 	}
 
-	public String getProductCode() {
-		return ProductCode;
+	public String getItemCode() {
+		return ItemCode;
 	}
 
-	public void setProductCode(String productCode) {
-		this.ProductCode = productCode;
+	public void setItemCode(String itemCode) {
+		this.ItemCode = itemCode;
 	}
 
 	public boolean getIsQualification() {
@@ -65,20 +65,20 @@ public class QnBLinesPojo {
 		this.AliasName = aliasName;
 	}
 
-	public String getProductType() {
-		return ProductType;
+	public String getItemType() {
+		return ItemType;
 	}
 
-	public void setProductType(String productType) {
-		this.ProductType = productType;
+	public void setItemType(String itemType) {
+		this.ItemType = itemType;
 	}
 
-	public String getProductId() {
-		return ProductId;
+	public String getItemId() {
+		return ItemId;
 	}
 
-	public void setProductId(String productId) {
-		this.ProductId = productId;
+	public void setItemId(String itemId) {
+		this.ItemId = itemId;
 	}
 
 	public String getId() {
