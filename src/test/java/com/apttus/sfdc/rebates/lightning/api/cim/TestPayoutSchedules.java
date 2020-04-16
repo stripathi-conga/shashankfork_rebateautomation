@@ -30,7 +30,7 @@ public class TestPayoutSchedules extends UnifiedFramework {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
-		DataHelper obj= DataHelper.getInstanceOfDataHelper();
+		DataHelper obj= DataHelper.getInstance();
 		obj.getData(environment);
 		
 		efficacies = new Efficacies();
