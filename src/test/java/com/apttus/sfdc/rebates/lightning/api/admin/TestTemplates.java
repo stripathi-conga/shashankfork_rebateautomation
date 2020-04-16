@@ -34,8 +34,8 @@ public class TestTemplates extends UnifiedFramework {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
-		DataHelper obj= DataHelper.getInstance();
-		obj.getData(environment);
+		DataHelper dataHelper = DataHelper.getInstance();
+		dataHelper.getData(environment);
 		
 		efficacies = new Efficacies();
 		sfdcRestUtils = new SFDCRestUtils();

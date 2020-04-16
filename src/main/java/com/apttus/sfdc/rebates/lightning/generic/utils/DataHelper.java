@@ -9,8 +9,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
 public class DataHelper {
-	// These values will be set Before Suite execution and used in most of the
-	// classes
+	// These values will be set Before Suite execution and used in most of the classes
 	private static String incentiveDataSourceId;
 	private static String incentiveDataSourceName;
 	private static String incentiveTemplateIdBenefitProductTiered;
@@ -91,18 +90,17 @@ public class DataHelper {
 			cimHelper = new CIMHelper();
 			cimAdminHelper = new CIMAdminHelper();
 
-			// ---- Deactivate the Active Link Template for LinkTemplate with SubType as
-			// Benefit Only Tiered ----
+			// Deactivate the Active Link Template for LinkTemplate with SubType as Benefit Only Tiered
 			jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateTiered");
 			cim.deactivateLinkTemplateForIncentives(jsonData);
 
-			// ----- Delete Existing DataSource ------
+			// Delete Existing DataSource
 			cimHelper.deleteDataSourceForIncentive(cimAdmin);
 
-			// ----- Create Step and NonStep Formula Id's -----
+			// Create Step and NonStep Formula Id's
 			cimHelper.createDataSourceAndFormulasForIncentives(cimAdmin);
 
-			// ----- Create and activate Template for Benefit Only Tiered -----
+			// Create and activate Template for Benefit Only Tiered
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyTieredQnBLayoutAPI");
 			String benefitOnlyTieredQnBLayoutId = cim.getQnBLayoutId(jsonData);
 			cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyTieredQnBLayoutId);
@@ -110,18 +108,16 @@ public class DataHelper {
 			cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
 			DataHelper.setIncentiveTemplateIdBenefitProductTiered(cimAdmin.getTemplateData().getTemplateId());
 
-			// ---- Create and activate Link Template for SubType as Benefit Only Tiered
-			// ----
+			// Create and activate Link Template for SubType as Benefit Only Tiered
 			String linkTemplateDataFromJson = "createNewLinkTemplateSubTypeTieredAPI";
 			cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 			cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
 
-			// ---- Deactivate the Active Link Template for LinkTemplate with SubType as
-			// Benefit Only Discrete ----
+			// Deactivate the Active Link Template for LinkTemplate with SubType as Benefit Only Discrete
 			jsonData = efficacies.readJsonElement("CIMTemplateData.json", "activeTemplateIdForRebateDiscrete");
 			cim.deactivateLinkTemplateForIncentives(jsonData);
 
-			// ---- Create and activate Template for Benefit Only Discrete -----
+			// Create and activate Template for Benefit Only Discrete
 			jsonData = efficacies.readJsonElement("CIMAdminTemplateData.json", "benefitOnlyDiscreteQnBLayoutAPI");
 			String benefitOnlyDiscreteQnBLayoutId = cim.getQnBLayoutId(jsonData);
 			cimHelper.createAndValidateTemplate(cimAdmin, benefitOnlyDiscreteQnBLayoutId);
@@ -129,8 +125,7 @@ public class DataHelper {
 			cimHelper.activateTemplateAndSetIdForIncentive(cimAdmin);
 			DataHelper.setIncentiveTemplateIdBenefitProductDiscrete(cimAdmin.getTemplateData().getTemplateId());
 
-			// ----- Create and activate Link Template for SubType as Benefit Only Tiered
-			// ----
+			// Create and activate Link Template for SubType as Benefit Only Tiered
 			linkTemplateDataFromJson = "createNewLinkTemplateSubTypeDiscreteAPI";
 			cimAdminHelper.createAndValidateLinkTemplate(cimAdmin, linkTemplateDataFromJson);
 			cimAdminHelper.activateAndVerifyLinkTemplate(cimAdmin);
