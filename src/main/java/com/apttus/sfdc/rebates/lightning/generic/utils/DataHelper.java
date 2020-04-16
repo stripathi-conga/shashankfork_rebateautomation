@@ -9,7 +9,7 @@ import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rudiments.utils.SFDCRestUtils;
 
 public class DataHelper {
-	// These values will be set in @BeforeSuite and used in all Incentive classes
+	// These values will be set Before Suite execution and used in all Incentive classes
 	private static String incentiveDataSourceId;
 	private static String incentiveDataSourceName;
 	private static String incentiveTemplateIdBenefitProductTiered;
