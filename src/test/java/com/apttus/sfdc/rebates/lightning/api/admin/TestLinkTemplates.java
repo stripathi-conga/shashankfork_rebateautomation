@@ -32,8 +32,8 @@ public class TestLinkTemplates extends UnifiedFramework {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void beforeClass(String runParallel, String environment, String browser, String hubURL) throws Exception {
-		DataHelper obj= DataHelper.getInstanceOfDataHelper();
-		obj.getData(environment);
+		DataHelper dataHelper = DataHelper.getInstance();
+		dataHelper.getData(environment);
 		
 		efficacies = new Efficacies();
 		sfdcRestUtils = new SFDCRestUtils();
