@@ -52,14 +52,14 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 						reqQualification.get("StartDate").getAsString(), "Verify Qualification StartDate");
 				softassert.assertEquals(resQualification.get("EndDate").getAsString(),
 						reqQualification.get("EndDate").getAsString(), "Verify Qualification EndDate");
-				softassert.assertEquals(resQualification.get("ProductType").getAsString(),
-						reqQualification.get("ProductType").getAsString(), "Verify Qualification ProductType");
-				softassert.assertEquals(resQualification.get("ProductCode").getAsString(),
-						reqQualification.get("ProductCode").getAsString(), "Verify Qualification ProductCode");
+				softassert.assertEquals(resQualification.get("ItemType").getAsString(),
+						reqQualification.get("ItemType").getAsString(), "Verify Qualification ItemType");
+				softassert.assertEquals(resQualification.get("ItemCode").getAsString(),
+						reqQualification.get("ItemCode").getAsString(), "Verify Qualification ItemCode");
 				softassert.assertEquals(resQualification.get("Name").getAsString(),
-						reqQualification.get("Name").getAsString(), "Verify Qualification Product Name");
-				softassert.assertEquals(resQualification.get("ProductId").getAsString(),
-						reqQualification.get("ProductId").getAsString(), "Verify Qualification ProductId");
+						reqQualification.get("Name").getAsString(), "Verify Qualification Item Name");
+				softassert.assertEquals(resQualification.get("ItemId").getAsString(),
+						reqQualification.get("ItemId").getAsString(), "Verify Qualification ItemId");
 				softassert.assertEquals(resQualification.get("FormulaId").getAsString(),
 						reqQualification.get("FormulaId").getAsString(), "Verify Qualification FormulaId");
 				softassert.assertEquals(resQualification.get("AliasName").getAsString(),
@@ -88,14 +88,14 @@ public class BenefitProductValidator extends ResponseValidatorBase {
 						reqBenefit.get("StartDate").getAsString(), "Verify Benefit StartDate");
 				softassert.assertEquals(resBenefit.get("EndDate").getAsString(),
 						reqBenefit.get("EndDate").getAsString(), "Verify Benefit EndDate");
-				softassert.assertEquals(resBenefit.get("ProductType").getAsString(),
-						reqBenefit.get("ProductType").getAsString(), "Verify Benefit ProductType");
-				softassert.assertEquals(resBenefit.get("ProductCode").getAsString(),
-						reqBenefit.get("ProductCode").getAsString(), "Verify Benefit ProductCode");
+				softassert.assertEquals(resBenefit.get("ItemType").getAsString(),
+						reqBenefit.get("ItemType").getAsString(), "Verify Benefit ItemType");
+				softassert.assertEquals(resBenefit.get("ItemCode").getAsString(),
+						reqBenefit.get("ItemCode").getAsString(), "Verify Benefit ItemCode");
 				softassert.assertEquals(resBenefit.get("Name").getAsString(), reqBenefit.get("Name").getAsString(),
-						"Verify Benefit Product Name");
-				softassert.assertEquals(resBenefit.get("ProductId").getAsString(),
-						reqBenefit.get("ProductId").getAsString(), "Verify Benefit ProductId");
+						"Verify Benefit Item Name");
+				softassert.assertEquals(resBenefit.get("ItemId").getAsString(),
+						reqBenefit.get("ItemId").getAsString(), "Verify Benefit ItemId");
 				softassert.assertEquals(resBenefit.get("FormulaId").getAsString(),
 						reqBenefit.get("FormulaId").getAsString(), "Verify Benefit FormulaId");
 				softassert.assertEquals(resBenefit.get("AliasName").getAsString(),

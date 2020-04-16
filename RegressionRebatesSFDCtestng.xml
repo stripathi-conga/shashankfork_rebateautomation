@@ -29,16 +29,6 @@
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestTemplateUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestDataSourceUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.admin.TestAuditLogsUI" />
-		</classes>
-	</test>
-
-	<test name="SFDC Rebates CIM Regression Test" parallel="classes" group-by-instances="false" preserve-order="true">
-		<groups>
-			<run>
-				<include name="Regression" />
-			</run>
-		</groups>
-		<classes>
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentives" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestIncentiveQnB" />
 			<class name="com.apttus.sfdc.rebates.lightning.api.cim.TestParticipants" />
@@ -46,6 +36,6 @@
 			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveParticipantUI" />
 			<class name="com.apttus.sfdc.rebates.lightning.ui.cim.TestIncentiveQnBUI" />
-		</classes> 
+		</classes>
 	</test>
 </suite> 

@@ -272,7 +272,7 @@ public class CIM extends CIMAdmin {
 		}
 	}
 
-	public String getProductId(String productName) throws ApplicationException {
+	public String getItemId(String productName) throws ApplicationException {
 		String productId;
 		try {
 			response = sfdcRestUtils.getData(urlGenerator.getProductIdURL.replace("{Product}", productName));
