@@ -14,6 +14,7 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.CIMAdmin;
 import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMAdminHelper;
+import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
 import com.apttus.sfdc.rebates.lightning.generic.utils.SFDCHelper;
 import com.apttus.sfdc.rebates.lightning.main.UnifiedFramework;
@@ -43,6 +44,9 @@ public class TestTemplateUI extends UnifiedFramework {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
 	public void setUp(String runParallel, String environment, String browser, String hubURL) throws Exception {
+		DataHelper dataHelper = DataHelper.getInstance();
+		dataHelper.getData(environment);
+		
 		WebDriverUtils utils = new WebDriverUtils();
 		utils.initializeDriver(browser, hubURL);
 		driver = utils.getDriver();
