@@ -69,4 +69,16 @@ public class RebatesConstants {
 	public static final String RevenueBased = "Revenue based";
 	public static final String cancel="Cancel";
 	public static final String update="Update";
+	public static final String payementYearly = "Yearly";
+	public static final String payementHalfYearly = "Half Yearly";
+	public static final String payementMonthly = "Monthly";
+	public static final String paymentQuaterly = "Quarterly";
+	public static final String calenderGregorian = "Gregorian";
+	public static final String paymentCheck = "Check";
+	public static final String paymentCreditMemo = "Credit Memo";
+	public static final String paymentElectricFunds = "Electronic Funds Transfer";
+	public static final String alertNumberisTooHigh = "The number is too high.";
+	public static final String AccountValidation = "Account added on Incentive header : Automation_Participant_Account_1, cannot be added to Participants tab";
+	public static final String placeholder = "Select an Option";
+	public static final int waitFor10Sec=10000;
 }

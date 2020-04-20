@@ -129,5 +129,19 @@ public class HomePage extends GenericPage {
 		sfdcAcolyte.navigateTo(urlGeneratorUI.calculationEngineAuditLogsListURL.replace("{runId}", "").
 				replace("/{view}", listView));		
 		return PageFactory.initElements(driver, AuditLogsPage.class);		
+	}
+
+	public IncentivePage navigateToIncentiveEditview(String incentiveId) throws Exception {
+
+		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveEditURL.replace("{incentiveId}", incentiveId).replace("{view}",
+				RebatesConstants.editPath));
+		return PageFactory.initElements(driver, IncentivePage.class);
 	}	
+	public IncentivePage navigateToIncentiveNew() throws Exception {
+
+		sfdcAcolyte.navigateTo(urlGeneratorUI.incentiveHomeURL.replace("{incentiveId}", RebatesConstants.newPath)
+				.replace("{view}", ""));
+
+		return PageFactory.initElements(driver, IncentivePage.class);
+	}
 }

@@ -15,6 +15,7 @@ import com.apttus.helpers.Efficacies;
 import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
+import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
@@ -42,6 +43,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 	public HomePage homepage;
 	private SoftAssert softassert;
 	private CIMHelper cimHelper;
+	GenericPage genericPage;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -71,6 +73,7 @@ public class TestIncentiveUI extends UnifiedFramework {
 	public void beforeClass() throws Exception {
 		benefitProductQnB = new BenefitProductQnB(instanceURL, sfdcRestUtils);
 		softassert = new SoftAssert();
+		genericPage=new GenericPage(driver);
 	}
 
 	@Test(description = "TC- 491 Program will not be activated if Q&B is empty but  participants are there", groups = {
@@ -121,6 +124,33 @@ public class TestIncentiveUI extends UnifiedFramework {
 		incentivepage.activateIncentive();
 		softassert.assertEquals(RebatesConstants.mandatoryMessageUnsavedChanges,
 				incentivepage.txtToastMessage.getText());
+		softassert.assertAll();
+	}
+	@Test(description = "TC-342 Validate for the fields for Schedules and payment on the New rebate program header page", groups = {
+			"Regression", "Low", "UI" })
+	public void verifySchedulesPaymentsFields() throws Exception {
+
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProductDiscrete");
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductDiscrete(), cim);
+		incentivepage = homepage.navigateToIncentiveEditview(cim.getIncentiveData().incentiveId);
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor10Sec);
+		incentivepage.ddlPaymentFrequency.click();
+		softassert.assertEquals(incentivepage.ddlPayementYearly.getText(), RebatesConstants.payementYearly);
+		softassert.assertEquals(incentivepage.ddlPayementHalfYearly.getText(), RebatesConstants.payementHalfYearly);
+		softassert.assertEquals(incentivepage.ddlPayementMonthly.getText(), RebatesConstants.payementMonthly);
+		softassert.assertEquals(incentivepage.ddlPayementQuartly.getText(), RebatesConstants.paymentQuaterly);
+
+		incentivepage.ddlCalender.click();
+		softassert.assertEquals(incentivepage.ddlCalenderValue.getAttribute("data-value"),
+				RebatesConstants.calenderGregorian);
+		incentivepage.txtGraceDays.sendKeys("88888888888");
+		incentivepage.btnSave.click();
+		softassert.assertEquals(incentivepage.lblAlertGraceDays.getText(), RebatesConstants.alertNumberisTooHigh);
+		incentivepage.ddlPaymentMethod.click();
+		softassert.assertEquals(incentivepage.ddlCheck.getText(), RebatesConstants.paymentCheck);
+		softassert.assertEquals(incentivepage.ddlCreditMemo.getText(), RebatesConstants.paymentCreditMemo);
+		softassert.assertEquals(incentivepage.ddlElectronicFund.getText(), RebatesConstants.paymentElectricFunds);
 		softassert.assertAll();
 	}
 	

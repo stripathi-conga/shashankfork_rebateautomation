@@ -23,16 +23,17 @@
 		"Apttus_Config2__Description__c": "Automation Program",
 		"Calendar__c": "Gregorian",
 		"BenefitLevel__c": "Agreement Account",
-		"AccountName": "Automation_Account_1",
+		"AccountName": "Automation_Participant_Account_1",
 		"PayoutFrequency__c": "Monthly",
 		"PaymentMethod__c": "Credit Memo",
-		"MeasurementLevel__c": "Individual Participants",
+		"MeasurementLevel__c": "Agreement Account",
 		"Apttus_Config2__RecurrenceFrequency__c": "Monthly",
-		"GracePeriod__c":0,
+		"GracePeriod__c":1,
 		"Apttus_Config2__UseType__c": "Rebate 2.0",
 		"IncentiveType__c": "Rebate",
 		"IncentiveSubType__c": "Benefit Product Discrete"
-	},
+	}
+	,
 	"createIncentiveIndividualParticipantForPayeeAndMeasurementLevelBenefitProductTiered": {
 		"Name": "{Random}",
 		"Apttus_Config2__EffectiveDate__c": "startofcurrentmonth",

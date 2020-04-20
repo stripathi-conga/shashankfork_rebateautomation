@@ -128,7 +128,7 @@ public class IncentivePage extends GenericPage {
 	public List<WebElement> gridErrorMessage;
 	@FindBy(xpath = "//*[text()='Tier value should be incremental']")
 	public WebElement txtErrorMessage;
-	
+
 	@FindBy(xpath = "//lightning-base-combobox-item/span[2]/span")
 	public List<WebElement> comboboxvalue;
 
@@ -136,54 +136,117 @@ public class IncentivePage extends GenericPage {
 	public WebElement btnSelected;
 	@FindBy(xpath = "//lightning-primitive-cell-checkbox")
 	public List<WebElement> checkbox;
-	
-	//div 10 is show Action button for Benefit Only. 
+
+	// div 10 is show Action button for Benefit Only.
 	@FindBy(xpath = "//tr[1]/td[10]//button")
 	public WebElement btnShowAction;
-	
+
 	@FindBy(xpath = "//*[text()='Delete']")
 	public WebElement btnDelete;
-	
+
 	@FindBy(xpath = "//*[@class='slds-dropdown__item']//span[text()='Edit']")
 	public WebElement btnEditSpillover;
-	
+
 	@FindBy(xpath = "//tr[1]/th[@data-label='Section Id']//*[text()]")
 	public WebElement txtSectionID;
-	
+
 	@FindBy(xpath = "//*[@class='slds-button slds-button_brand slds-button_destructive']")
 	public WebElement btnConfirmDelete;
 	@FindBy(xpath = "//*[text()='Cancel']")
 	public WebElement btnCancel;
 	@FindBy(xpath = "//*[text()='Update']")
 	public WebElement btnUpdate;
-	
+
 	@FindBy(xpath = "//c-core-data-table-formula//div[@class='slds-truncate slds-m-left_x-small']/span")
 	public List<WebElement> txtformula;
-	
+
 	@FindBy(xpath = "//*[@class='col slds-grid slds-grid_align-spread cell-height']//div[text()]")
 	public List<WebElement> txtBenefit;
-	
+
 	@FindBy(xpath = "//input[@name='0']")
 	public WebElement txtBenefitEditModel;
-	
+
 	@FindBy(xpath = "//input[@name='progress']")
 	public WebElement txtFormulaEditModel;
-	
-	//Need to find better locator - To do
+
+	// Need to find better locator - To do
 	@FindBy(xpath = "//tr[1]/td[12]//button")
 	public WebElement btnTierShowAction;
-	
+
 	@FindBy(xpath = "//*[@name='progress']")
 	public List<WebElement> ddlQualificationBenefitFormula;
-	
+
 	@FindBy(xpath = "//tr[1]/td[11]//div[2]/div[1]")
 	public WebElement txtTierBenefit;
-	
+
 	@FindBy(xpath = "//input[@name='0']")
 	public List<WebElement> txtTierBenefitEditModel;
-	
+
 	@FindBy(xpath = "//tr[1]/td[12]//button")
 	public WebElement btnInLineEdit;
+
+	@FindBy(xpath = "//button[text()='Add Participants']")
+	public WebElement btnAddParticipant;
+
+	@FindBy(xpath = "//span[@class='slds-listbox__option-text slds-listbox__option-text_entity']")
+	public WebElement ddlAccount;
+
+	@FindBy(xpath = "//*[@placeholder='SearchAccount...']")
+	public WebElement txtSearchAccount;
+
+	@FindBy(xpath = "//*[@placeholder='Enter product name or code to search']")
+	public WebElement txtSearchCategory;
+	
+	@FindBy(xpath = "//footer/button[text()='Add']")
+	public WebElement btnAddAccount;
+
+	@FindBy(xpath = "//*[@name='Incentive Type']")
+	public WebElement ddlIncentiveType;
+
+	@FindBy(xpath = "//span[@title='Rebate']")
+	public WebElement ddlIncentiveTypeRebate;
+
+	@FindBy(xpath = "//*[@name='Incentive Sub-Type']")
+	public WebElement ddlIncentiveSubType;
+
+	@FindBy(xpath = "//span[@title='Benefit Product Discrete']")
+	public WebElement ddlIncentiveSubTypeRebate;
+
+	@FindBy(xpath = "//button[text()='Next']")
+	public WebElement btnNext;
+
+	@FindBy(xpath = "//*[@name='Payment Frequency']")
+	public WebElement ddlPaymentFrequency;
+	@FindBy(xpath = "//*[@name='Measurement Level']")
+	public WebElement ddlMeasurementLevel;
+	@FindBy(xpath = "//*[@name='Calendar']")
+	public WebElement ddlCalender;
+	@FindBy(xpath = "//*[@name='Payment Method']")
+	public WebElement ddlPaymentMethod;
+
+	@FindBy(xpath = "//*[@data-value='Agreement Account']")
+	public WebElement ddlAgreementAccount;
+	@FindBy(xpath = "//*[@class='slds-combobox_container']//lightning-base-combobox-item[3]")
+	public WebElement ddlPayementHalfYearly;
+	@FindBy(xpath = "//*[@class='slds-combobox_container']//lightning-base-combobox-item[2]")
+	public WebElement ddlPayementQuartly;
+	@FindBy(xpath = "//*[@class='slds-combobox_container']//lightning-base-combobox-item[1]")
+	public WebElement ddlPayementMonthly;
+	@FindBy(xpath = "//*[@class='slds-combobox_container']//lightning-base-combobox-item[4]")
+	public WebElement ddlPayementYearly;
+	@FindBy(xpath = "//*[@data-value='Gregorian']")
+	public WebElement ddlCalenderValue;
+	@FindBy(xpath = "//*[@data-value='Check']")
+	public WebElement ddlCheck;
+	@FindBy(xpath = "//*[@data-value='Credit Memo']")
+	public WebElement ddlCreditMemo;
+	@FindBy(xpath = "//*[@data-value='Electronic Funds Transfer']")
+	public WebElement ddlElectronicFund;
+	@FindBy(xpath = "//div[contains(text(),'The number')]")
+	public WebElement lblAlertGraceDays;
+
+	@FindBy(xpath = "//*[@name='Payment Grace Period (Days)']")
+	public WebElement txtGraceDays;
 	
 	@FindBy(xpath = "//*[text()='Tier value is required']")
 	public WebElement txtErrorMessageTierValueRequired;

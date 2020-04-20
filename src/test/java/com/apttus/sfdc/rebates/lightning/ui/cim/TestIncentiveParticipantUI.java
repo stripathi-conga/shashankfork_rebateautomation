@@ -14,6 +14,7 @@ import com.apttus.selenium.WebDriverUtils;
 import com.apttus.sfdc.rebates.lightning.api.library.BenefitProductQnB;
 import com.apttus.sfdc.rebates.lightning.api.library.CIM;
 import com.apttus.sfdc.rebates.lightning.api.validator.BenefitProductValidator;
+import com.apttus.sfdc.rebates.lightning.common.GenericPage;
 import com.apttus.sfdc.rebates.lightning.generic.utils.CIMHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.DataHelper;
 import com.apttus.sfdc.rebates.lightning.generic.utils.RebatesConstants;
@@ -44,6 +45,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 	public HomePage homepage;
 	private SoftAssert softassert;
 	private CIMHelper cimHelper;
+	GenericPage genericPage;
 
 	@BeforeClass(alwaysRun = true)
 	@Parameters({ "runParallel", "environment", "browser", "hubURL" })
@@ -68,6 +70,7 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 		cim = new CIM(instanceURL, sfdcRestUtils);
 		responseValidator = new BenefitProductValidator();
 		cimHelper = new CIMHelper();
+		genericPage=new GenericPage(driver);
 	}
 
 	@BeforeMethod(alwaysRun = true)
@@ -130,6 +133,38 @@ public class TestIncentiveParticipantUI extends UnifiedFramework {
 		softassert.assertEquals(true, incentivepage.lnkAccount.get(1).isEnabled());
 		softassert.assertEquals("enable", incentivepage.effectiveDate.get(0).getAttribute("data-navigation"));
 		softassert.assertEquals("enable", incentivepage.effectiveDate.get(1).getAttribute("data-navigation"));
+		softassert.assertAll();
+	}
+	@Test(description = "TC- 585 Select and Activate measurement level", groups = { "Regression", "Medium", "UI" })
+	public void verifyActivationForAgreementAccount() throws Exception {
+
+		incentivepage = homepage.navigateToIncentiveNew();
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor10Sec);
+		incentivepage.ddlIncentiveType.click();
+		incentivepage.ddlIncentiveTypeRebate.click();
+		incentivepage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec);
+		incentivepage.ddlIncentiveSubType.click();
+		incentivepage.ddlIncentiveSubTypeRebate.click();
+		genericPage.waitTillPageContentLoad(RebatesConstants.waitFor3Sec);
+		incentivepage.btnNext.click();
+		// verify placeholder for Measurement Level and Payment Frequency
+		softassert.assertEquals(incentivepage.ddlMeasurementLevel.getAttribute("placeholder"),
+				RebatesConstants.placeholder);
+		softassert.assertEquals(incentivepage.ddlPaymentFrequency.getAttribute("placeholder"),
+				RebatesConstants.placeholder);
+
+		// verify Account used to Incentive header should not used in Add Participant
+		jsonData = efficacies.readJsonElement("CIMTemplateData.json",
+				"createNewIncentiveAgreementAccountBenefitProduct");
+		cimHelper.addAndValidateIncentive(jsonData, DataHelper.getIncentiveTemplateIdBenefitProductTiered(),
+				benefitProductQnB);
+		cimHelper.addAndValidateQnBOnIncentive(benefitProductQnB, "XXTBenefitProduct");
+		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		cimHelper.addAndValidateParticipant(benefitProductQnB, "addParticipants");
+		
+		incentivepage = homepage.navigateToIncentiveEdit(benefitProductQnB.getIncentiveData().incentiveId);
+		incentivepage.activateIncentive();
+		softassert.assertEquals(incentivepage.txtToastMessage.getText(), RebatesConstants.AccountValidation);
 		softassert.assertAll();
 	}
 
